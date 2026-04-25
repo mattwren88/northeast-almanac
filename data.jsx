@@ -530,6 +530,11 @@ async function loadEvents() {
     if (!res.ok) throw new Error(`events.json ${res.status}`);
     const j = await res.json();
     window.ANCHOR_DATE = j.anchorDate;
+    if (Array.isArray(j.weather) && j.weather.length) {
+      // Replace WEATHER contents in place so existing `WEATHER[d]` reads pick up the live forecast.
+      WEATHER.length = 0;
+      WEATHER.push(...j.weather);
+    }
     return { events: j.events, source: 'live', generatedAt: j.generatedAt };
   } catch (err) {
     console.warn('Live events.json unavailable; falling back to mock data.', err);

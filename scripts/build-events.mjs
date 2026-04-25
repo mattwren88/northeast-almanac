@@ -14,11 +14,16 @@ const ROOT = resolve(HERE, '..');
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36';
 const API = 'https://discovernepa.com/wp-json/tribe/events/v1/events';
+const WEATHER_API = 'https://api.open-meteo.com/v1/forecast';
 const HORIZON_DAYS = 14;
 const PER_PAGE = 50;
 
 // NEPA bounding box — drop events outside it from the map view
 const BBOX = { latMin: 40.80, latMax: 41.70, lngMin: -76.05, lngMax: -75.05 };
+
+// Single weather point for the region (Scranton). Editorial-level forecast — close enough.
+const WX_LAT = 41.41;
+const WX_LNG = -75.66;
 
 // Map DiscoverNEPA category names (case-insensitive substrings) to our 7 categories
 const CATEGORY_RULES = [
@@ -104,6 +109,47 @@ function fixTown(t) {
   if (!t) return '';
   const k = t.trim().toLowerCase();
   return TOWN_FIX[k] || t.trim();
+}
+
+// WMO weather codes → our { cond, icon }
+// https://open-meteo.com/en/docs (codes table)
+function wxFromCode(code) {
+  if (code === 0) return { cond: 'sun',    icon: '☀' };
+  if (code <= 2)  return { cond: 'partly', icon: '⛅' };
+  if (code === 3) return { cond: 'cloud',  icon: '☁' };
+  if (code <= 48) return { cond: 'fog',    icon: '🌫' };
+  if (code <= 67) return { cond: 'rain',   icon: '☂' };
+  if (code <= 77) return { cond: 'snow',   icon: '❄' };
+  if (code <= 82) return { cond: 'rain',   icon: '☂' };
+  if (code <= 86) return { cond: 'snow',   icon: '❄' };
+  return { cond: 'storm', icon: '⛈' };
+}
+
+async function fetchWeather() {
+  const params = new URLSearchParams({
+    latitude:         String(WX_LAT),
+    longitude:        String(WX_LNG),
+    daily:            'temperature_2m_max,temperature_2m_min,weather_code',
+    temperature_unit: 'fahrenheit',
+    timezone:         'America/New_York',
+    forecast_days:    String(HORIZON_DAYS),
+  });
+  const res = await fetch(`${WEATHER_API}?${params}`, { headers: { 'User-Agent': UA } });
+  if (!res.ok) throw new Error(`Open-Meteo ${res.status}`);
+  const j = await res.json();
+  const dayLabels = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  return j.daily.time.map((date, i) => {
+    const wx = wxFromCode(j.daily.weather_code[i]);
+    const dt = new Date(date + 'T00:00:00');
+    return {
+      day:   i,
+      label: dayLabels[dt.getDay()],
+      cond:  wx.cond,
+      icon:  wx.icon,
+      high:  Math.round(j.daily.temperature_2m_max[i]),
+      low:   Math.round(j.daily.temperature_2m_min[i]),
+    };
+  });
 }
 
 async function fetchPage(page, startYmd, endYmd) {
@@ -216,8 +262,14 @@ async function main() {
   const endYmd = ymd(end);
 
   console.log(`Fetching DiscoverNEPA events ${anchorYmd} → ${endYmd}…`);
-  const raw = await fetchAllEvents(anchorYmd, endYmd);
-  console.log(`  ${raw.length} raw events`);
+  const [raw, weather] = await Promise.all([
+    fetchAllEvents(anchorYmd, endYmd),
+    fetchWeather().catch(err => {
+      console.warn('  weather fetch failed:', err.message);
+      return null;
+    }),
+  ]);
+  console.log(`  ${raw.length} raw events, weather: ${weather ? `${weather.length} days` : 'unavailable'}`);
 
   const normalized = raw.map(r => normalize(r, anchorYmd)).filter(Boolean);
   console.log(`  ${normalized.length} after normalization (date window + bbox)`);
@@ -236,7 +288,8 @@ async function main() {
     generatedAt: new Date().toISOString(),
     anchorDate: anchorYmd,
     horizonDays: HORIZON_DAYS,
-    source: 'discovernepa.com (Tribe Events REST)',
+    source: 'discovernepa.com (Tribe Events REST) + open-meteo',
+    weather,
     events: deduped,
   };
 

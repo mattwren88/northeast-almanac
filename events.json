@@ -1,8 +1,122 @@
 {
-  "generatedAt": "2026-04-25T16:06:09.247Z",
+  "generatedAt": "2026-04-25T16:15:30.779Z",
   "anchorDate": "2026-04-25",
   "horizonDays": 14,
-  "source": "discovernepa.com (Tribe Events REST)",
+  "source": "discovernepa.com (Tribe Events REST) + open-meteo",
+  "weather": [
+    {
+      "day": 0,
+      "label": "Sat",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 55,
+      "low": 42
+    },
+    {
+      "day": 1,
+      "label": "Sun",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 56,
+      "low": 41
+    },
+    {
+      "day": 2,
+      "label": "Mon",
+      "cond": "sun",
+      "icon": "☀",
+      "high": 66,
+      "low": 41
+    },
+    {
+      "day": 3,
+      "label": "Tue",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 60,
+      "low": 43
+    },
+    {
+      "day": 4,
+      "label": "Wed",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 58,
+      "low": 47
+    },
+    {
+      "day": 5,
+      "label": "Thu",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 47,
+      "low": 40
+    },
+    {
+      "day": 6,
+      "label": "Fri",
+      "cond": "cloud",
+      "icon": "☁",
+      "high": 46,
+      "low": 36
+    },
+    {
+      "day": 7,
+      "label": "Sat",
+      "cond": "cloud",
+      "icon": "☁",
+      "high": 51,
+      "low": 37
+    },
+    {
+      "day": 8,
+      "label": "Sun",
+      "cond": "cloud",
+      "icon": "☁",
+      "high": 57,
+      "low": 35
+    },
+    {
+      "day": 9,
+      "label": "Mon",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 61,
+      "low": 38
+    },
+    {
+      "day": 10,
+      "label": "Tue",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 55,
+      "low": 42
+    },
+    {
+      "day": 11,
+      "label": "Wed",
+      "cond": "cloud",
+      "icon": "☁",
+      "high": 62,
+      "low": 37
+    },
+    {
+      "day": 12,
+      "label": "Thu",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 61,
+      "low": 49
+    },
+    {
+      "day": 13,
+      "label": "Fri",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 64,
+      "low": 48
+    }
+  ],
   "events": [
     {
       "id": "dn-10050498",
