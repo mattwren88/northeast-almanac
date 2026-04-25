@@ -1,0 +1,5 @@
+{
+  "_README": "Manual overrides applied after scraping. Use event URLs (https://discovernepa.com/event/...) or ids (dn-12345). Featured events appear in the Editor's Picks rail; hidden events are surfaced by the 'Hidden gems only' filter.",
+  "featured": [],
+  "hidden": []
+}

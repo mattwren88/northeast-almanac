@@ -1,0 +1,36 @@
+name: Refresh events.json
+
+on:
+  schedule:
+    # Friday 06:00 ET (10:00 UTC during EDT)
+    - cron: '0 10 * * 5'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run scraper
+        run: node scripts/build-events.mjs
+
+      - name: Commit refreshed events.json
+        run: |
+          git config user.name  "northeast-almanac bot"
+          git config user.email "actions@users.noreply.github.com"
+          if git diff --quiet events.json; then
+            echo "No changes to events.json"
+            exit 0
+          fi
+          git add events.json
+          today=$(date -u +%Y-%m-%d)
+          git commit -m "chore: refresh events.json ($today)"
+          git push

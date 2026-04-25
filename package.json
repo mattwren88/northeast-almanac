@@ -1,0 +1,13 @@
+{
+  "name": "northeast-almanac",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "scrape": "node scripts/build-events.mjs",
+    "serve": "python3 -m http.server 8000"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
