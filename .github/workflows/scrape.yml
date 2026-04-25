@@ -2,8 +2,9 @@ name: Refresh events.json
 
 on:
   schedule:
-    # Friday 06:00 ET (10:00 UTC during EDT)
-    - cron: '0 10 * * 5'
+    # Daily at 06:00 ET (10:00 UTC during EDT). Daily so a transient failure
+    # gets retried within 24h, and so new DiscoverNEPA listings appear fast.
+    - cron: '0 10 * * *'
   workflow_dispatch: {}
 
 permissions:

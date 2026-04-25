@@ -2,6 +2,33 @@
 
 const { useState: useStateApp, useEffect: useEffectApp, useMemo: useMemoApp } = React;
 
+function RefreshStamp({ generatedAt, eventStatus }) {
+  if (eventStatus === 'mock') {
+    return (
+      <div className="mast-refresh stale" title="events.json not found — showing mock data">
+        Mock data · run <code>node scripts/build-events.mjs</code> to fetch live
+      </div>
+    );
+  }
+  if (!generatedAt) return null;
+  const refreshed = new Date(generatedAt);
+  const ageMs = Date.now() - refreshed.getTime();
+  const ageDays = Math.floor(ageMs / 86400000);
+  const ageHours = Math.floor(ageMs / 3600000);
+  let level = 'fresh';
+  if (ageDays >= 10) level = 'stale';
+  else if (ageDays >= 3) level = 'aging';
+  const human = ageHours < 1 ? 'just now'
+    : ageHours < 24 ? `${ageHours} ${ageHours === 1 ? 'hour' : 'hours'} ago`
+    : ageDays < 7 ? `${ageDays} ${ageDays === 1 ? 'day' : 'days'} ago`
+    : refreshed.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  return (
+    <div className={`mast-refresh ${level}`}>
+      Refreshed {human}
+    </div>
+  );
+}
+
 function App() {
   const tweaks = useTweaks(window.TWEAK_DEFAULTS);
   const [view, setView] = useStateApp('calendar'); // calendar | map | list
@@ -95,8 +122,9 @@ function App() {
         <div className="mast-tagline">
           A standing chronicle of markets, gallery openings, hikes, dive bars,
           opera-house touring acts, and other goings-on across the
-          Lackawanna, Wyoming, and Pocono valleys — refreshed Friday at dawn.
+          Lackawanna, Wyoming, and Pocono valleys — refreshed daily at dawn.
         </div>
+        <RefreshStamp generatedAt={generatedAt} eventStatus={eventStatus} />
       </header>
 
       {/* TOOLBAR */}

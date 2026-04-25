@@ -147,6 +147,26 @@ body::before {
   line-height: 1.4;
   text-wrap: pretty;
 }
+.mast-refresh {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  padding: 8px 0 0;
+  color: var(--ink-3);
+}
+.mast-refresh.fresh { color: var(--ink-3); }
+.mast-refresh.aging { color: var(--gold); }
+.mast-refresh.stale { color: var(--press-red); font-weight: 500; }
+.mast-refresh code {
+  font-family: var(--mono);
+  font-size: 10px;
+  background: var(--paper-2);
+  padding: 1px 4px;
+  border-radius: 2px;
+  text-transform: none;
+  letter-spacing: 0;
+}
 
 /* ============ TOOLBAR ============ */
 .toolbar {

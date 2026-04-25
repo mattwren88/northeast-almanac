@@ -244,6 +244,51 @@ async function loadCurated() {
   }
 }
 
+async function previousEventCount() {
+  try {
+    const raw = await readFile(resolve(ROOT, 'events.json'), 'utf8');
+    const j = JSON.parse(raw);
+    return Array.isArray(j.events) ? j.events.length : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function isValidEvent(e) {
+  return (
+    e &&
+    typeof e.id === 'string' && e.id.length > 0 &&
+    typeof e.title === 'string' && e.title.length > 0 &&
+    typeof e.start === 'string' && /^\d{2}:\d{2}$/.test(e.start) &&
+    Number.isInteger(e.day) && e.day >= 0 && e.day < HORIZON_DAYS &&
+    Number.isFinite(e?.coords?.x) && e.coords.x >= 0 && e.coords.x <= 1 &&
+    Number.isFinite(e?.coords?.y) && e.coords.y >= 0 && e.coords.y <= 1 &&
+    typeof e.category === 'string' &&
+    typeof e.town === 'string' && e.town.length > 0
+  );
+}
+
+// Sanity guards. Each returns a string (failure reason) or null (pass).
+function guardHardFloor(events, MIN = 10) {
+  return events.length < MIN
+    ? `only ${events.length} valid events; hard floor is ${MIN}`
+    : null;
+}
+
+function guardSharpDrop(newCount, prevCount, ratio = 0.5, prevMin = 20) {
+  if (prevCount < prevMin) return null;
+  if (newCount >= prevCount * ratio) return null;
+  return `event count fell from ${prevCount} → ${newCount} (>${Math.round((1 - ratio) * 100)}% drop)`;
+}
+
+function guardSchema(prevalidatedCount, validCount, dropMax = 0.2) {
+  if (prevalidatedCount === 0) return null;
+  const dropped = prevalidatedCount - validCount;
+  const rate = dropped / prevalidatedCount;
+  if (rate <= dropMax) return null;
+  return `${dropped}/${prevalidatedCount} events failed schema validation (${Math.round(rate * 100)}% > ${Math.round(dropMax * 100)}%)`;
+}
+
 function applyCurated(events, curated) {
   const featSet = new Set(curated.featured || []);
   const hideSet = new Set(curated.hidden || []);
@@ -282,7 +327,28 @@ async function main() {
 
   autoCluster(deduped);
 
-  deduped.sort((a, b) => a.day - b.day || a.start.localeCompare(b.start));
+  // Schema validation — drop malformed events, then fail loudly if too many were bad.
+  const prevalidatedCount = deduped.length;
+  const valid = deduped.filter(isValidEvent);
+  const dropped = prevalidatedCount - valid.length;
+  if (dropped > 0) console.log(`  ${dropped} events dropped by schema validation`);
+
+  // Sanity guards — fail the job (don't write events.json) if any trip.
+  const prevCount = await previousEventCount();
+  const failures = [
+    guardSchema(prevalidatedCount, valid.length),
+    guardHardFloor(valid),
+    guardSharpDrop(valid.length, prevCount),
+  ].filter(Boolean);
+
+  if (failures.length) {
+    console.error('REFUSING TO WRITE events.json — sanity checks failed:');
+    for (const f of failures) console.error(`  · ${f}`);
+    console.error(`(previous count: ${prevCount}, new count: ${valid.length})`);
+    process.exit(1);
+  }
+
+  valid.sort((a, b) => a.day - b.day || a.start.localeCompare(b.start));
 
   const out = {
     generatedAt: new Date().toISOString(),
@@ -290,11 +356,11 @@ async function main() {
     horizonDays: HORIZON_DAYS,
     source: 'discovernepa.com (Tribe Events REST) + open-meteo',
     weather,
-    events: deduped,
+    events: valid,
   };
 
   await writeFile(resolve(ROOT, 'events.json'), JSON.stringify(out, null, 2));
-  console.log(`Wrote events.json (${deduped.length} events, anchor ${anchorYmd}).`);
+  console.log(`Wrote events.json (${valid.length} events, anchor ${anchorYmd}; previous: ${prevCount}).`);
 }
 
 main().catch(err => {
