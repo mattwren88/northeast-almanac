@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Fetches the next ~14 days of NEPA events from DiscoverNEPA's public Tribe
-// Events Calendar REST API and writes events.json in the shape the app expects.
+// Fetches the next ~14 days of NEPA events from a registry of public Tribe
+// Events Calendar REST APIs (DiscoverNEPA + others) and writes events.json
+// in the shape the app expects.
 //
 // Usage: node scripts/build-events.mjs
 // Output: ./events.json (events array, anchorDate, generatedAt)
@@ -13,7 +14,18 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36';
-const API = 'https://discovernepa.com/wp-json/tribe/events/v1/events';
+
+// Each source must expose a Tribe Events Calendar REST endpoint with the
+// standard shape: { events: [...], total, total_pages }. `id` becomes the
+// event-id prefix (kept short and stable so curated.json keys keep matching).
+// Order matters: earlier sources win on dedupe collisions.
+const SOURCES = [
+  { id: 'dn',  name: 'DiscoverNEPA',         base: 'https://discovernepa.com/wp-json/tribe/events/v1/events' },
+  { id: 'hm',  name: 'Happenings Magazine',  base: 'https://www.happeningsmagazinepa.com/wp-json/tribe/events/v1/events' },
+  { id: 'lcl', name: 'Lackawanna Libraries', base: 'https://lclshome.org/wp-json/tribe/events/v1/events' },
+  { id: 'scr', name: 'City of Scranton',     base: 'https://scrantonpa.gov/wp-json/tribe/events/v1/events' },
+];
+
 const WEATHER_API = 'https://api.open-meteo.com/v1/forecast';
 const HORIZON_DAYS = 14;
 const PER_PAGE = 50;
@@ -45,6 +57,56 @@ const TOWN_FIX = {
   'wilkesbarre': 'Wilkes-Barre',
   'wilkes-barre': 'Wilkes-Barre',
 };
+
+// Centroid fallback for sources whose Tribe venues lack geo_lat/geo_lng.
+// Keys are lowercase town names; coords are approximate town centers.
+// Towns outside the BBOX above are intentionally omitted (would be filtered anyway).
+const TOWN_COORDS = {
+  // Lackawanna County
+  'scranton':         [41.4090, -75.6624],
+  'dunmore':          [41.4234, -75.6322],
+  'carbondale':       [41.5740, -75.5005],
+  'old forge':        [41.3712, -75.7405],
+  'taylor':           [41.3956, -75.7188],
+  'moosic':           [41.3534, -75.7383],
+  'throop':           [41.4517, -75.6066],
+  'olyphant':         [41.4673, -75.6005],
+  'archbald':         [41.5006, -75.5374],
+  'jessup':           [41.4734, -75.5605],
+  'jermyn':           [41.5290, -75.5444],
+  'mayfield':         [41.5409, -75.5377],
+  'clarks summit':    [41.4912, -75.7224],
+  'south abington township': [41.4756, -75.7060],
+  // Luzerne County
+  'wilkes-barre':     [41.2459, -75.8813],
+  'kingston':         [41.2670, -75.8966],
+  'plains':           [41.2787, -75.8480],
+  'pittston':         [41.3262, -75.7896],
+  'west pittston':    [41.3287, -75.7918],
+  'hazleton':         [40.9584, -75.9747],
+  'nanticoke':        [41.2009, -76.0001],
+  'mountain top':     [41.1450, -75.8888],
+  'dallas':           [41.3404, -75.9646],
+  'shavertown':       [41.3206, -75.9529],
+  // Wayne County
+  'honesdale':        [41.5762, -75.2549],
+  'hawley':           [41.4762, -75.1819],
+  // Carbon County
+  'jim thorpe':       [40.8718, -75.7327],
+  'lehighton':        [40.8345, -75.7113],
+  // Monroe County
+  'stroudsburg':      [40.9865, -75.1945],
+  'east stroudsburg': [41.0023, -75.1791],
+  'mount pocono':     [41.1212, -75.3613],
+  // Wyoming County
+  'tunkhannock':      [41.5384, -75.9474],
+};
+
+function townCoords(town) {
+  if (!town) return null;
+  const key = town.trim().toLowerCase();
+  return TOWN_COORDS[key] || null;
+}
 
 function decodeEntities(s = '') {
   return s
@@ -152,18 +214,18 @@ async function fetchWeather() {
   });
 }
 
-async function fetchPage(page, startYmd, endYmd) {
-  const url = `${API}?per_page=${PER_PAGE}&page=${page}&start_date=${startYmd}&end_date=${endYmd}`;
+async function fetchPage(source, page, startYmd, endYmd) {
+  const url = `${source.base}?per_page=${PER_PAGE}&page=${page}&start_date=${startYmd}&end_date=${endYmd}`;
   const res = await fetch(url, { headers: { 'User-Agent': UA, 'Accept': 'application/json' } });
   if (res.status === 404) return { events: [], total: 0 };
-  if (!res.ok) throw new Error(`DiscoverNEPA ${res.status} on page ${page}`);
+  if (!res.ok) throw new Error(`${source.name} ${res.status} on page ${page}`);
   return res.json();
 }
 
-async function fetchAllEvents(startYmd, endYmd) {
+async function fetchSource(source, startYmd, endYmd) {
   const all = [];
   for (let page = 1; page <= 30; page++) {
-    const j = await fetchPage(page, startYmd, endYmd);
+    const j = await fetchPage(source, page, startYmd, endYmd);
     if (!j.events || j.events.length === 0) break;
     all.push(...j.events);
     if (j.events.length < PER_PAGE) break;
@@ -176,25 +238,29 @@ function ymd(d) {
   return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}`;
 }
 
-function normalize(raw, anchorYmd) {
-  const lat = parseFloat(raw.venue?.geo_lat);
-  const lng = parseFloat(raw.venue?.geo_lng);
-  const hasCoords = Number.isFinite(lat) && Number.isFinite(lng) && inBbox(lat, lng);
+function normalize(raw, anchorYmd, source) {
   const day = dayOffset(raw.start_date, anchorYmd);
   if (day < 0 || day >= HORIZON_DAYS) return null;
-  if (!hasCoords) return null;
+
+  const town = fixTown(raw.venue?.city || '');
+  let lat = parseFloat(raw.venue?.geo_lat);
+  let lng = parseFloat(raw.venue?.geo_lng);
+  if (!(Number.isFinite(lat) && Number.isFinite(lng))) {
+    const fallback = townCoords(town);
+    if (fallback) [lat, lng] = fallback;
+  }
+  if (!(Number.isFinite(lat) && Number.isFinite(lng) && inBbox(lat, lng))) return null;
 
   const title = stripHtml(raw.title);
   const blurb = stripHtml(raw.excerpt || raw.description || '').slice(0, 320);
   const venueName = stripHtml(raw.venue?.venue || '');
-  const town = fixTown(raw.venue?.city || '');
   const category = inferCategory(raw);
   const indoor = !OUTDOOR_RULES.test([title, ...(raw.categories || []).map(c => c.name)].join(' '));
   const cost = stripHtml(raw.cost) || 'See site';
   const recurring = raw.start_date_details && raw.recurring ? 'Recurring' : null;
 
   return {
-    id: `dn-${raw.id}`,
+    id: `${source.id}-${raw.id}`,
     title,
     venue: venueName || 'TBA',
     town: town || 'NEPA',
@@ -209,6 +275,8 @@ function normalize(raw, anchorYmd) {
     blurb,
     tags: [...(raw.tags || []).map(t => stripHtml(t.name))].filter(Boolean).slice(0, 5),
     coords: projectCoords(lat, lng),
+    lat,
+    lng,
     url: raw.url,
     recurring,
   };
@@ -306,18 +374,30 @@ async function main() {
   const anchorYmd = ymd(today);
   const endYmd = ymd(end);
 
-  console.log(`Fetching DiscoverNEPA events ${anchorYmd} → ${endYmd}…`);
-  const [raw, weather] = await Promise.all([
-    fetchAllEvents(anchorYmd, endYmd),
+  console.log(`Fetching events ${anchorYmd} → ${endYmd} from ${SOURCES.length} sources…`);
+
+  const sourceFetches = SOURCES.map(async (source) => {
+    try {
+      const raw = await fetchSource(source, anchorYmd, endYmd);
+      const normalized = raw.map(r => normalize(r, anchorYmd, source)).filter(Boolean);
+      console.log(`  [${source.id}] ${source.name}: ${raw.length} raw, ${normalized.length} kept after window+bbox`);
+      return normalized;
+    } catch (err) {
+      console.warn(`  [${source.id}] ${source.name} failed: ${err.message} — skipping`);
+      return [];
+    }
+  });
+
+  const [perSource, weather] = await Promise.all([
+    Promise.all(sourceFetches),
     fetchWeather().catch(err => {
       console.warn('  weather fetch failed:', err.message);
       return null;
     }),
   ]);
-  console.log(`  ${raw.length} raw events, weather: ${weather ? `${weather.length} days` : 'unavailable'}`);
 
-  const normalized = raw.map(r => normalize(r, anchorYmd)).filter(Boolean);
-  console.log(`  ${normalized.length} after normalization (date window + bbox)`);
+  const normalized = perSource.flat();
+  console.log(`  ${normalized.length} total normalized events; weather: ${weather ? `${weather.length} days` : 'unavailable'}`);
 
   const deduped = dedupe(normalized);
   console.log(`  ${deduped.length} after dedupe`);
@@ -354,7 +434,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     anchorDate: anchorYmd,
     horizonDays: HORIZON_DAYS,
-    source: 'discovernepa.com (Tribe Events REST) + open-meteo',
+    source: `${SOURCES.map(s => s.name).join(' + ')} (Tribe Events REST) + open-meteo`,
     weather,
     events: valid,
   };

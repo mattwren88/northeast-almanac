@@ -543,13 +543,13 @@ async function loadEvents() {
 }
 
 const CATEGORIES = {
-  market: { label: 'Markets', color: 'oklch(0.55 0.14 50)' },
-  food: { label: 'Food & Drink', color: 'oklch(0.52 0.18 25)' },
-  outdoor: { label: 'Outdoors', color: 'oklch(0.50 0.10 145)' },
-  art: { label: 'Art', color: 'oklch(0.45 0.12 280)' },
-  performance: { label: 'Theater & Music', color: 'oklch(0.40 0.10 330)' },
-  nightlife: { label: 'Nightlife', color: 'oklch(0.35 0.08 250)' },
-  community: { label: 'Community', color: 'oklch(0.55 0.08 70)' },
+  market:      { label: 'Markets',         color: '#E07A1F', icon: '🛍' },
+  food:        { label: 'Food & Drink',    color: '#D63838', icon: '🍴' },
+  outdoor:     { label: 'Outdoors',        color: '#2F8F4E', icon: '🌲' },
+  art:         { label: 'Art',             color: '#7A3FBF', icon: '🎨' },
+  performance: { label: 'Theater & Music', color: '#D6248A', icon: '🎭' },
+  nightlife:   { label: 'Nightlife',       color: '#1F5FCC', icon: '🌙' },
+  community:   { label: 'Community',       color: '#C9A227', icon: '👥' },
 };
 
 Object.assign(window, { MOCK_EVENT_DATA, WEATHER, CATEGORIES, dateForDay, MONTHS, DAYS, loadEvents });

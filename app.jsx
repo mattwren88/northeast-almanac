@@ -182,7 +182,7 @@ function App() {
                   <h3 className="pick-title">{ev.title}</h3>
                   <p className="pick-blurb">{ev.blurb}</p>
                   <div className="pick-foot">
-                    <span className="pick-when">{date.weekday} {date.month} {date.date}, {fmtTime(ev.start)}</span>
+                    <span className="pick-when">{date.weekday} {date.month} {date.date}, {fmtEventTime(ev)}</span>
                     <span className="pick-where">{ev.venue}, {ev.town}</span>
                   </div>
                 </article>
@@ -236,10 +236,6 @@ function App() {
           <div className="colophon-block">
             <div className="colophon-k">Coverage area</div>
             <div className="colophon-v">Lackawanna · Luzerne · Wayne · Monroe · Carbon counties</div>
-          </div>
-          <div className="colophon-block">
-            <div className="colophon-k">Set in</div>
-            <div className="colophon-v">Newsreader, Instrument Serif & JetBrains Mono</div>
           </div>
         </div>
       </footer>

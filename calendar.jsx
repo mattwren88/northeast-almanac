@@ -73,7 +73,7 @@ function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset
                       <div className="evt-bar" style={{ background: cat.color }} />
                       <div className="evt-body">
                         <div className="evt-meta-row">
-                          <span className="evt-time">{fmtTime(ev.start)}</span>
+                          <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>{fmtEventTime(ev)}</span>
                           {ev.featured && <span className="evt-pick">Editor's pick</span>}
                           {ev.hidden && <span className="evt-hidden">Hidden gem</span>}
                           {ev.recurring && <span className="evt-recur">↻</span>}
@@ -120,4 +120,14 @@ function fmtTime(t) {
   return m === 0 ? `${hh} ${ampm}` : `${hh}:${m.toString().padStart(2, '0')} ${ampm}`;
 }
 
-Object.assign(window, { CalendarView, fmtTime });
+function isAllDay(ev) {
+  return ev && ev.start === '00:00' && ev.end === '23:59';
+}
+
+function fmtEventTime(ev, { range = false } = {}) {
+  if (isAllDay(ev)) return 'All day';
+  if (!range) return fmtTime(ev.start);
+  return `${fmtTime(ev.start)} – ${fmtTime(ev.end)}`;
+}
+
+Object.assign(window, { CalendarView, fmtTime, isAllDay, fmtEventTime });
