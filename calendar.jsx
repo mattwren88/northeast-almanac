@@ -130,4 +130,90 @@ function fmtEventTime(ev, { range = false } = {}) {
   return `${fmtTime(ev.start)} – ${fmtTime(ev.end)}`;
 }
 
-Object.assign(window, { CalendarView, fmtTime, isAllDay, fmtEventTime });
+function pad2(n) { return String(n).padStart(2, '0'); }
+
+function eventIcsDates(ev) {
+  const iso = dateForDay(ev.day).iso;
+  const ymd = iso.replace(/-/g, '');
+  if (isAllDay(ev)) {
+    const next = new Date(iso + 'T00:00:00');
+    next.setDate(next.getDate() + 1);
+    const endYmd = `${next.getFullYear()}${pad2(next.getMonth() + 1)}${pad2(next.getDate())}`;
+    return { dtstart: `;VALUE=DATE:${ymd}`, dtend: `;VALUE=DATE:${endYmd}`, allDay: true };
+  }
+  const stamp = (t) => {
+    const [h, m] = t.split(':').map(Number);
+    return `${ymd}T${pad2(h)}${pad2(m)}00`;
+  };
+  return { dtstart: `:${stamp(ev.start)}`, dtend: `:${stamp(ev.end)}`, allDay: false };
+}
+
+function icsEscape(s) {
+  return String(s || '')
+    .replace(/\\/g, '\\\\')
+    .replace(/\r?\n/g, '\\n')
+    .replace(/,/g, '\\,')
+    .replace(/;/g, '\\;');
+}
+
+function icsStamp() {
+  const d = new Date();
+  return `${d.getUTCFullYear()}${pad2(d.getUTCMonth() + 1)}${pad2(d.getUTCDate())}T${pad2(d.getUTCHours())}${pad2(d.getUTCMinutes())}${pad2(d.getUTCSeconds())}Z`;
+}
+
+function eventToVevent(ev) {
+  const { dtstart, dtend } = eventIcsDates(ev);
+  const lines = [
+    'BEGIN:VEVENT',
+    `UID:${ev.id}@nepa-almanac`,
+    `DTSTAMP:${icsStamp()}`,
+    `DTSTART${dtstart}`,
+    `DTEND${dtend}`,
+    `SUMMARY:${icsEscape(ev.title)}`,
+    `LOCATION:${icsEscape(`${ev.venue}, ${ev.town}, PA`)}`,
+  ];
+  if (ev.blurb) lines.push(`DESCRIPTION:${icsEscape(ev.blurb)}`);
+  if (ev.url) lines.push(`URL:${ev.url}`);
+  lines.push('END:VEVENT');
+  return lines.join('\r\n');
+}
+
+function eventToIcs(ev) {
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Northeast Almanac//EN',
+    'CALSCALE:GREGORIAN',
+    eventToVevent(ev),
+    'END:VCALENDAR',
+  ].join('\r\n');
+}
+
+function eventsToIcs(events) {
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Northeast Almanac//EN',
+    'CALSCALE:GREGORIAN',
+    ...events.map(eventToVevent),
+    'END:VCALENDAR',
+  ].join('\r\n');
+}
+
+function slugify(s) {
+  return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'event';
+}
+
+function downloadIcs(filename, ics) {
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+Object.assign(window, { CalendarView, fmtTime, isAllDay, fmtEventTime, eventToIcs, eventsToIcs, downloadIcs, slugify });

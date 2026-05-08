@@ -29,16 +29,53 @@ function RefreshStamp({ generatedAt, eventStatus }) {
   );
 }
 
+const ALL_VIEWS = ['calendar', 'map', 'list'];
+const ALL_CATS = Object.keys(CATEGORIES);
+
+function parseHash() {
+  const raw = (window.location.hash || '').replace(/^#/, '');
+  const p = new URLSearchParams(raw);
+  const view = p.get('view');
+  const w = parseInt(p.get('w') || '', 10);
+  const cats = p.get('cats');
+  return {
+    view: ALL_VIEWS.includes(view) ? view : null,
+    weekOffset: Number.isInteger(w) && w >= 0 && w <= 1 ? w : null,
+    activeCats: cats ? cats.split(',').filter(c => ALL_CATS.includes(c)) : null,
+    hiddenOnly: p.get('hidden') === '1',
+    openEventId: p.get('ev') || null,
+    planOpen: p.get('plan') === '1',
+  };
+}
+
+function writeHash(state) {
+  const p = new URLSearchParams();
+  if (state.view && state.view !== 'calendar') p.set('view', state.view);
+  if (state.weekOffset) p.set('w', String(state.weekOffset));
+  if (state.activeCats && state.activeCats.length !== ALL_CATS.length) {
+    p.set('cats', state.activeCats.join(','));
+  }
+  if (state.hiddenOnly) p.set('hidden', '1');
+  if (state.openEventId) p.set('ev', state.openEventId);
+  if (state.planOpen) p.set('plan', '1');
+  const next = p.toString();
+  const target = next ? `#${next}` : '';
+  if (window.location.hash !== target && !(window.location.hash === '' && target === '')) {
+    history.replaceState(null, '', `${window.location.pathname}${window.location.search}${target}`);
+  }
+}
+
 function App() {
   const tweaks = useTweaks(window.TWEAK_DEFAULTS);
-  const [view, setView] = useStateApp('calendar'); // calendar | map | list
-  const [weekOffset, setWeekOffset] = useStateApp(0);
-  const [activeCats, setActiveCats] = useStateApp(Object.keys(CATEGORIES));
+  const initial = parseHash();
+  const [view, setView] = useStateApp(initial.view || 'calendar'); // calendar | map | list
+  const [weekOffset, setWeekOffset] = useStateApp(initial.weekOffset ?? 0);
+  const [activeCats, setActiveCats] = useStateApp(initial.activeCats || ALL_CATS);
   const [activeTowns, setActiveTowns] = useStateApp(null); // null = all
-  const [openEventId, setOpenEventId] = useStateApp(null);
+  const [openEventId, setOpenEventId] = useStateApp(initial.openEventId);
   const [saved, setSaved] = useStateApp([]);
-  const [planOpen, setPlanOpen] = useStateApp(false);
-  const [hiddenOnly, setHiddenOnly] = useStateApp(false);
+  const [planOpen, setPlanOpen] = useStateApp(initial.planOpen);
+  const [hiddenOnly, setHiddenOnly] = useStateApp(initial.hiddenOnly);
   const [events, setEvents] = useStateApp([]);
   const [eventStatus, setEventStatus] = useStateApp('loading'); // loading | live | mock | error
   const [generatedAt, setGeneratedAt] = useStateApp(null);
@@ -69,6 +106,26 @@ function App() {
   useEffectApp(() => {
     localStorage.setItem('nepa-saved', JSON.stringify(saved));
   }, [saved]);
+
+  // Write URL hash whenever shareable state changes
+  useEffectApp(() => {
+    writeHash({ view, weekOffset, activeCats, hiddenOnly, openEventId, planOpen });
+  }, [view, weekOffset, activeCats, hiddenOnly, openEventId, planOpen]);
+
+  // Read hash on browser back/forward
+  useEffectApp(() => {
+    const onHash = () => {
+      const h = parseHash();
+      setView(h.view || 'calendar');
+      setWeekOffset(h.weekOffset ?? 0);
+      setActiveCats(h.activeCats || ALL_CATS);
+      setHiddenOnly(h.hiddenOnly);
+      setOpenEventId(h.openEventId);
+      setPlanOpen(h.planOpen);
+    };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
 
   const filtered = useMemoApp(() => {
     return events.filter(e => activeCats.includes(e.category))

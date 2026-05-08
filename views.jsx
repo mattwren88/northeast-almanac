@@ -49,7 +49,14 @@ function MapView({ events, saved, onSave, onOpen, weekOffset }) {
     const map = mapRef.current;
     if (!map || !window.L) return;
     if (layerRef.current) { layerRef.current.remove(); layerRef.current = null; }
-    const layer = window.L.layerGroup();
+    const layer = window.L.markerClusterGroup
+      ? window.L.markerClusterGroup({
+          showCoverageOnHover: false,
+          spiderfyOnMaxZoom: true,
+          maxClusterRadius: 45,
+          disableClusteringAtZoom: 13,
+        })
+      : window.L.layerGroup();
     dayEvents.forEach(ev => {
       const ll = eventLatLng(ev);
       if (!ll) return;
@@ -336,7 +343,15 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
             >
               {isSaved ? '★ Saved to weekend' : '☆ Add to weekend'}
             </button>
-            <button className="drawer-btn ghost">↗ Directions</button>
+            <button
+              className="drawer-btn ghost"
+              onClick={() => downloadIcs(`${slugify(event.title)}.ics`, eventToIcs(event))}
+            >
+              ↓ Add to calendar
+            </button>
+            {event.url && (
+              <a className="drawer-btn ghost" href={event.url} target="_blank" rel="noopener noreferrer">↗ Event page</a>
+            )}
           </div>
         </div>
       </aside>
@@ -397,6 +412,12 @@ function WeekendPlan({ events, saved, onRemove, onClose, onShare }) {
               })}
             </div>
             <footer className="plan-foot">
+              <button
+                className="plan-share"
+                onClick={() => downloadIcs('northeast-almanac-weekend.ics', eventsToIcs(items))}
+              >
+                ↓ Download .ics
+              </button>
               <button className="plan-share" onClick={onShare}>↗ Share this weekend</button>
             </footer>
           </>
