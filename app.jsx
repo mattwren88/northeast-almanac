@@ -73,6 +73,7 @@ function App() {
   const [openEventId, setOpenEventId] = useStateApp(initial.openEventId);
   const [saved, setSaved] = useStateApp([]);
   const [planOpen, setPlanOpen] = useStateApp(initial.planOpen);
+  const [aboutOpen, setAboutOpen] = useStateApp(false);
   const [events, setEvents] = useStateApp([]);
   const [eventStatus, setEventStatus] = useStateApp('loading'); // loading | live | mock | error
   const [generatedAt, setGeneratedAt] = useStateApp(null);
@@ -288,11 +289,27 @@ function App() {
         <div className="colophon-row">
           <div className="colophon-block">
             <div className="colophon-k">Compiled from</div>
-            <div className="colophon-v">venue calendars · Facebook events · regional papers · tip line</div>
+            <div className="colophon-v">
+              <a href="https://discovernepa.com/events/" target="_blank" rel="noopener noreferrer">DiscoverNEPA</a>
+              {' · '}
+              <a href="https://www.happeningsmagazinepa.com/events/" target="_blank" rel="noopener noreferrer">Happenings Magazine</a>
+              {' · '}
+              <a href="https://lclshome.org/events/" target="_blank" rel="noopener noreferrer">Lackawanna County Library System</a>
+              {' · '}
+              <a href="https://scrantonpa.gov/events/" target="_blank" rel="noopener noreferrer">City of Scranton</a>
+              {'. Weather via '}
+              <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a>.
+            </div>
           </div>
           <div className="colophon-block">
             <div className="colophon-k">Coverage area</div>
             <div className="colophon-v">Lackawanna · Luzerne · Wayne · Monroe · Carbon counties</div>
+          </div>
+          <div className="colophon-block">
+            <div className="colophon-k">About</div>
+            <div className="colophon-v">
+              <button className="colophon-link" onClick={() => setAboutOpen(true)}>How this almanac is made →</button>
+            </div>
           </div>
         </div>
       </footer>
@@ -318,6 +335,8 @@ function App() {
 
       <BackToTop />
 
+      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} generatedAt={generatedAt} />}
+
       {/* TWEAKS */}
       {tweaks.editing && (
         <TweaksPanel onClose={tweaks.dismiss} title="Tweaks">
@@ -335,6 +354,89 @@ function App() {
           </TweakSection>
         </TweaksPanel>
       )}
+    </div>
+  );
+}
+
+function AboutModal({ onClose, generatedAt }) {
+  const refreshed = generatedAt ? new Date(generatedAt).toLocaleString('en-US', { dateStyle: 'long', timeStyle: 'short' }) : '—';
+  return (
+    <div className="about-backdrop" onClick={onClose}>
+      <aside className="about" onClick={e => e.stopPropagation()}>
+        <button className="about-close" onClick={onClose} aria-label="Close">×</button>
+        <div className="about-eyebrow">COLOPHON · ABOUT THE ALMANAC</div>
+        <h2 className="about-title">How this almanac is made</h2>
+
+        <p className="about-lede">
+          A non-commercial weekend planner for Northeast Pennsylvania.
+          Events are pulled from public calendars run by the venues
+          themselves, then organized by date, geography, and category.
+          Every listing links back to its original source.
+        </p>
+
+        <section className="about-section">
+          <h3>Sources</h3>
+          <ul>
+            <li><a href="https://discovernepa.com/events/" target="_blank" rel="noopener noreferrer">DiscoverNEPA</a> — regional tourism calendar</li>
+            <li><a href="https://www.happeningsmagazinepa.com/events/" target="_blank" rel="noopener noreferrer">Happenings Magazine</a> — local culture and lifestyle</li>
+            <li><a href="https://lclshome.org/events/" target="_blank" rel="noopener noreferrer">Lackawanna County Library System</a> — talks, kids' programs, classes</li>
+            <li><a href="https://scrantonpa.gov/events/" target="_blank" rel="noopener noreferrer">City of Scranton</a> — municipal events</li>
+            <li><a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — 14-day weather forecast</li>
+          </ul>
+          <p className="about-fine">
+            All four event sources publish public Tribe Events Calendar
+            REST feeds. We fetch only excerpts and titles, link back
+            to each original page, and identify ourselves with a
+            named User-Agent so site owners can reach us.
+          </p>
+        </section>
+
+        <section className="about-section">
+          <h3>Refresh cadence</h3>
+          <p>
+            A GitHub Action runs the scraper daily at <strong>06:00 ET</strong>.
+            If anything changed, the new <code>events.json</code> is
+            committed back to the repo and the site picks it up on
+            next page load.
+          </p>
+          <p className="about-fine">Last refreshed: <strong>{refreshed}</strong></p>
+        </section>
+
+        <section className="about-section">
+          <h3>Coverage area</h3>
+          <p>
+            Lackawanna · Luzerne · Wayne · Monroe · Carbon counties.
+            Events outside the bounding box (40.80–41.70°N, 76.05–75.05°W)
+            are filtered out.
+          </p>
+        </section>
+
+        <section className="about-section">
+          <h3>Removal & corrections</h3>
+          <p>
+            If you run one of the venues or sources above and want a
+            listing removed, the cadence changed, or your name spelled
+            differently — open an issue at{' '}
+            <a href="https://github.com/mattwren88/northeast-almanac/issues" target="_blank" rel="noopener noreferrer">
+              github.com/mattwren88/northeast-almanac/issues
+            </a>{' '}
+            and it'll be handled within 24 hours.
+          </p>
+        </section>
+
+        <section className="about-section">
+          <h3>What this is not</h3>
+          <ul>
+            <li>Not a commercial product — no ads, no tracking, no email capture.</li>
+            <li>Not a republication — listings are excerpts that link back to their source.</li>
+            <li>Not exhaustive — only events with a date, location, and public listing show up.</li>
+          </ul>
+        </section>
+
+        <footer className="about-foot">
+          <a href="https://github.com/mattwren88/northeast-almanac" target="_blank" rel="noopener noreferrer">Source code on GitHub →</a>
+        </footer>
+      </aside>
     </div>
   );
 }

@@ -13,7 +13,9 @@ import { dirname, resolve } from 'node:path';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
 
-const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36';
+// Identify the bot honestly so site owners can contact / allow-list / block us.
+// If you fork this, update the URL to point at your own repo.
+const UA = 'Northeast-Almanac/1.0 (+https://github.com/mattwren88/northeast-almanac; non-commercial regional event aggregator; contact via GitHub Issues)';
 
 // Each source must expose a Tribe Events Calendar REST endpoint with the
 // standard shape: { events: [...], total, total_pages }. `id` becomes the
