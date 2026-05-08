@@ -1,31 +1,51 @@
 // Calendar view — week grid with editorial styling
 
-const { useState, useMemo } = React;
+const { useState, useMemo, useEffect: useEffectCal } = React;
+
+function useIsMobile() {
+  const [m, set] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 800px)').matches);
+  useEffectCal(() => {
+    const mq = window.matchMedia('(max-width: 800px)');
+    const h = (e) => set(e.matches);
+    mq.addEventListener('change', h);
+    return () => mq.removeEventListener('change', h);
+  }, []);
+  return m;
+}
 
 function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset, weatherAware }) {
-  const startDay = weekOffset * 7;
+  const isMobile = useIsMobile();
+  // On mobile we anchor the week to today (clamped within the 14-day horizon)
+  // and ignore weekOffset — Prev/Next is hidden.
+  const startDay = isMobile
+    ? Math.max(0, Math.min(todayDayOffset(), 14 - 7))
+    : weekOffset * 7;
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => startDay + i);
 
   return (
     <div className="cal-wrap">
       <div className="cal-header">
         <div className="cal-nav">
-          <button
-            className="cal-nav-btn"
-            onClick={() => setWeekOffset(Math.max(0, weekOffset - 1))}
-            disabled={weekOffset === 0}
-          >‹ Prev</button>
+          {!isMobile && (
+            <button
+              className="cal-nav-btn"
+              onClick={() => setWeekOffset(Math.max(0, weekOffset - 1))}
+              disabled={weekOffset === 0}
+            >‹ Prev</button>
+          )}
           <div className="cal-week-label">
-            <span className="cal-week-em">Week of</span>{' '}
+            <span className="cal-week-em">{isMobile ? 'Next 7 days from' : 'Week of'}</span>{' '}
             {dateForDay(startDay).month} {dateForDay(startDay).date}
             {' — '}
             {dateForDay(startDay + 6).month} {dateForDay(startDay + 6).date}
           </div>
-          <button
-            className="cal-nav-btn"
-            onClick={() => setWeekOffset(Math.min(1, weekOffset + 1))}
-            disabled={weekOffset === 1}
-          >Next ›</button>
+          {!isMobile && (
+            <button
+              className="cal-nav-btn"
+              onClick={() => setWeekOffset(Math.min(1, weekOffset + 1))}
+              disabled={weekOffset === 1}
+            >Next ›</button>
+          )}
         </div>
       </div>
 
@@ -216,4 +236,4 @@ function downloadIcs(filename, ics) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-Object.assign(window, { CalendarView, fmtTime, isAllDay, fmtEventTime, eventToIcs, eventsToIcs, downloadIcs, slugify });
+Object.assign(window, { CalendarView, fmtTime, isAllDay, fmtEventTime, eventToIcs, eventsToIcs, downloadIcs, slugify, useIsMobile });
