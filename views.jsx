@@ -14,16 +14,14 @@ function eventLatLng(ev) {
 }
 
 // ============ MAP VIEW ============
-function MapView({ events, saved, onSave, onOpen, weekOffset }) {
-  const startDay = weekOffset * 7;
-  const days = [0, 1, 2, 3, 4, 5, 6].map(i => startDay + i);
+function MapView({ events, saved, onSave, onOpen }) {
   const today = todayDayOffset();
-  const initialDay = today >= startDay && today <= startDay + 6 ? today : startDay;
+  // Anchor the strip to today: show 7 days starting today, clamped so we
+  // always emit 7 valid offsets within the 14-day horizon.
+  const startDay = Math.max(0, Math.min(today, 14 - 7));
+  const days = [0, 1, 2, 3, 4, 5, 6].map(i => startDay + i);
+  const initialDay = days.includes(today) ? today : startDay;
   const [activeDay, setActiveDay] = useStateMV(initialDay);
-  // Re-sync to today (or start of visible week) when weekOffset changes
-  useEffectMV(() => {
-    setActiveDay(today >= startDay && today <= startDay + 6 ? today : startDay);
-  }, [weekOffset]);
   const dayEvents = events.filter(e => e.day === activeDay);
 
   const mapElRef = useRefMV(null);
