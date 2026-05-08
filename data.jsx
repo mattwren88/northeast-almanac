@@ -524,6 +524,21 @@ function dateForDay(d) {
   };
 }
 
+// Returns day offsets [0..13] covering the upcoming Fri/Sat/Sun cluster.
+// If today is Fri/Sat/Sun, includes remaining weekend days from today onward.
+// If today is Mon–Thu, finds the next Fri and includes through Sun.
+function thisWeekendDays() {
+  const out = [];
+  let started = false;
+  for (let d = 0; d < 14; d++) {
+    const wd = dateForDay(d).weekday;
+    const isWE = wd === 'Fri' || wd === 'Sat' || wd === 'Sun';
+    if (isWE) { out.push(d); started = true; }
+    else if (started) break;
+  }
+  return out;
+}
+
 async function loadEvents() {
   try {
     const res = await fetch('events.json', { cache: 'no-store' });
@@ -552,4 +567,4 @@ const CATEGORIES = {
   community:   { label: 'Community',       color: '#C9A227', icon: '👥' },
 };
 
-Object.assign(window, { MOCK_EVENT_DATA, WEATHER, CATEGORIES, dateForDay, MONTHS, DAYS, loadEvents });
+Object.assign(window, { MOCK_EVENT_DATA, WEATHER, CATEGORIES, dateForDay, MONTHS, DAYS, loadEvents, thisWeekendDays });

@@ -821,8 +821,12 @@ body::before {
   gap: 14px;
   align-items: baseline;
   margin-bottom: 14px;
-  padding-bottom: 8px;
+  padding: 10px 0 8px;
   border-bottom: 2px solid var(--ink);
+  position: sticky;
+  top: 64px;
+  background: var(--paper);
+  z-index: 3;
 }
 .list-day-num {
   font-family: var(--display);
@@ -1360,4 +1364,34 @@ body::before {
   text-align: center;
   padding: 60px 0;
   font-size: 18px;
+}
+
+/* ============ BACK TO TOP ============ */
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  border: 2px solid var(--ink);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 50;
+  box-shadow: 2px 2px 0 var(--rule);
+  transition: transform 0.15s ease, opacity 0.2s ease;
+  opacity: 0.92;
+}
+.back-to-top:hover {
+  transform: translateY(-2px);
+  opacity: 1;
+}
+
+/* Weekend-only toggle picks up a warm accent when active */
+.toolbar-flag.is-active {
+  background: var(--ink);
+  color: var(--paper);
 }

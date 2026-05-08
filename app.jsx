@@ -43,6 +43,7 @@ function parseHash() {
     weekOffset: Number.isInteger(w) && w >= 0 && w <= 1 ? w : null,
     activeCats: cats ? cats.split(',').filter(c => ALL_CATS.includes(c)) : null,
     hiddenOnly: p.get('hidden') === '1',
+    weekendOnly: p.get('weekend') === '1',
     openEventId: p.get('ev') || null,
     planOpen: p.get('plan') === '1',
   };
@@ -56,6 +57,7 @@ function writeHash(state) {
     p.set('cats', state.activeCats.join(','));
   }
   if (state.hiddenOnly) p.set('hidden', '1');
+  if (state.weekendOnly) p.set('weekend', '1');
   if (state.openEventId) p.set('ev', state.openEventId);
   if (state.planOpen) p.set('plan', '1');
   const next = p.toString();
@@ -76,6 +78,7 @@ function App() {
   const [saved, setSaved] = useStateApp([]);
   const [planOpen, setPlanOpen] = useStateApp(initial.planOpen);
   const [hiddenOnly, setHiddenOnly] = useStateApp(initial.hiddenOnly);
+  const [weekendOnly, setWeekendOnly] = useStateApp(initial.weekendOnly);
   const [events, setEvents] = useStateApp([]);
   const [eventStatus, setEventStatus] = useStateApp('loading'); // loading | live | mock | error
   const [generatedAt, setGeneratedAt] = useStateApp(null);
@@ -109,8 +112,8 @@ function App() {
 
   // Write URL hash whenever shareable state changes
   useEffectApp(() => {
-    writeHash({ view, weekOffset, activeCats, hiddenOnly, openEventId, planOpen });
-  }, [view, weekOffset, activeCats, hiddenOnly, openEventId, planOpen]);
+    writeHash({ view, weekOffset, activeCats, hiddenOnly, weekendOnly, openEventId, planOpen });
+  }, [view, weekOffset, activeCats, hiddenOnly, weekendOnly, openEventId, planOpen]);
 
   // Read hash on browser back/forward
   useEffectApp(() => {
@@ -120,6 +123,7 @@ function App() {
       setWeekOffset(h.weekOffset ?? 0);
       setActiveCats(h.activeCats || ALL_CATS);
       setHiddenOnly(h.hiddenOnly);
+      setWeekendOnly(h.weekendOnly);
       setOpenEventId(h.openEventId);
       setPlanOpen(h.planOpen);
     };
@@ -127,10 +131,12 @@ function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  const weekendDays = useMemoApp(() => thisWeekendDays(), [events]);
   const filtered = useMemoApp(() => {
     return events.filter(e => activeCats.includes(e.category))
-      .filter(e => !hiddenOnly || e.hidden);
-  }, [events, activeCats, hiddenOnly]);
+      .filter(e => !hiddenOnly || e.hidden)
+      .filter(e => !weekendOnly || weekendDays.includes(e.day));
+  }, [events, activeCats, hiddenOnly, weekendOnly, weekendDays]);
 
   const featuredThisWeek = useMemoApp(() => {
     const start = weekOffset * 7;
@@ -213,6 +219,13 @@ function App() {
           ))}
         </div>
         <div className="toolbar-section toolbar-flags">
+          <button
+            className={`toolbar-flag ${weekendOnly ? 'is-active' : ''}`}
+            onClick={() => setWeekendOnly(w => !w)}
+            title="Show only events on the next Fri / Sat / Sun"
+          >
+            ✦ This weekend
+          </button>
           <button
             className={`toolbar-flag ${hiddenOnly ? 'is-active' : ''}`}
             onClick={() => setHiddenOnly(h => !h)}
@@ -316,6 +329,8 @@ function App() {
         />
       )}
 
+      <BackToTop />
+
       {/* TWEAKS */}
       {tweaks.editing && (
         <TweaksPanel onClose={tweaks.dismiss} title="Tweaks">
@@ -334,6 +349,27 @@ function App() {
         </TweaksPanel>
       )}
     </div>
+  );
+}
+
+function BackToTop() {
+  const [show, set] = useStateApp(false);
+  useEffectApp(() => {
+    const onScroll = () => set(window.scrollY > 400);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  if (!show) return null;
+  return (
+    <button
+      className="back-to-top"
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      aria-label="Back to top"
+      title="Back to top"
+    >
+      ↑
+    </button>
   );
 }
 
