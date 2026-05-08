@@ -17,7 +17,13 @@ function eventLatLng(ev) {
 function MapView({ events, saved, onSave, onOpen, weekOffset }) {
   const startDay = weekOffset * 7;
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => startDay + i);
-  const [activeDay, setActiveDay] = useStateMV(startDay);
+  const today = todayDayOffset();
+  const initialDay = today >= startDay && today <= startDay + 6 ? today : startDay;
+  const [activeDay, setActiveDay] = useStateMV(initialDay);
+  // Re-sync to today (or start of visible week) when weekOffset changes
+  useEffectMV(() => {
+    setActiveDay(today >= startDay && today <= startDay + 6 ? today : startDay);
+  }, [weekOffset]);
   const dayEvents = events.filter(e => e.day === activeDay);
 
   const mapElRef = useRefMV(null);
@@ -85,13 +91,14 @@ function MapView({ events, saved, onSave, onOpen, weekOffset }) {
         {days.map(d => {
           const date = dateForDay(d);
           const count = events.filter(e => e.day === d).length;
+          const isToday = d === today;
           return (
             <button
               key={d}
-              className={`map-day-pill ${activeDay === d ? 'is-active' : ''}`}
+              className={`map-day-pill ${activeDay === d ? 'is-active' : ''} ${isToday ? 'is-today' : ''}`}
               onClick={() => setActiveDay(d)}
             >
-              <span className="map-day-pill-wd">{date.weekday}</span>
+              <span className="map-day-pill-wd">{date.weekday}{isToday && <span className="map-today-dot">·</span>}</span>
               <span className="map-day-pill-num">{date.date}</span>
               <span className="map-day-pill-count">{count}</span>
             </button>
