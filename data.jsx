@@ -524,13 +524,25 @@ function dateForDay(d) {
   };
 }
 
-// Returns day offsets [0..13] covering the upcoming Fri/Sat/Sun cluster.
-// If today is Fri/Sat/Sun, includes remaining weekend days from today onward.
-// If today is Mon–Thu, finds the next Fri and includes through Sun.
+// Day offset (relative to anchor) for "today" — events.json's anchorDate
+// can lag actual today by a day or two depending on cron run, so the calendar
+// "today" highlight needs to reflect real today, not day=0 (anchor).
+function todayDayOffset() {
+  if (!window.ANCHOR_DATE) return 0;
+  const anchor = new Date(window.ANCHOR_DATE + 'T00:00:00');
+  const t = new Date(); t.setHours(0, 0, 0, 0);
+  return Math.round((t.getTime() - anchor.getTime()) / 86400000);
+}
+
+// Returns day offsets covering the upcoming Fri/Sat/Sun cluster, starting
+// from today (not the anchor). If today is mid-weekend, only the remaining
+// weekend days are returned. Always at most 3 days.
 function thisWeekendDays() {
+  const startToday = todayDayOffset();
   const out = [];
   let started = false;
-  for (let d = 0; d < 14; d++) {
+  for (let d = startToday; d < 14 && out.length < 3; d++) {
+    if (d < 0) continue;
     const wd = dateForDay(d).weekday;
     const isWE = wd === 'Fri' || wd === 'Sat' || wd === 'Sun';
     if (isWE) { out.push(d); started = true; }
@@ -567,4 +579,4 @@ const CATEGORIES = {
   community:   { label: 'Community',       color: '#C9A227', icon: '👥' },
 };
 
-Object.assign(window, { MOCK_EVENT_DATA, WEATHER, CATEGORIES, dateForDay, MONTHS, DAYS, loadEvents, thisWeekendDays });
+Object.assign(window, { MOCK_EVENT_DATA, WEATHER, CATEGORIES, dateForDay, MONTHS, DAYS, loadEvents, thisWeekendDays, todayDayOffset });

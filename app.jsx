@@ -29,7 +29,7 @@ function RefreshStamp({ generatedAt, eventStatus }) {
   );
 }
 
-const ALL_VIEWS = ['calendar', 'map', 'list'];
+const ALL_VIEWS = ['calendar', 'weekend', 'map', 'list'];
 const ALL_CATS = Object.keys(CATEGORIES);
 
 function parseHash() {
@@ -42,8 +42,6 @@ function parseHash() {
     view: ALL_VIEWS.includes(view) ? view : null,
     weekOffset: Number.isInteger(w) && w >= 0 && w <= 1 ? w : null,
     activeCats: cats ? cats.split(',').filter(c => ALL_CATS.includes(c)) : null,
-    hiddenOnly: p.get('hidden') === '1',
-    weekendOnly: p.get('weekend') === '1',
     openEventId: p.get('ev') || null,
     planOpen: p.get('plan') === '1',
   };
@@ -56,8 +54,6 @@ function writeHash(state) {
   if (state.activeCats && state.activeCats.length !== ALL_CATS.length) {
     p.set('cats', state.activeCats.join(','));
   }
-  if (state.hiddenOnly) p.set('hidden', '1');
-  if (state.weekendOnly) p.set('weekend', '1');
   if (state.openEventId) p.set('ev', state.openEventId);
   if (state.planOpen) p.set('plan', '1');
   const next = p.toString();
@@ -77,8 +73,6 @@ function App() {
   const [openEventId, setOpenEventId] = useStateApp(initial.openEventId);
   const [saved, setSaved] = useStateApp([]);
   const [planOpen, setPlanOpen] = useStateApp(initial.planOpen);
-  const [hiddenOnly, setHiddenOnly] = useStateApp(initial.hiddenOnly);
-  const [weekendOnly, setWeekendOnly] = useStateApp(initial.weekendOnly);
   const [events, setEvents] = useStateApp([]);
   const [eventStatus, setEventStatus] = useStateApp('loading'); // loading | live | mock | error
   const [generatedAt, setGeneratedAt] = useStateApp(null);
@@ -112,8 +106,8 @@ function App() {
 
   // Write URL hash whenever shareable state changes
   useEffectApp(() => {
-    writeHash({ view, weekOffset, activeCats, hiddenOnly, weekendOnly, openEventId, planOpen });
-  }, [view, weekOffset, activeCats, hiddenOnly, weekendOnly, openEventId, planOpen]);
+    writeHash({ view, weekOffset, activeCats, openEventId, planOpen });
+  }, [view, weekOffset, activeCats, openEventId, planOpen]);
 
   // Read hash on browser back/forward
   useEffectApp(() => {
@@ -122,8 +116,6 @@ function App() {
       setView(h.view || 'calendar');
       setWeekOffset(h.weekOffset ?? 0);
       setActiveCats(h.activeCats || ALL_CATS);
-      setHiddenOnly(h.hiddenOnly);
-      setWeekendOnly(h.weekendOnly);
       setOpenEventId(h.openEventId);
       setPlanOpen(h.planOpen);
     };
@@ -131,12 +123,9 @@ function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  const weekendDays = useMemoApp(() => thisWeekendDays(), [events]);
   const filtered = useMemoApp(() => {
-    return events.filter(e => activeCats.includes(e.category))
-      .filter(e => !hiddenOnly || e.hidden)
-      .filter(e => !weekendOnly || weekendDays.includes(e.day));
-  }, [events, activeCats, hiddenOnly, weekendOnly, weekendDays]);
+    return events.filter(e => activeCats.includes(e.category));
+  }, [events, activeCats]);
 
   const featuredThisWeek = useMemoApp(() => {
     const start = weekOffset * 7;
@@ -166,7 +155,12 @@ function App() {
       <header className="mast">
         <div className="mast-top">
           <div className="mast-edition">VOL. III · NO. 17</div>
-          <div className="mast-date">SATURDAY, APRIL 25, 2026 — TWO-WEEK ALMANAC</div>
+          <div className="mast-date">{(() => {
+            const t = new Date();
+            const wd = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'][t.getDay()];
+            const mo = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'][t.getMonth()];
+            return `${wd}, ${mo} ${t.getDate()}, ${t.getFullYear()} — TWO-WEEK ALMANAC`;
+          })()}</div>
           <div className="mast-price">FREE · PA</div>
         </div>
         <div className="mast-rule" />
@@ -194,13 +188,13 @@ function App() {
       <div className="toolbar">
         <div className="toolbar-section toolbar-views">
           <span className="toolbar-label">View</span>
-          {['calendar', 'map', 'list'].map(v => (
+          {['calendar', 'weekend', 'map', 'list'].map(v => (
             <button
               key={v}
               className={`toolbar-tab ${view === v ? 'is-active' : ''}`}
               onClick={() => setLayout(v)}
             >
-              {v === 'calendar' ? 'Week' : v === 'map' ? 'Map' : 'Index'}
+              {v === 'calendar' ? 'Week' : v === 'weekend' ? 'Weekend' : v === 'map' ? 'Map' : 'Index'}
             </button>
           ))}
         </div>
@@ -217,21 +211,6 @@ function App() {
               {c.label}
             </button>
           ))}
-        </div>
-        <div className="toolbar-section toolbar-flags">
-          <button
-            className={`toolbar-flag ${weekendOnly ? 'is-active' : ''}`}
-            onClick={() => setWeekendOnly(w => !w)}
-            title="Show only events on the next Fri / Sat / Sun"
-          >
-            ✦ This weekend
-          </button>
-          <button
-            className={`toolbar-flag ${hiddenOnly ? 'is-active' : ''}`}
-            onClick={() => setHiddenOnly(h => !h)}
-          >
-            ◊ Hidden gems only
-          </button>
         </div>
       </div>
 
@@ -273,6 +252,14 @@ function App() {
             weekOffset={weekOffset}
             setWeekOffset={setWeekOffset}
             weatherAware={true}
+          />
+        )}
+        {view === 'weekend' && (
+          <WeekendView
+            events={filtered}
+            saved={saved}
+            onSave={toggleSave}
+            onOpen={setOpenEventId}
           />
         )}
         {view === 'map' && (

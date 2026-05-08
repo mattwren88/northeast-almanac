@@ -136,14 +136,110 @@ function MapView({ events, saved, onSave, onOpen, weekOffset }) {
   );
 }
 
+// ============ WEEKEND VIEW ============
+function WeekendView({ events, saved, onSave, onOpen }) {
+  const days = thisWeekendDays();
+  if (days.length === 0) {
+    return (
+      <div className="weekend-wrap">
+        <div className="weekend-empty">— No weekend in the visible horizon —</div>
+      </div>
+    );
+  }
+  const first = dateForDay(days[0]);
+  const last = dateForDay(days[days.length - 1]);
+  return (
+    <div className="weekend-wrap">
+      <div className="weekend-header">
+        <div className="weekend-eyebrow">FOCUSED · 3-DAY</div>
+        <h2 className="weekend-title">This Weekend</h2>
+        <div className="weekend-range">
+          {first.weekday} {first.month} {first.date}
+          {days.length > 1 ? ` – ${last.weekday} ${last.month} ${last.date}` : ''}
+        </div>
+      </div>
+      <div className={`weekend-grid cols-${days.length}`}>
+        {days.map(d => {
+          const date = dateForDay(d);
+          const wx = WEATHER[d];
+          const dayEvents = events
+            .filter(e => e.day === d)
+            .sort((a, b) => a.start.localeCompare(b.start));
+          const isToday = d === todayDayOffset();
+          return (
+            <div key={d} className={`weekend-col ${isToday ? 'is-today' : ''}`}>
+              <div className="weekend-col-head">
+                <div className="weekend-col-wd">
+                  {date.weekday}
+                  {isToday && <span className="cal-today-dot">today</span>}
+                </div>
+                <div className="weekend-col-num">{date.date}</div>
+                <div className="weekend-col-meta">
+                  <span className="cal-wx" title={wx.cond}>{wx.icon} {wx.high}°/{wx.low}°</span>
+                  <span className="cal-count">{dayEvents.length} {dayEvents.length === 1 ? 'event' : 'events'}</span>
+                </div>
+              </div>
+              <div className="weekend-events">
+                {dayEvents.length === 0 && (
+                  <div className="cal-empty">— Nothing yet —</div>
+                )}
+                {dayEvents.map(ev => {
+                  const cat = CATEGORIES[ev.category];
+                  const isSaved = saved.includes(ev.id);
+                  return (
+                    <article
+                      key={ev.id}
+                      className={`evt ${ev.featured ? 'evt-featured' : ''}`}
+                      onClick={() => onOpen(ev.id)}
+                    >
+                      <div className="evt-bar" style={{ background: cat.color }} />
+                      <div className="evt-body">
+                        <div className="evt-meta-row">
+                          <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>{fmtEventTime(ev)}</span>
+                          {ev.featured && <span className="evt-pick">Editor's pick</span>}
+                          {ev.recurring && <span className="evt-recur">↻</span>}
+                        </div>
+                        <h3 className="evt-title">{ev.title}</h3>
+                        <div className="evt-where">
+                          <span className="evt-venue">{ev.venue}</span>
+                          <span className="evt-sep">·</span>
+                          <span className="evt-town">{ev.town}</span>
+                        </div>
+                        <div className="evt-foot">
+                          <span className="evt-cat" style={{ color: cat.color }}>
+                            {cat.label.toUpperCase()}
+                          </span>
+                          <span className="evt-price">{ev.price}</span>
+                          <button
+                            className={`evt-save ${isSaved ? 'is-saved' : ''}`}
+                            onClick={(e) => { e.stopPropagation(); onSave(ev.id); }}
+                            aria-label={isSaved ? 'Unsave' : 'Save'}
+                          >
+                            {isSaved ? '★' : '☆'}
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 // ============ LIST VIEW ============
 const HORIZON_DAYS = 14;
 function ListView({ events, saved, onSave, onOpen, weekOffset }) {
   const [query, setQuery] = useStateMV('');
-  const anchorIso = useMemoMV(() => dateForDay(0).iso, []);
-  const endIso = useMemoMV(() => dateForDay(HORIZON_DAYS - 1).iso, []);
-  const [fromIso, setFromIso] = useStateMV(anchorIso);
-  const [toIso, setToIso] = useStateMV(endIso);
+  const minIso = useMemoMV(() => dateForDay(0).iso, []);
+  const maxIso = useMemoMV(() => dateForDay(HORIZON_DAYS - 1).iso, []);
+  const todayIso = useMemoMV(() => dateForDay(Math.max(0, todayDayOffset())).iso, []);
+  const [fromIso, setFromIso] = useStateMV(todayIso);
+  const [toIso, setToIso] = useStateMV(maxIso);
 
   const fuse = useMemoMV(() => {
     if (!window.Fuse) return null;
@@ -178,7 +274,7 @@ function ListView({ events, saved, onSave, onOpen, weekOffset }) {
   const visibleDays = [];
   for (let d = 0; d < HORIZON_DAYS; d++) if (dayInRange(d)) visibleDays.push(d);
 
-  const clearRange = () => { setFromIso(anchorIso); setToIso(endIso); };
+  const clearRange = () => { setFromIso(todayIso); setToIso(maxIso); };
   const totalShown = searched.filter(e => dayInRange(e.day)).length;
 
   return (
@@ -197,18 +293,18 @@ function ListView({ events, saved, onSave, onOpen, weekOffset }) {
             type="date"
             className="list-date"
             value={fromIso}
-            min={anchorIso}
-            max={endIso}
-            onChange={(e) => setFromIso(e.target.value || anchorIso)}
+            min={minIso}
+            max={maxIso}
+            onChange={(e) => setFromIso(e.target.value || minIso)}
           />
           <label className="list-range-label">to</label>
           <input
             type="date"
             className="list-date"
             value={toIso}
-            min={anchorIso}
-            max={endIso}
-            onChange={(e) => setToIso(e.target.value || endIso)}
+            min={minIso}
+            max={maxIso}
+            onChange={(e) => setToIso(e.target.value || maxIso)}
           />
           <button className="list-clear" onClick={clearRange}>Reset</button>
         </div>
@@ -222,12 +318,13 @@ function ListView({ events, saved, onSave, onOpen, weekOffset }) {
         const wx = WEATHER[d];
         const dayEvents = searched.filter(e => e.day === d).sort((a, b) => a.start.localeCompare(b.start));
         if (dayEvents.length === 0) return null;
+        const isToday = d === todayDayOffset();
         return (
-          <section key={d} className="list-day">
+          <section key={d} className={`list-day ${isToday ? 'is-today' : ''}`}>
             <header className="list-day-head">
               <div className="list-day-num">{date.date}</div>
               <div className="list-day-info">
-                <div className="list-day-wd">{date.weekday}</div>
+                <div className="list-day-wd">{date.weekday}{isToday && <span className="list-today-dot">today</span>}</div>
                 <div className="list-day-month">{date.month}</div>
               </div>
               <div className="list-day-rule" />
@@ -427,4 +524,4 @@ function WeekendPlan({ events, saved, onRemove, onClose, onShare }) {
   );
 }
 
-Object.assign(window, { MapView, ListView, EventDrawer, WeekendPlan });
+Object.assign(window, { MapView, ListView, EventDrawer, WeekendPlan, WeekendView });

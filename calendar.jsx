@@ -37,7 +37,7 @@ function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset
             .filter(e => e.day === d)
             .sort((a, b) => a.start.localeCompare(b.start));
           const isWeekend = date.weekday === 'Sat' || date.weekday === 'Sun';
-          const isToday = d === 0;
+          const isToday = d === todayDayOffset();
 
           return (
             <div
