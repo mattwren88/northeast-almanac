@@ -387,11 +387,24 @@ function ListView({ events, saved, onSave, onOpen, weekOffset }) {
 }
 
 // ============ EVENT DETAIL DRAWER ============
+const EVENT_SOURCES = {
+  dn:  { label: 'DiscoverNEPA',                home: 'https://discovernepa.com/events/' },
+  hm:  { label: 'Happenings Magazine',         home: 'https://www.happeningsmagazinepa.com/events/' },
+  lcl: { label: 'Lackawanna County Libraries', home: 'https://lclshome.org/events/' },
+  scr: { label: 'City of Scranton',            home: 'https://scrantonpa.gov/events/' },
+};
+function eventSource(ev) {
+  if (ev.source && EVENT_SOURCES[ev.source]) return EVENT_SOURCES[ev.source];
+  const match = /^([a-z]+)-/.exec(ev.id || '');
+  return match ? EVENT_SOURCES[match[1]] : null;
+}
+
 function EventDrawer({ event, isSaved, onSave, onClose }) {
   if (!event) return null;
   const cat = CATEGORIES[event.category];
   const date = dateForDay(event.day);
   const wx = WEATHER[event.day];
+  const src = eventSource(event);
   return (
     <div className="drawer-backdrop" onClick={onClose}>
       <aside className="drawer" onClick={e => e.stopPropagation()}>
@@ -437,6 +450,15 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
           <div className="drawer-tags">
             {event.tags.map(t => <span key={t} className="drawer-chip">#{t}</span>)}
           </div>
+
+          {src && (
+            <div className="drawer-source">
+              <span className="drawer-source-k">Listing via</span>
+              <a className="drawer-source-v" href={src.home} target="_blank" rel="noopener noreferrer">
+                {src.label} ↗
+              </a>
+            </div>
+          )}
 
           <div className="drawer-actions">
             <button

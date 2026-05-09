@@ -562,12 +562,20 @@ async function loadEvents() {
       WEATHER.length = 0;
       WEATHER.push(...j.weather);
     }
-    return { events: j.events, source: 'live', generatedAt: j.generatedAt };
+    // Backfill audience for older events.json (pre-college-sources).
+    const events = (j.events || []).map(e => e.audience ? e : { ...e, audience: 'community' });
+    return { events, source: 'live', generatedAt: j.generatedAt };
   } catch (err) {
     console.warn('Live events.json unavailable; falling back to mock data.', err);
     return { events: MOCK_EVENT_DATA, source: 'mock' };
   }
 }
+
+const AUDIENCES = {
+  community: { label: 'Community', description: 'Public events from regional venues and publishers' },
+  college:   { label: 'Colleges',  description: 'University of Scranton, Marywood, Keystone (lots of academic dates)' },
+};
+const ALL_AUDIENCES = Object.keys(AUDIENCES);
 
 const CATEGORIES = {
   market:      { label: 'Markets',         color: '#E07A1F', icon: '🛍' },
@@ -579,4 +587,4 @@ const CATEGORIES = {
   community:   { label: 'Community',       color: '#C9A227', icon: '👥' },
 };
 
-Object.assign(window, { MOCK_EVENT_DATA, WEATHER, CATEGORIES, dateForDay, MONTHS, DAYS, loadEvents, thisWeekendDays, todayDayOffset });
+Object.assign(window, { MOCK_EVENT_DATA, WEATHER, CATEGORIES, AUDIENCES, ALL_AUDIENCES, dateForDay, MONTHS, DAYS, loadEvents, thisWeekendDays, todayDayOffset });

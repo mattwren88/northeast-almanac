@@ -9,6 +9,7 @@
 import { writeFile, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import { randomUUID } from 'node:crypto';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
@@ -21,11 +22,47 @@ const UA = 'Northeast-Almanac/1.0 (+https://github.com/mattwren88/northeast-alma
 // standard shape: { events: [...], total, total_pages }. `id` becomes the
 // event-id prefix (kept short and stable so curated.json keys keep matching).
 // Order matters: earlier sources win on dedupe collisions.
+//
+// robots.txt review (verified 2026-05-09):
+//   discovernepa.com         — User-agent: * allows /wp-json/. AI-training crawlers
+//                              are blocked; we are not one. ✓
+//   happeningsmagazinepa.com — Disallows specific /calendar/action~* views; the
+//                              /wp-json/tribe/events/v1/events REST endpoint is
+//                              not blocked. ✓
+//   lclshome.org             — Only /wp-admin/ blocked. ✓
+//   scrantonpa.gov           — Only /wp-admin/ blocked. ✓
+// Re-verify if you fork this and aim a new UA at any of them.
 const SOURCES = [
   { id: 'dn',  name: 'DiscoverNEPA',         base: 'https://discovernepa.com/wp-json/tribe/events/v1/events' },
   { id: 'hm',  name: 'Happenings Magazine',  base: 'https://www.happeningsmagazinepa.com/wp-json/tribe/events/v1/events' },
   { id: 'lcl', name: 'Lackawanna Libraries', base: 'https://lclshome.org/wp-json/tribe/events/v1/events' },
   { id: 'scr', name: 'City of Scranton',     base: 'https://scrantonpa.gov/wp-json/tribe/events/v1/events' },
+];
+
+// College sources — different feed shapes (custom JSON, 25Live RSS, WordPress RSS).
+// Audience: 'college' so the frontend can hide them by default behind a toggle.
+//
+// robots.txt review (verified 2026-05-09):
+//   events.scranton.edu       — no robots.txt at host root; standard public events feed. ✓
+//   25livepub.collegenet.com  — User-agent: * Disallow: (empty) → fully allowed. ✓
+//   www.keystone.edu          — User-agent: * Disallow: (empty), Crawl-delay: 10 — we
+//                              hit it once per daily run, well under that. ✓
+const COLLEGE_SOURCES = [
+  {
+    id: 'uosc', name: 'University of Scranton', type: 'uos-json',
+    url: 'https://events.scranton.edu/_data/current-live.json',
+    town: 'Scranton', coords: [41.4044, -75.6601],
+  },
+  {
+    id: 'mary', name: 'Marywood University', type: 'rss-trumba',
+    url: 'https://25livepub.collegenet.com/calendars/marywood-calendar-month.rss?filterview=All+Events&filter2=_*Academic+Affairs_*Academics_*Alumni+Events_*Art+Dept.._*Art+Exhibits_*Athletic+Games_*Athletics_*Camps_*Campus+Ministry_*Career+Services_*Clinics_*Community+Event_*Conferences+and+Events_*CSD+Dept.._*Development_*Housing+and+Residence+Life_*Kresge+Gallery_*Mahady+Gallery_*Maslow+Gallery_*Military+and+Veteran+Services_*Music_*Nursing_*Physician+Assistant+Program_*Psychology+and+Counseling+Dept.._*Registrar_*School+of+Business+Dept.._*School+of+Humanities_*School+of+Visual+%26+Performing+Arts_*Social+Sciences+Dept.._*Social+Work+Dept.._*Student+Accounts_*Student+Engagement_*Student+Exhibition_*Student+Health+Services_*Suraci+Gallery_&filterfield2=25983',
+    town: 'Scranton', coords: [41.4218, -75.6519],
+  },
+  {
+    id: 'key', name: 'Keystone College', type: 'rss-wp',
+    url: 'https://www.keystone.edu/events/feed/',
+    town: 'La Plume', coords: [41.5868, -75.7825],
+  },
 ];
 
 const WEATHER_API = 'https://api.open-meteo.com/v1/forecast';
@@ -129,7 +166,9 @@ function decodeEntities(s = '') {
 }
 
 function stripHtml(s = '') {
-  return decodeEntities(s.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim();
+  // Decode first so RSS-style encoded markup (&lt;br/&gt;, &amp;nbsp;) is
+  // recognized as tags/whitespace by the strip pass below.
+  return decodeEntities(decodeEntities(s)).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 }
 
 function fmtTime(isoLocal) {
@@ -216,23 +255,27 @@ async function fetchWeather() {
   });
 }
 
-async function fetchPage(source, page, startYmd, endYmd) {
+async function fetchPage(source, page, startYmd, endYmd, ifModifiedSince) {
   const url = `${source.base}?per_page=${PER_PAGE}&page=${page}&start_date=${startYmd}&end_date=${endYmd}`;
-  const res = await fetch(url, { headers: { 'User-Agent': UA, 'Accept': 'application/json' } });
+  const headers = { 'User-Agent': UA, 'Accept': 'application/json' };
+  if (ifModifiedSince && page === 1) headers['If-Modified-Since'] = ifModifiedSince;
+  const res = await fetch(url, { headers });
+  if (res.status === 304) return { notModified: true };
   if (res.status === 404) return { events: [], total: 0 };
   if (!res.ok) throw new Error(`${source.name} ${res.status} on page ${page}`);
   return res.json();
 }
 
-async function fetchSource(source, startYmd, endYmd) {
+async function fetchSource(source, startYmd, endYmd, ifModifiedSince) {
   const all = [];
   for (let page = 1; page <= 30; page++) {
-    const j = await fetchPage(source, page, startYmd, endYmd);
+    const j = await fetchPage(source, page, startYmd, endYmd, ifModifiedSince);
+    if (j.notModified) return { notModified: true };
     if (!j.events || j.events.length === 0) break;
     all.push(...j.events);
     if (j.events.length < PER_PAGE) break;
   }
-  return all;
+  return { events: all };
 }
 
 function ymd(d) {
@@ -281,6 +324,8 @@ function normalize(raw, anchorYmd, source) {
     lng,
     url: raw.url,
     recurring,
+    source: source.id,
+    audience: 'community',
   };
 }
 
@@ -321,6 +366,15 @@ async function previousEventCount() {
     return Array.isArray(j.events) ? j.events.length : 0;
   } catch {
     return 0;
+  }
+}
+
+async function loadPreviousJson() {
+  try {
+    const raw = await readFile(resolve(ROOT, 'events.json'), 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return null;
   }
 }
 
@@ -369,6 +423,154 @@ function applyCurated(events, curated) {
   }
 }
 
+// ============ COLLEGE SOURCES ============
+
+// Format an absolute Date in America/New_York → { ymd: 'YYYY-MM-DD', hm: 'HH:MM' }.
+// Run-environment timezone-independent (works in CI on UTC).
+function dateToETParts(d) {
+  if (!d || isNaN(d.getTime())) return null;
+  const fmt = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/New_York',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hour12: false,
+  });
+  const p = Object.fromEntries(fmt.formatToParts(d).map(x => [x.type, x.value]));
+  return { ymd: `${p.year}-${p.month}-${p.day}`, hm: `${p.hour === '24' ? '00' : p.hour}:${p.minute}` };
+}
+
+// Tiny RSS parser — returns array of plain objects from <item>…</item> blocks.
+function parseRssItems(xml) {
+  const out = [];
+  const itemRx = /<item[\s\S]*?<\/item>/g;
+  const items = xml.match(itemRx) || [];
+  const cdata = (s) => s.replace(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/, '$1');
+  const pluck = (block, tag) => {
+    const m = block.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
+    return m ? cdata(m[1]).trim() : '';
+  };
+  for (const block of items) {
+    out.push({
+      title:       pluck(block, 'title'),
+      link:        pluck(block, 'link'),
+      description: pluck(block, 'description'),
+      pubDate:     pluck(block, 'pubDate'),
+      category:    pluck(block, 'category'),
+      guid:        pluck(block, 'guid'),
+    });
+  }
+  return out;
+}
+
+function normalizeCollegeEvent({ source, raw, anchorYmd, startD, endD, title, blurb, url, allDay }) {
+  if (!startD || isNaN(startD.getTime())) return null;
+  const sp = dateToETParts(startD);
+  if (!sp) return null;
+  const day = dayOffset(`${sp.ymd} 00:00:00`, anchorYmd);
+  if (day < 0 || day >= HORIZON_DAYS) return null;
+
+  let start, end;
+  if (allDay) {
+    start = '00:00'; end = '23:59';
+  } else {
+    start = sp.hm;
+    const ep = endD ? dateToETParts(endD) : null;
+    // Same-day end only; otherwise default to start + 90 minutes.
+    if (ep && ep.ymd === sp.ymd) {
+      end = ep.hm;
+    } else {
+      const [h, m] = start.split(':').map(Number);
+      const total = h * 60 + m + 90;
+      const eh = Math.min(23, Math.floor(total / 60));
+      const em = total % 60;
+      end = `${String(eh).padStart(2, '0')}:${String(em).padStart(2, '0')}`;
+    }
+  }
+
+  const [lat, lng] = source.coords;
+  if (!inBbox(lat, lng)) return null;
+
+  const fakeRaw = {
+    title,
+    categories: [{ name: 'college' }, { name: source.name }],
+    tags: [],
+  };
+  const category = inferCategory(fakeRaw);
+  const indoor = !OUTDOOR_RULES.test(title);
+  const id = `${source.id}-${(raw && (raw.id || raw.guid || raw.link)) || randomUUID().slice(0, 8)}`
+    .replace(/[^a-z0-9-]/gi, '_').slice(0, 80);
+
+  return {
+    id,
+    title,
+    venue: source.name,
+    town: source.town,
+    day,
+    start,
+    end,
+    category,
+    price: 'See site',
+    indoor,
+    featured: false,
+    hidden: false,
+    blurb: (blurb || '').slice(0, 320),
+    tags: [],
+    coords: projectCoords(lat, lng),
+    lat,
+    lng,
+    url: url || '',
+    recurring: null,
+    source: source.id,
+    audience: 'college',
+  };
+}
+
+async function fetchUofSJson(source, anchorYmd) {
+  const res = await fetch(source.url, { headers: { 'User-Agent': UA, 'Accept': 'application/json' } });
+  if (!res.ok) throw new Error(`${source.name} ${res.status}`);
+  const j = await res.json();
+  const events = Array.isArray(j.events) ? j.events : [];
+  return events.map(raw => {
+    const startD = raw.startDate ? new Date(raw.startDate) : null;
+    const endD = raw.endDate ? new Date(raw.endDate) : null;
+    const allDay = String(raw.allDay).toLowerCase() === 'true';
+    return normalizeCollegeEvent({
+      source, raw, anchorYmd,
+      startD, endD,
+      title: stripHtml(raw.title),
+      blurb: stripHtml(raw.description),
+      url: raw.url,
+      allDay,
+    });
+  }).filter(Boolean);
+}
+
+async function fetchRssCollege(source, anchorYmd) {
+  const res = await fetch(source.url, { headers: { 'User-Agent': UA, 'Accept': 'application/rss+xml, application/xml' }, redirect: 'follow' });
+  if (!res.ok) throw new Error(`${source.name} ${res.status}`);
+  const xml = await res.text();
+  const items = parseRssItems(xml);
+  return items.map(raw => {
+    const startD = raw.pubDate ? new Date(raw.pubDate) : null;
+    if (!startD) return null;
+    const sp = dateToETParts(startD);
+    // Trumba/25Live academic feeds often have no real time → 04:00 GMT = 00:00 ET = all-day.
+    const allDay = sp && sp.hm === '00:00';
+    return normalizeCollegeEvent({
+      source, raw, anchorYmd,
+      startD, endD: null,
+      title: stripHtml(raw.title),
+      blurb: stripHtml(raw.description).slice(0, 320),
+      url: raw.link,
+      allDay,
+    });
+  }).filter(Boolean);
+}
+
+async function fetchCollegeSource(source, anchorYmd) {
+  if (source.type === 'uos-json') return fetchUofSJson(source, anchorYmd);
+  return fetchRssCollege(source, anchorYmd);
+}
+
 async function main() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -376,11 +578,34 @@ async function main() {
   const anchorYmd = ymd(today);
   const endYmd = ymd(end);
 
-  console.log(`Fetching events ${anchorYmd} → ${endYmd} from ${SOURCES.length} sources…`);
+  console.log(`Fetching events ${anchorYmd} → ${endYmd} from ${SOURCES.length} community + ${COLLEGE_SOURCES.length} college sources…`);
+
+  // If-Modified-Since: send last run's timestamp; if a source returns 304, reuse
+  // the events we already have for that source from the previous events.json.
+  const previousJson = await loadPreviousJson();
+  const ifModifiedSince = previousJson?.generatedAt
+    ? new Date(previousJson.generatedAt).toUTCString()
+    : null;
+  const previousBySource = {};
+  if (previousJson?.events && previousJson.anchorDate === anchorYmd) {
+    for (const e of previousJson.events) {
+      const m = (e.id || '').match(/^([a-z]+)-/);
+      if (m) (previousBySource[m[1]] ||= []).push(e);
+    }
+  }
 
   const sourceFetches = SOURCES.map(async (source) => {
     try {
-      const raw = await fetchSource(source, anchorYmd, endYmd);
+      // Only attempt 304 reuse if the previous run shares the same anchor date
+      // (otherwise day offsets would be wrong).
+      const canReuse = previousJson && previousJson.anchorDate === anchorYmd;
+      const result = await fetchSource(source, anchorYmd, endYmd, canReuse ? ifModifiedSince : null);
+      if (result.notModified) {
+        const cached = previousBySource[source.id] || [];
+        console.log(`  [${source.id}] ${source.name}: 304 Not Modified — reusing ${cached.length} cached events`);
+        return cached;
+      }
+      const raw = result.events;
       const normalized = raw.map(r => normalize(r, anchorYmd, source)).filter(Boolean);
       console.log(`  [${source.id}] ${source.name}: ${raw.length} raw, ${normalized.length} kept after window+bbox`);
       return normalized;
@@ -390,15 +615,27 @@ async function main() {
     }
   });
 
-  const [perSource, weather] = await Promise.all([
+  const collegeFetches = COLLEGE_SOURCES.map(async (source) => {
+    try {
+      const events = await fetchCollegeSource(source, anchorYmd);
+      console.log(`  [${source.id}] ${source.name} (college): ${events.length} kept after window+bbox`);
+      return events;
+    } catch (err) {
+      console.warn(`  [${source.id}] ${source.name} (college) failed: ${err.message} — skipping`);
+      return [];
+    }
+  });
+
+  const [perSource, perCollege, weather] = await Promise.all([
     Promise.all(sourceFetches),
+    Promise.all(collegeFetches),
     fetchWeather().catch(err => {
       console.warn('  weather fetch failed:', err.message);
       return null;
     }),
   ]);
 
-  const normalized = perSource.flat();
+  const normalized = [...perSource.flat(), ...perCollege.flat()];
   console.log(`  ${normalized.length} total normalized events; weather: ${weather ? `${weather.length} days` : 'unavailable'}`);
 
   const deduped = dedupe(normalized);
@@ -436,7 +673,7 @@ async function main() {
     generatedAt: new Date().toISOString(),
     anchorDate: anchorYmd,
     horizonDays: HORIZON_DAYS,
-    source: `${SOURCES.map(s => s.name).join(' + ')} (Tribe Events REST) + open-meteo`,
+    source: `${SOURCES.map(s => s.name).join(' + ')} + ${COLLEGE_SOURCES.map(s => s.name).join(' + ')} + open-meteo`,
     weather,
     events: valid,
   };

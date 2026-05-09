@@ -1,31 +1,31 @@
 {
-  "generatedAt": "2026-05-09T11:01:20.881Z",
+  "generatedAt": "2026-05-09T16:18:54.906Z",
   "anchorDate": "2026-05-09",
   "horizonDays": 14,
-  "source": "DiscoverNEPA + Happenings Magazine + Lackawanna Libraries + City of Scranton (Tribe Events REST) + open-meteo",
+  "source": "DiscoverNEPA + Happenings Magazine + Lackawanna Libraries + City of Scranton + University of Scranton + Marywood University + Keystone College + open-meteo",
   "weather": [
     {
       "day": 0,
       "label": "Sat",
       "cond": "rain",
       "icon": "☂",
-      "high": 59,
+      "high": 58,
       "low": 47
     },
     {
       "day": 1,
       "label": "Sun",
-      "cond": "cloud",
-      "icon": "☁",
-      "high": 66,
-      "low": 50
+      "cond": "rain",
+      "icon": "☂",
+      "high": 67,
+      "low": 48
     },
     {
       "day": 2,
       "label": "Mon",
       "cond": "cloud",
       "icon": "☁",
-      "high": 56,
+      "high": 58,
       "low": 41
     },
     {
@@ -33,7 +33,7 @@
       "label": "Tue",
       "cond": "cloud",
       "icon": "☁",
-      "high": 61,
+      "high": 60,
       "low": 34
     },
     {
@@ -41,7 +41,7 @@
       "label": "Wed",
       "cond": "rain",
       "icon": "☂",
-      "high": 59,
+      "high": 55,
       "low": 44
     },
     {
@@ -49,39 +49,39 @@
       "label": "Thu",
       "cond": "rain",
       "icon": "☂",
-      "high": 56,
-      "low": 47
+      "high": 50,
+      "low": 44
     },
     {
       "day": 6,
       "label": "Fri",
-      "cond": "rain",
-      "icon": "☂",
-      "high": 64,
-      "low": 42
+      "cond": "cloud",
+      "icon": "☁",
+      "high": 66,
+      "low": 43
     },
     {
       "day": 7,
       "label": "Sat",
       "cond": "cloud",
       "icon": "☁",
-      "high": 68,
+      "high": 75,
       "low": 49
     },
     {
       "day": 8,
       "label": "Sun",
-      "cond": "rain",
-      "icon": "☂",
-      "high": 74,
-      "low": 54
+      "cond": "cloud",
+      "icon": "☁",
+      "high": 86,
+      "low": 60
     },
     {
       "day": 9,
       "label": "Mon",
-      "cond": "cloud",
-      "icon": "☁",
-      "high": 86,
+      "cond": "rain",
+      "icon": "☂",
+      "high": 88,
       "low": 62
     },
     {
@@ -89,32 +89,32 @@
       "label": "Tue",
       "cond": "rain",
       "icon": "☂",
-      "high": 73,
-      "low": 56
+      "high": 88,
+      "low": 67
     },
     {
       "day": 11,
       "label": "Wed",
-      "cond": "cloud",
-      "icon": "☁",
-      "high": 77,
-      "low": 50
+      "cond": "rain",
+      "icon": "☂",
+      "high": 67,
+      "low": 51
     },
     {
       "day": 12,
       "label": "Thu",
       "cond": "rain",
       "icon": "☂",
-      "high": 79,
-      "low": 60
+      "high": 68,
+      "low": 48
     },
     {
       "day": 13,
       "label": "Fri",
-      "cond": "rain",
-      "icon": "☂",
-      "high": 78,
-      "low": 60
+      "cond": "cloud",
+      "icon": "☁",
+      "high": 71,
+      "low": 43
     }
   ],
   "events": [
@@ -141,7 +141,90 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-09/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "0-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315643",
+      "title": "Spring Semester Ends",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 0,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Saturday, May 9, 2026 Event Name: Spring Semester Ends Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACL Categories: *Academic Affairs, *Registrar, *Community Event, *Academics, *IEP Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315643",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "0-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1275616155",
+      "title": "Spring term ends.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 0,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Saturday, May 9, 2026 Event Name: Spring term ends. Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHCHF Categories: *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1275616155",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "0-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315644",
+      "title": "University Housing Closes at 10 A.M. for Non-Graduating Students",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 0,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Saturday, May 9, 2026 Event Name: University Housing Closes at 10 A.M. for Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACM Categories: *Registrar, *Housing and Residence Life Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315644",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "0-scranton"
     },
     {
       "id": "dn-10051811",
@@ -165,7 +248,9 @@
       "lat": 40.9862055,
       "lng": -75.1975225,
       "url": "https://discovernepa.com/event/monroe-farmers-market/2026-05-09/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10056363",
@@ -189,7 +274,9 @@
       "lat": 41.0563306,
       "lng": -75.5228252,
       "url": "https://discovernepa.com/event/stock-car-racing-experience/2026-05-09/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10059469",
@@ -214,6 +301,8 @@
       "lng": -75.5050365,
       "url": "https://discovernepa.com/event/second-saturdays/2026-05-09/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "0-carbondale"
     },
     {
@@ -238,7 +327,9 @@
       "lat": 41.2752157,
       "lng": -75.8743289,
       "url": "https://discovernepa.com/event/cancer-wellness-center-annual-walk/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-442282",
@@ -262,7 +353,9 @@
       "lat": 40.8631053,
       "lng": -75.7397465,
       "url": "https://discovernepa.com/event/6th-annual-lisa-napoletano-running-with-the-angels/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-482070",
@@ -286,7 +379,9 @@
       "lat": 41.3605726,
       "lng": -75.6853836,
       "url": "https://discovernepa.com/event/northeast-pa-heart-walk/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-498605",
@@ -311,6 +406,8 @@
       "lng": -75.6574576,
       "url": "https://discovernepa.com/event/scranton-soccerfest/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "0-scranton"
     },
     {
@@ -336,6 +433,8 @@
       "lng": -75.879036,
       "url": "https://discovernepa.com/event/seed-to-supper/2026-05-09/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "0-wilkes-barre"
     },
     {
@@ -360,7 +459,9 @@
       "lat": 41.3337197,
       "lng": -75.7482942,
       "url": "https://discovernepa.com/event/touch-a-truck/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "hm-10017785",
@@ -389,6 +490,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-09/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "0-wilkes-barre"
     },
     {
@@ -418,6 +521,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-09/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "0-scranton"
     },
     {
@@ -443,6 +548,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/compassionate-canines-read-to-a-dog/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "0-scranton"
     },
     {
@@ -468,6 +575,8 @@
       "lng": -75.5041409,
       "url": "https://discovernepa.com/event/free-community-lunch-2/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "0-carbondale"
     },
     {
@@ -499,6 +608,8 @@
       "lng": -75.5005,
       "url": "https://www.happeningsmagazinepa.com/event/free-monthly-community-luncheon-12/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "0-carbondale"
     },
     {
@@ -524,6 +635,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/diy-seed-bombs/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "0-scranton"
     },
     {
@@ -548,7 +661,9 @@
       "lat": 41.4912,
       "lng": -75.7224,
       "url": "https://lclshome.org/event/movie-fans-matinee-slih/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "lcl-183609",
@@ -573,6 +688,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/teen-gachapon-bingo/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "0-scranton"
     },
     {
@@ -598,6 +715,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/danger-club-may-2026-1/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "0-scranton"
     },
     {
@@ -623,6 +742,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/is-it-reel-how-to-debunk-misinformation-in-online-videos/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "0-scranton"
     },
     {
@@ -648,6 +769,8 @@
       "lng": -75.5005,
       "url": "https://lclshome.org/event/fandom-fanatics-2/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "0-carbondale"
     },
     {
@@ -673,6 +796,8 @@
       "lng": -75.5045978,
       "url": "https://discovernepa.com/event/second-saturdays-series/2026-05-09/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "0-carbondale"
     },
     {
@@ -698,6 +823,8 @@
       "lng": -75.5050365,
       "url": "https://discovernepa.com/event/wine-tasting-art-live-piano/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "0-carbondale"
     },
     {
@@ -727,7 +854,9 @@
       "lat": 41.4912,
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-09/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "hm-10015707",
@@ -758,6 +887,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-09/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "0-wilkes-barre"
     },
     {
@@ -783,6 +914,8 @@
       "lng": -75.6669594,
       "url": "https://discovernepa.com/event/fall-of-the-house-of-usher/2026-05-09/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "0-scranton"
     },
     {
@@ -808,7 +941,36 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/little-theatre-of-wilkes-barre-presents-a-chorus-line/2026-05-09/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "0-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1374354873",
+      "title": "Carnegie Hall Concert: New England Symphonic Ensemble",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 0,
+      "start": "20:30",
+      "end": "22:00",
+      "category": "performance",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Off Campus Event Saturday, May 9, 2026, 8:30 – 10:30pm On Saturday, May 9, 2026, Dr. Rick Hoffenberg will make his Carnegie Hall conducting debut in a performance of Leonard Bernstein’s Chichester Psalms, a three-movement piece for vocal soloists, chorus, and orchestra. The performers will include the all-professional ",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1374354873",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "0-scranton"
     },
     {
       "id": "hm-10020721",
@@ -833,7 +995,36 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-10/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "1-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315645",
+      "title": "Mother’s Day",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 1,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Sunday, May 10, 2026 Event Name: Mother’s Day Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACN Categories: *Community Event Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315645",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "1-scranton"
     },
     {
       "id": "dn-502759",
@@ -860,6 +1051,8 @@
       "lng": -75.6483866,
       "url": "https://discovernepa.com/event/mothers-day-brunch-6/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "1-scranton"
     },
     {
@@ -889,6 +1082,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-10/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "1-wilkes-barre"
     },
     {
@@ -918,6 +1113,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-10/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "1-scranton"
     },
     {
@@ -943,6 +1140,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-10/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "1-scranton"
     },
     {
@@ -968,6 +1167,8 @@
       "lng": -75.6669594,
       "url": "https://discovernepa.com/event/fall-of-the-house-of-usher/2026-05-10/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "1-scranton"
     },
     {
@@ -997,6 +1198,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/joseph-and-the-amazing-technicolor-dreamcoat-2/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "1-scranton"
     },
     {
@@ -1022,6 +1225,35 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/lego-club-2026/2026-05-10/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
+      "cluster": "1-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364572492",
+      "title": "Lia Schwenk & Todd Snyder Senior Recital",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 1,
+      "start": "14:00",
+      "end": "15:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Swartz Center Marian Chapel Sunday, May 10, 2026, 2 – 3:30pm Lia Schwenk and Todd Snyder Senior Recital Event Name: Lia Schwenk & Todd Snyder Senior Recital Event State: Confirmed Organizer: rhouser@marywood.edu Expected Headcount: 60 Event Locator: 2026-AAHKRD Categories: *Music, Theatre, Dance, *Community Event Organ",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364572492",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
       "cluster": "1-scranton"
     },
     {
@@ -1051,7 +1283,9 @@
       "lat": 41.4912,
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-10/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "hm-10015708",
@@ -1082,6 +1316,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-10/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "1-wilkes-barre"
     },
     {
@@ -1107,7 +1343,88 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/little-theatre-of-wilkes-barre-presents-a-chorus-line/2026-05-10/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "1-wilkes-barre"
+    },
+    {
+      "id": "uosc-4245a4870a00006f5b92e492db151bd2",
+      "title": "2026 Spring Last Week of Classes (No Exams Permitted) May 11th to May 15th",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 2,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "2026 Spring Last Week of Classes (No Exams Perm...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/2026-spring-last-week-of-classes-no-exams-permitted-may-11th-to-may-15th.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
+      "cluster": "2-scranton"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_313664",
+      "title": "Traditional and graduate final grades due",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 2,
+      "start": "08:00",
+      "end": "09:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Traditional and graduate final grades due The post Traditional and graduate final grades due appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/traditional-and-graduate-final-grades-due-2/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_313666",
+      "title": "All second half final grades due",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 2,
+      "start": "08:00",
+      "end": "09:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The post All second half final grades due appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/all-second-half-final-grades-due-2/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "hm-10017787",
@@ -1135,7 +1452,9 @@
       "lat": 41.2459,
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-11/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "lcl-179286",
@@ -1160,6 +1479,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/cruise-into-kindergarten-am-session-5/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "2-clarks summit"
     },
     {
@@ -1185,6 +1506,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/toddlers-on-the-move-may-11/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "2-scranton"
     },
     {
@@ -1214,6 +1537,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-11/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "2-scranton"
     },
     {
@@ -1239,6 +1564,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/geisinger-school-of-medicine-golf-classic/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "2-clarks summit"
     },
     {
@@ -1264,6 +1591,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-11/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "2-scranton"
     },
     {
@@ -1288,7 +1617,9 @@
       "lat": 41.574,
       "lng": -75.5005,
       "url": "https://lclshome.org/event/pacific-islander-movie-marathon/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "lcl-10005270",
@@ -1313,6 +1644,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/caring-hands/2026-05-11/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "2-clarks summit"
     },
     {
@@ -1338,6 +1671,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/first-friends-2/2026-05-11/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "2-scranton"
     },
     {
@@ -1363,6 +1698,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/discovery-seekers-celebrating-america-series-5/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "2-clarks summit"
     },
     {
@@ -1388,6 +1725,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/monday-book-club/2026-05-11/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "2-clarks summit"
     },
     {
@@ -1413,6 +1752,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/cruise-into-kindergarten-pm-session-5/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "2-clarks summit"
     },
     {
@@ -1443,6 +1784,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-11/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "2-clarks summit"
     },
     {
@@ -1473,7 +1816,9 @@
       "lat": 41.2459,
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-11/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "lcl-181623",
@@ -1498,6 +1843,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/finals-week-de-stress-w-compassionate-canines/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "2-scranton"
     },
     {
@@ -1523,7 +1870,36 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-12/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "3-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315646",
+      "title": "Final Grades Due by Noon",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 3,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Tuesday, May 12, 2026 Event Name: Final Grades Due by Noon Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACP Categories: *Academic Affairs, *Registrar, *Academics Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315646",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "3-scranton"
     },
     {
       "id": "hm-10017788",
@@ -1552,6 +1928,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-12/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "3-wilkes-barre"
     },
     {
@@ -1577,6 +1955,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/always-in-stitches/2026-05-12/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-clarks summit"
     },
     {
@@ -1602,6 +1982,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/book-lovers-book-club-may-2026/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-scranton"
     },
     {
@@ -1627,6 +2009,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/reading-adventures-storytime-28/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-clarks summit"
     },
     {
@@ -1652,6 +2036,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/stories-with-cal-newbery-may-2026/2026-05-12/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-scranton"
     },
     {
@@ -1681,6 +2067,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-12/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "3-scranton"
     },
     {
@@ -1705,7 +2093,9 @@
       "lat": 40.8338915,
       "lng": -75.706755,
       "url": "https://discovernepa.com/event/understanding-site-selection-lunch-learn/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "hm-10007632",
@@ -1729,7 +2119,9 @@
       "lat": 41.4517,
       "lng": -75.6066,
       "url": "https://www.happeningsmagazinepa.com/event/yoga-for-healing-with-the-greenhouse-project/2026-05-12/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "lcl-10005507",
@@ -1754,6 +2146,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/toddler-tumble-time-2026/2026-05-12/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-scranton"
     },
     {
@@ -1779,6 +2173,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-12/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "3-scranton"
     },
     {
@@ -1804,6 +2200,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/mahjong/2026-05-12/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-clarks summit"
     },
     {
@@ -1829,6 +2227,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/reading-adventures-storytime-29/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-clarks summit"
     },
     {
@@ -1854,6 +2254,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/tech-table-2026/2026-05-12/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-scranton"
     },
     {
@@ -1879,6 +2281,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/nkh-kids-in-the-kitchen-may-2026/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-scranton"
     },
     {
@@ -1909,6 +2313,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-12/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "3-clarks summit"
     },
     {
@@ -1940,6 +2346,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-12/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "3-wilkes-barre"
     },
     {
@@ -1964,7 +2372,9 @@
       "lat": 41.3956,
       "lng": -75.7188,
       "url": "https://lclshome.org/event/school-age-funtime-2-2/2026-05-12/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "lcl-182184",
@@ -1989,6 +2399,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/death-cafe-3/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-clarks summit"
     },
     {
@@ -2014,6 +2426,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/reading-skills-compound-words-3/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-scranton"
     },
     {
@@ -2040,7 +2454,9 @@
       "lat": 41.3605726,
       "lng": -75.6853836,
       "url": "https://discovernepa.com/event/scranton-wilkes-barre-railriders-vs-syracuse-mets/2026-05-12/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10056534",
@@ -2064,7 +2480,9 @@
       "lat": 41.5989752,
       "lng": -75.1562097,
       "url": "https://discovernepa.com/event/worship-in-movement/2026-05-12/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-10002095",
@@ -2089,7 +2507,36 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/mystery-book-club/2026-05-12/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "3-clarks summit"
+    },
+    {
+      "id": "uosc-2560746c0a00006f08c90c8322d31fea",
+      "title": "Judaic Studies Institute Lecture - The Pope and the Rabbi-My Story of Friendship and Dialogue with Pope Francis",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 3,
+      "start": "19:30",
+      "end": "20:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Judaic Studies Institute Lecture: “The Pope and the...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/judaic-studies-institute-lecture--the-pope-and-the-rabbi-my-story-of-friendship-and-dialogue-with-pope-francis.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
+      "cluster": "3-scranton"
     },
     {
       "id": "hm-10020723",
@@ -2114,7 +2561,63 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-13/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "4-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364623466",
+      "title": "Summer I term payment due date.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 4,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Wednesday, May 13, 2026 Event Name: Summer I term payment due date. Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKTF Categories: *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364623466",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "4-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364623465",
+      "title": "Summer III term payment due date.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 4,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Wednesday, May 13, 2026 Event Name: Summer III term payment due date. Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKVJ Categories: *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364623465",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "4-scranton"
     },
     {
       "id": "dn-10058541",
@@ -2138,7 +2641,9 @@
       "lat": 41.0424556,
       "lng": -75.2698509,
       "url": "https://discovernepa.com/event/bog-birding-experience/2026-05-13/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10051912",
@@ -2162,7 +2667,9 @@
       "lat": 40.8213263,
       "lng": -75.9932361,
       "url": "https://discovernepa.com/event/hometown-farmers-market/2026-05-13/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "hm-10017789",
@@ -2191,6 +2698,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-13/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "4-wilkes-barre"
     },
     {
@@ -2216,6 +2725,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/terrific-tales-31/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-clarks summit"
     },
     {
@@ -2241,6 +2752,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/stories-with-cal-newbery-may-2026/2026-05-13/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-scranton"
     },
     {
@@ -2270,6 +2783,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-13/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "4-scranton"
     },
     {
@@ -2295,6 +2810,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/terrific-tales-32/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-clarks summit"
     },
     {
@@ -2321,7 +2838,9 @@
       "lat": 41.3605726,
       "lng": -75.6853836,
       "url": "https://discovernepa.com/event/scranton-wilkes-barre-railriders-vs-syracuse-mets/2026-05-13/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-10005508",
@@ -2346,6 +2865,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/toddler-tumble-time-2026/2026-05-13/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-scranton"
     },
     {
@@ -2371,6 +2892,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/movie-fans-matinee-htmam/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-clarks summit"
     },
     {
@@ -2396,6 +2919,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/movie-sinners-2/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-scranton"
     },
     {
@@ -2420,7 +2945,9 @@
       "lat": 41.574,
       "lng": -75.5005,
       "url": "https://lclshome.org/event/self-care-diys/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "lcl-182633",
@@ -2445,7 +2972,35 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/laughing-yoga/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-scranton"
+    },
+    {
+      "id": "key-https___www_keystone_edu_event_intervarsity-bible-study-2_2025-09-04_",
+      "title": "InterVarsity Bible Study",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 4,
+      "start": "17:00",
+      "end": "18:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The InterVarsity club invites you to come to Bible Study on Wednesdays on the second floor of Hibbard Campus Center. All are welcome no matter your faith background. The post InterVarsity Bible Study appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/intervarsity-bible-study-2/2026-05-13/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "hm-10006627",
@@ -2470,6 +3025,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/vinyasa-yoga-2/2026-05-13/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "4-scranton"
     },
     {
@@ -2495,6 +3052,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/vinyasa-yoga-flow-with-the-greenhouse-project/2026-05-13/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "4-scranton"
     },
     {
@@ -2525,6 +3084,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-13/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "4-clarks summit"
     },
     {
@@ -2556,6 +3117,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-13/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "4-wilkes-barre"
     },
     {
@@ -2581,6 +3144,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/creative-writing-community-13/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-scranton"
     },
     {
@@ -2606,6 +3171,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/danger-club-may-2026-2/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-scranton"
     },
     {
@@ -2631,6 +3198,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/lily-watercolor-class-with-tulasi-goli/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-clarks summit"
     },
     {
@@ -2656,6 +3225,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/tail-waggin-tutors-session-1-5/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-clarks summit"
     },
     {
@@ -2680,7 +3251,9 @@
       "lat": 41.3956,
       "lng": -75.7188,
       "url": "https://lclshome.org/event/stuffed-animal-bingo-for-families/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "lcl-186391",
@@ -2705,7 +3278,36 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/teen-tech-tutors-organizing-photos-creating-albums/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-clarks summit"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1395074871",
+      "title": "Dominique Ferraro Senior Recital",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 4,
+      "start": "18:00",
+      "end": "19:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Swartz Center Marian Chapel Wednesday, May 13, 2026, 6 – 8pm Dominique Ferraro Senior Recital Event Name: Dominique Ferraro Senior Recital Event State: Confirmed Organizer: rhouser@marywood.edu Expected Headcount: 100 Event Locator: 2026-AAHNFC Categories: *Music, Theatre, Dance, *Community Event Organization: Music, T",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1395074871",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "4-scranton"
     },
     {
       "id": "lcl-183219",
@@ -2730,7 +3332,35 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/tail-waggin-tutors-session-2-5/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "4-clarks summit"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_327210",
+      "title": "Observatory Spring Sessions",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 4,
+      "start": "20:00",
+      "end": "21:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The Thomas G. Cupillari ’60 Astronomical Observatory will begin its spring sessions on Wednesday, March 18 from 8–10 p.m. and will continue each Wednesday and Friday evening through May 22. […] The post Observatory Spring Sessions appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/observatory-spring-sessions/2026-05-13/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "hm-10020724",
@@ -2755,7 +3385,36 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-14/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "5-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315647",
+      "title": "Ascension of the Lord",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 5,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Thursday, May 14, 2026 Event Name: Ascension of the Lord Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACQ Categories: *Campus Ministry, *Community Event Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315647",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "5-scranton"
     },
     {
       "id": "hm-107538",
@@ -2782,6 +3441,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/united-way-community-breakfast-awards/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -2811,6 +3472,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-14/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "5-wilkes-barre"
     },
     {
@@ -2836,6 +3499,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/stories-with-helpers-sfd/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -2865,6 +3530,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-14/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -2890,6 +3557,35 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/toddler-tumble-time-2026/2026-05-14/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
+      "cluster": "5-scranton"
+    },
+    {
+      "id": "uosc-400ed9f70a00006f14bb2d9fa07de8d3",
+      "title": "Peoples Choice CTE Workshop",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 5,
+      "start": "11:30",
+      "end": "12:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "As we approach the end of the Spring 2026 semester, we...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/people039s-choice-cte-workshop.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
       "cluster": "5-scranton"
     },
     {
@@ -2915,7 +3611,62 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-14/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "5-scranton"
+    },
+    {
+      "id": "uosc-1ffb1b250a00006f08c90c83235204e7",
+      "title": "Ascension Thursday Mass",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 5,
+      "start": "12:05",
+      "end": "13:05",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Celebrate the Eucharist on Ascension...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/ascension-thursday-mass.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
+      "cluster": "5-scranton"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_316631",
+      "title": "OPEN Meetings",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 5,
+      "start": "12:20",
+      "end": "13:50",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "OPEN, the College’s GSA, holds meetings every Thursday at 12:20 p.m. in the Cottage. All LGBTQ+ individuals and allies are always welcome to attend. The post OPEN Meetings appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/open-meetings/2026-05-14/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "lcl-10005289",
@@ -2940,6 +3691,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/scrabble-group/2026-05-14/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-clarks summit"
     },
     {
@@ -2965,6 +3718,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/yoga-for-stress-relief/2026-05-14/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -2990,6 +3745,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/yoga-for-stress-relief-with-the-greenhouse-project/2026-05-14/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -3014,7 +3771,9 @@
       "lat": 41.4517,
       "lng": -75.6066,
       "url": "https://www.happeningsmagazinepa.com/event/yoga-for-healing-with-the-greenhouse-project/2026-05-14/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "dn-10051924",
@@ -3038,7 +3797,9 @@
       "lat": 41.5809697,
       "lng": -75.5148053,
       "url": "https://discovernepa.com/event/carbondale-farmers-market-2/2026-05-14/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-10004151",
@@ -3062,7 +3823,9 @@
       "lat": 41.3956,
       "lng": -75.7188,
       "url": "https://lclshome.org/event/free-senior-tech-tutoring-2/2026-05-14/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "lcl-183499",
@@ -3087,7 +3850,36 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/youth-yard-and-garden-safety/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-clarks summit"
+    },
+    {
+      "id": "uosc-1ffc14680a00006f08c90c83ae6e8d35",
+      "title": "Ascension Thursday Mass",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 5,
+      "start": "16:40",
+      "end": "17:40",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Celebrate the Eucharist on Ascension...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/ascension-thursday-mass1.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
+      "cluster": "5-scranton"
     },
     {
       "id": "lcl-10005350",
@@ -3112,6 +3904,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/tech-table-2026/2026-05-14/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -3137,6 +3931,8 @@
       "lng": -75.8882212,
       "url": "https://discovernepa.com/event/free-tai-chi/2026-05-14/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "5-wilkes-barre"
     },
     {
@@ -3162,6 +3958,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/drawing-101-apr-may-2026/2026-05-14/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -3187,6 +3985,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/american-sign-language-practice-2/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -3217,6 +4017,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-14/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "5-clarks summit"
     },
     {
@@ -3248,6 +4050,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-14/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "5-wilkes-barre"
     },
     {
@@ -3273,6 +4077,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/america-250-pennsylvania-snack-ranking-teens/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -3298,6 +4104,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/screening-of-david-mcculloughs-lcls-2006-lecture/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -3323,6 +4131,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/stories-with-cal-newbery-2/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-scranton"
     },
     {
@@ -3348,6 +4158,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/yard-garden-safety/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-clarks summit"
     },
     {
@@ -3372,7 +4184,9 @@
       "lat": 41.5989752,
       "lng": -75.1562097,
       "url": "https://discovernepa.com/event/worship-in-movement/2026-05-14/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10054277",
@@ -3398,7 +4212,9 @@
       "lat": 41.3605726,
       "lng": -75.6853836,
       "url": "https://discovernepa.com/event/scranton-wilkes-barre-railriders-vs-syracuse-mets/2026-05-14/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10051928",
@@ -3423,6 +4239,8 @@
       "lng": -75.8882212,
       "url": "https://discovernepa.com/event/free-zen-meditation/2026-05-14/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "5-wilkes-barre"
     },
     {
@@ -3448,6 +4266,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/families-helping-families/2026-05-14/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "5-clarks summit"
     },
     {
@@ -3473,7 +4293,63 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-15/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "6-wilkes-barre"
+    },
+    {
+      "id": "uosc-4246b2140a00006f5b92e4928c5dddbf",
+      "title": "2026 Spring Last Day of Class",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 6,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "2026 Spring Last Day of Class...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/2026-spring-last-day-of-class.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
+      "cluster": "6-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315648",
+      "title": "Hooding and Honors Ceremonies",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 6,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Friday, May 15, 2026 Event Name: Hooding and Honors Ceremonies Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACR Categories: *Academic Affairs, *Registrar, *Academics Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315648",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "6-scranton"
     },
     {
       "id": "dn-10056364",
@@ -3497,7 +4373,9 @@
       "lat": 41.0563306,
       "lng": -75.5228252,
       "url": "https://discovernepa.com/event/stock-car-racing-experience/2026-05-15/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "hm-10017791",
@@ -3526,6 +4404,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-15/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "6-wilkes-barre"
     },
     {
@@ -3551,6 +4431,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/music-and-rhyme-wiggle-time-23/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "6-clarks summit"
     },
     {
@@ -3576,6 +4458,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/nkh-storytime-may-15/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "6-scranton"
     },
     {
@@ -3605,6 +4489,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-15/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "6-scranton"
     },
     {
@@ -3630,6 +4516,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/music-and-rhyme-wiggle-time-24/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "6-clarks summit"
     },
     {
@@ -3654,7 +4542,9 @@
       "lat": 41.574,
       "lng": -75.5005,
       "url": "https://lclshome.org/event/little-farmers-club-5/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "hm-10019720",
@@ -3679,6 +4569,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-15/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "6-scranton"
     },
     {
@@ -3704,6 +4596,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/conversational-italian-class/2026-05-15/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "6-clarks summit"
     },
     {
@@ -3728,7 +4622,9 @@
       "lat": 41.5722584,
       "lng": -75.5041409,
       "url": "https://discovernepa.com/event/pioneer-city-market/2026-05-15/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-10005524",
@@ -3753,6 +4649,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/coloring-club-2026/2026-05-15/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "6-scranton"
     },
     {
@@ -3777,7 +4675,62 @@
       "lat": 40.9635417,
       "lng": -75.9719367,
       "url": "https://discovernepa.com/event/community-dinner/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1395589707",
+      "title": "Commencement Liturgy",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 6,
+      "start": "16:00",
+      "end": "17:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Swartz Center Marian Chapel Friday, May 15, 2026, 4 – 5pm Event Name: Commencement Liturgy Event State: Confirmed Organizer: coval@marywood.edu Expected Headcount: 150 Event Locator: 2025-AAHCVN Categories: *Campus Ministry, *Commencement, *Community Event Organization: Presidents Office",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1395589707",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "6-scranton"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_329879",
+      "title": "Master’s Hooding Ceremony",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 6,
+      "start": "17:30",
+      "end": "19:00",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Friday, May 15, 2026 Registration 5:30 p.m. Ceremony 6 p.m. Gambal Athletic Center Students should arrive at 5:30 p.m. and report to the Gambal Athletic Center. Please dress in your […] The post Master’s Hooding Ceremony appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/masters-hooding-ceremony/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "hm-10016114",
@@ -3807,6 +4760,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-15/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "6-clarks summit"
     },
     {
@@ -3838,6 +4793,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-15/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "6-wilkes-barre"
     },
     {
@@ -3863,6 +4820,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/zootopia-2-family-movie-night/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "6-clarks summit"
     },
     {
@@ -3889,7 +4848,9 @@
       "lat": 41.3605726,
       "lng": -75.6853836,
       "url": "https://discovernepa.com/event/scranton-wilkes-barre-railriders-vs-syracuse-mets/2026-05-15/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-494957",
@@ -3913,7 +4874,9 @@
       "lat": 41.2636189,
       "lng": -75.9003211,
       "url": "https://discovernepa.com/event/nepacms-presents-the-soldiers-tale/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10059607",
@@ -3937,7 +4900,35 @@
       "lat": 41.2141948,
       "lng": -75.9523462,
       "url": "https://discovernepa.com/event/clue-high-school-version/2026-05-15/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_327210",
+      "title": "Observatory Spring Sessions",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 6,
+      "start": "20:00",
+      "end": "21:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The Thomas G. Cupillari ’60 Astronomical Observatory will begin its spring sessions on Wednesday, March 18 from 8–10 p.m. and will continue each Wednesday and Friday evening through May 22. […] The post Observatory Spring Sessions appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/observatory-spring-sessions/2026-05-15/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "hm-10020726",
@@ -3962,7 +4953,63 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-16/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "7-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315650",
+      "title": "Armed Forces Day",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 7,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Saturday, May 16, 2026 Event Name: Armed Forces Day Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACT Categories: *Community Event Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315650",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "7-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315652",
+      "title": "University Housing Closes at 6 P.M. for Graduating Students",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 7,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Saturday, May 16, 2026 Event Name: University Housing Closes at 6 P.M. for Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACW Categories: *Registrar, *Housing and Residence Life Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315652",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "7-scranton"
     },
     {
       "id": "dn-10052091",
@@ -3986,7 +5033,9 @@
       "lat": 40.9862055,
       "lng": -75.1975225,
       "url": "https://discovernepa.com/event/monroe-farmers-market/2026-05-16/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10056365",
@@ -4010,7 +5059,9 @@
       "lat": 41.0563306,
       "lng": -75.5228252,
       "url": "https://discovernepa.com/event/stock-car-racing-experience/2026-05-16/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-497108",
@@ -4034,7 +5085,35 @@
       "lat": 41.4184709,
       "lng": -75.6369086,
       "url": "https://discovernepa.com/event/saint-josephs-center-sidewalk-sale/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_329881",
+      "title": "RYLA Training",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 7,
+      "start": "08:00",
+      "end": "09:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The post RYLA Training appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/ryla-training/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "dn-499956",
@@ -4059,6 +5138,8 @@
       "lng": -75.6452112,
       "url": "https://discovernepa.com/event/enhancing-calligraphy-with-embroidered-illustrations/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "7-scranton"
     },
     {
@@ -4084,6 +5165,8 @@
       "lng": -75.879036,
       "url": "https://discovernepa.com/event/seed-to-supper/2026-05-16/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "7-wilkes-barre"
     },
     {
@@ -4113,6 +5196,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-16/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "7-wilkes-barre"
     },
     {
@@ -4138,6 +5223,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/chi-kids-in-the-kitchen/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "7-scranton"
     },
     {
@@ -4162,7 +5249,9 @@
       "lat": 40.9119021,
       "lng": -75.4312237,
       "url": "https://discovernepa.com/event/flower-moon-festival/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-508847",
@@ -4187,6 +5276,8 @@
       "lng": -75.6634019,
       "url": "https://discovernepa.com/event/armed-forces-day-parade/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "7-scranton"
     },
     {
@@ -4216,6 +5307,61 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-16/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
+      "cluster": "7-scranton"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_313670",
+      "title": "Commencement",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 7,
+      "start": "11:00",
+      "end": "12:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Details will be announced. The post Commencement appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/commencement-2/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315651",
+      "title": "Commencement",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 7,
+      "start": "13:00",
+      "end": "14:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Off Campus Event Saturday, May 16, 2026, 1 – 4:30pm Mohegan Sun Arena Event Name: Commencement Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACV Categories: *Academic Affairs, *Registrar, *Commencement, *Community Event, *Academics Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315651",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
       "cluster": "7-scranton"
     },
     {
@@ -4240,7 +5386,9 @@
       "lat": 41.5722584,
       "lng": -75.5041409,
       "url": "https://discovernepa.com/event/concert-of-magic/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "hm-107789",
@@ -4270,7 +5418,9 @@
       "lat": 41.574,
       "lng": -75.5005,
       "url": "https://www.happeningsmagazinepa.com/event/concert-of-magic/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "lcl-182584",
@@ -4295,6 +5445,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/mini-art-day-flower-crowns/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "7-scranton"
     },
     {
@@ -4324,7 +5476,9 @@
       "lat": 41.4912,
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-16/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "dn-502718",
@@ -4348,7 +5502,9 @@
       "lat": 41.4869522,
       "lng": -75.7207824,
       "url": "https://discovernepa.com/event/the-magic-of-disney/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "hm-10015714",
@@ -4379,6 +5535,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-16/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "7-wilkes-barre"
     },
     {
@@ -4405,7 +5563,9 @@
       "lat": 41.3605726,
       "lng": -75.6853836,
       "url": "https://discovernepa.com/event/scranton-wilkes-barre-railriders-vs-syracuse-mets/2026-05-16/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10059608",
@@ -4429,7 +5589,9 @@
       "lat": 41.2141948,
       "lng": -75.9523462,
       "url": "https://discovernepa.com/event/clue-high-school-version/2026-05-16/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-506412",
@@ -4454,6 +5616,35 @@
       "lng": -75.6577895,
       "url": "https://discovernepa.com/event/in-recital-john-wilson/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
+      "cluster": "7-scranton"
+    },
+    {
+      "id": "uosc-c2cfc5eb0a00006f1d6e3a2b10e0ad46",
+      "title": "In Recital - John Wilson, piano",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 7,
+      "start": "19:30",
+      "end": "21:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "IN RECITALJohn Wilson, piano johnwilsonpiano.com...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/in-recital--john-wilson-piano.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
       "cluster": "7-scranton"
     },
     {
@@ -4479,7 +5670,36 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-17/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "8-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315653",
+      "title": "University Housing Move-In for Summer I & III Sessions",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 8,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Sunday, May 17, 2026 Event Name: University Housing Move-In for Summer I Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACX Categories: *Registrar, *Housing and Residence Life Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315653",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "8-scranton"
     },
     {
       "id": "hm-10017793",
@@ -4508,6 +5728,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-17/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "8-wilkes-barre"
     },
     {
@@ -4537,6 +5759,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-17/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "8-scranton"
     },
     {
@@ -4562,6 +5786,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-17/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "8-scranton"
     },
     {
@@ -4588,7 +5814,9 @@
       "lat": 41.3605726,
       "lng": -75.6853836,
       "url": "https://discovernepa.com/event/scranton-wilkes-barre-railriders-vs-syracuse-mets/2026-05-17/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-183871",
@@ -4613,6 +5841,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/sundays-princess-tea-party-2/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "8-scranton"
     },
     {
@@ -4637,7 +5867,9 @@
       "lat": 41.4912,
       "lng": -75.7224,
       "url": "https://lclshome.org/event/teen-led-chess-club-5/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "dn-10059609",
@@ -4661,7 +5893,9 @@
       "lat": 41.2141948,
       "lng": -75.9523462,
       "url": "https://discovernepa.com/event/clue-high-school-version/2026-05-17/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "hm-10016116",
@@ -4690,7 +5924,9 @@
       "lat": 41.4912,
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-17/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "hm-10015715",
@@ -4721,7 +5957,225 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-17/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "8-wilkes-barre"
+    },
+    {
+      "id": "uosc-424804060a00006f5b92e492de5eaf48",
+      "title": "2026 Spring Final Exams Begin",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 9,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "2026 Spring Final Exams Begin...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/2026-spring-final-exams-begin.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
+      "cluster": "9-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1387346198",
+      "title": "Flags of Fallen Set Up",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 9,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Sette LaVerghetta Center for Performing Arts Parking Lot Monday, May 18, 2026 Flags of Fallen Set Up Meet at field behind the SLC Performing Arts/Music building at 9am Click Link below for additional information and to join our volunteer sign up list.Sign up: https://forms.gle/3Uee7Y8rCbX3r1rE7 Event Name: Flags of Fal",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1387346198",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "9-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364572495",
+      "title": "Summer I & III: A $35.00 late fee will be charged on registrations received on or after this date.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 9,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Monday, May 18, 2026 Event Name: A $35.00 late fee will be charged on reg Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKTH Categories: *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364572495",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "9-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364572494",
+      "title": "Summer I term begins.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 9,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Monday, May 18, 2026 Event Name: Summer I term begins. Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKTG Categories: *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364572494",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "9-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364623467",
+      "title": "Summer I: Drop courses & receive 100% refund/cancellation of tuition and course fees.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 9,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Monday, May 18 – Wednesday, May 20, 2026 Event Name: Drop courses & receive 100% refund/cance Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKTK Categories: *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364623467",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "9-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364623468",
+      "title": "Summer III term begins.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 9,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Monday, May 18, 2026 Event Name: Summer III term begins. Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKVK Categories: *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364623468",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "9-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315654",
+      "title": "Summer Session I Begins",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 9,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Monday, May 18, 2026 Event Name: Summer Session I Begins Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHADA Categories: *Academic Affairs, *Registrar, *Academics, *IEP Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315654",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "9-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315655",
+      "title": "Summer Session III Begins",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 9,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Monday, May 18, 2026 Event Name: Summer Session III Begins Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHADB Categories: *Academic Affairs, *Registrar, *Academics Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315655",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "9-scranton"
     },
     {
       "id": "hm-10017794",
@@ -4749,7 +6203,9 @@
       "lat": 41.2459,
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-18/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "lcl-179290",
@@ -4774,6 +6230,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/cruise-into-kindergarten-am-session-6/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-clarks summit"
     },
     {
@@ -4803,6 +6261,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-18/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "9-scranton"
     },
     {
@@ -4828,6 +6288,8 @@
       "lng": -75.7188,
       "url": "https://lclshome.org/event/well-read-readers-book-club-2/2026-05-18/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-taylor"
     },
     {
@@ -4853,6 +6315,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-18/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "9-scranton"
     },
     {
@@ -4877,7 +6341,9 @@
       "lat": 41.574,
       "lng": -75.5005,
       "url": "https://lclshome.org/event/asian-american-movie-marathon/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "lcl-10005271",
@@ -4902,6 +6368,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/caring-hands/2026-05-18/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-clarks summit"
     },
     {
@@ -4926,7 +6394,36 @@
       "lat": 41.574,
       "lng": -75.5005,
       "url": "https://lclshome.org/event/garden-club-4/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1387358854",
+      "title": "Marywood Chambers Singers Tour: NYC",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 9,
+      "start": "13:45",
+      "end": "15:15",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Off Campus Event Monday, May 18, 2026, 1:45 – 2:45pm Marywood Chamber Singers Tour: NYC The Marywood University Chamber Singers will embark on its annual concert tour with a concert at the famed Saint Patrick's Cathedral in New York City on Monday, May 18. 26-member choir will perform a program of unaccompanied sacred ",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1387358854",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "9-scranton"
     },
     {
       "id": "lcl-10005502",
@@ -4951,6 +6448,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/first-friends-2/2026-05-18/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-scranton"
     },
     {
@@ -4976,6 +6475,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/nkh-teen-anime-club-may-2026/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-scranton"
     },
     {
@@ -5001,6 +6502,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/cruise-into-kindergarten-pm-session-6/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-clarks summit"
     },
     {
@@ -5026,6 +6529,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/adult-gaming-club-15/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-scranton"
     },
     {
@@ -5056,6 +6561,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-18/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "9-clarks summit"
     },
     {
@@ -5086,7 +6593,9 @@
       "lat": 41.2459,
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-18/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "lcl-10004371",
@@ -5111,6 +6620,8 @@
       "lng": -75.7188,
       "url": "https://lclshome.org/event/paws-to-read-6/2026-05-18/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-taylor"
     },
     {
@@ -5136,6 +6647,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/cookbook-club-10/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-clarks summit"
     },
     {
@@ -5161,6 +6674,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/story-explorers-may-2026/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-scranton"
     },
     {
@@ -5186,6 +6701,8 @@
       "lng": -75.7188,
       "url": "https://lclshome.org/event/flag-bingo/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-taylor"
     },
     {
@@ -5211,6 +6728,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/b-a-m-quilt-group-disappearing-nine-patch-quilt-2/2026-05-18/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "9-clarks summit"
     },
     {
@@ -5236,7 +6755,36 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-19/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "10-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364623470",
+      "title": "Summer III: Drop courses & receive 100% refund/cancellation of tuition and course fees.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 10,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Tuesday, May 19 – Wednesday, May 27, 2026 Event Name: Drop courses & receive 100% refund/cance Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKVN Categories: *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364623470",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "10-scranton"
     },
     {
       "id": "hm-10017795",
@@ -5265,6 +6813,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-19/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "10-wilkes-barre"
     },
     {
@@ -5290,6 +6840,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/always-in-stitches/2026-05-19/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-clarks summit"
     },
     {
@@ -5315,6 +6867,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/reading-adventures-storytime-30/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-clarks summit"
     },
     {
@@ -5340,6 +6894,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/stories-with-cal-newbery-may-2026/2026-05-19/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-scranton"
     },
     {
@@ -5369,6 +6925,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-19/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "10-scranton"
     },
     {
@@ -5393,7 +6951,9 @@
       "lat": 41.4517,
       "lng": -75.6066,
       "url": "https://www.happeningsmagazinepa.com/event/yoga-for-healing-with-the-greenhouse-project/2026-05-19/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "lcl-10005510",
@@ -5418,6 +6978,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/little-builders-party-2026/2026-05-19/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-scranton"
     },
     {
@@ -5443,6 +7005,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-19/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "10-scranton"
     },
     {
@@ -5468,6 +7032,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/mahjong/2026-05-19/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-clarks summit"
     },
     {
@@ -5493,6 +7059,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/reading-adventures-storytime-31/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-clarks summit"
     },
     {
@@ -5518,6 +7086,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/red-white-and-bingo/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-scranton"
     },
     {
@@ -5543,6 +7113,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/craft-swap/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-scranton"
     },
     {
@@ -5568,6 +7140,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/food-fun-7/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-clarks summit"
     },
     {
@@ -5592,7 +7166,9 @@
       "lat": 41.574,
       "lng": -75.5005,
       "url": "https://lclshome.org/event/teen-bingo/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "lcl-10005351",
@@ -5617,6 +7193,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/tech-table-2026/2026-05-19/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-scranton"
     },
     {
@@ -5647,6 +7225,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-19/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "10-clarks summit"
     },
     {
@@ -5678,6 +7258,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-19/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "10-wilkes-barre"
     },
     {
@@ -5703,6 +7285,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/knot-another-stitch-13/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-scranton"
     },
     {
@@ -5728,6 +7312,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/novel-thoughts-may-19-2026/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-scranton"
     },
     {
@@ -5752,7 +7338,9 @@
       "lat": 41.5989752,
       "lng": -75.1562097,
       "url": "https://discovernepa.com/event/worship-in-movement/2026-05-19/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-10005316",
@@ -5777,7 +7365,36 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/lackawanna-backyard-beekeepers/2026-05-19/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "10-clarks summit"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1387358855",
+      "title": "Marywood Chamber Singers Tour: Norwich, CT",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 10,
+      "start": "19:00",
+      "end": "20:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Off Campus Event Tuesday, May 19, 2026, 7 – 8pm Marywood Chamber Singers Tour: Norwich, CT The Marywood University Chamber Singers will continue on its annual concert tour with a concert at the famed Cathedral of St. Patrick in Norwich, CT on Tuesday, May 19. 26-member choir will perform a program of unaccompanied sacr",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1387358855",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "10-scranton"
     },
     {
       "id": "hm-10020729",
@@ -5802,7 +7419,36 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-20/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "11-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364572496",
+      "title": "Summer I: Last day to register/add classes.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 11,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Wednesday, May 20, 2026 Event Name: Last day to register/add classes. Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKTJ Categories: *Registrar, *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364572496",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "11-scranton"
     },
     {
       "id": "dn-10052147",
@@ -5826,7 +7472,9 @@
       "lat": 40.8213263,
       "lng": -75.9932361,
       "url": "https://discovernepa.com/event/hometown-farmers-market/2026-05-20/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10056366",
@@ -5850,7 +7498,9 @@
       "lat": 41.0563306,
       "lng": -75.5228252,
       "url": "https://discovernepa.com/event/stock-car-racing-experience/2026-05-20/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "hm-10017796",
@@ -5879,6 +7529,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-20/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "11-wilkes-barre"
     },
     {
@@ -5904,6 +7556,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/terrific-tales-33/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-clarks summit"
     },
     {
@@ -5929,6 +7583,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/stories-with-cal-newbery-may-2026/2026-05-20/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -5958,6 +7614,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-20/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -5983,6 +7641,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/terrific-tales-34/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-clarks summit"
     },
     {
@@ -6008,6 +7668,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/little-builders-party-2026/2026-05-20/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -6033,6 +7695,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/movie-fans-matinee-ronr/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-clarks summit"
     },
     {
@@ -6058,6 +7722,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/movie-one-battle-after-another-2/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -6082,7 +7748,9 @@
       "lat": 41.0563306,
       "lng": -75.5228252,
       "url": "https://discovernepa.com/event/drive-your-own-car-at-pocono-raceway/2026-05-20/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-182725",
@@ -6107,6 +7775,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/nkh-chess-club-may-20/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -6132,6 +7802,8 @@
       "lng": -75.8864551,
       "url": "https://discovernepa.com/event/sunsets-on-soma/2026-05-20/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "11-wilkes-barre"
     },
     {
@@ -6157,7 +7829,35 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/railway-rewind/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-clarks summit"
+    },
+    {
+      "id": "key-https___www_keystone_edu_event_intervarsity-bible-study-2_2025-09-04_",
+      "title": "InterVarsity Bible Study",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 11,
+      "start": "17:00",
+      "end": "18:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The InterVarsity club invites you to come to Bible Study on Wednesdays on the second floor of Hibbard Campus Center. All are welcome no matter your faith background. The post InterVarsity Bible Study appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/intervarsity-bible-study-2/2026-05-20/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "hm-10006628",
@@ -6182,6 +7882,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/vinyasa-yoga-2/2026-05-20/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -6207,6 +7909,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/vinyasa-yoga-flow-with-the-greenhouse-project/2026-05-20/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -6237,6 +7941,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-20/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "11-clarks summit"
     },
     {
@@ -6268,6 +7974,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-20/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "11-wilkes-barre"
     },
     {
@@ -6293,6 +8001,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/socrates-cafe-11/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -6318,6 +8028,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/spl-book-club-4/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -6343,6 +8055,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/american-girl-club-may-2026/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-scranton"
     },
     {
@@ -6368,7 +8082,35 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/herb-workshop/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "11-clarks summit"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_327210",
+      "title": "Observatory Spring Sessions",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 11,
+      "start": "20:00",
+      "end": "21:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The Thomas G. Cupillari ’60 Astronomical Observatory will begin its spring sessions on Wednesday, March 18 from 8–10 p.m. and will continue each Wednesday and Friday evening through May 22. […] The post Observatory Spring Sessions appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/observatory-spring-sessions/2026-05-20/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "hm-10020730",
@@ -6393,7 +8135,63 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-21/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "12-wilkes-barre"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1266315656",
+      "title": "Shavuot Begins at Sundown",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 12,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Thursday, May 21, 2026 Event Name: Shavuot Begins at Sundown Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHADC Categories: *Community Event Organization: Registrar",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315656",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "12-scranton"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1364623471",
+      "title": "Summer I: Drop courses & receive 75% refund/cancellation of tuition and course fees.",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 12,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Academic Dates Thursday, May 21 – Saturday, May 23, 2026 Event Name: Drop courses & receive 75% refund/cancel Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKTL Categories: *Student Accounts Organization: Student Accounts",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364623471",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "12-scranton"
     },
     {
       "id": "hm-10017797",
@@ -6422,6 +8220,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-21/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "12-wilkes-barre"
     },
     {
@@ -6447,6 +8247,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/block-party-6/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-clarks summit"
     },
     {
@@ -6472,6 +8274,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/stories-with-cal-newbery-may-2026/2026-05-21/1/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-scranton"
     },
     {
@@ -6501,6 +8305,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-21/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "12-scranton"
     },
     {
@@ -6526,6 +8332,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/little-builders-party-2026/2026-05-21/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-scranton"
     },
     {
@@ -6551,7 +8359,35 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-21/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "12-scranton"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_316631",
+      "title": "OPEN Meetings",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 12,
+      "start": "12:20",
+      "end": "13:50",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "OPEN, the College’s GSA, holds meetings every Thursday at 12:20 p.m. in the Cottage. All LGBTQ+ individuals and allies are always welcome to attend. The post OPEN Meetings appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/open-meetings/2026-05-21/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "lcl-10005290",
@@ -6576,6 +8412,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/scrabble-group/2026-05-21/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-clarks summit"
     },
     {
@@ -6601,6 +8439,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/yoga-for-stress-relief/2026-05-21/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "12-scranton"
     },
     {
@@ -6626,6 +8466,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/yoga-for-stress-relief-with-the-greenhouse-project/2026-05-21/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "12-scranton"
     },
     {
@@ -6650,7 +8492,9 @@
       "lat": 41.4517,
       "lng": -75.6066,
       "url": "https://www.happeningsmagazinepa.com/event/yoga-for-healing-with-the-greenhouse-project/2026-05-21/",
-      "recurring": null
+      "recurring": null,
+      "source": "hm",
+      "audience": "community"
     },
     {
       "id": "dn-10052151",
@@ -6674,7 +8518,9 @@
       "lat": 41.5809697,
       "lng": -75.5148053,
       "url": "https://discovernepa.com/event/carbondale-farmers-market-2/2026-05-21/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-10004152",
@@ -6698,7 +8544,9 @@
       "lat": 41.3956,
       "lng": -75.7188,
       "url": "https://lclshome.org/event/free-senior-tech-tutoring-2/2026-05-21/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "dn-10059304",
@@ -6722,7 +8570,9 @@
       "lat": 41.4694328,
       "lng": -75.604031,
       "url": "https://discovernepa.com/event/olyphant-third-thursdays/2026-05-21/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-183521",
@@ -6747,6 +8597,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/teen-game-night-15/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-clarks summit"
     },
     {
@@ -6772,6 +8624,8 @@
       "lng": -75.8882212,
       "url": "https://discovernepa.com/event/free-tai-chi/2026-05-21/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "12-wilkes-barre"
     },
     {
@@ -6797,6 +8651,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/teen-creator-lab/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-scranton"
     },
     {
@@ -6822,6 +8678,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/i-love-myself-workshop-may-2026/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-scranton"
     },
     {
@@ -6852,6 +8710,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-21/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "12-clarks summit"
     },
     {
@@ -6883,6 +8743,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-21/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "12-wilkes-barre"
     },
     {
@@ -6908,6 +8770,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/stories-with-cal-newbery-may-2026/2026-05-21/2/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-scranton"
     },
     {
@@ -6933,6 +8797,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/insulin-pump-support-group-2/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-clarks summit"
     },
     {
@@ -6957,7 +8823,9 @@
       "lat": 41.5989752,
       "lng": -75.1562097,
       "url": "https://discovernepa.com/event/worship-in-movement/2026-05-21/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-10052155",
@@ -6982,6 +8850,8 @@
       "lng": -75.8882212,
       "url": "https://discovernepa.com/event/free-zen-meditation/2026-05-21/",
       "recurring": null,
+      "source": "dn",
+      "audience": "community",
       "cluster": "12-wilkes-barre"
     },
     {
@@ -7007,7 +8877,36 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/families-helping-families/2026-05-21/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "12-clarks summit"
+    },
+    {
+      "id": "mary-http___uid_trumba_com_event_1387358856",
+      "title": "Marywood Chamber Singer Tour: Cambridge, MA",
+      "venue": "Marywood University",
+      "town": "Scranton",
+      "day": 12,
+      "start": "19:00",
+      "end": "20:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Off Campus Event Thursday, May 21, 2026, 7 – 8pm Marywood Chamber Singers Tour: Cambridge, MA The Marywood University Chamber Singers will continue on its annual concert tour with a concert at the famed Saint Paul's Parish in Cambridge, MA onThursday, May 21. 26-member choir will perform a program of unaccompanied sacr",
+      "tags": [],
+      "coords": {
+        "x": 0.39809999999999945,
+        "y": 0.3091111111111151
+      },
+      "lat": 41.4218,
+      "lng": -75.6519,
+      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1387358856",
+      "recurring": null,
+      "source": "mary",
+      "audience": "college",
+      "cluster": "12-scranton"
     },
     {
       "id": "hm-10020731",
@@ -7032,7 +8931,62 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-22/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "13-wilkes-barre"
+    },
+    {
+      "id": "uosc-42d4375b0a00006f5b92e49225f7c7ac",
+      "title": "2026 Spring Final Exams End & Last Day of Term",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 13,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "2026 Spring Final Exams End & Last Day of T...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/2026-spring-final-exams-end-amp-last-day-of-term.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
+      "cluster": "13-scranton"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_329883",
+      "title": "Educators Conference",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 13,
+      "start": "08:00",
+      "end": "09:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The post Educators Conference appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/educators-conference/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     },
     {
       "id": "hm-10017798",
@@ -7061,6 +9015,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-22/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "13-wilkes-barre"
     },
     {
@@ -7086,6 +9042,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/music-and-rhyme-wiggle-time-25/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "13-clarks summit"
     },
     {
@@ -7111,6 +9069,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/nkh-storytime-may-22/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "13-scranton"
     },
     {
@@ -7140,6 +9100,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-22/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "13-scranton"
     },
     {
@@ -7165,6 +9127,8 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/music-and-rhyme-wiggle-time-26/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "13-clarks summit"
     },
     {
@@ -7190,6 +9154,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/art-exhibit-the-anthracite-coal-industry-of-northeastern-pennsylvania/2026-05-22/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "13-scranton"
     },
     {
@@ -7215,7 +9181,36 @@
       "lng": -75.7224,
       "url": "https://lclshome.org/event/conversational-italian-class/2026-05-22/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "13-clarks summit"
+    },
+    {
+      "id": "uosc-dbabd0430a00006f188e938810d85ccb",
+      "title": "Bonnie W. Oldham Library Research Prize Awards Ceremony and Reception",
+      "venue": "University of Scranton",
+      "town": "Scranton",
+      "day": 13,
+      "start": "13:00",
+      "end": "14:00",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Awards Ceremony and light Reception for honorees and...",
+      "tags": [],
+      "coords": {
+        "x": 0.38989999999999725,
+        "y": 0.32844444444444276
+      },
+      "lat": 41.4044,
+      "lng": -75.6601,
+      "url": "https://events.scranton.edu/2026/05/bonnie-w-oldham-library-research-prize-awards-ceremony-and-reception.shtml",
+      "recurring": null,
+      "source": "uosc",
+      "audience": "college",
+      "cluster": "13-scranton"
     },
     {
       "id": "dn-10052178",
@@ -7239,7 +9234,9 @@
       "lat": 41.5722584,
       "lng": -75.5041409,
       "url": "https://discovernepa.com/event/pioneer-city-market/2026-05-22/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "lcl-184255",
@@ -7263,7 +9260,9 @@
       "lat": 41.574,
       "lng": -75.5005,
       "url": "https://lclshome.org/event/kids-creation-station-2/",
-      "recurring": null
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
     },
     {
       "id": "hm-108496",
@@ -7290,6 +9289,8 @@
       "lng": -75.6624,
       "url": "https://www.happeningsmagazinepa.com/event/pocono-mountain-street-rods-may-2026-friday-night-cruise/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "13-scranton"
     },
     {
@@ -7315,6 +9316,8 @@
       "lng": -75.6624,
       "url": "https://lclshome.org/event/swingin-on-vine-2026/",
       "recurring": null,
+      "source": "lcl",
+      "audience": "community",
       "cluster": "13-scranton"
     },
     {
@@ -7345,6 +9348,8 @@
       "lng": -75.7224,
       "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-22/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "13-clarks summit"
     },
     {
@@ -7376,6 +9381,8 @@
       "lng": -75.8813,
       "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-22/",
       "recurring": null,
+      "source": "hm",
+      "audience": "community",
       "cluster": "13-wilkes-barre"
     },
     {
@@ -7400,7 +9407,35 @@
       "lat": 41.3605726,
       "lng": -75.6853836,
       "url": "https://discovernepa.com/event/banana-ball/2026-05-22/",
-      "recurring": null
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
+    },
+    {
+      "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_327210",
+      "title": "Observatory Spring Sessions",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 13,
+      "start": "20:00",
+      "end": "21:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The Thomas G. Cupillari ’60 Astronomical Observatory will begin its spring sessions on Wednesday, March 18 from 8–10 p.m. and will continue each Wednesday and Friday evening through May 22. […] The post Observatory Spring Sessions appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/observatory-spring-sessions/2026-05-22/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
     }
   ]
 }

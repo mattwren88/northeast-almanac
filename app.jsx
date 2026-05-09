@@ -38,10 +38,13 @@ function parseHash() {
   const view = p.get('view');
   const w = parseInt(p.get('w') || '', 10);
   const cats = p.get('cats');
+  const aud = p.get('aud');
   return {
     view: ALL_VIEWS.includes(view) ? view : null,
     weekOffset: Number.isInteger(w) && w >= 0 && w <= 1 ? w : null,
     activeCats: cats ? cats.split(',').filter(c => ALL_CATS.includes(c)) : null,
+    activeAudiences: aud ? aud.split(',').filter(a => ALL_AUDIENCES.includes(a)) : null,
+    town: p.get('town') || '',
     openEventId: p.get('ev') || null,
     planOpen: p.get('plan') === '1',
   };
@@ -54,6 +57,12 @@ function writeHash(state) {
   if (state.activeCats && state.activeCats.length !== ALL_CATS.length) {
     p.set('cats', state.activeCats.join(','));
   }
+  // Audiences: emit only when different from default (community-only).
+  if (state.activeAudiences) {
+    const sorted = [...state.activeAudiences].sort().join(',');
+    if (sorted !== 'community') p.set('aud', sorted);
+  }
+  if (state.town) p.set('town', state.town);
   if (state.openEventId) p.set('ev', state.openEventId);
   if (state.planOpen) p.set('plan', '1');
   const next = p.toString();
@@ -69,7 +78,9 @@ function App() {
   const [view, setView] = useStateApp(initial.view || 'calendar'); // calendar | map | list
   const [weekOffset, setWeekOffset] = useStateApp(initial.weekOffset ?? 0);
   const [activeCats, setActiveCats] = useStateApp(initial.activeCats || ALL_CATS);
-  const [activeTowns, setActiveTowns] = useStateApp(null); // null = all
+  const [activeAudiences, setActiveAudiences] = useStateApp(initial.activeAudiences || ['community']); // colleges off by default
+  const [activeTown, setActiveTown] = useStateApp(initial.town || ''); // '' = all
+  const [filtersOpen, setFiltersOpen] = useStateApp(false);
   const [openEventId, setOpenEventId] = useStateApp(initial.openEventId);
   const [saved, setSaved] = useStateApp([]);
   const [planOpen, setPlanOpen] = useStateApp(initial.planOpen);
@@ -107,8 +118,8 @@ function App() {
 
   // Write URL hash whenever shareable state changes
   useEffectApp(() => {
-    writeHash({ view, weekOffset, activeCats, openEventId, planOpen });
-  }, [view, weekOffset, activeCats, openEventId, planOpen]);
+    writeHash({ view, weekOffset, activeCats, activeAudiences, town: activeTown, openEventId, planOpen });
+  }, [view, weekOffset, activeCats, activeAudiences, activeTown, openEventId, planOpen]);
 
   // Read hash on browser back/forward
   useEffectApp(() => {
@@ -117,6 +128,8 @@ function App() {
       setView(h.view || 'calendar');
       setWeekOffset(h.weekOffset ?? 0);
       setActiveCats(h.activeCats || ALL_CATS);
+      setActiveAudiences(h.activeAudiences || ['community']);
+      setActiveTown(h.town || '');
       setOpenEventId(h.openEventId);
       setPlanOpen(h.planOpen);
     };
@@ -124,9 +137,50 @@ function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  // Keyboard nav while drawer is open: Esc closes, ←/→ cycle through filtered events
+  const filteredSortedIds = useMemoApp(() => {
+    if (!openEventId) return null;
+    return [...events]
+      .filter(e =>
+        activeCats.includes(e.category) &&
+        activeAudiences.includes(e.audience || 'community') &&
+        (!activeTown || e.town === activeTown)
+      )
+      .sort((a, b) => a.day - b.day || a.start.localeCompare(b.start))
+      .map(e => e.id);
+  }, [events, activeCats, activeAudiences, activeTown, openEventId]);
+  useEffectApp(() => {
+    if (!openEventId || !filteredSortedIds) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') { setOpenEventId(null); return; }
+      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+      const idx = filteredSortedIds.indexOf(openEventId);
+      if (idx === -1) return;
+      if (e.key === 'ArrowRight' && idx < filteredSortedIds.length - 1) {
+        e.preventDefault();
+        setOpenEventId(filteredSortedIds[idx + 1]);
+      } else if (e.key === 'ArrowLeft' && idx > 0) {
+        e.preventDefault();
+        setOpenEventId(filteredSortedIds[idx - 1]);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [openEventId, filteredSortedIds]);
+
+  const allTowns = useMemoApp(() => {
+    const set = new Set();
+    events.forEach(e => { if (e.town) set.add(e.town); });
+    return [...set].sort((a, b) => a.localeCompare(b));
+  }, [events]);
+
   const filtered = useMemoApp(() => {
-    return events.filter(e => activeCats.includes(e.category));
-  }, [events, activeCats]);
+    return events.filter(e =>
+      activeCats.includes(e.category) &&
+      activeAudiences.includes(e.audience || 'community') &&
+      (!activeTown || e.town === activeTown)
+    );
+  }, [events, activeCats, activeAudiences, activeTown]);
 
   const featuredThisWeek = useMemoApp(() => {
     const start = weekOffset * 7;
@@ -144,6 +198,24 @@ function App() {
       cs.includes(cat) ? cs.filter(c => c !== cat) : [...cs, cat]
     );
   };
+
+  const toggleAudience = (a) => {
+    setActiveAudiences(xs =>
+      xs.includes(a) ? xs.filter(x => x !== a) : [...xs, a]
+    );
+  };
+
+  const resetFilters = () => {
+    setActiveCats(ALL_CATS);
+    setActiveAudiences(['community']);
+    setActiveTown('');
+  };
+
+  const filterCount = (
+    (activeCats.length !== ALL_CATS.length ? 1 : 0) +
+    (activeAudiences.length !== 1 || activeAudiences[0] !== 'community' ? 1 : 0) +
+    (activeTown ? 1 : 0)
+  );
 
   const setLayout = (v) => {
     setView(v);
@@ -199,21 +271,34 @@ function App() {
             </button>
           ))}
         </div>
-        <div className="toolbar-section toolbar-cats">
-          <span className="toolbar-label">Filter</span>
-          {Object.entries(CATEGORIES).map(([k, c]) => (
-            <button
-              key={k}
-              className={`toolbar-cat ${activeCats.includes(k) ? 'is-active' : ''}`}
-              onClick={() => toggleCat(k)}
-              style={{ '--cat-color': c.color }}
-            >
-              <span className="toolbar-cat-dot" />
-              {c.label}
-            </button>
-          ))}
+        <div className="toolbar-section toolbar-filters-trigger">
+          <button
+            className={`filters-btn ${filtersOpen ? 'is-open' : ''} ${filterCount > 0 ? 'has-active' : ''}`}
+            onClick={() => setFiltersOpen(v => !v)}
+            aria-expanded={filtersOpen}
+          >
+            <span className="filters-btn-icon">≡</span>
+            <span className="filters-btn-label">Filters</span>
+            {filterCount > 0 && <span className="filters-btn-badge">{filterCount}</span>}
+            <span className="filters-btn-caret">{filtersOpen ? '▲' : '▼'}</span>
+          </button>
         </div>
       </div>
+
+      {filtersOpen && (
+        <FiltersPanel
+          activeCats={activeCats}
+          toggleCat={toggleCat}
+          activeAudiences={activeAudiences}
+          toggleAudience={toggleAudience}
+          allTowns={allTowns}
+          activeTown={activeTown}
+          setActiveTown={setActiveTown}
+          onReset={resetFilters}
+          onClose={() => setFiltersOpen(false)}
+          filterCount={filterCount}
+        />
+      )}
 
       {/* EDITOR'S PICKS RAIL */}
       {featuredThisWeek.length > 0 && view !== 'map' && (
@@ -242,9 +327,34 @@ function App() {
         </section>
       )}
 
+      {/* WEATHER ADVISORY (when current week has rainy days that affect outdoor events) */}
+      {eventStatus !== 'loading' && view !== 'map' && (() => {
+        const start = view === 'weekend' ? 0 : weekOffset * 7;
+        const end = view === 'weekend' ? 14 : start + 7;
+        const rainyDays = [];
+        for (let d = start; d < end; d++) {
+          const wx = WEATHER[d];
+          if (wx && wx.cond === 'rain') rainyDays.push(d);
+        }
+        if (rainyDays.length === 0) return null;
+        const outdoorAtRisk = filtered.filter(e => rainyDays.includes(e.day) && !e.indoor).length;
+        if (outdoorAtRisk === 0) return null;
+        return (
+          <div className="wx-advisory" role="note">
+            <span className="wx-advisory-icon">☂</span>
+            <span>
+              <strong>{rainyDays.length}</strong> {rainyDays.length === 1 ? 'rainy day' : 'rainy days'} ahead
+              {' — '}
+              <strong>{outdoorAtRisk}</strong> outdoor {outdoorAtRisk === 1 ? 'event is' : 'events are'} dimmed in this view
+            </span>
+          </div>
+        );
+      })()}
+
       {/* MAIN VIEW */}
       <main className="main">
-        {view === 'calendar' && (
+        {eventStatus === 'loading' && <LoadingSkeleton />}
+        {eventStatus !== 'loading' && view === 'calendar' && (
           <CalendarView
             events={filtered}
             saved={saved}
@@ -255,7 +365,7 @@ function App() {
             weatherAware={true}
           />
         )}
-        {view === 'weekend' && (
+        {eventStatus !== 'loading' && view === 'weekend' && (
           <WeekendView
             events={filtered}
             saved={saved}
@@ -263,7 +373,7 @@ function App() {
             onOpen={setOpenEventId}
           />
         )}
-        {view === 'map' && (
+        {eventStatus !== 'loading' && view === 'map' && (
           <MapView
             events={filtered}
             saved={saved}
@@ -272,7 +382,7 @@ function App() {
             weekOffset={weekOffset}
           />
         )}
-        {view === 'list' && (
+        {eventStatus !== 'loading' && view === 'list' && (
           <ListView
             events={filtered}
             saved={saved}
@@ -297,6 +407,12 @@ function App() {
               <a href="https://lclshome.org/events/" target="_blank" rel="noopener noreferrer">Lackawanna County Library System</a>
               {' · '}
               <a href="https://scrantonpa.gov/events/" target="_blank" rel="noopener noreferrer">City of Scranton</a>
+              {' · '}
+              <a href="https://events.scranton.edu/" target="_blank" rel="noopener noreferrer">University of Scranton</a>
+              {' · '}
+              <a href="https://www.marywood.edu/community/news-events" target="_blank" rel="noopener noreferrer">Marywood University</a>
+              {' · '}
+              <a href="https://www.keystone.edu/keystone-events/" target="_blank" rel="noopener noreferrer">Keystone College</a>
               {'. Weather via '}
               <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a>.
             </div>
@@ -376,18 +492,29 @@ function AboutModal({ onClose, generatedAt }) {
 
         <section className="about-section">
           <h3>Sources</h3>
+          <h4 className="about-subhead">Community calendars</h4>
           <ul>
             <li><a href="https://discovernepa.com/events/" target="_blank" rel="noopener noreferrer">DiscoverNEPA</a> — regional tourism calendar</li>
             <li><a href="https://www.happeningsmagazinepa.com/events/" target="_blank" rel="noopener noreferrer">Happenings Magazine</a> — local culture and lifestyle</li>
             <li><a href="https://lclshome.org/events/" target="_blank" rel="noopener noreferrer">Lackawanna County Library System</a> — talks, kids' programs, classes</li>
             <li><a href="https://scrantonpa.gov/events/" target="_blank" rel="noopener noreferrer">City of Scranton</a> — municipal events</li>
+          </ul>
+          <h4 className="about-subhead">College calendars (off by default)</h4>
+          <ul>
+            <li><a href="https://events.scranton.edu/" target="_blank" rel="noopener noreferrer">University of Scranton</a> — public events feed (JSON)</li>
+            <li><a href="https://www.marywood.edu/community/news-events" target="_blank" rel="noopener noreferrer">Marywood University</a> — 25Live calendar (RSS)</li>
+            <li><a href="https://www.keystone.edu/keystone-events/" target="_blank" rel="noopener noreferrer">Keystone College</a> — events feed (RSS)</li>
+          </ul>
+          <h4 className="about-subhead">Other</h4>
+          <ul>
             <li><a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — 14-day weather forecast</li>
           </ul>
           <p className="about-fine">
-            All four event sources publish public Tribe Events Calendar
-            REST feeds. We fetch only excerpts and titles, link back
-            to each original page, and identify ourselves with a
-            named User-Agent so site owners can reach us.
+            We fetch only excerpts and titles, link back to each
+            original page, and identify ourselves with a named
+            User-Agent so site owners can reach us. Colleges are
+            hidden by default in the filter panel since their feeds
+            include many academic dates that aren't public events.
           </p>
         </section>
 
@@ -437,6 +564,120 @@ function AboutModal({ onClose, generatedAt }) {
           <a href="https://github.com/mattwren88/northeast-almanac" target="_blank" rel="noopener noreferrer">Source code on GitHub →</a>
         </footer>
       </aside>
+    </div>
+  );
+}
+
+function FiltersPanel({
+  activeCats, toggleCat,
+  activeAudiences, toggleAudience,
+  allTowns, activeTown, setActiveTown,
+  onReset, onClose, filterCount,
+}) {
+  return (
+    <div className="filters-panel" role="region" aria-label="Filters">
+      <div className="filters-grid">
+        {/* SOURCE */}
+        <div className="filters-block">
+          <div className="filters-block-head">
+            <span className="filters-block-k">Source</span>
+            <span className="filters-block-hint">community by default · colleges add ~50 academic dates</span>
+          </div>
+          <div className="filters-block-rows">
+            {Object.entries(AUDIENCES).map(([k, a]) => (
+              <label key={k} className={`filters-check ${activeAudiences.includes(k) ? 'is-on' : ''}`}>
+                <input
+                  type="checkbox"
+                  checked={activeAudiences.includes(k)}
+                  onChange={() => toggleAudience(k)}
+                />
+                <span className="filters-check-mark" aria-hidden="true">{activeAudiences.includes(k) ? '✓' : ''}</span>
+                <span className="filters-check-body">
+                  <span className="filters-check-label">{a.label}</span>
+                  <span className="filters-check-desc">{a.description}</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* CATEGORY */}
+        <div className="filters-block">
+          <div className="filters-block-head">
+            <span className="filters-block-k">Category</span>
+            <span className="filters-block-hint">{activeCats.length} of {ALL_CATS.length} on</span>
+          </div>
+          <div className="filters-block-rows filters-cats">
+            {Object.entries(CATEGORIES).map(([k, c]) => (
+              <label
+                key={k}
+                className={`filters-cat ${activeCats.includes(k) ? 'is-on' : ''}`}
+                style={{ '--cat-color': c.color }}
+              >
+                <input
+                  type="checkbox"
+                  checked={activeCats.includes(k)}
+                  onChange={() => toggleCat(k)}
+                />
+                <span className="filters-cat-dot" />
+                <span className="filters-cat-label">{c.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* TOWN */}
+        <div className="filters-block">
+          <div className="filters-block-head">
+            <span className="filters-block-k">Town</span>
+            <span className="filters-block-hint">{allTowns.length} towns in this batch</span>
+          </div>
+          <div className="filters-block-rows">
+            <select
+              className="filters-town-select"
+              value={activeTown}
+              onChange={e => setActiveTown(e.target.value)}
+            >
+              <option value="">All towns</option>
+              {allTowns.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div className="filters-foot">
+        <button className="filters-reset" onClick={onReset} disabled={filterCount === 0}>
+          Reset all
+        </button>
+        <button className="filters-done" onClick={onClose}>Done</button>
+      </div>
+    </div>
+  );
+}
+
+function LoadingSkeleton() {
+  return (
+    <div className="skel-wrap" role="status" aria-label="Loading events">
+      <div className="skel-head">
+        <div className="skel-eyebrow">SETTING TYPE · COMPILING THE WEEK</div>
+        <div className="skel-title">Pulling tonight's edition…</div>
+      </div>
+      <div className="skel-grid">
+        {[0, 1, 2, 3, 4, 5, 6].map(i => (
+          <div key={i} className="skel-col">
+            <div className="skel-day-num" />
+            <div className="skel-line w70" />
+            {[0, 1, 2].map(j => (
+              <div key={j} className="skel-card">
+                <div className="skel-bar" />
+                <div className="skel-line w40" />
+                <div className="skel-line w90" />
+                <div className="skel-line w60" />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
