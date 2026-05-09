@@ -465,16 +465,41 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
               className={`drawer-btn primary ${isSaved ? 'is-saved' : ''}`}
               onClick={() => onSave(event.id)}
             >
-              {isSaved ? '★ Saved to weekend' : '☆ Add to weekend'}
+              {isSaved ? '★ Saved to plan' : '☆ Add to plan'}
             </button>
-            <button
-              className="drawer-btn ghost"
-              onClick={() => downloadIcs(`${slugify(event.title)}.ics`, eventToIcs(event))}
-            >
-              ↓ Add to calendar
-            </button>
+            <div className="drawer-cal-row">
+              <div className="drawer-cal-label">Add to calendar</div>
+              <div className="drawer-cal-btns">
+                <a
+                  className="drawer-cal-btn"
+                  href={eventToGcalUrl(event)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >Google</a>
+                <button
+                  className="drawer-cal-btn"
+                  onClick={() => downloadIcs(`${slugify(event.title)}.ics`, eventToIcs(event))}
+                >Apple (.ics)</button>
+                <a
+                  className="drawer-cal-btn"
+                  href={eventToOutlookUrl(event)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >Outlook</a>
+              </div>
+            </div>
             {event.url && (
-              <a className="drawer-btn ghost" href={event.url} target="_blank" rel="noopener noreferrer">↗ Event page</a>
+              <div className="drawer-cal-row">
+                <div className="drawer-cal-label">More info</div>
+                <div className="drawer-cal-btns">
+                  <a
+                    className="drawer-cal-btn"
+                    href={event.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >View original listing ↗</a>
+                </div>
+              </div>
             )}
           </div>
         </div>
@@ -483,32 +508,48 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
   );
 }
 
-// ============ WEEKEND PLAN SIDEBAR ============
-function WeekendPlan({ events, saved, onRemove, onClose, onShare }) {
-  const items = saved.map(id => events.find(e => e.id === id)).filter(Boolean)
+// ============ SAVED PLAN SIDEBAR ============
+function WeekendPlan({ events, saved, onRemove, onClose, onShare, onClearPast, shareCopied }) {
+  const today = todayDayOffset();
+  const all = saved.map(id => events.find(e => e.id === id)).filter(Boolean)
     .sort((a, b) => a.day - b.day || a.start.localeCompare(b.start));
+  const upcoming = all.filter(e => e.day >= today);
+  const past = all.filter(e => e.day < today);
 
-  // Group by day
+  // Group upcoming by day
   const byDay = {};
-  items.forEach(e => {
+  upcoming.forEach(e => {
     if (!byDay[e.day]) byDay[e.day] = [];
     byDay[e.day].push(e);
   });
+
+  const isEmpty = upcoming.length === 0 && past.length === 0;
+  const onlyPast = upcoming.length === 0 && past.length > 0;
 
   return (
     <div className="plan-backdrop" onClick={onClose}>
       <aside className="plan" onClick={e => e.stopPropagation()}>
         <header className="plan-head">
           <div className="plan-eyebrow">YOUR PLAN</div>
-          <h2 className="plan-title">The Weekend, Curated</h2>
+          <h2 className="plan-title">Your Plan</h2>
           <button className="plan-close" onClick={onClose}>×</button>
         </header>
-        {items.length === 0 ? (
+        {isEmpty && (
           <div className="plan-empty">
             <div className="plan-empty-mark">☆</div>
-            <p>Tap the star on any event to start building a weekend plan.</p>
+            <p>Tap the star on any event to start building a plan.</p>
           </div>
-        ) : (
+        )}
+        {onlyPast && (
+          <div className="plan-empty">
+            <div className="plan-empty-mark">✓</div>
+            <p>All your saved events have passed.</p>
+            <button className="plan-clear-past" onClick={onClearPast}>
+              Clear {past.length} past {past.length === 1 ? 'event' : 'events'}
+            </button>
+          </div>
+        )}
+        {upcoming.length > 0 && (
           <>
             <div className="plan-body">
               {Object.entries(byDay).map(([d, evs]) => {
@@ -534,15 +575,24 @@ function WeekendPlan({ events, saved, onRemove, onClose, onShare }) {
                   </div>
                 );
               })}
+              {past.length > 0 && (
+                <div className="plan-past-row">
+                  <button className="plan-clear-past" onClick={onClearPast}>
+                    Clear {past.length} past {past.length === 1 ? 'event' : 'events'}
+                  </button>
+                </div>
+              )}
             </div>
             <footer className="plan-foot">
               <button
                 className="plan-share"
-                onClick={() => downloadIcs('northeast-almanac-weekend.ics', eventsToIcs(items))}
+                onClick={() => downloadIcs('northeast-almanac-plan.ics', eventsToIcs(upcoming))}
               >
-                ↓ Download .ics
+                ↓ Download for calendar app
               </button>
-              <button className="plan-share" onClick={onShare}>↗ Share this weekend</button>
+              <button className="plan-share" onClick={onShare}>
+                {shareCopied ? '✓ Link copied' : '↗ Copy share link'}
+              </button>
             </footer>
           </>
         )}

@@ -1105,8 +1105,49 @@ body::before {
 }
 .drawer-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
+  align-items: stretch;
 }
+.drawer-cal-row {
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  background: var(--paper-3);
+}
+.drawer-cal-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.drawer-cal-btns {
+  display: flex;
+  gap: 6px;
+}
+.drawer-cal-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.drawer-cal-btn:hover { background: var(--ink); color: var(--paper); }
 .drawer-btn {
   flex: 1;
   padding: 12px 14px;
@@ -1236,6 +1277,9 @@ body::before {
 .plan-foot {
   padding: 18px 28px;
   border-top: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 .plan-share {
   width: 100%;
@@ -1247,8 +1291,28 @@ body::before {
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  cursor: pointer;
 }
 .plan-share:hover { background: var(--ink); }
+.plan-past-row {
+  padding: 10px 28px 18px;
+  display: flex;
+  justify-content: center;
+}
+.plan-clear-past {
+  background: transparent;
+  color: var(--ink-3);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 8px 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.12s, border-color 0.12s;
+}
+.plan-clear-past:hover { color: var(--ink); border-color: var(--ink); }
 
 /* ============ COLOPHON ============ */
 .colophon { margin-top: 60px; }
@@ -1784,7 +1848,8 @@ body::before {
   color: oklch(0.22 0.10 240);
 }
 @media (max-width: 800px) {
-  .wx-advisory { margin: 0 12px 10px; font-size: 11px; }
+  .wx-advisory { font-size: 11px; }
+  .cal-wrap { padding: 0 ;}
 }
 
 /* LOADING SKELETON */
@@ -1928,8 +1993,9 @@ body::before {
 .filters-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
+  gap: 10px;
+  height: 64px;
+  padding: 0 18px;
   background: var(--paper-3);
   color: var(--ink);
   border: 1px solid var(--rule);
@@ -1948,7 +2014,11 @@ body::before {
   border-color: var(--ink);
 }
 .filters-btn.has-active { border-color: var(--press-red); }
-.filters-btn-icon { font-size: 14px; line-height: 1; }
+.filters-btn-icon { font-size: 18px; line-height: 1; }
+@media (max-width: 800px) {
+  .filters-btn { height: 56px; padding: 0 14px; gap: 8px; }
+  .filters-btn-icon { font-size: 16px; }
+}
 .filters-btn-badge {
   display: inline-flex;
   align-items: center;

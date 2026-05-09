@@ -88,6 +88,7 @@ function parseHash() {
     town: p.get('town') || '',
     openEventId: p.get('ev') || null,
     planOpen: p.get('plan') === '1',
+    sharedIds: (p.get('share') || '').split(',').filter(Boolean),
   };
 }
 
@@ -126,6 +127,7 @@ function App() {
   const [saved, setSaved] = useStateApp([]);
   const [planOpen, setPlanOpen] = useStateApp(initial.planOpen);
   const [aboutOpen, setAboutOpen] = useStateApp(false);
+  const [shareCopied, setShareCopied] = useStateApp(false);
   const [events, setEvents] = useStateApp([]);
   const [eventStatus, setEventStatus] = useStateApp('loading'); // loading | live | mock | error
   const [generatedAt, setGeneratedAt] = useStateApp(null);
@@ -146,12 +148,21 @@ function App() {
     }
   }, [tweaks.values.layout]);
 
-  // Restore saved
+  // Restore saved (and merge any ?share=… IDs from a friend's link)
   useEffectApp(() => {
+    let s = [];
     try {
-      const s = JSON.parse(localStorage.getItem('nepa-saved') || '[]');
-      setSaved(s);
+      s = JSON.parse(localStorage.getItem('nepa-saved') || '[]');
     } catch {}
+    const incoming = initial.sharedIds || [];
+    if (incoming.length > 0) {
+      const merged = [...s];
+      incoming.forEach(id => { if (!merged.includes(id)) merged.push(id); });
+      setSaved(merged);
+      setPlanOpen(true);
+    } else {
+      setSaved(s);
+    }
   }, []);
   useEffectApp(() => {
     localStorage.setItem('nepa-saved', JSON.stringify(saved));
@@ -234,6 +245,42 @@ function App() {
     setSaved(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
   };
 
+  const upcomingSavedCount = useMemoApp(() => {
+    if (events.length === 0) return saved.length;
+    const today = todayDayOffset();
+    return saved.filter(id => {
+      const ev = events.find(e => e.id === id);
+      return ev && ev.day >= today;
+    }).length;
+  }, [saved, events]);
+
+  const clearPastSaved = () => {
+    if (events.length === 0) return;
+    const today = todayDayOffset();
+    setSaved(s => s.filter(id => {
+      const ev = events.find(e => e.id === id);
+      return !ev || ev.day >= today;
+    }));
+  };
+
+  const sharePlan = async () => {
+    if (events.length === 0) return;
+    const today = todayDayOffset();
+    const ids = saved.filter(id => {
+      const ev = events.find(e => e.id === id);
+      return ev && ev.day >= today;
+    });
+    if (ids.length === 0) return;
+    const url = `${location.origin}${location.pathname}#share=${ids.join(',')}`;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      window.prompt('Copy this link:', url);
+    }
+    setShareCopied(true);
+    setTimeout(() => setShareCopied(false), 1800);
+  };
+
   const toggleCat = (cat) => {
     setActiveCats(cs =>
       cs.includes(cat) ? cs.filter(c => c !== cat) : [...cs, cat]
@@ -285,8 +332,8 @@ function App() {
           </h1>
           <button className="mast-plan" onClick={() => setPlanOpen(true)}>
             <span className="mast-plan-star">★</span>
-            <span className="mast-plan-text">My Weekend</span>
-            {saved.length > 0 && <span className="mast-plan-count">{saved.length}</span>}
+            <span className="mast-plan-text">My Plan</span>
+            {upcomingSavedCount > 0 && <span className="mast-plan-count">{upcomingSavedCount}</span>}
           </button>
         </div>
         <div className="mast-rule thin" />
@@ -492,7 +539,9 @@ function App() {
           saved={saved}
           onRemove={toggleSave}
           onClose={() => setPlanOpen(false)}
-          onShare={() => alert('Share link copied — friends will see your saved events.')}
+          onShare={sharePlan}
+          onClearPast={clearPastSaved}
+          shareCopied={shareCopied}
         />
       )}
 

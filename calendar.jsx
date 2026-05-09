@@ -220,6 +220,62 @@ function eventsToIcs(events) {
   ].join('\r\n');
 }
 
+function eventToGcalUrl(ev) {
+  const iso = dateForDay(ev.day).iso;
+  const ymd = iso.replace(/-/g, '');
+  let dates;
+  if (isAllDay(ev)) {
+    const next = new Date(iso + 'T00:00:00');
+    next.setDate(next.getDate() + 1);
+    const endYmd = `${next.getFullYear()}${pad2(next.getMonth() + 1)}${pad2(next.getDate())}`;
+    dates = `${ymd}/${endYmd}`;
+  } else {
+    const stamp = (t) => {
+      const [h, m] = t.split(':').map(Number);
+      return `${ymd}T${pad2(h)}${pad2(m)}00`;
+    };
+    dates = `${stamp(ev.start)}/${stamp(ev.end)}`;
+  }
+  const p = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: ev.title,
+    dates,
+    location: `${ev.venue}, ${ev.town}, PA`,
+    details: [ev.blurb, ev.url].filter(Boolean).join('\n\n'),
+  });
+  return `https://calendar.google.com/calendar/render?${p.toString()}`;
+}
+
+function eventToOutlookUrl(ev) {
+  const iso = dateForDay(ev.day).iso;
+  const allDay = isAllDay(ev);
+  let startdt, enddt;
+  if (allDay) {
+    startdt = iso;
+    const next = new Date(iso + 'T00:00:00');
+    next.setDate(next.getDate() + 1);
+    enddt = `${next.getFullYear()}-${pad2(next.getMonth() + 1)}-${pad2(next.getDate())}`;
+  } else {
+    const stamp = (t) => {
+      const [h, m] = t.split(':').map(Number);
+      return `${iso}T${pad2(h)}:${pad2(m)}:00`;
+    };
+    startdt = stamp(ev.start);
+    enddt = stamp(ev.end);
+  }
+  const p = new URLSearchParams({
+    path: '/calendar/action/compose',
+    rru: 'addevent',
+    subject: ev.title,
+    startdt,
+    enddt,
+    location: `${ev.venue}, ${ev.town}, PA`,
+    body: [ev.blurb, ev.url].filter(Boolean).join('\n\n'),
+    allday: allDay ? 'true' : 'false',
+  });
+  return `https://outlook.live.com/calendar/0/deeplink/compose?${p.toString()}`;
+}
+
 function slugify(s) {
   return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'event';
 }
@@ -236,4 +292,4 @@ function downloadIcs(filename, ics) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-Object.assign(window, { CalendarView, fmtTime, isAllDay, fmtEventTime, eventToIcs, eventsToIcs, downloadIcs, slugify, useIsMobile });
+Object.assign(window, { CalendarView, fmtTime, isAllDay, fmtEventTime, eventToIcs, eventsToIcs, downloadIcs, slugify, useIsMobile, eventToGcalUrl, eventToOutlookUrl });

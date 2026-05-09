@@ -1,0 +1,25 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Northeast Almanac//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:hm-10020720@nepa-almanac
+DTSTAMP:20260509T214849Z
+DTSTART;VALUE=DATE:20260509
+DTEND;VALUE=DATE:20260510
+SUMMARY:Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture
+LOCATION:SordoniArtGallery\, Wilkes-Barre\, PA
+DESCRIPTION:Why Am I Sad by Dana Stirling explores mental health and depression through still life photography. An estimated 280 million people worldwide live with depression\; this exhibition shares the personal narrative of one of them—Dana Stirling. As a child of immigrants\, she grew up navigating dual identities\, often feeling 
+URL:https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-09/
+END:VEVENT
+BEGIN:VEVENT
+UID:mary-http___uid_trumba_com_event_1266315643@nepa-almanac
+DTSTAMP:20260509T214849Z
+DTSTART;VALUE=DATE:20260509
+DTEND;VALUE=DATE:20260510
+SUMMARY:Spring Semester Ends
+LOCATION:Marywood University\, Scranton\, PA
+DESCRIPTION:Academic Dates Saturday\, May 9\, 2026 Event Name: Spring Semester Ends Event State: Confirmed Organizer: ariccio@marywood.edu Event Locator: 2025-AAHACL Categories: *Academic Affairs\, *Registrar\, *Community Event\, *Academics\, *IEP Organization: Registrar
+URL:https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1266315643
+END:VEVENT
+END:VCALENDAR
