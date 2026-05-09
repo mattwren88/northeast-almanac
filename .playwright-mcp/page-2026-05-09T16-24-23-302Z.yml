@@ -1,0 +1,72 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: VOL. III · NO. 17
+      - generic [ref=e7]: SATURDAY, MAY 9, 2026 — TWO-WEEK ALMANAC
+      - generic [ref=e8]: FREE · PA
+    - generic [ref=e10]:
+      - heading "The Northeast Almanac" [level=1] [ref=e11]:
+        - generic [ref=e12]: The
+        - generic [ref=e13]: Northeast Almanac
+      - button "★ My Weekend" [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: ★
+        - generic [ref=e16]: My Weekend
+    - generic [ref=e18]: A standing chronicle of markets, gallery openings, hikes, dive bars, opera-house touring acts, and other goings-on across the Lackawanna, Wyoming, and Pocono valleys — refreshed daily at dawn.
+  - generic [ref=e19]:
+    - generic [ref=e20]:
+      - button "Week" [pressed] [ref=e21] [cursor=pointer]:
+        - img [ref=e23]
+        - generic [ref=e25]: Week
+      - button "Weekend" [ref=e26] [cursor=pointer]:
+        - img [ref=e28]
+        - generic [ref=e32]: Weekend
+      - button "Map" [ref=e33] [cursor=pointer]:
+        - img [ref=e35]
+        - generic [ref=e38]: Map
+      - button "Index" [ref=e39] [cursor=pointer]:
+        - img [ref=e41]
+        - generic [ref=e45]: Index
+    - button "≡ Filters ▼" [ref=e47] [cursor=pointer]:
+      - generic [ref=e48]: ≡
+      - generic [ref=e49]: Filters
+      - generic [ref=e50]: ▼
+  - main [ref=e51]:
+    - status "Loading events" [ref=e52]:
+      - generic [ref=e53]:
+        - generic [ref=e54]: SETTING TYPE · COMPILING THE WEEK
+        - generic [ref=e55]: Pulling tonight's edition…
+  - contentinfo [ref=e183]:
+    - generic [ref=e185]:
+      - generic [ref=e186]:
+        - generic [ref=e187]: Compiled from
+        - generic [ref=e188]:
+          - link "DiscoverNEPA" [ref=e189] [cursor=pointer]:
+            - /url: https://discovernepa.com/events/
+          - text: ·
+          - link "Happenings Magazine" [ref=e190] [cursor=pointer]:
+            - /url: https://www.happeningsmagazinepa.com/events/
+          - text: ·
+          - link "Lackawanna County Library System" [ref=e191] [cursor=pointer]:
+            - /url: https://lclshome.org/events/
+          - text: ·
+          - link "City of Scranton" [ref=e192] [cursor=pointer]:
+            - /url: https://scrantonpa.gov/events/
+          - text: ·
+          - link "University of Scranton" [ref=e193] [cursor=pointer]:
+            - /url: https://events.scranton.edu/
+          - text: ·
+          - link "Marywood University" [ref=e194] [cursor=pointer]:
+            - /url: https://www.marywood.edu/community/news-events
+          - text: ·
+          - link "Keystone College" [ref=e195] [cursor=pointer]:
+            - /url: https://www.keystone.edu/keystone-events/
+          - text: . Weather via
+          - link "Open-Meteo" [ref=e196] [cursor=pointer]:
+            - /url: https://open-meteo.com
+          - text: .
+      - generic [ref=e197]:
+        - generic [ref=e198]: Coverage area
+        - generic [ref=e199]: Lackawanna · Luzerne · Wayne · Monroe · Carbon counties
+      - generic [ref=e200]:
+        - generic [ref=e201]: About
+        - button "How this almanac is made →" [ref=e203] [cursor=pointer]

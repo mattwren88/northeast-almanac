@@ -1,6 +1,6 @@
 // Main app — masthead, sidebar, view switching, filters
 
-const { useState: useStateApp, useEffect: useEffectApp, useMemo: useMemoApp } = React;
+const { useState: useStateApp, useEffect: useEffectApp, useMemo: useMemoApp, useRef: useRefApp } = React;
 
 function RefreshStamp({ generatedAt, eventStatus }) {
   if (eventStatus === 'mock') {
@@ -31,6 +31,47 @@ function RefreshStamp({ generatedAt, eventStatus }) {
 
 const ALL_VIEWS = ['calendar', 'weekend', 'map', 'list'];
 const ALL_CATS = Object.keys(CATEGORIES);
+
+// Editorial monochrome glyphs for the View toolbar. 20×20, currentColor stroke,
+// inheriting tile color so the inverted active state works automatically.
+const WeekGlyph = () => (
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+    <rect x="2.5" y="4" width="15" height="12" rx="1.2" />
+    <line x1="2.5" y1="7.5" x2="17.5" y2="7.5" />
+    {[5.5, 7.7, 9.9, 12.1, 14.3].map((x, i) => (
+      <line key={i} x1={x} y1="7.5" x2={x} y2="16" />
+    ))}
+  </svg>
+);
+const WeekendGlyph = () => (
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2"  y="9" width="4.5" height="6.5" rx="0.8" />
+    <rect x="7.75" y="6" width="4.5" height="9.5" rx="0.8" />
+    <rect x="13.5" y="9" width="4.5" height="6.5" rx="0.8" />
+  </svg>
+);
+const MapGlyph = () => (
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M10 3.5 C7 3.5 5 5.5 5 8 C5 11.5 10 16.5 10 16.5 C10 16.5 15 11.5 15 8 C15 5.5 13 3.5 10 3.5 Z" />
+    <circle cx="10" cy="8" r="1.7" fill="currentColor" stroke="none" />
+  </svg>
+);
+const IndexGlyph = () => (
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+    <circle cx="4.5" cy="5.5"  r="0.9" fill="currentColor" stroke="none" />
+    <circle cx="4.5" cy="10"   r="0.9" fill="currentColor" stroke="none" />
+    <circle cx="4.5" cy="14.5" r="0.9" fill="currentColor" stroke="none" />
+    <line x1="7.5" y1="5.5"  x2="17" y2="5.5" />
+    <line x1="7.5" y1="10"   x2="17" y2="10" />
+    <line x1="7.5" y1="14.5" x2="17" y2="14.5" />
+  </svg>
+);
+const VIEW_TILES = [
+  { key: 'calendar', label: 'Week',    Glyph: WeekGlyph },
+  { key: 'weekend',  label: 'Weekend', Glyph: WeekendGlyph },
+  { key: 'map',      label: 'Map',     Glyph: MapGlyph },
+  { key: 'list',     label: 'Index',   Glyph: IndexGlyph },
+];
 
 function parseHash() {
   const raw = (window.location.hash || '').replace(/^#/, '');
@@ -260,14 +301,16 @@ function App() {
       {/* TOOLBAR */}
       <div className="toolbar">
         <div className="toolbar-section toolbar-views">
-          <span className="toolbar-label">View</span>
-          {['calendar', 'weekend', 'map', 'list'].map(v => (
+          {VIEW_TILES.map(t => (
             <button
-              key={v}
-              className={`toolbar-tab ${view === v ? 'is-active' : ''}`}
-              onClick={() => setLayout(v)}
+              key={t.key}
+              className={`toolbar-view-tile ${view === t.key ? 'is-active' : ''}`}
+              onClick={() => setLayout(t.key)}
+              aria-label={t.label}
+              aria-pressed={view === t.key}
             >
-              {v === 'calendar' ? 'Week' : v === 'weekend' ? 'Weekend' : v === 'map' ? 'Map' : 'Index'}
+              <span className="toolbar-view-tile-glyph"><t.Glyph /></span>
+              <span className="toolbar-view-tile-label">{t.label}</span>
             </button>
           ))}
         </div>
@@ -354,42 +397,46 @@ function App() {
       {/* MAIN VIEW */}
       <main className="main">
         {eventStatus === 'loading' && <LoadingSkeleton />}
-        {eventStatus !== 'loading' && view === 'calendar' && (
-          <CalendarView
-            events={filtered}
-            saved={saved}
-            onSave={toggleSave}
-            onOpen={setOpenEventId}
-            weekOffset={weekOffset}
-            setWeekOffset={setWeekOffset}
-            weatherAware={true}
-          />
-        )}
-        {eventStatus !== 'loading' && view === 'weekend' && (
-          <WeekendView
-            events={filtered}
-            saved={saved}
-            onSave={toggleSave}
-            onOpen={setOpenEventId}
-          />
-        )}
-        {eventStatus !== 'loading' && view === 'map' && (
-          <MapView
-            events={filtered}
-            saved={saved}
-            onSave={toggleSave}
-            onOpen={setOpenEventId}
-            weekOffset={weekOffset}
-          />
-        )}
-        {eventStatus !== 'loading' && view === 'list' && (
-          <ListView
-            events={filtered}
-            saved={saved}
-            onSave={toggleSave}
-            onOpen={setOpenEventId}
-            weekOffset={weekOffset}
-          />
+        {eventStatus !== 'loading' && (
+          <div key={view} className="view-fade">
+            {view === 'calendar' && (
+              <CalendarView
+                events={filtered}
+                saved={saved}
+                onSave={toggleSave}
+                onOpen={setOpenEventId}
+                weekOffset={weekOffset}
+                setWeekOffset={setWeekOffset}
+                weatherAware={true}
+              />
+            )}
+            {view === 'weekend' && (
+              <WeekendView
+                events={filtered}
+                saved={saved}
+                onSave={toggleSave}
+                onOpen={setOpenEventId}
+              />
+            )}
+            {view === 'map' && (
+              <MapView
+                events={filtered}
+                saved={saved}
+                onSave={toggleSave}
+                onOpen={setOpenEventId}
+                weekOffset={weekOffset}
+              />
+            )}
+            {view === 'list' && (
+              <ListView
+                events={filtered}
+                saved={saved}
+                onSave={toggleSave}
+                onOpen={setOpenEventId}
+                weekOffset={weekOffset}
+              />
+            )}
+          </div>
         )}
       </main>
 
@@ -568,6 +615,114 @@ function AboutModal({ onClose, generatedAt }) {
   );
 }
 
+function TownDropdown({ towns, value, onChange }) {
+  const [open, setOpen] = useStateApp(false);
+  const [query, setQuery] = useStateApp('');
+  const [activeIdx, setActiveIdx] = useStateApp(0);
+  const wrapRef = useRefApp(null);
+  const inputRef = useRefApp(null);
+
+  // Close on click outside or Esc
+  useEffectApp(() => {
+    if (!open) return;
+    const onDocClick = (e) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false);
+    };
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', onDocClick);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDocClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  // Focus search when opening
+  useEffectApp(() => {
+    if (open) {
+      setQuery('');
+      setActiveIdx(0);
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }
+  }, [open]);
+
+  const options = useMemoApp(() => {
+    const q = query.trim().toLowerCase();
+    const filtered = q ? towns.filter(t => t.toLowerCase().includes(q)) : towns;
+    return [{ value: '', label: 'All towns' }, ...filtered.map(t => ({ value: t, label: t }))];
+  }, [towns, query]);
+
+  const pick = (v) => { onChange(v); setOpen(false); };
+
+  const onInputKey = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setActiveIdx(i => Math.min(options.length - 1, i + 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setActiveIdx(i => Math.max(0, i - 1));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      const opt = options[activeIdx];
+      if (opt) pick(opt.value);
+    }
+  };
+
+  const buttonLabel = value || 'All towns';
+
+  return (
+    <div className={`town-dd ${open ? 'is-open' : ''}`} ref={wrapRef}>
+      <button
+        type="button"
+        className={`town-dd-trigger ${value ? 'has-value' : ''}`}
+        onClick={() => setOpen(o => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <span className="town-dd-trigger-label">{buttonLabel}</span>
+        <span className="town-dd-trigger-caret">{open ? '▲' : '▼'}</span>
+      </button>
+      {open && (
+        <div className="town-dd-pop" role="listbox">
+          <div className="town-dd-search">
+            <input
+              ref={inputRef}
+              type="search"
+              placeholder={`Search ${towns.length} towns…`}
+              value={query}
+              onChange={e => { setQuery(e.target.value); setActiveIdx(0); }}
+              onKeyDown={onInputKey}
+            />
+          </div>
+          <div className="town-dd-list">
+            {options.length === 1 && query && (
+              <div className="town-dd-empty">No towns match "{query}"</div>
+            )}
+            {options.map((opt, i) => {
+              const isSel = opt.value === value;
+              const isActive = i === activeIdx;
+              return (
+                <button
+                  key={opt.value || '__all'}
+                  type="button"
+                  role="option"
+                  aria-selected={isSel}
+                  className={`town-dd-row ${isSel ? 'is-selected' : ''} ${isActive ? 'is-active' : ''} ${opt.value === '' ? 'is-all' : ''}`}
+                  onClick={() => pick(opt.value)}
+                  onMouseEnter={() => setActiveIdx(i)}
+                >
+                  <span className="town-dd-row-mark" aria-hidden="true">{isSel ? '✓' : ''}</span>
+                  <span className="town-dd-row-label">{opt.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function FiltersPanel({
   activeCats, toggleCat,
   activeAudiences, toggleAudience,
@@ -633,14 +788,11 @@ function FiltersPanel({
             <span className="filters-block-hint">{allTowns.length} towns in this batch</span>
           </div>
           <div className="filters-block-rows">
-            <select
-              className="filters-town-select"
+            <TownDropdown
+              towns={allTowns}
               value={activeTown}
-              onChange={e => setActiveTown(e.target.value)}
-            >
-              <option value="">All towns</option>
-              {allTowns.map(t => <option key={t} value={t}>{t}</option>)}
-            </select>
+              onChange={setActiveTown}
+            />
           </div>
         </div>
       </div>

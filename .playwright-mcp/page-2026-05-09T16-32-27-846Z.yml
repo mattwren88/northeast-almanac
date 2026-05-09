@@ -1,0 +1,252 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: VOL. III · NO. 17
+      - generic [ref=e7]: SATURDAY, MAY 9, 2026 — TWO-WEEK ALMANAC
+      - generic [ref=e8]: FREE · PA
+    - generic [ref=e10]:
+      - heading "The Northeast Almanac" [level=1] [ref=e11]:
+        - generic [ref=e12]: The
+        - generic [ref=e13]: Northeast Almanac
+      - button "★ My Weekend" [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: ★
+        - generic [ref=e16]: My Weekend
+    - generic [ref=e18]: A standing chronicle of markets, gallery openings, hikes, dive bars, opera-house touring acts, and other goings-on across the Lackawanna, Wyoming, and Pocono valleys — refreshed daily at dawn.
+    - generic [ref=e204]: Refreshed just now
+  - generic [ref=e19]:
+    - generic [ref=e20]:
+      - button "Week" [ref=e21] [cursor=pointer]:
+        - img [ref=e23]
+        - generic [ref=e25]: Week
+      - button "Weekend" [ref=e26] [cursor=pointer]:
+        - img [ref=e28]
+        - generic [ref=e32]: Weekend
+      - button "Map" [active] [pressed] [ref=e33] [cursor=pointer]:
+        - img [ref=e35]
+        - generic [ref=e38]: Map
+      - button "Index" [ref=e39] [cursor=pointer]:
+        - img [ref=e41]
+        - generic [ref=e45]: Index
+    - button "≡ Filters ▼" [ref=e47] [cursor=pointer]:
+      - generic [ref=e48]: ≡
+      - generic [ref=e49]: Filters
+      - generic [ref=e50]: ▼
+  - main [ref=e51]:
+    - generic [ref=e1910]:
+      - generic [ref=e1911]:
+        - button "Sat· 9 27" [ref=e1912] [cursor=pointer]:
+          - generic [ref=e1913]: Sat·
+          - generic [ref=e1914]: "9"
+          - generic [ref=e1915]: "27"
+        - button "Sun 10 11" [ref=e1916] [cursor=pointer]:
+          - generic [ref=e1917]: Sun
+          - generic [ref=e1918]: "10"
+          - generic [ref=e1919]: "11"
+        - button "Mon 11 15" [ref=e1920] [cursor=pointer]:
+          - generic [ref=e1921]: Mon
+          - generic [ref=e1922]: "11"
+          - generic [ref=e1923]: "15"
+        - button "Tue 12 23" [ref=e1924] [cursor=pointer]:
+          - generic [ref=e1925]: Tue
+          - generic [ref=e1926]: "12"
+          - generic [ref=e1927]: "23"
+        - button "Wed 13 25" [ref=e1928] [cursor=pointer]:
+          - generic [ref=e1929]: Wed
+          - generic [ref=e1930]: "13"
+          - generic [ref=e1931]: "25"
+        - button "Thu 14 28" [ref=e1932] [cursor=pointer]:
+          - generic [ref=e1933]: Thu
+          - generic [ref=e1934]: "14"
+          - generic [ref=e1935]: "28"
+        - button "Fri 15 19" [ref=e1936] [cursor=pointer]:
+          - generic [ref=e1937]: Fri
+          - generic [ref=e1938]: "15"
+          - generic [ref=e1939]: "19"
+      - generic [ref=e1940]:
+        - generic [ref=e1941]:
+          - generic [ref=e1942]:
+            - generic:
+              - generic:
+                - img
+              - generic:
+                - button "6" [ref=e1946] [cursor=pointer]:
+                  - generic [ref=e1947]: "6"
+                - button "2" [ref=e1948] [cursor=pointer]:
+                  - generic [ref=e1949]: "2"
+                - button "10" [ref=e1950] [cursor=pointer]:
+                  - generic [ref=e1951]: "10"
+                - button "6" [ref=e1952] [cursor=pointer]:
+                  - generic [ref=e1953]: "6"
+            - generic:
+              - generic [ref=e1954]:
+                - button "Zoom in" [ref=e1955] [cursor=pointer]: +
+                - button "Zoom out" [ref=e1956] [cursor=pointer]: −
+              - generic [ref=e1957]:
+                - link "Leaflet" [ref=e1958] [cursor=pointer]:
+                  - /url: https://leafletjs.com
+                  - img [ref=e1959]
+                  - text: Leaflet
+                - text: "| © OpenStreetMap © CARTO"
+          - generic "Category key":
+            - generic:
+              - generic: 🛍 Markets
+            - generic:
+              - generic: 🍴 Food & Drink
+            - generic:
+              - generic: 🌲 Outdoors
+            - generic:
+              - generic: 🎨 Art
+            - generic:
+              - generic: 🎭 Theater & Music
+            - generic:
+              - generic: 🌙 Nightlife
+            - generic:
+              - generic: 👥 Community
+        - generic [ref=e1963]:
+          - generic [ref=e1964]:
+            - generic [ref=e1965]: Sat, May 9
+            - generic [ref=e1966]: 27 events
+          - generic [ref=e1967]:
+            - 'button "All day Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture Wilkes-Barre" [ref=e1968] [cursor=pointer]':
+              - generic [ref=e1970]: All day
+              - generic [ref=e1971]: "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture"
+              - generic [ref=e1972]: Wilkes-Barre
+            - button "8 AM Monroe Farmers Market Stroudsburg" [ref=e1973] [cursor=pointer]:
+              - generic [ref=e1975]: 8 AM
+              - generic [ref=e1976]: Monroe Farmers Market
+              - generic [ref=e1977]: Stroudsburg
+            - button "8 AM Stock Car Racing Experience Long Pond" [ref=e1978] [cursor=pointer]:
+              - generic [ref=e1980]: 8 AM
+              - generic [ref=e1981]: Stock Car Racing Experience
+              - generic [ref=e1982]: Long Pond
+            - button "8 AM Second Saturdays Carbondale" [ref=e1983] [cursor=pointer]:
+              - generic [ref=e1985]: 8 AM
+              - generic [ref=e1986]: Second Saturdays
+              - generic [ref=e1987]: Carbondale
+            - button "8:30 AM Cancer Wellness Center Annual Walk Forty Fort" [ref=e1988] [cursor=pointer]:
+              - generic [ref=e1990]: 8:30 AM
+              - generic [ref=e1991]: Cancer Wellness Center Annual Walk
+              - generic [ref=e1992]: Forty Fort
+            - button "9 AM 6th Annual Lisa Napoletano Running with the Angels Jim Thorpe" [ref=e1993] [cursor=pointer]:
+              - generic [ref=e1995]: 9 AM
+              - generic [ref=e1996]: 6th Annual Lisa Napoletano Running with the Angels
+              - generic [ref=e1997]: Jim Thorpe
+            - button "9 AM Northeast PA Heart Walk Moosic" [ref=e1998] [cursor=pointer]:
+              - generic [ref=e2000]: 9 AM
+              - generic [ref=e2001]: Northeast PA Heart Walk
+              - generic [ref=e2002]: Moosic
+            - button "9 AM Scranton SoccerFest Scranton" [ref=e2003] [cursor=pointer]:
+              - generic [ref=e2005]: 9 AM
+              - generic [ref=e2006]: Scranton SoccerFest
+              - generic [ref=e2007]: Scranton
+            - button "9:30 AM Seed to Supper Wilkes-Barre" [ref=e2008] [cursor=pointer]:
+              - generic [ref=e2010]: 9:30 AM
+              - generic [ref=e2011]: Seed to Supper
+              - generic [ref=e2012]: Wilkes-Barre
+            - button "10 AM Touch-a-Truck Avoca" [ref=e2013] [cursor=pointer]:
+              - generic [ref=e2015]: 10 AM
+              - generic [ref=e2016]: Touch-a-Truck
+              - generic [ref=e2017]: Avoca
+            - 'button "10 AM The Whispering: Screen Performance Exhibition Wilkes-Barre" [ref=e2018] [cursor=pointer]':
+              - generic [ref=e2020]: 10 AM
+              - generic [ref=e2021]: "The Whispering: Screen Performance Exhibition"
+              - generic [ref=e2022]: Wilkes-Barre
+            - button "11 AM Paint the Planet Pink Celebration of Life Blood Drive Scranton" [ref=e2023] [cursor=pointer]:
+              - generic [ref=e2025]: 11 AM
+              - generic [ref=e2026]: Paint the Planet Pink Celebration of Life Blood Drive
+              - generic [ref=e2027]: Scranton
+            - 'button "11 AM Compassionate Canines: Read to a Dog! Scranton" [ref=e2028] [cursor=pointer]':
+              - generic [ref=e2030]: 11 AM
+              - generic [ref=e2031]: "Compassionate Canines: Read to a Dog!"
+              - generic [ref=e2032]: Scranton
+            - button "12 PM Free Community Lunch Carbondale" [ref=e2033] [cursor=pointer]:
+              - generic [ref=e2035]: 12 PM
+              - generic [ref=e2036]: Free Community Lunch
+              - generic [ref=e2037]: Carbondale
+            - button "12 PM Free Monthly Community Luncheon Carbondale" [ref=e2038] [cursor=pointer]:
+              - generic [ref=e2040]: 12 PM
+              - generic [ref=e2041]: Free Monthly Community Luncheon
+              - generic [ref=e2042]: Carbondale
+            - button "12 PM DIY Seed Bombs Scranton" [ref=e2043] [cursor=pointer]:
+              - generic [ref=e2045]: 12 PM
+              - generic [ref=e2046]: DIY Seed Bombs
+              - generic [ref=e2047]: Scranton
+            - 'button "1 PM Movie Fans Matinee: Some Like it Hot Clarks Summit" [ref=e2048] [cursor=pointer]':
+              - generic [ref=e2050]: 1 PM
+              - generic [ref=e2051]: "Movie Fans Matinee: Some Like it Hot"
+              - generic [ref=e2052]: Clarks Summit
+            - button "1 PM Teen Gachapon Bingo Scranton" [ref=e2053] [cursor=pointer]:
+              - generic [ref=e2055]: 1 PM
+              - generic [ref=e2056]: Teen Gachapon Bingo
+              - generic [ref=e2057]: Scranton
+            - 'button "2 PM Danger Club: Making Popping Boba Scranton" [ref=e2058] [cursor=pointer]':
+              - generic [ref=e2060]: 2 PM
+              - generic [ref=e2061]: "Danger Club: Making Popping Boba"
+              - generic [ref=e2062]: Scranton
+            - button "2 PM Is It Reel? How to Debunk Misinformation in Online Videos Scranton" [ref=e2063] [cursor=pointer]:
+              - generic [ref=e2065]: 2 PM
+              - generic [ref=e2066]: Is It Reel? How to Debunk Misinformation in Online Videos
+              - generic [ref=e2067]: Scranton
+            - button "2 PM Fandom Fanatics Carbondale" [ref=e2068] [cursor=pointer]:
+              - generic [ref=e2070]: 2 PM
+              - generic [ref=e2071]: Fandom Fanatics
+              - generic [ref=e2072]: Carbondale
+            - button "4 PM Second Saturdays Series Carbondale" [ref=e2073] [cursor=pointer]:
+              - generic [ref=e2075]: 4 PM
+              - generic [ref=e2076]: Second Saturdays Series
+              - generic [ref=e2077]: Carbondale
+            - button "5 PM Wine Tasting, Art & Live Piano Carbondale" [ref=e2078] [cursor=pointer]:
+              - generic [ref=e2080]: 5 PM
+              - generic [ref=e2081]: Wine Tasting, Art & Live Piano
+              - generic [ref=e2082]: Carbondale
+            - button "5:45 PM CSUMC Vacation Bible School Clarks Summit" [ref=e2083] [cursor=pointer]:
+              - generic [ref=e2085]: 5:45 PM
+              - generic [ref=e2086]: CSUMC Vacation Bible School
+              - generic [ref=e2087]: Clarks Summit
+            - button "6 PM Art in Motion Mural Trolley Tour Wilkes-Barre" [ref=e2088] [cursor=pointer]:
+              - generic [ref=e2090]: 6 PM
+              - generic [ref=e2091]: Art in Motion Mural Trolley Tour
+              - generic [ref=e2092]: Wilkes-Barre
+            - button "7 PM Fall of the House of Usher Scranton" [ref=e2093] [cursor=pointer]:
+              - generic [ref=e2095]: 7 PM
+              - generic [ref=e2096]: Fall of the House of Usher
+              - generic [ref=e2097]: Scranton
+            - 'button "7:30 PM Little Theatre of Wilkes Barre presents: A Chorus Line Wilkes-Barre" [ref=e2098] [cursor=pointer]':
+              - generic [ref=e2100]: 7:30 PM
+              - generic [ref=e2101]: "Little Theatre of Wilkes Barre presents: A Chorus Line"
+              - generic [ref=e2102]: Wilkes-Barre
+  - contentinfo [ref=e183]:
+    - generic [ref=e185]:
+      - generic [ref=e186]:
+        - generic [ref=e187]: Compiled from
+        - generic [ref=e188]:
+          - link "DiscoverNEPA" [ref=e189] [cursor=pointer]:
+            - /url: https://discovernepa.com/events/
+          - text: ·
+          - link "Happenings Magazine" [ref=e190] [cursor=pointer]:
+            - /url: https://www.happeningsmagazinepa.com/events/
+          - text: ·
+          - link "Lackawanna County Library System" [ref=e191] [cursor=pointer]:
+            - /url: https://lclshome.org/events/
+          - text: ·
+          - link "City of Scranton" [ref=e192] [cursor=pointer]:
+            - /url: https://scrantonpa.gov/events/
+          - text: ·
+          - link "University of Scranton" [ref=e193] [cursor=pointer]:
+            - /url: https://events.scranton.edu/
+          - text: ·
+          - link "Marywood University" [ref=e194] [cursor=pointer]:
+            - /url: https://www.marywood.edu/community/news-events
+          - text: ·
+          - link "Keystone College" [ref=e195] [cursor=pointer]:
+            - /url: https://www.keystone.edu/keystone-events/
+          - text: . Weather via
+          - link "Open-Meteo" [ref=e196] [cursor=pointer]:
+            - /url: https://open-meteo.com
+          - text: .
+      - generic [ref=e197]:
+        - generic [ref=e198]: Coverage area
+        - generic [ref=e199]: Lackawanna · Luzerne · Wayne · Monroe · Carbon counties
+      - generic [ref=e200]:
+        - generic [ref=e201]: About
+        - button "How this almanac is made →" [ref=e203] [cursor=pointer]

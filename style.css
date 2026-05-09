@@ -55,7 +55,7 @@ body::before {
 
 /* ============ MASTHEAD ============ */
 .mast {
-  padding-bottom: 14px;
+  padding-bottom: 4px;
 }
 .mast-top {
   display: flex;
@@ -143,7 +143,7 @@ body::before {
   font-size: 17px;
   color: var(--ink-2);
   max-width: 920px;
-  padding: 12px 0 0;
+  padding: 8px 0 0;
   line-height: 1.4;
   text-wrap: pretty;
 }
@@ -152,7 +152,7 @@ body::before {
   font-size: 10px;
   letter-spacing: 1.4px;
   text-transform: uppercase;
-  padding: 8px 0 0;
+  padding: 4px 0 0;
   color: var(--ink-3);
 }
 .mast-refresh.fresh { color: var(--ink-3); }
@@ -174,8 +174,8 @@ body::before {
   flex-wrap: wrap;
   gap: 24px;
   align-items: center;
-  padding: 18px 0 14px;
-  margin-top: 10px;
+  padding: 12px 0 10px;
+  margin-top: 6px;
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
 }
@@ -1765,7 +1765,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 24px 14px;
+  margin: 14px;
   padding: 10px 14px;
   background: oklch(0.95 0.04 240);
   border: 1px solid oklch(0.78 0.06 240);
@@ -2169,3 +2169,204 @@ body::before {
   border-bottom: 1px solid var(--rule-soft);
 }
 .about-subhead:first-child { margin-top: 0; }
+
+/* VIEW TILES (replaces .toolbar-tab text tabs) */
+.toolbar-views { gap: 8px; }
+.toolbar-view-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 64px;
+  height: 64px;
+  padding: 8px 4px;
+  background: var(--paper-3);
+  color: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+.toolbar-view-tile:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.toolbar-view-tile.is-active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.toolbar-view-tile-glyph {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.toolbar-view-tile-glyph svg { width: 100%; height: 100%; display: block; }
+.toolbar-view-tile-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+@media (max-width: 800px) {
+  .toolbar-view-tile { width: 56px; height: 56px; }
+  .toolbar-view-tile-glyph { width: 20px; height: 20px; }
+  .toolbar-view-tile-label { font-size: 9px; }
+}
+
+/* CUSTOM TOWN DROPDOWN (replaces native <select>) */
+.town-dd {
+  position: relative;
+  width: 100%;
+}
+.town-dd-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px;
+  background: var(--paper-2);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: 14px;
+  text-align: left;
+  transition: border-color 0.12s, background 0.12s;
+}
+.town-dd-trigger:hover { border-color: var(--ink); }
+.town-dd.is-open .town-dd-trigger {
+  border-color: var(--ink);
+  background: var(--paper-3);
+}
+.town-dd-trigger.has-value .town-dd-trigger-label {
+  font-weight: 600;
+}
+.town-dd-trigger-caret {
+  font-size: 8px;
+  color: var(--ink-3);
+  flex-shrink: 0;
+}
+.town-dd.is-open .town-dd-trigger-caret { color: var(--ink); }
+
+.town-dd-pop {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: var(--paper-3);
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  box-shadow: 0 8px 20px oklch(0.20 0.012 60 / 0.18);
+  overflow: hidden;
+  animation: townDdIn 0.14s ease-out;
+}
+@keyframes townDdIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.town-dd-search {
+  padding: 8px;
+  border-bottom: 1px solid var(--rule-soft);
+  background: var(--paper-2);
+}
+.town-dd-search input {
+  width: 100%;
+  padding: 6px 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--paper-3);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  outline: none;
+}
+.town-dd-search input:focus { border-color: var(--ink); }
+.town-dd-search input::placeholder {
+  color: var(--ink-3);
+  font-style: italic;
+}
+.town-dd-list {
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+.town-dd-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-size: 13.5px;
+  color: var(--ink-2);
+  text-align: left;
+  transition: background 0.08s, color 0.08s;
+}
+.town-dd-row.is-active { background: var(--paper-2); color: var(--ink); }
+.town-dd-row.is-selected { color: var(--ink); font-weight: 600; }
+.town-dd-row.is-selected.is-active { background: var(--press-red-dim); }
+.town-dd-row.is-all {
+  font-style: italic;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--rule-soft);
+  padding-bottom: 8px;
+  margin-bottom: 2px;
+}
+.town-dd-row.is-all.is-selected {
+  color: var(--ink);
+  font-style: normal;
+}
+.town-dd-row-mark {
+  flex-shrink: 0;
+  width: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--press-red);
+  text-align: center;
+}
+.town-dd-empty {
+  padding: 14px 12px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-3);
+  text-align: center;
+}
+
+/* Scrollbar polish */
+.town-dd-list::-webkit-scrollbar { width: 8px; }
+.town-dd-list::-webkit-scrollbar-track { background: var(--paper-2); }
+.town-dd-list::-webkit-scrollbar-thumb {
+  background: var(--rule);
+  border-radius: 4px;
+  border: 2px solid var(--paper-2);
+}
+.town-dd-list::-webkit-scrollbar-thumb:hover { background: var(--ink-3); }
+
+/* VIEW FADE — re-mounts on view change via React key, so this animation re-fires */
+.view-fade {
+  animation: viewFadeIn 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes viewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .view-fade { animation: none; }
+}

@@ -1,0 +1,150 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: VOL. III · NO. 17
+      - generic [ref=e7]: SATURDAY, MAY 9, 2026 — TWO-WEEK ALMANAC
+      - generic [ref=e8]: FREE · PA
+    - generic [ref=e10]:
+      - heading "The Northeast Almanac" [level=1] [ref=e11]:
+        - generic [ref=e12]: The
+        - generic [ref=e13]: Northeast Almanac
+      - button "★ My Weekend" [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: ★
+        - generic [ref=e16]: My Weekend
+    - generic [ref=e18]: A standing chronicle of markets, gallery openings, hikes, dive bars, opera-house touring acts, and other goings-on across the Lackawanna, Wyoming, and Pocono valleys — refreshed daily at dawn.
+    - generic [ref=e204]: Refreshed just now
+  - generic [ref=e19]:
+    - generic [ref=e20]:
+      - button "Week" [pressed] [ref=e21] [cursor=pointer]:
+        - img [ref=e23]
+        - generic [ref=e25]: Week
+      - button "Weekend" [ref=e26] [cursor=pointer]:
+        - img [ref=e28]
+        - generic [ref=e32]: Weekend
+      - button "Map" [ref=e33] [cursor=pointer]:
+        - img [ref=e35]
+        - generic [ref=e38]: Map
+      - button "Index" [ref=e39] [cursor=pointer]:
+        - img [ref=e41]
+        - generic [ref=e45]: Index
+    - button "≡ Filters 1 ▼" [active] [ref=e205] [cursor=pointer]:
+      - generic [ref=e48]: ≡
+      - generic [ref=e49]: Filters
+      - generic [ref=e206]: "1"
+      - generic [ref=e50]: ▼
+  - main [ref=e51]:
+    - generic [ref=e207]:
+      - generic [ref=e209]:
+        - button "‹ Prev" [disabled] [ref=e210]
+        - generic [ref=e211]: Week of May 9 — May 15
+        - button "Next ›" [ref=e212] [cursor=pointer]
+      - generic [ref=e213]:
+        - generic [ref=e214]:
+          - generic [ref=e215]:
+            - generic [ref=e216]:
+              - text: Sat
+              - generic [ref=e217]: today
+            - generic [ref=e218]: "9"
+            - generic [ref=e219]:
+              - generic "rain" [ref=e220]: ☂ 58°/47°
+              - generic [ref=e221]: 0 events
+          - generic [ref=e223]: — Nothing yet —
+        - generic [ref=e224]:
+          - generic [ref=e225]:
+            - generic [ref=e226]: Sun
+            - generic [ref=e227]: "10"
+            - generic [ref=e228]:
+              - generic "rain" [ref=e229]: ☂ 67°/48°
+              - generic [ref=e230]: 0 events
+          - generic [ref=e232]: — Nothing yet —
+        - generic [ref=e233]:
+          - generic [ref=e234]:
+            - generic [ref=e235]: Mon
+            - generic [ref=e236]: "11"
+            - generic [ref=e237]:
+              - generic "cloud" [ref=e238]: ☁ 58°/41°
+              - generic [ref=e239]: 0 events
+          - generic [ref=e241]: — Nothing yet —
+        - generic [ref=e242]:
+          - generic [ref=e243]:
+            - generic [ref=e244]: Tue
+            - generic [ref=e245]: "12"
+            - generic [ref=e246]:
+              - generic "cloud" [ref=e247]: ☁ 60°/34°
+              - generic [ref=e248]: 1 event
+          - article [ref=e250] [cursor=pointer]:
+            - generic [ref=e252]:
+              - generic [ref=e254]: 6:30 PM
+              - heading "Worship In Movement" [level=3] [ref=e255]
+              - generic [ref=e256]: Whispering Pines Community Church·Beach Lake
+              - generic [ref=e257]:
+                - generic [ref=e258]: COMMUNITY
+                - generic [ref=e259]: See site
+                - button "Save" [ref=e260]: ☆
+        - generic [ref=e261]:
+          - generic [ref=e262]:
+            - generic [ref=e263]: Wed
+            - generic [ref=e264]: "13"
+            - generic [ref=e265]:
+              - generic "rain" [ref=e266]: ☂ 55°/44°
+              - generic [ref=e267]: 0 events
+          - generic [ref=e269]: — Nothing yet —
+        - generic [ref=e270]:
+          - generic [ref=e271]:
+            - generic [ref=e272]: Thu
+            - generic [ref=e273]: "14"
+            - generic [ref=e274]:
+              - generic "rain" [ref=e275]: ☂ 50°/44°
+              - generic [ref=e276]: 1 event
+          - article [ref=e278] [cursor=pointer]:
+            - generic [ref=e280]:
+              - generic [ref=e282]: 6:30 PM
+              - heading "Worship In Movement" [level=3] [ref=e283]
+              - generic [ref=e284]: Whispering Pines Community Church·Beach Lake
+              - generic [ref=e285]:
+                - generic [ref=e286]: COMMUNITY
+                - generic [ref=e287]: See site
+                - button "Save" [ref=e288]: ☆
+        - generic [ref=e289]:
+          - generic [ref=e290]:
+            - generic [ref=e291]: Fri
+            - generic [ref=e292]: "15"
+            - generic [ref=e293]:
+              - generic "cloud" [ref=e294]: ☁ 66°/43°
+              - generic [ref=e295]: 0 events
+          - generic [ref=e297]: — Nothing yet —
+  - contentinfo [ref=e183]:
+    - generic [ref=e185]:
+      - generic [ref=e186]:
+        - generic [ref=e187]: Compiled from
+        - generic [ref=e188]:
+          - link "DiscoverNEPA" [ref=e189] [cursor=pointer]:
+            - /url: https://discovernepa.com/events/
+          - text: ·
+          - link "Happenings Magazine" [ref=e190] [cursor=pointer]:
+            - /url: https://www.happeningsmagazinepa.com/events/
+          - text: ·
+          - link "Lackawanna County Library System" [ref=e191] [cursor=pointer]:
+            - /url: https://lclshome.org/events/
+          - text: ·
+          - link "City of Scranton" [ref=e192] [cursor=pointer]:
+            - /url: https://scrantonpa.gov/events/
+          - text: ·
+          - link "University of Scranton" [ref=e193] [cursor=pointer]:
+            - /url: https://events.scranton.edu/
+          - text: ·
+          - link "Marywood University" [ref=e194] [cursor=pointer]:
+            - /url: https://www.marywood.edu/community/news-events
+          - text: ·
+          - link "Keystone College" [ref=e195] [cursor=pointer]:
+            - /url: https://www.keystone.edu/keystone-events/
+          - text: . Weather via
+          - link "Open-Meteo" [ref=e196] [cursor=pointer]:
+            - /url: https://open-meteo.com
+          - text: .
+      - generic [ref=e197]:
+        - generic [ref=e198]: Coverage area
+        - generic [ref=e199]: Lackawanna · Luzerne · Wayne · Monroe · Carbon counties
+      - generic [ref=e200]:
+        - generic [ref=e201]: About
+        - button "How this almanac is made →" [ref=e203] [cursor=pointer]
