@@ -13,14 +13,28 @@ function useIsMobile() {
   return m;
 }
 
-function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset, weatherAware }) {
+function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset, weatherAware, filterCount = 0, onResetFilters }) {
   const isMobile = useIsMobile();
+  const todayD = todayDayOffset();
   // On mobile we anchor the week to today (clamped within the 14-day horizon)
   // and ignore weekOffset — Prev/Next is hidden.
   const startDay = isMobile
-    ? Math.max(0, Math.min(todayDayOffset(), 14 - 7))
+    ? Math.max(0, Math.min(todayD, 14 - 7))
     : weekOffset * 7;
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => startDay + i);
+  const dates = useMemo(() => {
+    const out = {};
+    for (let d = 0; d < 14; d++) out[d] = dateForDay(d);
+    return out;
+  }, []);
+  const eventsByDay = useMemo(() => {
+    const m = {};
+    events.forEach(e => { (m[e.day] ||= []).push(e); });
+    Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
+    return m;
+  }, [events]);
+  const startDate = dates[startDay];
+  const endDate = dates[startDay + 6];
 
   return (
     <div className="cal-wrap">
@@ -35,9 +49,9 @@ function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset
           )}
           <div className="cal-week-label">
             <span className="cal-week-em">{isMobile ? 'Next 7 days from' : 'Week of'}</span>{' '}
-            {dateForDay(startDay).month} {dateForDay(startDay).date}
+            {startDate.month} {startDate.date}
             {' — '}
-            {dateForDay(startDay + 6).month} {dateForDay(startDay + 6).date}
+            {endDate.month} {endDate.date}
           </div>
           {!isMobile && (
             <button
@@ -51,13 +65,11 @@ function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset
 
       <div className="cal-grid">
         {days.map(d => {
-          const date = dateForDay(d);
+          const date = dates[d];
           const wx = WEATHER[d];
-          const dayEvents = events
-            .filter(e => e.day === d)
-            .sort((a, b) => a.start.localeCompare(b.start));
+          const dayEvents = eventsByDay[d] || [];
           const isWeekend = date.weekday === 'Sat' || date.weekday === 'Sun';
-          const isToday = d === todayDayOffset();
+          const isToday = d === todayD;
 
           return (
             <div
@@ -78,7 +90,7 @@ function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset
 
               <div className="cal-events">
                 {dayEvents.length === 0 && (
-                  <div className="cal-empty">— Nothing yet —</div>
+                  <div className="cal-empty">{filterCount > 0 ? '— Filtered out —' : '— Nothing yet —'}</div>
                 )}
                 {dayEvents.map(ev => {
                   const cat = CATEGORIES[ev.category];
@@ -89,6 +101,10 @@ function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset
                       key={ev.id}
                       className={`evt ${dimmed ? 'evt-dim' : ''} ${ev.featured ? 'evt-featured' : ''}`}
                       onClick={() => onOpen(ev.id)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(ev.id); } }}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`${ev.title} at ${ev.venue}, ${ev.town}`}
                     >
                       <div className="evt-bar" style={{ background: cat.color }} />
                       <div className="evt-body">
@@ -112,7 +128,9 @@ function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset
                           <button
                             className={`evt-save ${isSaved ? 'is-saved' : ''}`}
                             onClick={(e) => { e.stopPropagation(); onSave(ev.id); }}
-                            aria-label={isSaved ? 'Unsave' : 'Save'}
+                            aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
+                            aria-pressed={isSaved}
+                            title={isSaved ? 'Remove from plan' : 'Save to plan'}
                           >
                             {isSaved ? '★' : '☆'}
                           </button>

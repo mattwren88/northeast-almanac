@@ -32,6 +32,22 @@ function RefreshStamp({ generatedAt, eventStatus }) {
 const ALL_VIEWS = ['calendar', 'weekend', 'map', 'list'];
 const ALL_CATS = Object.keys(CATEGORIES);
 
+// Snapshot the currently-focused element so we can restore it after a
+// modal closes. Call captureFocus() in the open-action handler (BEFORE
+// setState), then call restoreFocus() in the close-action handler.
+const focusReturn = {
+  ref: { current: null },
+  capture() { this.ref.current = document.activeElement; },
+  restore() {
+    const el = this.ref.current;
+    this.ref.current = null;
+    if (el && typeof el.focus === 'function') {
+      // Defer so it runs after React unmounts the modal subtree.
+      setTimeout(() => el.focus(), 0);
+    }
+  },
+};
+
 // Editorial monochrome glyphs for the View toolbar. 20×20, currentColor stroke,
 // inheriting tile color so the inverted active state works automatically.
 const WeekGlyph = () => (
@@ -127,7 +143,24 @@ function App() {
   const [saved, setSaved] = useStateApp([]);
   const [planOpen, setPlanOpen] = useStateApp(initial.planOpen);
   const [aboutOpen, setAboutOpen] = useStateApp(false);
-  const [shareCopied, setShareCopied] = useStateApp(false);
+  const [toast, setToast] = useStateApp(null); // { msg, undo? }
+  const toastTimerRef = useRefApp(null);
+  // Wrap state setters so opens capture focus and closes restore it.
+  const viewEvent = (id) => { focusReturn.capture(); setOpenEventId(id); };
+  const closeEvent = () => { setOpenEventId(null); focusReturn.restore(); };
+  const openPlan = () => { focusReturn.capture(); setPlanOpen(true); };
+  const closePlan = () => { setPlanOpen(false); focusReturn.restore(); };
+  const openAbout = () => { focusReturn.capture(); setAboutOpen(true); };
+  const closeAbout = () => { setAboutOpen(false); focusReturn.restore(); };
+  const toggleFilters = () => {
+    if (filtersOpen) { setFiltersOpen(false); focusReturn.restore(); }
+    else { focusReturn.capture(); setFiltersOpen(true); }
+  };
+  const showToast = (msg, undo) => {
+    if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+    setToast({ msg, undo });
+    toastTimerRef.current = setTimeout(() => setToast(null), 5000);
+  };
   const [events, setEvents] = useStateApp([]);
   const [eventStatus, setEventStatus] = useStateApp('loading'); // loading | live | mock | error
   const [generatedAt, setGeneratedAt] = useStateApp(null);
@@ -202,9 +235,16 @@ function App() {
       .map(e => e.id);
   }, [events, activeCats, activeAudiences, activeTown, openEventId]);
   useEffectApp(() => {
-    if (!openEventId || !filteredSortedIds) return;
+    if (!openEventId && !planOpen && !aboutOpen) return;
     const onKey = (e) => {
-      if (e.key === 'Escape') { setOpenEventId(null); return; }
+      if (e.key === 'Escape') {
+        // Close the topmost modal (last opened wins by precedence)
+        if (aboutOpen) closeAbout();
+        else if (openEventId) closeEvent();
+        else if (planOpen) closePlan();
+        return;
+      }
+      if (!openEventId || !filteredSortedIds) return;
       if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
       const idx = filteredSortedIds.indexOf(openEventId);
       if (idx === -1) return;
@@ -218,7 +258,7 @@ function App() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [openEventId, filteredSortedIds]);
+  }, [openEventId, filteredSortedIds, planOpen, aboutOpen]);
 
   const allTowns = useMemoApp(() => {
     const set = new Set();
@@ -239,7 +279,13 @@ function App() {
     return events.filter(e => e.featured && e.day >= start && e.day < start + 7);
   }, [events, weekOffset]);
 
-  const openEvent = openEventId ? events.find(e => e.id === openEventId) : null;
+  const eventsById = useMemoApp(() => {
+    const m = new Map();
+    events.forEach(e => m.set(e.id, e));
+    return m;
+  }, [events]);
+
+  const openEvent = openEventId ? eventsById.get(openEventId) || null : null;
 
   const toggleSave = (id) => {
     setSaved(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
@@ -249,25 +295,30 @@ function App() {
     if (events.length === 0) return saved.length;
     const today = todayDayOffset();
     return saved.filter(id => {
-      const ev = events.find(e => e.id === id);
+      const ev = eventsById.get(id);
       return ev && ev.day >= today;
     }).length;
-  }, [saved, events]);
+  }, [saved, events, eventsById]);
 
   const clearPastSaved = () => {
     if (events.length === 0) return;
     const today = todayDayOffset();
-    setSaved(s => s.filter(id => {
-      const ev = events.find(e => e.id === id);
-      return !ev || ev.day >= today;
-    }));
+    const prev = saved;
+    const next = saved.filter(id => {
+      const ev = eventsById.get(id);
+      return ev && ev.day >= today;
+    });
+    const removed = prev.length - next.length;
+    if (removed === 0) return;
+    setSaved(next);
+    showToast(`Cleared ${removed} past ${removed === 1 ? 'event' : 'events'}`, () => setSaved(prev));
   };
 
   const sharePlan = async () => {
     if (events.length === 0) return;
     const today = todayDayOffset();
     const ids = saved.filter(id => {
-      const ev = events.find(e => e.id === id);
+      const ev = eventsById.get(id);
       return ev && ev.day >= today;
     });
     if (ids.length === 0) return;
@@ -277,8 +328,7 @@ function App() {
     } catch {
       window.prompt('Copy this link:', url);
     }
-    setShareCopied(true);
-    setTimeout(() => setShareCopied(false), 1800);
+    showToast('Share link copied to clipboard');
   };
 
   const toggleCat = (cat) => {
@@ -294,9 +344,16 @@ function App() {
   };
 
   const resetFilters = () => {
+    if (filterCount === 0) return;
+    const prev = { cats: activeCats, audiences: activeAudiences, town: activeTown };
     setActiveCats(ALL_CATS);
     setActiveAudiences(['community']);
     setActiveTown('');
+    showToast('Filters reset', () => {
+      setActiveCats(prev.cats);
+      setActiveAudiences(prev.audiences);
+      setActiveTown(prev.town);
+    });
   };
 
   const filterCount = (
@@ -330,7 +387,7 @@ function App() {
             <span className="mast-the">The</span>
             <span className="mast-name">Northeast Almanac</span>
           </h1>
-          <button className="mast-plan" onClick={() => setPlanOpen(true)}>
+          <button className="mast-plan" onClick={openPlan}>
             <span className="mast-plan-star">★</span>
             <span className="mast-plan-text">My Plan</span>
             {upcomingSavedCount > 0 && <span className="mast-plan-count">{upcomingSavedCount}</span>}
@@ -364,7 +421,7 @@ function App() {
         <div className="toolbar-section toolbar-filters-trigger">
           <button
             className={`filters-btn ${filtersOpen ? 'is-open' : ''} ${filterCount > 0 ? 'has-active' : ''}`}
-            onClick={() => setFiltersOpen(v => !v)}
+            onClick={toggleFilters}
             aria-expanded={filtersOpen}
           >
             <span className="filters-btn-icon">≡</span>
@@ -385,7 +442,7 @@ function App() {
           activeTown={activeTown}
           setActiveTown={setActiveTown}
           onReset={resetFilters}
-          onClose={() => setFiltersOpen(false)}
+          onClose={toggleFilters}
           filterCount={filterCount}
         />
       )}
@@ -401,7 +458,15 @@ function App() {
               const cat = CATEGORIES[ev.category];
               const date = dateForDay(ev.day);
               return (
-                <article key={ev.id} className="pick" onClick={() => setOpenEventId(ev.id)}>
+                <article
+                  key={ev.id}
+                  className="pick"
+                  onClick={() => viewEvent(ev.id)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); viewEvent(ev.id); } }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Editor's pick: ${ev.title}`}
+                >
                   <div className="pick-num">№ {String(i + 1).padStart(2, '0')}</div>
                   <div className="pick-cat" style={{ color: cat.color }}>{cat.label.toUpperCase()}</div>
                   <h3 className="pick-title">{ev.title}</h3>
@@ -418,7 +483,7 @@ function App() {
       )}
 
       {/* WEATHER ADVISORY (when current week has rainy days that affect outdoor events) */}
-      {eventStatus !== 'loading' && view !== 'map' && (() => {
+      {eventStatus !== 'loading' && eventStatus !== 'error' && view !== 'map' && (() => {
         const start = view === 'weekend' ? 0 : weekOffset * 7;
         const end = view === 'weekend' ? 14 : start + 7;
         const rainyDays = [];
@@ -444,17 +509,31 @@ function App() {
       {/* MAIN VIEW */}
       <main className="main">
         {eventStatus === 'loading' && <LoadingSkeleton />}
-        {eventStatus !== 'loading' && (
+        {eventStatus === 'error' && (
+          <div className="error-state">
+            <div className="error-state-mark">⚠</div>
+            <h2 className="error-state-title">Couldn't load events</h2>
+            <p className="error-state-msg">
+              The events feed is unreachable right now. Check your connection and try again.
+            </p>
+            <button className="error-state-btn" onClick={() => location.reload()}>
+              Reload
+            </button>
+          </div>
+        )}
+        {eventStatus !== 'loading' && eventStatus !== 'error' && (
           <div key={view} className="view-fade">
             {view === 'calendar' && (
               <CalendarView
                 events={filtered}
                 saved={saved}
                 onSave={toggleSave}
-                onOpen={setOpenEventId}
+                onOpen={viewEvent}
                 weekOffset={weekOffset}
                 setWeekOffset={setWeekOffset}
                 weatherAware={true}
+                filterCount={filterCount}
+                onResetFilters={resetFilters}
               />
             )}
             {view === 'weekend' && (
@@ -462,7 +541,7 @@ function App() {
                 events={filtered}
                 saved={saved}
                 onSave={toggleSave}
-                onOpen={setOpenEventId}
+                onOpen={viewEvent}
               />
             )}
             {view === 'map' && (
@@ -470,7 +549,7 @@ function App() {
                 events={filtered}
                 saved={saved}
                 onSave={toggleSave}
-                onOpen={setOpenEventId}
+                onOpen={viewEvent}
                 weekOffset={weekOffset}
               />
             )}
@@ -479,8 +558,10 @@ function App() {
                 events={filtered}
                 saved={saved}
                 onSave={toggleSave}
-                onOpen={setOpenEventId}
+                onOpen={viewEvent}
                 weekOffset={weekOffset}
+                filterCount={filterCount}
+                onResetFilters={resetFilters}
               />
             )}
           </div>
@@ -518,9 +599,18 @@ function App() {
           <div className="colophon-block">
             <div className="colophon-k">About</div>
             <div className="colophon-v">
-              <button className="colophon-link" onClick={() => setAboutOpen(true)}>How this almanac is made →</button>
+              <button className="colophon-link" onClick={openAbout}>How this almanac is made →</button>
             </div>
           </div>
+        </div>
+        <div className="colophon-fine">
+          © {new Date().getFullYear()} Matt Wren · Code under the{' '}
+          <a href="https://github.com/mattwren88/northeast-almanac/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>
+          {' · '}
+          <a href="https://github.com/mattwren88/northeast-almanac" target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+          {' · '}
+          <a href="https://github.com/mattwren88/northeast-almanac/issues" target="_blank" rel="noopener noreferrer">Corrections</a>
+          . Event data belongs to the venues that publish it.
         </div>
       </footer>
 
@@ -530,24 +620,51 @@ function App() {
           event={openEvent}
           isSaved={saved.includes(openEvent.id)}
           onSave={toggleSave}
-          onClose={() => setOpenEventId(null)}
+          onClose={closeEvent}
         />
       )}
       {planOpen && (
         <WeekendPlan
           events={events}
+          eventsById={eventsById}
           saved={saved}
           onRemove={toggleSave}
-          onClose={() => setPlanOpen(false)}
+          onClose={closePlan}
           onShare={sharePlan}
           onClearPast={clearPastSaved}
-          shareCopied={shareCopied}
         />
+      )}
+      {toast && (
+        <div className="toast" role="status" aria-live="polite">
+          <span className="toast-msg">{toast.msg}</span>
+          {toast.undo && (
+            <button
+              className="toast-undo"
+              onClick={() => {
+                toast.undo();
+                if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+                setToast(null);
+              }}
+            >
+              Undo
+            </button>
+          )}
+          <button
+            className="toast-dismiss"
+            aria-label="Dismiss"
+            onClick={() => {
+              if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+              setToast(null);
+            }}
+          >
+            ×
+          </button>
+        </div>
       )}
 
       <BackToTop />
 
-      {aboutOpen && <AboutModal onClose={() => setAboutOpen(false)} generatedAt={generatedAt} />}
+      {aboutOpen && <AboutModal onClose={closeAbout} generatedAt={generatedAt} />}
 
       {/* TWEAKS */}
       {tweaks.editing && (
@@ -575,85 +692,104 @@ function AboutModal({ onClose, generatedAt }) {
   return (
     <div className="about-backdrop" onClick={onClose}>
       <aside className="about" onClick={e => e.stopPropagation()}>
-        <button className="about-close" onClick={onClose} aria-label="Close">×</button>
+        <button className="about-close" onClick={onClose} aria-label="Close" autoFocus>×</button>
         <div className="about-eyebrow">COLOPHON · ABOUT THE ALMANAC</div>
         <h2 className="about-title">How this almanac is made</h2>
 
         <p className="about-lede">
-          A non-commercial weekend planner for Northeast Pennsylvania.
-          Events are pulled from public calendars run by the venues
-          themselves, then organized by date, geography, and category.
-          Every listing links back to its original source.
+          A weekend planner for Northeast Pennsylvania, kept by one
+          person and refreshed each morning. Listings come from
+          public calendars run by the venues themselves, and every
+          entry links back to its source.
         </p>
 
         <section className="about-section">
           <h3>Sources</h3>
-          <h4 className="about-subhead">Community calendars</h4>
+          <h4 className="about-subhead">Community</h4>
           <ul>
-            <li><a href="https://discovernepa.com/events/" target="_blank" rel="noopener noreferrer">DiscoverNEPA</a> — regional tourism calendar</li>
-            <li><a href="https://www.happeningsmagazinepa.com/events/" target="_blank" rel="noopener noreferrer">Happenings Magazine</a> — local culture and lifestyle</li>
-            <li><a href="https://lclshome.org/events/" target="_blank" rel="noopener noreferrer">Lackawanna County Library System</a> — talks, kids' programs, classes</li>
-            <li><a href="https://scrantonpa.gov/events/" target="_blank" rel="noopener noreferrer">City of Scranton</a> — municipal events</li>
+            <li><a href="https://discovernepa.com/events/" target="_blank" rel="noopener noreferrer">DiscoverNEPA</a></li>
+            <li><a href="https://www.happeningsmagazinepa.com/events/" target="_blank" rel="noopener noreferrer">Happenings Magazine</a></li>
+            <li><a href="https://lclshome.org/events/" target="_blank" rel="noopener noreferrer">Lackawanna County Library System</a></li>
+            <li><a href="https://scrantonpa.gov/events/" target="_blank" rel="noopener noreferrer">City of Scranton</a></li>
           </ul>
-          <h4 className="about-subhead">College calendars (off by default)</h4>
+          <h4 className="about-subhead">Colleges (off by default)</h4>
           <ul>
-            <li><a href="https://events.scranton.edu/" target="_blank" rel="noopener noreferrer">University of Scranton</a> — public events feed (JSON)</li>
-            <li><a href="https://www.marywood.edu/community/news-events" target="_blank" rel="noopener noreferrer">Marywood University</a> — 25Live calendar (RSS)</li>
-            <li><a href="https://www.keystone.edu/keystone-events/" target="_blank" rel="noopener noreferrer">Keystone College</a> — events feed (RSS)</li>
+            <li><a href="https://events.scranton.edu/" target="_blank" rel="noopener noreferrer">University of Scranton</a></li>
+            <li><a href="https://www.marywood.edu/community/news-events" target="_blank" rel="noopener noreferrer">Marywood University</a></li>
+            <li><a href="https://www.keystone.edu/keystone-events/" target="_blank" rel="noopener noreferrer">Keystone College</a></li>
           </ul>
-          <h4 className="about-subhead">Other</h4>
+          <h4 className="about-subhead">Weather</h4>
           <ul>
-            <li><a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — 14-day weather forecast</li>
+            <li><a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — 14-day forecast for Scranton</li>
           </ul>
           <p className="about-fine">
-            We fetch only excerpts and titles, link back to each
-            original page, and identify ourselves with a named
+            Only titles and short excerpts are fetched, each linked
+            back to its original page. Requests carry a named
             User-Agent so site owners can reach us. Colleges are
-            hidden by default in the filter panel since their feeds
-            include many academic dates that aren't public events.
+            hidden by default — their feeds carry many academic
+            dates that aren't really public events.
           </p>
         </section>
 
         <section className="about-section">
-          <h3>Refresh cadence</h3>
+          <h3>Refresh</h3>
           <p>
             A GitHub Action runs the scraper daily at <strong>06:00 ET</strong>.
-            If anything changed, the new <code>events.json</code> is
-            committed back to the repo and the site picks it up on
-            next page load.
+            When something has changed, a fresh <code>events.json</code>
+            is committed and the page picks it up on next load.
           </p>
           <p className="about-fine">Last refreshed: <strong>{refreshed}</strong></p>
         </section>
 
         <section className="about-section">
-          <h3>Coverage area</h3>
+          <h3>Coverage</h3>
           <p>
-            Lackawanna · Luzerne · Wayne · Monroe · Carbon counties.
-            Events outside the bounding box (40.80–41.70°N, 76.05–75.05°W)
-            are filtered out.
+            Lackawanna, Luzerne, Wayne, Monroe, and Carbon counties.
+            Anything outside roughly 40.80–41.70°N, 76.05–75.05°W
+            is dropped before publication.
           </p>
         </section>
 
         <section className="about-section">
-          <h3>Removal & corrections</h3>
+          <h3>Corrections & removals</h3>
           <p>
-            If you run one of the venues or sources above and want a
-            listing removed, the cadence changed, or your name spelled
-            differently — open an issue at{' '}
+            If you run a venue or source above and want a listing
+            pulled, the cadence changed, or your name spelled right —
+            open an issue at{' '}
             <a href="https://github.com/mattwren88/northeast-almanac/issues" target="_blank" rel="noopener noreferrer">
               github.com/mattwren88/northeast-almanac/issues
-            </a>{' '}
-            and it'll be handled within 24 hours.
+            </a>
+            . Usually fixed within a day.
           </p>
         </section>
 
         <section className="about-section">
-          <h3>What this is not</h3>
+          <h3>What this isn't</h3>
           <ul>
-            <li>Not a commercial product — no ads, no tracking, no email capture.</li>
-            <li>Not a republication — listings are excerpts that link back to their source.</li>
-            <li>Not exhaustive — only events with a date, location, and public listing show up.</li>
+            <li>Not commercial — no ads, no tracking, no email capture, no account to make.</li>
+            <li>Not a republication — short excerpts only, every one linked back to its source.</li>
+            <li>Not exhaustive — only events with a date, a location, and a public listing show up.</li>
           </ul>
+        </section>
+
+        <section className="about-section">
+          <h3>Colophon</h3>
+          <p className="about-fine">
+            Set in Newsreader and Instrument Serif, with JetBrains
+            Mono for the marginalia. Maps by{' '}
+            <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer">Leaflet</a>
+            {' '}over{' '}
+            <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
+            {' '}tiles. Built with React, hosted on GitHub Pages,
+            scraper in Node — no backend, no database, just a folder
+            of static files.
+          </p>
+          <p className="about-fine">
+            Code released under the{' '}
+            <a href="https://github.com/mattwren88/northeast-almanac/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>
+            . Event data belongs to the venues that publish it; this
+            site only points at it.
+          </p>
         </section>
 
         <footer className="about-foot">
@@ -732,18 +868,21 @@ function TownDropdown({ towns, value, onChange }) {
         <span className="town-dd-trigger-caret">{open ? '▲' : '▼'}</span>
       </button>
       {open && (
-        <div className="town-dd-pop" role="listbox">
+        <div className="town-dd-pop">
           <div className="town-dd-search">
             <input
               ref={inputRef}
               type="search"
               placeholder={`Search ${towns.length} towns…`}
+              aria-label="Search towns"
+              aria-controls="town-dd-listbox"
+              aria-activedescendant={`town-dd-opt-${activeIdx}`}
               value={query}
               onChange={e => { setQuery(e.target.value); setActiveIdx(0); }}
               onKeyDown={onInputKey}
             />
           </div>
-          <div className="town-dd-list">
+          <div className="town-dd-list" id="town-dd-listbox" role="listbox" aria-label="Towns">
             {options.length === 1 && query && (
               <div className="town-dd-empty">No towns match "{query}"</div>
             )}
@@ -753,12 +892,14 @@ function TownDropdown({ towns, value, onChange }) {
               return (
                 <button
                   key={opt.value || '__all'}
+                  id={`town-dd-opt-${i}`}
                   type="button"
                   role="option"
                   aria-selected={isSel}
                   className={`town-dd-row ${isSel ? 'is-selected' : ''} ${isActive ? 'is-active' : ''} ${opt.value === '' ? 'is-all' : ''}`}
                   onClick={() => pick(opt.value)}
                   onMouseEnter={() => setActiveIdx(i)}
+                  tabIndex={-1}
                 >
                   <span className="town-dd-row-mark" aria-hidden="true">{isSel ? '✓' : ''}</span>
                   <span className="town-dd-row-label">{opt.label}</span>
@@ -886,7 +1027,15 @@ function LoadingSkeleton() {
 function BackToTop() {
   const [show, set] = useStateApp(false);
   useEffectApp(() => {
-    const onScroll = () => set(window.scrollY > 400);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        set(window.scrollY > 400);
+        ticking = false;
+      });
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);

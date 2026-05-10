@@ -7,8 +7,8 @@
   --paper-2: oklch(0.94 0.014 78);
   --paper-3: oklch(0.99 0.008 80);
   --ink: oklch(0.20 0.012 60);
-  --ink-2: oklch(0.40 0.012 60);
-  --ink-3: oklch(0.58 0.014 60);
+  --ink-2: oklch(0.38 0.012 60);
+  --ink-3: oklch(0.50 0.014 60);
   --rule: oklch(0.78 0.014 65);
   --rule-soft: oklch(0.86 0.012 65);
   --press-red: oklch(0.50 0.18 25);
@@ -1003,12 +1003,17 @@ body::before {
 .drawer-rail { width: 6px; }
 .drawer-close {
   position: absolute;
-  top: 14px; right: 14px;
+  top: 8px; right: 8px;
   background: none;
   border: none;
   font-size: 28px;
   color: var(--ink-2);
   line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .drawer-body {
   padding: 32px 28px;
@@ -1210,11 +1215,16 @@ body::before {
 }
 .plan-close {
   position: absolute;
-  top: 18px; right: 18px;
+  top: 12px; right: 12px;
   background: none;
   border: none;
   font-size: 28px;
   line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .plan-empty {
   flex: 1;
@@ -1352,6 +1362,22 @@ body::before {
   font-size: 16px;
   color: var(--ink);
 }
+.colophon-fine {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  border-top: 1px solid var(--rule);
+  padding: 12px 0 4px;
+  text-align: center;
+}
+.colophon-fine a {
+  color: var(--ink-2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+}
+.colophon-fine a:hover { color: var(--ink); border-bottom-color: var(--ink); }
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 1100px) {
@@ -1720,13 +1746,18 @@ body::before {
 }
 .about-close {
   position: absolute;
-  top: 12px; right: 14px;
+  top: 6px; right: 8px;
   background: none;
   border: none;
   font-size: 28px;
   color: var(--ink-2);
   line-height: 1;
   cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .about-eyebrow {
   font-family: var(--mono);
@@ -2438,5 +2469,195 @@ body::before {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .view-fade { animation: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Keyboard-only focus indicator */
+:focus-visible {
+  outline: 2px solid var(--press-red);
+  outline-offset: 2px;
+}
+
+/* Mobile filters grid — stack columns on narrow screens */
+@media (max-width: 480px) {
+  .filters-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 14px 16px;
+  }
+}
+
+/* Cards rendered as <article role="button"> — keyboard activation works,
+   but they need cursor + reset of the role-default UA padding/font. */
+.pick, .evt, .list-item { cursor: pointer; }
+.pick:focus-visible, .evt:focus-visible, .list-item:focus-visible {
+  outline: 2px solid var(--press-red);
+  outline-offset: 2px;
+}
+
+/* ============ ERROR STATE ============ */
+.error-state {
+  margin: 60px auto;
+  max-width: 480px;
+  padding: 40px 28px;
+  text-align: center;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper-3);
+}
+.error-state-mark {
+  font-size: 40px;
+  color: var(--press-red);
+  margin-bottom: 12px;
+}
+.error-state-title {
+  font-family: var(--display);
+  font-size: 28px;
+  margin: 0 0 8px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.error-state-msg {
+  font-family: var(--serif);
+  color: var(--ink-2);
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+.error-state-btn {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 12px 22px;
+  background: var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--ink);
+  cursor: pointer;
+}
+.error-state-btn:hover { background: var(--press-red); border-color: var(--press-red); }
+
+/* ============ TOAST ============ */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px 12px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px oklch(0 0 0 / 0.18);
+  font-family: var(--serif);
+  font-size: 14px;
+  max-width: calc(100vw - 32px);
+  animation: toastIn 0.2s ease-out;
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+.toast-msg { line-height: 1.3; }
+.toast-undo {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid oklch(1 0 0 / 0.4);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.toast-undo:hover { background: oklch(1 0 0 / 0.12); border-color: var(--paper); }
+.toast-dismiss {
+  background: none;
+  border: none;
+  color: var(--paper);
+  opacity: 0.7;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 6px;
+  margin-left: 2px;
+  cursor: pointer;
+}
+.toast-dismiss:hover { opacity: 1; }
+
+/* ============ DRAWER KEY HINT ============ */
+.drawer-keyhint {
+  position: absolute;
+  top: 22px;
+  left: 28px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+@media (hover: none) { .drawer-keyhint { display: none; } }
+@media (max-width: 800px) { .drawer-keyhint { display: none; } }
+
+/* ============ LIST EMPTY RESET BUTTON ============ */
+.list-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--ink-2);
+}
+.list-empty-reset {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  cursor: pointer;
+}
+.list-empty-reset:hover { background: var(--ink); color: var(--paper); }
+
+/* ============ MOBILE FILTERS BOTTOM SHEET (C7) ============ */
+@media (max-width: 800px) {
+  .filters-panel {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 12px 12px 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    box-shadow: 0 -8px 24px oklch(0 0 0 / 0.18);
+    z-index: 9000;
+    animation: filtersSheetIn 0.22s ease-out;
+  }
+  @keyframes filtersSheetIn {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+  /* backdrop to dim main content */
+  .filters-panel::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: oklch(0 0 0 / 0.4);
+    z-index: -1;
+  }
 }

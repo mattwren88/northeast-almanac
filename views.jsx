@@ -2,6 +2,10 @@
 
 const { useState: useStateMV, useMemo: useMemoMV, useEffect: useEffectMV, useRef: useRefMV } = React;
 
+const onCardKey = (handler) => (e) => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); }
+};
+
 const MAP_BBOX = { latMin: 40.80, latMax: 41.70, lngMin: -76.05, lngMax: -75.05 };
 function eventLatLng(ev) {
   if (Number.isFinite(ev.lat) && Number.isFinite(ev.lng)) return [ev.lat, ev.lng];
@@ -49,6 +53,8 @@ function MapView({ events, saved, onSave, onOpen }) {
     return () => { map.remove(); mapRef.current = null; };
   }, []);
 
+  // Build the marker layer when events or activeDay change. Stash the event id
+  // on each marker so the saved-state effect can restyle without rebuilding.
   useEffectMV(() => {
     const map = mapRef.current;
     if (!map || !window.L) return;
@@ -65,14 +71,14 @@ function MapView({ events, saved, onSave, onOpen }) {
       const ll = eventLatLng(ev);
       if (!ll) return;
       const cat = CATEGORIES[ev.category] || { color: '#666', label: ev.category };
-      const isSaved = saved.includes(ev.id);
       const marker = window.L.circleMarker(ll, {
         radius: ev.featured ? 9 : 7,
         color: '#1a1a1a',
-        weight: isSaved ? 2.5 : 1,
+        weight: 1,
         fillColor: cat.color,
         fillOpacity: 0.92,
       });
+      marker._evId = ev.id;
       const label = `<strong>${ev.title.replace(/</g, '&lt;')}</strong><br><span style="opacity:0.7">${fmtEventTime(ev)} · ${ev.venue.replace(/</g, '&lt;')}</span>`;
       marker.bindTooltip(label, { direction: 'top', offset: [0, -6] });
       marker.on('click', () => onOpen(ev.id));
@@ -81,7 +87,19 @@ function MapView({ events, saved, onSave, onOpen }) {
     layer.addTo(map);
     layerRef.current = layer;
     return () => { layer.remove(); };
-  }, [events, activeDay, saved]);
+  }, [events, activeDay]);
+
+  // Update only the saved-stroke weight on existing markers when `saved` changes.
+  // Avoids destroying + re-clustering all markers on every star toggle.
+  useEffectMV(() => {
+    const layer = layerRef.current;
+    if (!layer) return;
+    const savedSet = new Set(saved);
+    layer.eachLayer(m => {
+      if (m._evId == null || typeof m.setStyle !== 'function') return;
+      m.setStyle({ weight: savedSet.has(m._evId) ? 2.5 : 1 });
+    });
+  }, [saved]);
 
   return (
     <div className="map-wrap">
@@ -144,6 +162,12 @@ function MapView({ events, saved, onSave, onOpen }) {
 // ============ WEEKEND VIEW ============
 function WeekendView({ events, saved, onSave, onOpen }) {
   const days = thisWeekendDays();
+  const eventsByDay = useMemoMV(() => {
+    const m = {};
+    events.forEach(e => { (m[e.day] ||= []).push(e); });
+    Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
+    return m;
+  }, [events]);
   if (days.length === 0) {
     return (
       <div className="weekend-wrap">
@@ -153,6 +177,7 @@ function WeekendView({ events, saved, onSave, onOpen }) {
   }
   const first = dateForDay(days[0]);
   const last = dateForDay(days[days.length - 1]);
+  const todayD = todayDayOffset();
   return (
     <div className="weekend-wrap">
       <div className="weekend-header">
@@ -167,10 +192,8 @@ function WeekendView({ events, saved, onSave, onOpen }) {
         {days.map(d => {
           const date = dateForDay(d);
           const wx = WEATHER[d];
-          const dayEvents = events
-            .filter(e => e.day === d)
-            .sort((a, b) => a.start.localeCompare(b.start));
-          const isToday = d === todayDayOffset();
+          const dayEvents = eventsByDay[d] || [];
+          const isToday = d === todayD;
           return (
             <div key={d} className={`weekend-col ${isToday ? 'is-today' : ''}`}>
               <div className="weekend-col-head">
@@ -196,6 +219,10 @@ function WeekendView({ events, saved, onSave, onOpen }) {
                       key={ev.id}
                       className={`evt ${ev.featured ? 'evt-featured' : ''}`}
                       onClick={() => onOpen(ev.id)}
+                      onKeyDown={onCardKey(() => onOpen(ev.id))}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`${ev.title} at ${ev.venue}, ${ev.town}`}
                     >
                       <div className="evt-bar" style={{ background: cat.color }} />
                       <div className="evt-body">
@@ -218,7 +245,9 @@ function WeekendView({ events, saved, onSave, onOpen }) {
                           <button
                             className={`evt-save ${isSaved ? 'is-saved' : ''}`}
                             onClick={(e) => { e.stopPropagation(); onSave(ev.id); }}
-                            aria-label={isSaved ? 'Unsave' : 'Save'}
+                            aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
+                            aria-pressed={isSaved}
+                            title={isSaved ? 'Remove from plan' : 'Save to plan'}
                           >
                             {isSaved ? '★' : '☆'}
                           </button>
@@ -238,8 +267,17 @@ function WeekendView({ events, saved, onSave, onOpen }) {
 
 // ============ LIST VIEW ============
 const HORIZON_DAYS = 14;
-function ListView({ events, saved, onSave, onOpen, weekOffset }) {
+function useDebouncedValue(value, delayMs) {
+  const [debounced, setDebounced] = useStateMV(value);
+  useEffectMV(() => {
+    const id = setTimeout(() => setDebounced(value), delayMs);
+    return () => clearTimeout(id);
+  }, [value, delayMs]);
+  return debounced;
+}
+function ListView({ events, saved, onSave, onOpen, weekOffset, filterCount = 0, onResetFilters }) {
   const [query, setQuery] = useStateMV('');
+  const debouncedQuery = useDebouncedValue(query, 150);
   const minIso = useMemoMV(() => dateForDay(0).iso, []);
   const maxIso = useMemoMV(() => dateForDay(HORIZON_DAYS - 1).iso, []);
   const todayIso = useMemoMV(() => dateForDay(Math.max(0, todayDayOffset())).iso, []);
@@ -257,7 +295,7 @@ function ListView({ events, saved, onSave, onOpen, weekOffset }) {
   }, [events]);
 
   const searched = useMemoMV(() => {
-    const q = query.trim();
+    const q = debouncedQuery.trim();
     if (!q) return events;
     if (!fuse) {
       const ql = q.toLowerCase();
@@ -269,18 +307,35 @@ function ListView({ events, saved, onSave, onOpen, weekOffset }) {
       );
     }
     return fuse.search(q).map(r => r.item);
-  }, [events, query, fuse]);
+  }, [events, debouncedQuery, fuse]);
+
+  const dates = useMemoMV(() => {
+    const out = {};
+    for (let d = 0; d < HORIZON_DAYS; d++) out[d] = dateForDay(d);
+    return out;
+  }, []);
 
   const dayInRange = (d) => {
-    const iso = dateForDay(d).iso;
+    const iso = dates[d].iso;
     return iso >= fromIso && iso <= toIso;
   };
 
   const visibleDays = [];
   for (let d = 0; d < HORIZON_DAYS; d++) if (dayInRange(d)) visibleDays.push(d);
 
+  const searchedByDay = useMemoMV(() => {
+    const m = {};
+    searched.forEach(e => { (m[e.day] ||= []).push(e); });
+    Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
+    return m;
+  }, [searched]);
+
   const clearRange = () => { setFromIso(todayIso); setToIso(maxIso); };
-  const totalShown = searched.filter(e => dayInRange(e.day)).length;
+  const totalShown = useMemoMV(
+    () => searched.filter(e => dayInRange(e.day)).length,
+    [searched, fromIso, toIso, dates]
+  );
+  const todayD = todayDayOffset();
 
   return (
     <div className="list-wrap">
@@ -315,15 +370,28 @@ function ListView({ events, saved, onSave, onOpen, weekOffset }) {
         </div>
         <div className="list-count">{totalShown} {totalShown === 1 ? 'event' : 'events'}</div>
       </div>
+      {totalShown === 0 && visibleDays.length > 0 && (
+        <div className="list-empty">
+          {debouncedQuery.trim()
+            ? <>No events match <strong>"{debouncedQuery.trim()}"</strong>.</>
+            : filterCount > 0
+              ? <>No events match your filters.</>
+              : <>No events in this range.</>
+          }
+          {filterCount > 0 && onResetFilters && (
+            <button className="list-empty-reset" onClick={onResetFilters}>Reset filters</button>
+          )}
+        </div>
+      )}
       {visibleDays.length === 0 && (
         <div className="list-empty">No events in this range.</div>
       )}
       {visibleDays.map(d => {
-        const date = dateForDay(d);
+        const date = dates[d];
         const wx = WEATHER[d];
-        const dayEvents = searched.filter(e => e.day === d).sort((a, b) => a.start.localeCompare(b.start));
+        const dayEvents = searchedByDay[d] || [];
         if (dayEvents.length === 0) return null;
-        const isToday = d === todayDayOffset();
+        const isToday = d === todayD;
         return (
           <section key={d} className={`list-day ${isToday ? 'is-today' : ''}`}>
             <header className="list-day-head">
@@ -341,7 +409,15 @@ function ListView({ events, saved, onSave, onOpen, weekOffset }) {
                 const cat = CATEGORIES[ev.category];
                 const isSaved = saved.includes(ev.id);
                 return (
-                  <article key={ev.id} className="list-item" onClick={() => onOpen(ev.id)}>
+                  <article
+                    key={ev.id}
+                    className="list-item"
+                    onClick={() => onOpen(ev.id)}
+                    onKeyDown={onCardKey(() => onOpen(ev.id))}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`${ev.title} at ${ev.venue}, ${ev.town}`}
+                  >
                     <div className="list-item-time">
                       {isAllDay(ev) ? (
                         <span className="list-item-start is-allday">All day</span>
@@ -372,6 +448,9 @@ function ListView({ events, saved, onSave, onOpen, weekOffset }) {
                     <button
                       className={`list-item-save ${isSaved ? 'is-saved' : ''}`}
                       onClick={(e) => { e.stopPropagation(); onSave(ev.id); }}
+                      aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
+                      aria-pressed={isSaved}
+                      title={isSaved ? 'Remove from plan' : 'Save to plan'}
                     >
                       {isSaved ? '★ Saved' : '☆ Save'}
                     </button>
@@ -400,6 +479,8 @@ function eventSource(ev) {
 }
 
 function EventDrawer({ event, isSaved, onSave, onClose }) {
+  const gcalUrl = useMemoMV(() => event ? eventToGcalUrl(event) : '', [event]);
+  const outlookUrl = useMemoMV(() => event ? eventToOutlookUrl(event) : '', [event]);
   if (!event) return null;
   const cat = CATEGORIES[event.category];
   const date = dateForDay(event.day);
@@ -407,8 +488,9 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
   const src = eventSource(event);
   return (
     <div className="drawer-backdrop" onClick={onClose}>
-      <aside className="drawer" onClick={e => e.stopPropagation()}>
-        <button className="drawer-close" onClick={onClose}>×</button>
+      <aside className="drawer" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={event.title}>
+        <button className="drawer-close" onClick={onClose} aria-label="Close event details" autoFocus>×</button>
+        <div className="drawer-keyhint" aria-hidden="true">← → to browse · Esc to close</div>
         <div className="drawer-rail" style={{ background: cat.color }} />
         <div className="drawer-body">
           <div className="drawer-cat" style={{ color: cat.color }}>
@@ -472,7 +554,7 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
               <div className="drawer-cal-btns">
                 <a
                   className="drawer-cal-btn"
-                  href={eventToGcalUrl(event)}
+                  href={gcalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >Google</a>
@@ -482,7 +564,7 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
                 >Apple (.ics)</button>
                 <a
                   className="drawer-cal-btn"
-                  href={eventToOutlookUrl(event)}
+                  href={outlookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >Outlook</a>
@@ -509,30 +591,29 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
 }
 
 // ============ SAVED PLAN SIDEBAR ============
-function WeekendPlan({ events, saved, onRemove, onClose, onShare, onClearPast, shareCopied }) {
-  const today = todayDayOffset();
-  const all = saved.map(id => events.find(e => e.id === id)).filter(Boolean)
-    .sort((a, b) => a.day - b.day || a.start.localeCompare(b.start));
-  const upcoming = all.filter(e => e.day >= today);
-  const past = all.filter(e => e.day < today);
-
-  // Group upcoming by day
-  const byDay = {};
-  upcoming.forEach(e => {
-    if (!byDay[e.day]) byDay[e.day] = [];
-    byDay[e.day].push(e);
-  });
+function WeekendPlan({ events, eventsById, saved, onRemove, onClose, onShare, onClearPast }) {
+  const lookup = eventsById || new Map(events.map(e => [e.id, e]));
+  const { upcoming, past, byDay } = useMemoMV(() => {
+    const today = todayDayOffset();
+    const all = saved.map(id => lookup.get(id)).filter(Boolean)
+      .sort((a, b) => a.day - b.day || a.start.localeCompare(b.start));
+    const upcoming = all.filter(e => e.day >= today);
+    const past = all.filter(e => e.day < today);
+    const byDay = {};
+    upcoming.forEach(e => { (byDay[e.day] ||= []).push(e); });
+    return { upcoming, past, byDay };
+  }, [saved, lookup]);
 
   const isEmpty = upcoming.length === 0 && past.length === 0;
   const onlyPast = upcoming.length === 0 && past.length > 0;
 
   return (
     <div className="plan-backdrop" onClick={onClose}>
-      <aside className="plan" onClick={e => e.stopPropagation()}>
+      <aside className="plan" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Your plan">
         <header className="plan-head">
           <div className="plan-eyebrow">YOUR PLAN</div>
           <h2 className="plan-title">Your Plan</h2>
-          <button className="plan-close" onClick={onClose}>×</button>
+          <button className="plan-close" onClick={onClose} aria-label="Close plan" autoFocus>×</button>
         </header>
         {isEmpty && (
           <div className="plan-empty">
@@ -591,7 +672,7 @@ function WeekendPlan({ events, saved, onRemove, onClose, onShare, onClearPast, s
                 ↓ Download for calendar app
               </button>
               <button className="plan-share" onClick={onShare}>
-                {shareCopied ? '✓ Link copied' : '↗ Copy share link'}
+                ↗ Copy share link
               </button>
             </footer>
           </>
