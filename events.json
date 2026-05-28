@@ -1,711 +1,129 @@
 {
-  "generatedAt": "2026-05-27T12:55:23.113Z",
-  "anchorDate": "2026-05-27",
+  "generatedAt": "2026-05-28T13:56:21.964Z",
+  "anchorDate": "2026-05-28",
   "horizonDays": 14,
   "source": "DiscoverNEPA + Happenings Magazine + Lackawanna Libraries + City of Scranton + University of Scranton + Marywood University + Keystone College + open-meteo",
   "weather": [
     {
       "day": 0,
-      "label": "Wed",
-      "cond": "cloud",
-      "icon": "☁",
-      "high": 86,
-      "low": 63
-    },
-    {
-      "day": 1,
       "label": "Thu",
       "cond": "cloud",
       "icon": "☁",
-      "high": 68,
-      "low": 52
+      "high": 70,
+      "low": 55
     },
     {
-      "day": 2,
+      "day": 1,
       "label": "Fri",
       "cond": "cloud",
       "icon": "☁",
-      "high": 75,
-      "low": 45
+      "high": 74,
+      "low": 47
     },
     {
-      "day": 3,
+      "day": 2,
       "label": "Sat",
-      "cond": "rain",
-      "icon": "☂",
+      "cond": "cloud",
+      "icon": "☁",
       "high": 64,
       "low": 44
     },
     {
-      "day": 4,
+      "day": 3,
       "label": "Sun",
       "cond": "cloud",
       "icon": "☁",
-      "high": 70,
-      "low": 43
+      "high": 73,
+      "low": 42
     },
     {
-      "day": 5,
+      "day": 4,
       "label": "Mon",
       "cond": "rain",
       "icon": "☂",
-      "high": 62,
-      "low": 51
-    },
-    {
-      "day": 6,
-      "label": "Tue",
-      "cond": "rain",
-      "icon": "☂",
-      "high": 66,
-      "low": 49
-    },
-    {
-      "day": 7,
-      "label": "Wed",
-      "cond": "rain",
-      "icon": "☂",
-      "high": 59,
+      "high": 69,
       "low": 48
     },
     {
-      "day": 8,
+      "day": 5,
+      "label": "Tue",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 67,
+      "low": 43
+    },
+    {
+      "day": 6,
+      "label": "Wed",
+      "cond": "partly",
+      "icon": "⛅",
+      "high": 74,
+      "low": 44
+    },
+    {
+      "day": 7,
       "label": "Thu",
       "cond": "cloud",
       "icon": "☁",
-      "high": 76,
-      "low": 46
+      "high": 78,
+      "low": 50
+    },
+    {
+      "day": 8,
+      "label": "Fri",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 69,
+      "low": 61
     },
     {
       "day": 9,
-      "label": "Fri",
-      "cond": "cloud",
-      "icon": "☁",
-      "high": 79,
-      "low": 53
-    },
-    {
-      "day": 10,
       "label": "Sat",
       "cond": "rain",
       "icon": "☂",
-      "high": 83,
-      "low": 62
+      "high": 79,
+      "low": 57
     },
     {
-      "day": 11,
+      "day": 10,
       "label": "Sun",
       "cond": "cloud",
       "icon": "☁",
-      "high": 75,
-      "low": 53
+      "high": 80,
+      "low": 55
+    },
+    {
+      "day": 11,
+      "label": "Mon",
+      "cond": "cloud",
+      "icon": "☁",
+      "high": 85,
+      "low": 55
     },
     {
       "day": 12,
-      "label": "Mon",
-      "cond": "partly",
-      "icon": "⛅",
-      "high": 73,
-      "low": 47
+      "label": "Tue",
+      "cond": "rain",
+      "icon": "☂",
+      "high": 74,
+      "low": 49
     },
     {
       "day": 13,
-      "label": "Tue",
-      "cond": "partly",
-      "icon": "⛅",
-      "high": 76,
-      "low": 46
+      "label": "Wed",
+      "cond": "sun",
+      "icon": "☀",
+      "high": 69,
+      "low": 43
     }
   ],
   "events": [
-    {
-      "id": "hm-10020735",
-      "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
-      "venue": "SordoniArtGallery",
-      "town": "Wilkes-Barre",
-      "day": 0,
-      "start": "00:00",
-      "end": "23:59",
-      "category": "community",
-      "price": "Free",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Why Am I Sad by Dana Stirling explores mental health and depression through still life photography. An estimated 280 million people worldwide live with depression; this exhibition shares the personal narrative of one of them—Dana Stirling. As a child of immigrants, she grew up navigating dual identities, often feeling ",
-      "tags": [],
-      "coords": {
-        "x": 0.16870000000000118,
-        "y": 0.5045555555555568
-      },
-      "lat": 41.2459,
-      "lng": -75.8813,
-      "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-05-27/",
-      "recurring": null,
-      "source": "hm",
-      "audience": "community",
-      "cluster": "0-wilkes-barre"
-    },
-    {
-      "id": "mary-http___uid_trumba_com_event_1364623474",
-      "title": "Summer I: Drop courses & receive 25% refund/cancellation of tuition and course fees.",
-      "venue": "Marywood University",
-      "town": "Scranton",
-      "day": 0,
-      "start": "00:00",
-      "end": "23:59",
-      "category": "community",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Academic Dates Wednesday, May 27 – Thursday, May 28, 2026 Event Name: Drop courses & receive 25% refund/cancel Event State: Confirmed Organizer: memoyle@marywood.edu Event Locator: 2026-AAHKTP Categories: *Student Accounts Organization: Student Accounts",
-      "tags": [],
-      "coords": {
-        "x": 0.39809999999999945,
-        "y": 0.3091111111111151
-      },
-      "lat": 41.4218,
-      "lng": -75.6519,
-      "url": "https://www.marywood.edu/community/news-events?trumbaEmbed=view%3devent%26eventid%3d1364623474",
-      "recurring": null,
-      "source": "mary",
-      "audience": "college",
-      "cluster": "0-scranton"
-    },
-    {
-      "id": "dn-10052399",
-      "title": "Hometown Farmers Market",
-      "venue": "Hometown Farmers Market",
-      "town": "Tamaqua",
-      "day": 0,
-      "start": "08:00",
-      "end": "19:00",
-      "category": "market",
-      "price": "See site",
-      "indoor": false,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Visit Hometown Farmers Market in Tamaqua, PA every Wednesday for locally grown produce, meats, baked goods & more. Year-round, rain or shine.",
-      "tags": [],
-      "coords": {
-        "x": 0.05676389999999287,
-        "y": 0.9763041111111052
-      },
-      "lat": 40.8213263,
-      "lng": -75.9932361,
-      "url": "https://discovernepa.com/event/hometown-farmers-market/2026-05-27/",
-      "recurring": null,
-      "source": "dn",
-      "audience": "community"
-    },
-    {
-      "id": "hm-10017803",
-      "title": "The Whispering: Screen Performance Exhibition",
-      "venue": "SordoniArtGallery",
-      "town": "Wilkes-Barre",
-      "day": 0,
-      "start": "10:00",
-      "end": "17:00",
-      "category": "art",
-      "price": "Free",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "The Whispering: Screen Performance Exhibition Echoes carried on fragile feathers. Sept 16 – Oct 8, 2025 Curated by Heather Sincavage, MFA Invited Artists: Jeff Rufus Byrd (US) E. M. Alysse Bowd (CA) Patricia Brace (US) Susan Smith & Bethany Engstrom (US) Nicola Fornoni (IT) Meri Hietala & Maippi Ketola (FI) Heather Lyo",
-      "tags": [
-        "arts",
-        "gallery",
-        "Sordoni Art Gallery"
-      ],
-      "coords": {
-        "x": 0.16870000000000118,
-        "y": 0.5045555555555568
-      },
-      "lat": 41.2459,
-      "lng": -75.8813,
-      "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-05-27/",
-      "recurring": null,
-      "source": "hm",
-      "audience": "community",
-      "cluster": "0-wilkes-barre"
-    },
-    {
-      "id": "lcl-10005520",
-      "title": "Stories with Cal & Newbery",
-      "venue": "Lackawanna County Children’s Library",
-      "town": "Scranton",
-      "day": 0,
-      "start": "10:30",
-      "end": "10:30",
-      "category": "community",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Join us for a story time featuring stories, songs, finger plays, a craft, and a puppet show with one of the Library’s mascots, Cal or Newbery! For families with children of all ages. Developed with toddlers and preschoolers in mind. Lackawanna County Children’s Library 520 Vine Street, Scranton, PA 18509 570-348-3000 x",
-      "tags": [],
-      "coords": {
-        "x": 0.38759999999999195,
-        "y": 0.3233333333333357
-      },
-      "lat": 41.409,
-      "lng": -75.6624,
-      "url": "https://lclshome.org/event/stories-with-cal-newbery-may-2026/2026-05-27/",
-      "recurring": null,
-      "source": "lcl",
-      "audience": "community",
-      "cluster": "0-scranton"
-    },
-    {
-      "id": "hm-10017434",
-      "title": "Paint the Planet Pink Celebration of Life Blood Drive",
-      "venue": "The University Of Scranton",
-      "town": "Scranton",
-      "day": 0,
-      "start": "11:00",
-      "end": "16:00",
-      "category": "art",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Paint the Planet Pink Celebration of Life Blood Drive held in memory of Greg Policare, Lisa Jones Kutra, and Brian Musto. Paint the Planet Pink®, a 501c3 all-volunteer organization, was established in 2014 as Paint Pittston Pink® and rebranded at the end of 2023. New name, new logo, same mission—“bringing the community",
-      "tags": [
-        "blood",
-        "charity",
-        "fundraiser"
-      ],
-      "coords": {
-        "x": 0.38759999999999195,
-        "y": 0.3233333333333357
-      },
-      "lat": 41.409,
-      "lng": -75.6624,
-      "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-05-27/",
-      "recurring": null,
-      "source": "hm",
-      "audience": "community",
-      "cluster": "0-scranton"
-    },
-    {
-      "id": "dn-10054288",
-      "title": "Scranton/Wilkes-Barre RailRiders vs. Worcester Red Sox",
-      "venue": "PNC Field",
-      "town": "Moosic",
-      "day": 0,
-      "start": "11:05",
-      "end": "13:30",
-      "category": "nightlife",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "RailRiders vs. Worcester Red Sox at PNC Field, Moosic runs May 26–31 and July 17–19 with games Tue–Sun plus a July weekend series.",
-      "tags": [
-        "RailRiders"
-      ],
-      "coords": {
-        "x": 0.3646164000000027,
-        "y": 0.37714155555555906
-      },
-      "lat": 41.3605726,
-      "lng": -75.6853836,
-      "url": "https://discovernepa.com/event/scranton-wilkes-barre-railriders-vs-worcester-red-sox/2026-05-27/",
-      "recurring": null,
-      "source": "dn",
-      "audience": "community"
-    },
-    {
-      "id": "lcl-10006335",
-      "title": "Needles & Hooks",
-      "venue": "Taylor Community Library",
-      "town": "Taylor",
-      "day": 0,
-      "start": "13:00",
-      "end": "14:00",
-      "category": "community",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Do you love to crochet or knit — or have you always wanted to learn? Join us for our friendly yarn group at the library. Whether you’re an experienced stitcher or picking up needles or a hook for the first time, this is a relaxed, welcoming space to create, chat, and share ideas. Bring your current project or start som",
-      "tags": [],
-      "coords": {
-        "x": 0.3311999999999955,
-        "y": 0.3382222222222213
-      },
-      "lat": 41.3956,
-      "lng": -75.7188,
-      "url": "https://lclshome.org/event/needles-hooks/2026-05-27/",
-      "recurring": null,
-      "source": "lcl",
-      "audience": "community"
-    },
-    {
-      "id": "lcl-183115",
-      "title": "Movie Fans Matinee: Seven Year Itch",
-      "venue": "Abington Community Library",
-      "town": "Clarks Summit",
-      "day": 0,
-      "start": "13:30",
-      "end": "15:30",
-      "category": "community",
-      "price": "Free",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Join us for a matinee movie showing celebrating 100 Years of Marilyn Monroe. On Wednesday, May 27 we will be showing the film “Seven Year Itch.” The story follows a faithful husband who, when his family leaves for a summer vacation, finds his overactive imagination leading him into temptation with an alluring new neigh",
-      "tags": [],
-      "coords": {
-        "x": 0.3276000000000039,
-        "y": 0.23200000000000254
-      },
-      "lat": 41.4912,
-      "lng": -75.7224,
-      "url": "https://lclshome.org/event/movie-fans-matinee-syi/",
-      "recurring": null,
-      "source": "lcl",
-      "audience": "community",
-      "cluster": "0-clarks summit"
-    },
-    {
-      "id": "lcl-181095",
-      "title": "Movie: Superman",
-      "venue": "Albright Memorial Library, Henkelman Room",
-      "town": "Scranton",
-      "day": 0,
-      "start": "14:00",
-      "end": "16:15",
-      "category": "community",
-      "price": "Free",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Join us every Wednesday at 2:00 PM for a free movie screening at the Albright Memorial Library. This week’s feature is “Superman” (Wednesday, May 27th): Superman, a cub reporter in Metropolis, embarks on a journey to reconcile his Kryptonian heritage with his human upbringing as Clark Kent. Rated PG-13; 2 hrs., 9 min. ",
-      "tags": [],
-      "coords": {
-        "x": 0.38759999999999195,
-        "y": 0.3233333333333357
-      },
-      "lat": 41.409,
-      "lng": -75.6624,
-      "url": "https://lclshome.org/event/movie-superman/",
-      "recurring": null,
-      "source": "lcl",
-      "audience": "community",
-      "cluster": "0-scranton"
-    },
-    {
-      "id": "lcl-183224",
-      "title": "LEGO Construction Crew",
-      "venue": "Abington Community Library",
-      "town": "Clarks Summit",
-      "day": 0,
-      "start": "16:00",
-      "end": "17:00",
-      "category": "community",
-      "price": "Free",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Design, create and build with LEGOs and friends! All materials will be provided. For ages 5-11. Please register. If program is full please email Miss Leigh-Ann at lpuchalski@albright.org to be added to the waitlist.",
-      "tags": [],
-      "coords": {
-        "x": 0.3276000000000039,
-        "y": 0.23200000000000254
-      },
-      "lat": 41.4912,
-      "lng": -75.7224,
-      "url": "https://lclshome.org/event/lego-construction-crew-5/",
-      "recurring": null,
-      "source": "lcl",
-      "audience": "community",
-      "cluster": "0-clarks summit"
-    },
-    {
-      "id": "lcl-182762",
-      "title": "NKH Book Club: “Rock Paper Scissors”",
-      "venue": "Nancy Kay Holmes Branch Library",
-      "town": "Scranton",
-      "day": 0,
-      "start": "17:00",
-      "end": "17:00",
-      "category": "nightlife",
-      "price": "Free",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Join us at the Library to discuss an exciting new title each month. May’s selection is Rock Paper Scissors by Alice Feeney. Stop by the Library to borrow a copy of this month’s selection! Intended for adults. Nancy Kay Holmes Branch Library 1032 Green Ridge Street, Scranton, PA 18509 570-207-0764",
-      "tags": [],
-      "coords": {
-        "x": 0.38759999999999195,
-        "y": 0.3233333333333357
-      },
-      "lat": 41.409,
-      "lng": -75.6624,
-      "url": "https://lclshome.org/event/nkh-book-club-may-2026/",
-      "recurring": null,
-      "source": "lcl",
-      "audience": "community",
-      "cluster": "0-scranton"
-    },
-    {
-      "id": "lcl-186173",
-      "title": "Tween Shrinky Dinks",
-      "venue": "Abington Community Library",
-      "town": "Clarks Summit",
-      "day": 0,
-      "start": "17:00",
-      "end": "18:00",
-      "category": "community",
-      "price": "Free",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Ages 8-12 Make your own Shrinky Dinks in a workshop led by our Teen Leadership Committee! Please email Kyler at kepstein@albright.org with any questions.",
-      "tags": [],
-      "coords": {
-        "x": 0.3276000000000039,
-        "y": 0.23200000000000254
-      },
-      "lat": 41.4912,
-      "lng": -75.7224,
-      "url": "https://lclshome.org/event/tween-shrinky-dinks/",
-      "recurring": null,
-      "source": "lcl",
-      "audience": "community",
-      "cluster": "0-clarks summit"
-    },
-    {
-      "id": "key-https___www_keystone_edu_event_intervarsity-bible-study-2_2025-09-04_",
-      "title": "InterVarsity Bible Study",
-      "venue": "Keystone College",
-      "town": "La Plume",
-      "day": 0,
-      "start": "17:00",
-      "end": "18:30",
-      "category": "community",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "The InterVarsity club invites you to come to Bible Study on Wednesdays on the second floor of Hibbard Campus Center. All are welcome no matter your faith background. The post InterVarsity Bible Study appeared first on Keystone College.",
-      "tags": [],
-      "coords": {
-        "x": 0.2674999999999983,
-        "y": 0.12577777777778387
-      },
-      "lat": 41.5868,
-      "lng": -75.7825,
-      "url": "https://www.keystone.edu/event/intervarsity-bible-study-2/2026-05-27/",
-      "recurring": null,
-      "source": "key",
-      "audience": "college"
-    },
-    {
-      "id": "hm-10006629",
-      "title": "Vinyasa Yoga",
-      "venue": "The Greenhouse Project",
-      "town": "Scranton",
-      "day": 0,
-      "start": "17:30",
-      "end": "18:30",
-      "category": "community",
-      "price": "$10",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Join us for vinyasa yoga flow Wednesday nights 5:30 PM led by Heather Solimini. A $10 donation suggested and appreciated but more or less is good too. Bring your mat and wear layers. We will be outside weather permitting, under the trees in the grass: think sunscreen, sunglasses, water. Experience the power and healing",
-      "tags": [],
-      "coords": {
-        "x": 0.38759999999999195,
-        "y": 0.3233333333333357
-      },
-      "lat": 41.409,
-      "lng": -75.6624,
-      "url": "https://www.happeningsmagazinepa.com/event/vinyasa-yoga-2/2026-05-27/",
-      "recurring": null,
-      "source": "hm",
-      "audience": "community",
-      "cluster": "0-scranton"
-    },
-    {
-      "id": "hm-10010210",
-      "title": "Vinyasa Yoga Flow with The Greenhouse Project",
-      "venue": "The Greenhouse Project",
-      "town": "Scranton",
-      "day": 0,
-      "start": "17:30",
-      "end": "18:30",
-      "category": "community",
-      "price": "$10",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Vinyasa Yoga Flow (In Person) Instructor: Heather Solimini Ongoing: Wednesdays 5:30 pm (at The Greenhouse Project, Scranton) Experience the power and healing of yoga in the good energy of the greenhouse. These in-person, small-group sessions are casual and uplifting. Join us for Vinyasa Yoga Flow Wednesday nights at 5:",
-      "tags": [],
-      "coords": {
-        "x": 0.38759999999999195,
-        "y": 0.3233333333333357
-      },
-      "lat": 41.409,
-      "lng": -75.6624,
-      "url": "https://www.happeningsmagazinepa.com/event/vinyasa-yoga-flow-with-the-greenhouse-project/2026-05-27/",
-      "recurring": null,
-      "source": "hm",
-      "audience": "community",
-      "cluster": "0-scranton"
-    },
-    {
-      "id": "hm-10016126",
-      "title": "CSUMC Vacation Bible School",
-      "venue": "Clarks Summit United Methodist Church",
-      "town": "Clarks Summit",
-      "day": 0,
-      "start": "17:45",
-      "end": "20:15",
-      "category": "community",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "It’s hard to find your way in a world gone wild. At CSUMC Vacation Bible School, children will journey on the ultimate Alaskan adventure where northern lights glow over majestic mountains, racing rivers, and glistening glaciers. Children from age 2 (potty trained) through the completion of grade 6 will learn about Jesu",
-      "tags": [
-        "bible",
-        "camp",
-        "church",
-        "vacation"
-      ],
-      "coords": {
-        "x": 0.3276000000000039,
-        "y": 0.23200000000000254
-      },
-      "lat": 41.4912,
-      "lng": -75.7224,
-      "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-05-27/",
-      "recurring": null,
-      "source": "hm",
-      "audience": "community",
-      "cluster": "0-clarks summit"
-    },
-    {
-      "id": "hm-10015725",
-      "title": "Art in Motion Mural Trolley Tour",
-      "venue": "Luzerne County",
-      "town": "Wilkes-Barre",
-      "day": 0,
-      "start": "18:00",
-      "end": "20:30",
-      "category": "art",
-      "price": "$50",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "The Street Art Society of NEPA presents the End of Summer Mural Trolley Tour! Have you seen all the murals popping up in the valley? Are you curious as to who the artists are and what their vision was for creating their murals? We want to share all those details and more during a fun and interactive trolley tour! Hop o",
-      "tags": [
-        "artists",
-        "arts",
-        "comedy",
-        "soiree",
-        "speaker"
-      ],
-      "coords": {
-        "x": 0.16870000000000118,
-        "y": 0.5045555555555568
-      },
-      "lat": 41.2459,
-      "lng": -75.8813,
-      "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-05-27/",
-      "recurring": null,
-      "source": "hm",
-      "audience": "community",
-      "cluster": "0-wilkes-barre"
-    },
-    {
-      "id": "lcl-186737",
-      "title": "From Our Kitchen to Yours",
-      "venue": "Abington Community Library",
-      "town": "Clarks Summit",
-      "day": 0,
-      "start": "18:00",
-      "end": "19:00",
-      "category": "community",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Our ongoing series will feature Lexie Kelly. Attendees will learn how to prepare Welsh Rarebit, Marinated Leeks, and Ben Franklin’s Milk Punch. This will be a cooking and tasting demo. $3 Materials Fee. For adults. Registration is required. This is a rescheduled program from February. Priority will be given to those wh",
-      "tags": [],
-      "coords": {
-        "x": 0.3276000000000039,
-        "y": 0.23200000000000254
-      },
-      "lat": 41.4912,
-      "lng": -75.7224,
-      "url": "https://lclshome.org/event/from-our-kitchen-to-yours/",
-      "recurring": null,
-      "source": "lcl",
-      "audience": "community",
-      "cluster": "0-clarks summit"
-    },
-    {
-      "id": "lcl-188501",
-      "title": "High Fae Reads",
-      "venue": "Taylor Community Library",
-      "town": "Taylor",
-      "day": 0,
-      "start": "18:00",
-      "end": "19:00",
-      "category": "community",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "Do you love stories of high fae, dragons, and magic with romance (and perhaps spice!) Join our newest book club for a reread of Sarah J. Maas’s Court of Thorns and Roses series in 2026, to be followed by more romantasy reads. Contact 570-562-1234.",
-      "tags": [],
-      "coords": {
-        "x": 0.3311999999999955,
-        "y": 0.3382222222222213
-      },
-      "lat": 41.3956,
-      "lng": -75.7188,
-      "url": "https://lclshome.org/event/high-fae-reads/",
-      "recurring": null,
-      "source": "lcl",
-      "audience": "community"
-    },
-    {
-      "id": "dn-10060639",
-      "title": "WBS Penguins vs. Toronto",
-      "venue": "Mohegan Arena at Casey Plaza",
-      "town": "Wilkes-Barre Twp.",
-      "day": 0,
-      "start": "19:05",
-      "end": "21:00",
-      "category": "community",
-      "price": "See site",
-      "indoor": true,
-      "featured": false,
-      "hidden": false,
-      "blurb": "The Wilkes-Barre/Scranton Penguins host Eastern Conference Final games at Mohegan Arena beginning Wednesday, May 27, 2026.",
-      "tags": [],
-      "coords": {
-        "x": 0.2015068000000042,
-        "y": 0.5106843333333333
-      },
-      "lat": 41.2403841,
-      "lng": -75.8484932,
-      "url": "https://discovernepa.com/event/wbs-penguins-vs-toronto/2026-05-27/",
-      "recurring": null,
-      "source": "dn",
-      "audience": "community"
-    },
     {
       "id": "hm-10020736",
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 1,
+      "day": 0,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -725,14 +143,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "1-wilkes-barre"
+      "cluster": "0-wilkes-barre"
     },
     {
       "id": "mary-http___uid_trumba_com_event_1364623475",
       "title": "Summer III: Drop courses & receive 75% refund/cancellation of tuition and course fees.",
       "venue": "Marywood University",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -752,14 +170,14 @@
       "recurring": null,
       "source": "mary",
       "audience": "college",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "mary-http___uid_trumba_com_event_1387346200",
       "title": "3rd Annual Veterans and Community Partners Wellness Summit at Marywood University",
       "venue": "Marywood University",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "08:00",
       "end": "09:30",
       "category": "art",
@@ -779,14 +197,14 @@
       "recurring": null,
       "source": "mary",
       "audience": "college",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_324951",
       "title": "Undergraduate Summer 1, Graduate Summer 1, and KCVC Summer 1 attendance due",
       "venue": "Keystone College",
       "town": "La Plume",
-      "day": 1,
+      "day": 0,
       "start": "08:00",
       "end": "09:30",
       "category": "performance",
@@ -806,14 +224,14 @@
       "recurring": null,
       "source": "key",
       "audience": "college",
-      "cluster": "1-la plume"
+      "cluster": "0-la plume"
     },
     {
       "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_324953",
       "title": "Last day to add or drop a Undergraduate Summer 1, Graduate Summer 1, and KCVC Summer 1 course without notation W",
       "venue": "Keystone College",
       "town": "La Plume",
-      "day": 1,
+      "day": 0,
       "start": "08:00",
       "end": "09:30",
       "category": "community",
@@ -833,14 +251,14 @@
       "recurring": null,
       "source": "key",
       "audience": "college",
-      "cluster": "1-la plume"
+      "cluster": "0-la plume"
     },
     {
       "id": "hm-10017804",
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 1,
+      "day": 0,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -864,14 +282,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "1-wilkes-barre"
+      "cluster": "0-wilkes-barre"
     },
     {
       "id": "lcl-10005521",
       "title": "Stories with Cal & Newbery",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "10:30",
       "end": "10:30",
       "category": "community",
@@ -891,14 +309,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "hm-10017435",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -922,14 +340,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "lcl-184226",
       "title": "Great Cookie Kerfuffle",
       "venue": "Carbondale Public Library",
       "town": "Carbondale",
-      "day": 1,
+      "day": 0,
       "start": "11:00",
       "end": "12:00",
       "category": "nightlife",
@@ -949,14 +367,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "1-carbondale"
+      "cluster": "0-carbondale"
     },
     {
       "id": "hm-10019729",
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -976,14 +394,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_316631",
       "title": "OPEN Meetings",
       "venue": "Keystone College",
       "town": "La Plume",
-      "day": 1,
+      "day": 0,
       "start": "12:20",
       "end": "13:50",
       "category": "community",
@@ -1003,14 +421,14 @@
       "recurring": null,
       "source": "key",
       "audience": "college",
-      "cluster": "1-la plume"
+      "cluster": "0-la plume"
     },
     {
       "id": "lcl-10005291",
       "title": "Scrabble Group",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 1,
+      "day": 0,
       "start": "12:30",
       "end": "15:30",
       "category": "community",
@@ -1030,14 +448,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "1-clarks summit"
+      "cluster": "0-clarks summit"
     },
     {
       "id": "hm-10006860",
       "title": "Yoga for Stress Relief",
       "venue": "Nay Aug Park",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "13:00",
       "end": "14:00",
       "category": "community",
@@ -1057,14 +475,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "hm-10007184",
       "title": "Yoga for Stress Relief with The Greenhouse Project",
       "venue": "Nay Aug Park",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "13:00",
       "end": "14:00",
       "category": "community",
@@ -1084,14 +502,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "hm-10007843",
       "title": "Yoga for Healing with The Greenhouse Project",
       "venue": "The Throop Civic Center",
       "town": "Throop",
-      "day": 1,
+      "day": 0,
       "start": "13:00",
       "end": "14:00",
       "category": "community",
@@ -1117,7 +535,7 @@
       "title": "Book Club",
       "venue": "Carbondale Public Library",
       "town": "Carbondale",
-      "day": 1,
+      "day": 0,
       "start": "13:00",
       "end": "15:00",
       "category": "nightlife",
@@ -1137,14 +555,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "1-carbondale"
+      "cluster": "0-carbondale"
     },
     {
       "id": "dn-10052403",
       "title": "Carbondale Farmers Market",
       "venue": "Carbondale Farmers Market",
       "town": "Carbondale",
-      "day": 1,
+      "day": 0,
       "start": "14:00",
       "end": "17:00",
       "category": "market",
@@ -1164,14 +582,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "1-carbondale"
+      "cluster": "0-carbondale"
     },
     {
       "id": "lcl-10004153",
       "title": "Free Senior Tech Tutoring",
       "venue": "Taylor Community Library",
       "town": "Taylor",
-      "day": 1,
+      "day": 0,
       "start": "15:00",
       "end": "17:00",
       "category": "community",
@@ -1197,7 +615,7 @@
       "title": "Tech Table",
       "venue": "Albright Memorial Library",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "17:00",
       "end": "19:00",
       "category": "community",
@@ -1217,14 +635,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "dn-10058518",
       "title": "Free Tai Chi",
       "venue": "Gather Community Space",
       "town": "Wilkes-Barre",
-      "day": 1,
+      "day": 0,
       "start": "17:30",
       "end": "18:00",
       "category": "community",
@@ -1244,14 +662,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "1-wilkes-barre"
+      "cluster": "0-wilkes-barre"
     },
     {
       "id": "lcl-10004257",
       "title": "Drawing 101",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "17:30",
       "end": "17:30",
       "category": "art",
@@ -1271,14 +689,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "hm-10016127",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 1,
+      "day": 0,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -1303,14 +721,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "1-clarks summit"
+      "cluster": "0-clarks summit"
     },
     {
       "id": "hm-10015726",
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 1,
+      "day": 0,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -1336,14 +754,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "1-wilkes-barre"
+      "cluster": "0-wilkes-barre"
     },
     {
       "id": "lcl-181614",
       "title": "Teen Anime Club",
       "venue": "Albright Memorial Library, Technology Lab",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "18:00",
       "end": "19:30",
       "category": "nightlife",
@@ -1363,14 +781,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "lcl-183385",
       "title": "“The Great Cookie Kerfuffle” Storytime",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 1,
+      "day": 0,
       "start": "18:00",
       "end": "18:00",
       "category": "community",
@@ -1390,14 +808,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "1-scranton"
+      "cluster": "0-scranton"
     },
     {
       "id": "dn-10056539",
       "title": "Worship In Movement",
       "venue": "Whispering Pines Community Church",
       "town": "Beach Lake",
-      "day": 1,
+      "day": 0,
       "start": "18:30",
       "end": "19:00",
       "category": "community",
@@ -1423,7 +841,7 @@
       "title": "Free Zen Meditation",
       "venue": "Gather Community Space",
       "town": "Wilkes-Barre",
-      "day": 1,
+      "day": 0,
       "start": "19:00",
       "end": "20:30",
       "category": "community",
@@ -1443,14 +861,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "1-wilkes-barre"
+      "cluster": "0-wilkes-barre"
     },
     {
       "id": "lcl-10005303",
       "title": "Families Helping Families",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 1,
+      "day": 0,
       "start": "19:00",
       "end": "20:00",
       "category": "community",
@@ -1470,14 +888,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "1-clarks summit"
+      "cluster": "0-clarks summit"
     },
     {
       "id": "dn-10054289",
       "title": "Scranton/Wilkes-Barre RailRiders vs. Worcester Red Sox",
       "venue": "PNC Field",
       "town": "Moosic",
-      "day": 1,
+      "day": 0,
       "start": "19:05",
       "end": "21:30",
       "category": "nightlife",
@@ -1505,7 +923,7 @@
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 2,
+      "day": 1,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -1525,14 +943,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "2-wilkes-barre"
+      "cluster": "1-wilkes-barre"
     },
     {
       "id": "mary-http___uid_trumba_com_event_1364623476",
       "title": "Summer I: Drop courses & receive 0% refund/cancellation of tuition and course fees.",
       "venue": "Marywood University",
       "town": "Scranton",
-      "day": 2,
+      "day": 1,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -1552,14 +970,14 @@
       "recurring": null,
       "source": "mary",
       "audience": "college",
-      "cluster": "2-scranton"
+      "cluster": "1-scranton"
     },
     {
       "id": "hm-10017805",
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 2,
+      "day": 1,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -1583,14 +1001,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "2-wilkes-barre"
+      "cluster": "1-wilkes-barre"
     },
     {
       "id": "lcl-182801",
       "title": "Storytime",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 2,
+      "day": 1,
       "start": "10:30",
       "end": "10:30",
       "category": "community",
@@ -1610,14 +1028,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "2-scranton"
+      "cluster": "1-scranton"
     },
     {
       "id": "hm-10017436",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 2,
+      "day": 1,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -1641,14 +1059,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "2-scranton"
+      "cluster": "1-scranton"
     },
     {
       "id": "hm-10019730",
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 2,
+      "day": 1,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -1668,14 +1086,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "2-scranton"
+      "cluster": "1-scranton"
     },
     {
       "id": "lcl-10005309",
       "title": "Conversational Italian Class",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 2,
+      "day": 1,
       "start": "12:00",
       "end": "13:00",
       "category": "community",
@@ -1695,14 +1113,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "2-clarks summit"
+      "cluster": "1-clarks summit"
     },
     {
       "id": "dn-10052413",
       "title": "Pioneer City Market",
       "venue": "Trinity Episcopal Church",
       "town": "Carbondale",
-      "day": 2,
+      "day": 1,
       "start": "14:00",
       "end": "18:00",
       "category": "market",
@@ -1728,7 +1146,7 @@
       "title": "Coloring Club",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 2,
+      "day": 1,
       "start": "14:30",
       "end": "16:30",
       "category": "nightlife",
@@ -1748,14 +1166,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "2-scranton"
+      "cluster": "1-scranton"
     },
     {
       "id": "lcl-183729",
       "title": "Grow With Your Library",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 2,
+      "day": 1,
       "start": "16:00",
       "end": "18:00",
       "category": "community",
@@ -1775,14 +1193,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "2-clarks summit"
+      "cluster": "1-clarks summit"
     },
     {
       "id": "lcl-184754",
       "title": "Macra-MAY",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 2,
+      "day": 1,
       "start": "17:00",
       "end": "18:30",
       "category": "community",
@@ -1802,14 +1220,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "2-clarks summit"
+      "cluster": "1-clarks summit"
     },
     {
       "id": "uosc-f3738f470a00006f57ed1838f2b7f4dd",
       "title": "Vin et Vues - Loire Valley and Its Wines - A Schemel Forum Collaborative Program",
       "venue": "University of Scranton",
       "town": "Scranton",
-      "day": 2,
+      "day": 1,
       "start": "17:30",
       "end": "20:30",
       "category": "food",
@@ -1829,14 +1247,14 @@
       "recurring": null,
       "source": "uosc",
       "audience": "college",
-      "cluster": "2-scranton"
+      "cluster": "1-scranton"
     },
     {
       "id": "hm-10016128",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 2,
+      "day": 1,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -1861,14 +1279,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "2-clarks summit"
+      "cluster": "1-clarks summit"
     },
     {
       "id": "hm-10015727",
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 2,
+      "day": 1,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -1894,14 +1312,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "2-wilkes-barre"
+      "cluster": "1-wilkes-barre"
     },
     {
       "id": "lcl-183538",
       "title": "Teen Macra-May",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 2,
+      "day": 1,
       "start": "18:30",
       "end": "20:00",
       "category": "community",
@@ -1921,14 +1339,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "2-clarks summit"
+      "cluster": "1-clarks summit"
     },
     {
       "id": "mary-http___uid_trumba_com_event_1376833031",
       "title": "Railriders Game Alumni Gathering",
       "venue": "Marywood University",
       "town": "Scranton",
-      "day": 2,
+      "day": 1,
       "start": "18:30",
       "end": "20:00",
       "category": "community",
@@ -1948,14 +1366,14 @@
       "recurring": null,
       "source": "mary",
       "audience": "college",
-      "cluster": "2-scranton"
+      "cluster": "1-scranton"
     },
     {
       "id": "dn-513903",
       "title": "Who Runs the World Dance Party",
       "venue": "The Green Ridge Club",
       "town": "Scranton",
-      "day": 2,
+      "day": 1,
       "start": "19:00",
       "end": "22:00",
       "category": "art",
@@ -1975,14 +1393,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "2-scranton"
+      "cluster": "1-scranton"
     },
     {
       "id": "dn-10054290",
       "title": "Scranton/Wilkes-Barre RailRiders vs. Worcester Red Sox",
       "venue": "PNC Field",
       "town": "Moosic",
-      "day": 2,
+      "day": 1,
       "start": "19:05",
       "end": "21:30",
       "category": "nightlife",
@@ -2010,7 +1428,7 @@
       "title": "WBS Penguins vs. Toronto",
       "venue": "Mohegan Arena at Casey Plaza",
       "town": "Wilkes-Barre Twp.",
-      "day": 2,
+      "day": 1,
       "start": "19:05",
       "end": "21:00",
       "category": "community",
@@ -2036,7 +1454,7 @@
       "title": "Little Theatre of Wilkes Barre presents: A Chorus Line",
       "venue": "Little Theatre of Wilkes-Barre",
       "town": "Wilkes-Barre",
-      "day": 2,
+      "day": 1,
       "start": "19:30",
       "end": "15:00",
       "category": "performance",
@@ -2056,14 +1474,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "2-wilkes-barre"
+      "cluster": "1-wilkes-barre"
     },
     {
       "id": "hm-10020738",
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 3,
+      "day": 2,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -2083,14 +1501,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "3-wilkes-barre"
+      "cluster": "2-wilkes-barre"
     },
     {
       "id": "dn-10052551",
       "title": "Monroe Farmers Market",
       "venue": "Courthouse Square – Stroudsburg",
       "town": "Stroudsburg",
-      "day": 3,
+      "day": 2,
       "start": "08:00",
       "end": "12:00",
       "category": "market",
@@ -2116,7 +1534,7 @@
       "title": "Helping Hands Car, Truck & Motorcycle Show",
       "venue": "ECUS Club",
       "town": "Hazleton",
-      "day": 3,
+      "day": 2,
       "start": "09:00",
       "end": "15:00",
       "category": "outdoor",
@@ -2142,7 +1560,7 @@
       "title": "Run For The Pizza 5K Run / 2 Mile Walk",
       "venue": "Old Forge High School’s Veterans Memorial Stadium",
       "town": "Old Forge",
-      "day": 3,
+      "day": 2,
       "start": "09:00",
       "end": "11:00",
       "category": "community",
@@ -2168,7 +1586,7 @@
       "title": "E.C.U.S. Club Car, Truck & Motorcycle Show",
       "venue": "E.C.U.S. Club",
       "town": "Hazleton",
-      "day": 3,
+      "day": 2,
       "start": "09:00",
       "end": "15:00",
       "category": "outdoor",
@@ -2194,7 +1612,7 @@
       "title": "Coffee & Cars",
       "venue": "The Guild Building",
       "town": "Scranton",
-      "day": 3,
+      "day": 2,
       "start": "09:00",
       "end": "11:00",
       "category": "community",
@@ -2214,14 +1632,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "3-scranton"
+      "cluster": "2-scranton"
     },
     {
       "id": "dn-10057087",
       "title": "Wayne County Farmers Market",
       "venue": "Wayne County Farmers’ Market",
       "town": "Honesdale",
-      "day": 3,
+      "day": 2,
       "start": "09:30",
       "end": "12:30",
       "category": "market",
@@ -2247,7 +1665,7 @@
       "title": "Seed to Supper",
       "venue": "George & Giovita Maffei Family Commons",
       "town": "Wilkes-Barre",
-      "day": 3,
+      "day": 2,
       "start": "09:30",
       "end": "11:00",
       "category": "community",
@@ -2267,14 +1685,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "3-wilkes-barre"
+      "cluster": "2-wilkes-barre"
     },
     {
       "id": "dn-513126",
       "title": "Roadsters & Runways Car and Airplane Show",
       "venue": "Cherry Ridge Airport",
       "town": "Honesdale",
-      "day": 3,
+      "day": 2,
       "start": "10:00",
       "end": "15:00",
       "category": "performance",
@@ -2300,7 +1718,7 @@
       "title": "South Side Farmers Market",
       "venue": "South Side Farmers Market",
       "town": "Scranton",
-      "day": 3,
+      "day": 2,
       "start": "10:00",
       "end": "13:00",
       "category": "market",
@@ -2320,14 +1738,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "3-scranton"
+      "cluster": "2-scranton"
     },
     {
       "id": "hm-10017806",
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 3,
+      "day": 2,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -2351,14 +1769,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "3-wilkes-barre"
+      "cluster": "2-wilkes-barre"
     },
     {
       "id": "lcl-180875",
       "title": "History and Tour of the Scranton Public Library",
       "venue": "Albright Memorial Library, Henkelman Room",
       "town": "Scranton",
-      "day": 3,
+      "day": 2,
       "start": "10:00",
       "end": "11:30",
       "category": "nightlife",
@@ -2378,14 +1796,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "3-scranton"
+      "cluster": "2-scranton"
     },
     {
       "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_330197",
       "title": "Introduction to Black and White Analog Darkroom Workshop",
       "venue": "Keystone College",
       "town": "La Plume",
-      "day": 3,
+      "day": 2,
       "start": "10:00",
       "end": "11:30",
       "category": "community",
@@ -2407,11 +1825,38 @@
       "audience": "college"
     },
     {
+      "id": "dn-515463",
+      "title": "West Scranton Garbage Olympics",
+      "venue": "NeighborWorks Office",
+      "town": "Scranton",
+      "day": 2,
+      "start": "10:30",
+      "end": "14:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The West Scranton Garbage Olympics in Scranton happens Saturday, May 30 at 10:30 AM with cleanup competitions, food, prizes and live music.",
+      "tags": [],
+      "coords": {
+        "x": 0.36018109999999126,
+        "y": 0.3347023333333312
+      },
+      "lat": 41.3987679,
+      "lng": -75.6898189,
+      "url": "https://discovernepa.com/event/west-scranton-garbage-olympics/",
+      "recurring": null,
+      "source": "dn",
+      "audience": "community",
+      "cluster": "2-scranton"
+    },
+    {
       "id": "lcl-10005503",
       "title": "First Friends",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 3,
+      "day": 2,
       "start": "10:30",
       "end": "10:30",
       "category": "community",
@@ -2431,14 +1876,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "3-scranton"
+      "cluster": "2-scranton"
     },
     {
       "id": "lcl-188484",
       "title": "Kids in the Kitchen",
       "venue": "Taylor Community Library",
       "town": "Taylor",
-      "day": 3,
+      "day": 2,
       "start": "10:30",
       "end": "11:30",
       "category": "community",
@@ -2464,7 +1909,7 @@
       "title": "Parade & Anniversary Celebrations",
       "venue": "Downtown Plymouth",
       "town": "Plymouth",
-      "day": 3,
+      "day": 2,
       "start": "11:00",
       "end": "16:00",
       "category": "community",
@@ -2492,7 +1937,7 @@
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 3,
+      "day": 2,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -2516,14 +1961,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "3-scranton"
+      "cluster": "2-scranton"
     },
     {
       "id": "dn-479856",
       "title": "White Haven Art Walk 2026",
       "venue": "Downtown White Haven",
       "town": "White Haven",
-      "day": 3,
+      "day": 2,
       "start": "12:00",
       "end": "17:00",
       "category": "art",
@@ -2549,7 +1994,7 @@
       "title": "Feel the Summer Food Truck Fest",
       "venue": "Patriot Square Park",
       "town": "Nanticoke",
-      "day": 3,
+      "day": 2,
       "start": "12:00",
       "end": "19:00",
       "category": "food",
@@ -2575,7 +2020,7 @@
       "title": "What R U Reading?: An Alternative Book Club",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 3,
+      "day": 2,
       "start": "12:00",
       "end": "12:00",
       "category": "performance",
@@ -2595,14 +2040,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "3-scranton"
+      "cluster": "2-scranton"
     },
     {
       "id": "dn-507339",
       "title": "Swatt Scholarship Cornhole Tournament",
       "venue": "Mayli Manor",
       "town": "Scott Twp.",
-      "day": 3,
+      "day": 2,
       "start": "13:00",
       "end": "17:00",
       "category": "community",
@@ -2628,7 +2073,7 @@
       "title": "Ice Cream Social",
       "venue": "Carbondale Public Library",
       "town": "Carbondale",
-      "day": 3,
+      "day": 2,
       "start": "13:00",
       "end": "15:00",
       "category": "nightlife",
@@ -2654,7 +2099,7 @@
       "title": "The Curiosity Club: Quail Egg Incubation",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 3,
+      "day": 2,
       "start": "14:00",
       "end": "14:00",
       "category": "nightlife",
@@ -2674,14 +2119,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "3-scranton"
+      "cluster": "2-scranton"
     },
     {
       "id": "lcl-189286",
       "title": "Craft & Yap",
       "venue": "Carbondale Public Library",
       "town": "Carbondale",
-      "day": 3,
+      "day": 2,
       "start": "14:00",
       "end": "15:00",
       "category": "art",
@@ -2707,7 +2152,7 @@
       "title": "Black Diamonds Pipe Band Gift Card Bingo",
       "venue": "Eagle Hose Co. Fire Hall",
       "town": "Dickson City",
-      "day": 3,
+      "day": 2,
       "start": "14:30",
       "end": "17:30",
       "category": "community",
@@ -2733,7 +2178,7 @@
       "title": "Family Movie Night",
       "venue": "Beaumont Free Methodist Church",
       "town": "White Haven",
-      "day": 3,
+      "day": 2,
       "start": "17:30",
       "end": "20:00",
       "category": "community",
@@ -2759,7 +2204,7 @@
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 3,
+      "day": 2,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -2790,7 +2235,7 @@
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 3,
+      "day": 2,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -2816,14 +2261,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "3-wilkes-barre"
+      "cluster": "2-wilkes-barre"
     },
     {
       "id": "scr-41800",
       "title": "Scranton Prep Graduation Ceremony",
       "venue": "Loyola Field at Scranton Preparatory School",
       "town": "Scranton",
-      "day": 3,
+      "day": 2,
       "start": "18:30",
       "end": "21:00",
       "category": "community",
@@ -2845,14 +2290,14 @@
       "recurring": null,
       "source": "scr",
       "audience": "community",
-      "cluster": "3-scranton"
+      "cluster": "2-scranton"
     },
     {
       "id": "dn-10054291",
       "title": "Scranton/Wilkes-Barre RailRiders vs. Worcester Red Sox",
       "venue": "PNC Field",
       "town": "Moosic",
-      "day": 3,
+      "day": 2,
       "start": "18:35",
       "end": "21:00",
       "category": "nightlife",
@@ -2880,7 +2325,7 @@
       "title": "Rail Riders Baseball Game (Military Appreciation Night)",
       "venue": "Marywood University",
       "town": "Scranton",
-      "day": 3,
+      "day": 2,
       "start": "18:35",
       "end": "20:05",
       "category": "community",
@@ -2900,14 +2345,14 @@
       "recurring": null,
       "source": "mary",
       "audience": "college",
-      "cluster": "3-scranton"
+      "cluster": "2-scranton"
     },
     {
       "id": "hm-10020545",
       "title": "Little Theatre of Wilkes Barre presents: A Chorus Line",
       "venue": "Little Theatre of Wilkes-Barre",
       "town": "Wilkes-Barre",
-      "day": 3,
+      "day": 2,
       "start": "19:30",
       "end": "15:00",
       "category": "performance",
@@ -2927,14 +2372,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "3-wilkes-barre"
+      "cluster": "2-wilkes-barre"
     },
     {
       "id": "hm-10020739",
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 4,
+      "day": 3,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -2954,14 +2399,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "4-wilkes-barre"
+      "cluster": "3-wilkes-barre"
     },
     {
       "id": "hm-10017807",
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 4,
+      "day": 3,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -2985,14 +2430,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "4-wilkes-barre"
+      "cluster": "3-wilkes-barre"
     },
     {
       "id": "hm-10017438",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 4,
+      "day": 3,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -3016,14 +2461,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "4-scranton"
+      "cluster": "3-scranton"
     },
     {
       "id": "hm-10019731",
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 4,
+      "day": 3,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -3043,14 +2488,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "4-scranton"
+      "cluster": "3-scranton"
     },
     {
       "id": "dn-511349",
       "title": "Cash Bingo Fundraiser",
       "venue": "Germania Hose Company",
       "town": "Duryea",
-      "day": 4,
+      "day": 3,
       "start": "13:00",
       "end": "16:00",
       "category": "community",
@@ -3076,7 +2521,7 @@
       "title": "Philadelphia Phillies at Los Angeles Dodgers Game",
       "venue": "University of Scranton",
       "town": "Scranton",
-      "day": 4,
+      "day": 3,
       "start": "13:10",
       "end": "17:00",
       "category": "community",
@@ -3096,14 +2541,14 @@
       "recurring": null,
       "source": "uosc",
       "audience": "college",
-      "cluster": "4-scranton"
+      "cluster": "3-scranton"
     },
     {
       "id": "dn-10054292",
       "title": "Scranton/Wilkes-Barre RailRiders vs. Worcester Red Sox",
       "venue": "PNC Field",
       "town": "Moosic",
-      "day": 4,
+      "day": 3,
       "start": "13:35",
       "end": "16:00",
       "category": "nightlife",
@@ -3131,7 +2576,7 @@
       "title": "Unleash the Familiar: A Mixed Media Fantasy Pet Workshop",
       "venue": "Stronghold Studios",
       "town": "Dickson City",
-      "day": 4,
+      "day": 3,
       "start": "14:00",
       "end": "17:00",
       "category": "community",
@@ -3157,7 +2602,7 @@
       "title": "Barbershop Chorus Annual Spring Show",
       "venue": "Kirby Center for the Creative Arts",
       "town": "Kingston",
-      "day": 4,
+      "day": 3,
       "start": "14:00",
       "end": "16:00",
       "category": "performance",
@@ -3183,7 +2628,7 @@
       "title": "Be Like Blippi Tour",
       "venue": "Scranton Cultural Center at the Masonic Temple",
       "town": "Scranton",
-      "day": 4,
+      "day": 3,
       "start": "14:00",
       "end": "15:30",
       "category": "performance",
@@ -3208,14 +2653,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "4-scranton"
+      "cluster": "3-scranton"
     },
     {
       "id": "lcl-10005531",
       "title": "Lego Club",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 4,
+      "day": 3,
       "start": "14:00",
       "end": "14:00",
       "category": "nightlife",
@@ -3235,14 +2680,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "4-scranton"
+      "cluster": "3-scranton"
     },
     {
       "id": "hm-10016130",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 4,
+      "day": 3,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -3273,7 +2718,7 @@
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 4,
+      "day": 3,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -3299,14 +2744,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "4-wilkes-barre"
+      "cluster": "3-wilkes-barre"
     },
     {
       "id": "hm-10020546",
       "title": "Little Theatre of Wilkes Barre presents: A Chorus Line",
       "venue": "Little Theatre of Wilkes-Barre",
       "town": "Wilkes-Barre",
-      "day": 4,
+      "day": 3,
       "start": "19:30",
       "end": "15:00",
       "category": "performance",
@@ -3326,14 +2771,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "4-wilkes-barre"
+      "cluster": "3-wilkes-barre"
     },
     {
       "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_324955",
       "title": "Undergraduate Summer Traditional and Graduate Summer Traditional attendance due",
       "venue": "Keystone College",
       "town": "La Plume",
-      "day": 5,
+      "day": 4,
       "start": "08:00",
       "end": "09:30",
       "category": "performance",
@@ -3359,7 +2804,7 @@
       "title": "Last day to add or drop an Undergraduate Summer Traditional and Graduate Summer Traditional course without notation W",
       "venue": "Keystone College",
       "town": "La Plume",
-      "day": 5,
+      "day": 4,
       "start": "08:00",
       "end": "09:30",
       "category": "community",
@@ -3385,7 +2830,7 @@
       "title": "Teen Take-and-Make: Pipe Cleaner Garden",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 5,
+      "day": 4,
       "start": "09:00",
       "end": "21:00",
       "category": "outdoor",
@@ -3405,14 +2850,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "5-clarks summit"
+      "cluster": "4-clarks summit"
     },
     {
       "id": "hm-10017808",
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 5,
+      "day": 4,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -3442,7 +2887,7 @@
       "title": "Toddlers on the Move",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 5,
+      "day": 4,
       "start": "10:30",
       "end": "10:30",
       "category": "community",
@@ -3462,14 +2907,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "5-scranton"
+      "cluster": "4-scranton"
     },
     {
       "id": "hm-10017439",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 5,
+      "day": 4,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -3493,14 +2938,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "5-scranton"
+      "cluster": "4-scranton"
     },
     {
       "id": "hm-10019732",
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 5,
+      "day": 4,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -3520,14 +2965,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "5-scranton"
+      "cluster": "4-scranton"
     },
     {
       "id": "lcl-10005273",
       "title": "Caring Hands",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 5,
+      "day": 4,
       "start": "13:00",
       "end": "15:00",
       "category": "community",
@@ -3547,14 +2992,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "5-clarks summit"
+      "cluster": "4-clarks summit"
     },
     {
       "id": "lcl-10006298",
       "title": "First Friends",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 5,
+      "day": 4,
       "start": "15:00",
       "end": "15:00",
       "category": "community",
@@ -3574,14 +3019,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "5-scranton"
+      "cluster": "4-scranton"
     },
     {
       "id": "lcl-186060",
       "title": "Adult Gaming Club",
       "venue": "Albright Memorial Library, Technology Lab",
       "town": "Scranton",
-      "day": 5,
+      "day": 4,
       "start": "17:30",
       "end": "19:30",
       "category": "nightlife",
@@ -3601,14 +3046,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "5-scranton"
+      "cluster": "4-scranton"
     },
     {
       "id": "hm-10016131",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 5,
+      "day": 4,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -3633,14 +3078,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "5-clarks summit"
+      "cluster": "4-clarks summit"
     },
     {
       "id": "hm-10015730",
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 5,
+      "day": 4,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -3672,7 +3117,7 @@
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 6,
+      "day": 5,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -3692,14 +3137,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "6-wilkes-barre"
+      "cluster": "5-wilkes-barre"
     },
     {
       "id": "dn-10060272",
       "title": "Public Day",
       "venue": "Irem Country Club",
       "town": "Dallas",
-      "day": 6,
+      "day": 5,
       "start": "10:00",
       "end": "18:00",
       "category": "nightlife",
@@ -3725,7 +3170,7 @@
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 6,
+      "day": 5,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -3749,14 +3194,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "6-wilkes-barre"
+      "cluster": "5-wilkes-barre"
     },
     {
       "id": "lcl-10005280",
       "title": "Always in Stitches",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 6,
+      "day": 5,
       "start": "10:00",
       "end": "12:00",
       "category": "community",
@@ -3776,14 +3221,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "6-clarks summit"
+      "cluster": "5-clarks summit"
     },
     {
       "id": "lcl-10006328",
       "title": "The 10 Warning Signs of Alzheimer’s",
       "venue": "Taylor Community Library",
       "town": "Taylor",
-      "day": 6,
+      "day": 5,
       "start": "10:00",
       "end": "11:00",
       "category": "community",
@@ -3809,7 +3254,7 @@
       "title": "Stories with Cal & Newbery",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 6,
+      "day": 5,
       "start": "10:30",
       "end": "10:30",
       "category": "community",
@@ -3829,14 +3274,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "6-scranton"
+      "cluster": "5-scranton"
     },
     {
       "id": "hm-10017440",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 6,
+      "day": 5,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -3860,14 +3305,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "6-scranton"
+      "cluster": "5-scranton"
     },
     {
       "id": "hm-10007635",
       "title": "Yoga for Healing with The Greenhouse Project",
       "venue": "The Throop Civic Center",
       "town": "Throop",
-      "day": 6,
+      "day": 5,
       "start": "11:30",
       "end": "12:30",
       "category": "community",
@@ -3893,7 +3338,7 @@
       "title": "Toddlers on the Move",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 6,
+      "day": 5,
       "start": "11:30",
       "end": "11:30",
       "category": "community",
@@ -3913,14 +3358,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "6-scranton"
+      "cluster": "5-scranton"
     },
     {
       "id": "hm-10019733",
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 6,
+      "day": 5,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -3940,14 +3385,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "6-scranton"
+      "cluster": "5-scranton"
     },
     {
       "id": "lcl-10005286",
       "title": "Mahjong",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 6,
+      "day": 5,
       "start": "13:00",
       "end": "15:00",
       "category": "community",
@@ -3967,14 +3412,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "6-clarks summit"
+      "cluster": "5-clarks summit"
     },
     {
       "id": "lcl-187535",
       "title": "Cookies & Crayons",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 6,
+      "day": 5,
       "start": "15:30",
       "end": "15:30",
       "category": "community",
@@ -3994,14 +3439,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "6-scranton"
+      "cluster": "5-scranton"
     },
     {
       "id": "lcl-10006304",
       "title": "Tech Table",
       "venue": "Albright Memorial Library",
       "town": "Scranton",
-      "day": 6,
+      "day": 5,
       "start": "17:00",
       "end": "19:00",
       "category": "community",
@@ -4021,14 +3466,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "6-scranton"
+      "cluster": "5-scranton"
     },
     {
       "id": "lcl-187242",
       "title": "Seeds of Change: Teen Garden Club",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 6,
+      "day": 5,
       "start": "17:00",
       "end": "18:00",
       "category": "outdoor",
@@ -4048,14 +3493,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "6-clarks summit"
+      "cluster": "5-clarks summit"
     },
     {
       "id": "hm-10016132",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 6,
+      "day": 5,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -4080,14 +3525,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "6-clarks summit"
+      "cluster": "5-clarks summit"
     },
     {
       "id": "hm-10015731",
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 6,
+      "day": 5,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -4113,14 +3558,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "6-wilkes-barre"
+      "cluster": "5-wilkes-barre"
     },
     {
       "id": "lcl-186678",
       "title": "Alaskan Cruises",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 6,
+      "day": 5,
       "start": "18:00",
       "end": "19:00",
       "category": "community",
@@ -4140,14 +3585,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "6-clarks summit"
+      "cluster": "5-clarks summit"
     },
     {
       "id": "dn-10056540",
       "title": "Worship In Movement",
       "venue": "Whispering Pines Community Church",
       "town": "Beach Lake",
-      "day": 6,
+      "day": 5,
       "start": "18:30",
       "end": "19:00",
       "category": "community",
@@ -4173,7 +3618,7 @@
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 7,
+      "day": 6,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -4193,14 +3638,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "7-wilkes-barre"
+      "cluster": "6-wilkes-barre"
     },
     {
       "id": "dn-10052752",
       "title": "Hometown Farmers Market",
       "venue": "Hometown Farmers Market",
       "town": "Tamaqua",
-      "day": 7,
+      "day": 6,
       "start": "08:00",
       "end": "19:00",
       "category": "market",
@@ -4226,7 +3671,7 @@
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 7,
+      "day": 6,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -4250,14 +3695,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "7-wilkes-barre"
+      "cluster": "6-wilkes-barre"
     },
     {
       "id": "lcl-10006275",
       "title": "Stories with Cal & Newbery",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 7,
+      "day": 6,
       "start": "10:30",
       "end": "10:30",
       "category": "community",
@@ -4277,14 +3722,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "7-scranton"
+      "cluster": "6-scranton"
     },
     {
       "id": "hm-10017441",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 7,
+      "day": 6,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -4308,14 +3753,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "7-scranton"
+      "cluster": "6-scranton"
     },
     {
       "id": "lcl-10006290",
       "title": "Toddlers on the Move",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 7,
+      "day": 6,
       "start": "11:30",
       "end": "11:30",
       "category": "community",
@@ -4335,14 +3780,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "7-scranton"
+      "cluster": "6-scranton"
     },
     {
       "id": "lcl-10006336",
       "title": "Needles & Hooks",
       "venue": "Taylor Community Library",
       "town": "Taylor",
-      "day": 7,
+      "day": 6,
       "start": "13:00",
       "end": "14:00",
       "category": "community",
@@ -4368,7 +3813,7 @@
       "title": "Movie “Wuthering Heights”",
       "venue": "Albright Memorial Library, Henkelman Room",
       "town": "Scranton",
-      "day": 7,
+      "day": 6,
       "start": "14:00",
       "end": "16:20",
       "category": "community",
@@ -4388,14 +3833,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "7-scranton"
+      "cluster": "6-scranton"
     },
     {
       "id": "lcl-190839",
       "title": "Tinkering Teens",
       "venue": "Carbondale Public Library",
       "town": "Carbondale",
-      "day": 7,
+      "day": 6,
       "start": "16:00",
       "end": "18:00",
       "category": "nightlife",
@@ -4421,7 +3866,7 @@
       "title": "NKH Chess Club",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 7,
+      "day": 6,
       "start": "16:30",
       "end": "18:00",
       "category": "nightlife",
@@ -4441,14 +3886,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "7-scranton"
+      "cluster": "6-scranton"
     },
     {
       "id": "key-https___www_keystone_edu_event_intervarsity-bible-study-2_2025-09-04_",
       "title": "InterVarsity Bible Study",
       "venue": "Keystone College",
       "town": "La Plume",
-      "day": 7,
+      "day": 6,
       "start": "17:00",
       "end": "18:30",
       "category": "community",
@@ -4474,7 +3919,7 @@
       "title": "Vinyasa Yoga",
       "venue": "The Greenhouse Project",
       "town": "Scranton",
-      "day": 7,
+      "day": 6,
       "start": "17:30",
       "end": "18:30",
       "category": "community",
@@ -4494,14 +3939,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "7-scranton"
+      "cluster": "6-scranton"
     },
     {
       "id": "hm-10010211",
       "title": "Vinyasa Yoga Flow with The Greenhouse Project",
       "venue": "The Greenhouse Project",
       "town": "Scranton",
-      "day": 7,
+      "day": 6,
       "start": "17:30",
       "end": "18:30",
       "category": "community",
@@ -4521,14 +3966,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "7-scranton"
+      "cluster": "6-scranton"
     },
     {
       "id": "hm-10016133",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 7,
+      "day": 6,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -4553,14 +3998,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "7-clarks summit"
+      "cluster": "6-clarks summit"
     },
     {
       "id": "hm-10015732",
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 7,
+      "day": 6,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -4586,14 +4031,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "7-wilkes-barre"
+      "cluster": "6-wilkes-barre"
     },
     {
       "id": "lcl-185643",
       "title": "Video Game Club: Mario Tennis Fever",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 7,
+      "day": 6,
       "start": "18:00",
       "end": "18:00",
       "category": "nightlife",
@@ -4613,14 +4058,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "7-scranton"
+      "cluster": "6-scranton"
     },
     {
       "id": "lcl-186736",
       "title": "Great Cookie Kerfuffle Read & Play",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 7,
+      "day": 6,
       "start": "18:00",
       "end": "18:30",
       "category": "community",
@@ -4640,14 +4085,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "7-clarks summit"
+      "cluster": "6-clarks summit"
     },
     {
       "id": "lcl-187285",
       "title": "The Power of Companion Planting in the Vegetable Garden",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 7,
+      "day": 6,
       "start": "18:00",
       "end": "19:00",
       "category": "outdoor",
@@ -4667,14 +4112,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "7-clarks summit"
+      "cluster": "6-clarks summit"
     },
     {
       "id": "hm-10020742",
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 8,
+      "day": 7,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -4694,14 +4139,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "8-wilkes-barre"
+      "cluster": "7-wilkes-barre"
     },
     {
       "id": "mary-http___uid_trumba_com_event_1364623464",
       "title": "Summer III: Drop courses & receive 50% refund/cancellation of tuition and course fees.",
       "venue": "Marywood University",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -4721,14 +4166,14 @@
       "recurring": null,
       "source": "mary",
       "audience": "college",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "hm-10017811",
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 8,
+      "day": 7,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -4752,14 +4197,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "8-wilkes-barre"
+      "cluster": "7-wilkes-barre"
     },
     {
       "id": "lcl-188606",
       "title": "Seed-Starting and Stories",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "10:30",
       "end": "10:30",
       "category": "art",
@@ -4779,14 +4224,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "hm-10017442",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -4810,14 +4255,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "lcl-10006291",
       "title": "Toddlers on the Move",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "11:30",
       "end": "11:30",
       "category": "community",
@@ -4837,14 +4282,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "dn-503832",
       "title": "Wyoming Rotary 35th Annual Golf Tournament",
       "venue": "Irem Clubhouse",
       "town": "Dallas",
-      "day": 8,
+      "day": 7,
       "start": "12:00",
       "end": "17:00",
       "category": "community",
@@ -4870,7 +4315,7 @@
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -4890,14 +4335,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "key-https___www_keystone_edu__post_type_tribe_events__038_p_316631",
       "title": "OPEN Meetings",
       "venue": "Keystone College",
       "town": "La Plume",
-      "day": 8,
+      "day": 7,
       "start": "12:20",
       "end": "13:50",
       "category": "community",
@@ -4923,7 +4368,7 @@
       "title": "Scrabble Group",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 8,
+      "day": 7,
       "start": "12:30",
       "end": "15:30",
       "category": "community",
@@ -4943,14 +4388,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "8-clarks summit"
+      "cluster": "7-clarks summit"
     },
     {
       "id": "hm-10006861",
       "title": "Yoga for Stress Relief",
       "venue": "Nay Aug Park",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "13:00",
       "end": "14:00",
       "category": "community",
@@ -4970,14 +4415,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "hm-10007185",
       "title": "Yoga for Stress Relief with The Greenhouse Project",
       "venue": "Nay Aug Park",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "13:00",
       "end": "14:00",
       "category": "community",
@@ -4997,14 +4442,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "hm-10007844",
       "title": "Yoga for Healing with The Greenhouse Project",
       "venue": "The Throop Civic Center",
       "town": "Throop",
-      "day": 8,
+      "day": 7,
       "start": "13:00",
       "end": "14:00",
       "category": "community",
@@ -5030,7 +4475,7 @@
       "title": "Carbondale Farmers Market",
       "venue": "Carbondale Farmers Market",
       "town": "Carbondale",
-      "day": 8,
+      "day": 7,
       "start": "14:00",
       "end": "17:00",
       "category": "market",
@@ -5056,7 +4501,7 @@
       "title": "Free Senior Tech Tutoring",
       "venue": "Taylor Community Library",
       "town": "Taylor",
-      "day": 8,
+      "day": 7,
       "start": "15:00",
       "end": "17:00",
       "category": "community",
@@ -5082,7 +4527,7 @@
       "title": "Art Explorers",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 8,
+      "day": 7,
       "start": "16:00",
       "end": "17:00",
       "category": "art",
@@ -5102,14 +4547,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "8-clarks summit"
+      "cluster": "7-clarks summit"
     },
     {
       "id": "lcl-10006305",
       "title": "Tech Table",
       "venue": "Albright Memorial Library",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "17:00",
       "end": "19:00",
       "category": "community",
@@ -5129,14 +4574,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "dn-10058519",
       "title": "Free Tai Chi",
       "venue": "Gather Community Space",
       "town": "Wilkes-Barre",
-      "day": 8,
+      "day": 7,
       "start": "17:30",
       "end": "18:00",
       "category": "community",
@@ -5156,14 +4601,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "8-wilkes-barre"
+      "cluster": "7-wilkes-barre"
     },
     {
       "id": "hm-10016134",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 8,
+      "day": 7,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -5188,14 +4633,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "8-clarks summit"
+      "cluster": "7-clarks summit"
     },
     {
       "id": "hm-10015733",
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 8,
+      "day": 7,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -5221,14 +4666,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "8-wilkes-barre"
+      "cluster": "7-wilkes-barre"
     },
     {
       "id": "lcl-10001687",
       "title": "Stamp n Swap",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 8,
+      "day": 7,
       "start": "18:00",
       "end": "20:00",
       "category": "community",
@@ -5248,14 +4693,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "8-clarks summit"
+      "cluster": "7-clarks summit"
     },
     {
       "id": "lcl-185059",
       "title": "Teen Game Night",
       "venue": "Albright Memorial Library, Technology Lab",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "18:00",
       "end": "19:30",
       "category": "community",
@@ -5275,14 +4720,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "lcl-188698",
       "title": "Stories with Cal & Newbery",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 8,
+      "day": 7,
       "start": "18:00",
       "end": "18:00",
       "category": "community",
@@ -5302,14 +4747,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "8-scranton"
+      "cluster": "7-scranton"
     },
     {
       "id": "dn-10056541",
       "title": "Worship In Movement",
       "venue": "Whispering Pines Community Church",
       "town": "Beach Lake",
-      "day": 8,
+      "day": 7,
       "start": "18:30",
       "end": "19:00",
       "category": "community",
@@ -5335,7 +4780,7 @@
       "title": "Free Zen Meditation",
       "venue": "Gather Community Space",
       "town": "Wilkes-Barre",
-      "day": 8,
+      "day": 7,
       "start": "19:00",
       "end": "20:30",
       "category": "community",
@@ -5355,14 +4800,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "8-wilkes-barre"
+      "cluster": "7-wilkes-barre"
     },
     {
       "id": "lcl-10005304",
       "title": "Families Helping Families",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 8,
+      "day": 7,
       "start": "19:00",
       "end": "20:00",
       "category": "community",
@@ -5382,14 +4827,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "8-clarks summit"
+      "cluster": "7-clarks summit"
     },
     {
       "id": "hm-10020743",
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 9,
+      "day": 8,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -5409,14 +4854,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "9-wilkes-barre"
+      "cluster": "8-wilkes-barre"
     },
     {
       "id": "mary-http___uid_trumba_com_event_1398478377",
       "title": "Camp Freedom Informational Breakfast",
       "venue": "Marywood University",
       "town": "Scranton",
-      "day": 9,
+      "day": 8,
       "start": "08:00",
       "end": "09:30",
       "category": "community",
@@ -5436,14 +4881,14 @@
       "recurring": null,
       "source": "mary",
       "audience": "college",
-      "cluster": "9-scranton"
+      "cluster": "8-scranton"
     },
     {
       "id": "dn-497267",
       "title": "Timber Sale Field Tour",
       "venue": "Delaware State Forest District Office",
       "town": "East Stroudsburg",
-      "day": 9,
+      "day": 8,
       "start": "10:00",
       "end": "13:00",
       "category": "community",
@@ -5469,7 +4914,7 @@
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 9,
+      "day": 8,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -5493,14 +4938,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "9-wilkes-barre"
+      "cluster": "8-wilkes-barre"
     },
     {
       "id": "lcl-186749",
       "title": "Great Cookie Kerfuffle Read & Play",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 9,
+      "day": 8,
       "start": "10:00",
       "end": "10:30",
       "category": "community",
@@ -5520,14 +4965,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "9-clarks summit"
+      "cluster": "8-clarks summit"
     },
     {
       "id": "mary-http___uid_trumba_com_event_1398478378",
       "title": "Camp Freedom CARE Event",
       "venue": "Marywood University",
       "town": "Scranton",
-      "day": 9,
+      "day": 8,
       "start": "10:00",
       "end": "11:30",
       "category": "community",
@@ -5547,14 +4992,14 @@
       "recurring": null,
       "source": "mary",
       "audience": "college",
-      "cluster": "9-scranton"
+      "cluster": "8-scranton"
     },
     {
       "id": "lcl-186763",
       "title": "Storytime",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 9,
+      "day": 8,
       "start": "10:30",
       "end": "10:30",
       "category": "community",
@@ -5574,14 +5019,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "9-scranton"
+      "cluster": "8-scranton"
     },
     {
       "id": "hm-10017443",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 9,
+      "day": 8,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -5605,14 +5050,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "9-scranton"
+      "cluster": "8-scranton"
     },
     {
       "id": "hm-10019735",
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 9,
+      "day": 8,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -5632,14 +5077,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "9-scranton"
+      "cluster": "8-scranton"
     },
     {
       "id": "lcl-10005310",
       "title": "Conversational Italian Class",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 9,
+      "day": 8,
       "start": "12:00",
       "end": "13:00",
       "category": "community",
@@ -5659,14 +5104,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "9-clarks summit"
+      "cluster": "8-clarks summit"
     },
     {
       "id": "dn-10052769",
       "title": "Pioneer City Market",
       "venue": "Trinity Episcopal Church",
       "town": "Carbondale",
-      "day": 9,
+      "day": 8,
       "start": "14:00",
       "end": "18:00",
       "category": "market",
@@ -5692,7 +5137,7 @@
       "title": "Coloring Club",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 9,
+      "day": 8,
       "start": "14:30",
       "end": "16:30",
       "category": "nightlife",
@@ -5712,14 +5157,40 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "9-scranton"
+      "cluster": "8-scranton"
+    },
+    {
+      "id": "dn-514766",
+      "title": "SEEDS of NEPA Open House",
+      "venue": "Stourbridge Tech Hub",
+      "town": "Honesdale",
+      "day": 8,
+      "start": "15:00",
+      "end": "17:00",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "SEEDS of NEPA hosts an Open House at Stourbridge Tech Hub in Honesdale on Friday, June 5 from 3-5 PM with refreshments and community info.",
+      "tags": [],
+      "coords": {
+        "x": 0.7863341999999989,
+        "y": 0.1393965555555582
+      },
+      "lat": 41.5745431,
+      "lng": -75.2636658,
+      "url": "https://discovernepa.com/event/seeds-of-nepa-open-house/",
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
     },
     {
       "id": "dn-514155",
       "title": "Gather on the Green: A NEPA Gives Lawn Party",
       "venue": "Gather Community Space",
       "town": "Wilkes-Barre",
-      "day": 9,
+      "day": 8,
       "start": "16:00",
       "end": "19:30",
       "category": "art",
@@ -5739,14 +5210,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "9-wilkes-barre"
+      "cluster": "8-wilkes-barre"
     },
     {
       "id": "dn-10052771",
       "title": "First Friday Scranton",
       "venue": "Downtown Scranton",
       "town": "Scranton",
-      "day": 9,
+      "day": 8,
       "start": "17:00",
       "end": "21:00",
       "category": "community",
@@ -5766,14 +5237,41 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "9-scranton"
+      "cluster": "8-scranton"
+    },
+    {
+      "id": "dn-515626",
+      "title": "First Friday: Yoga with Mindy",
+      "venue": "The DRIPBaR",
+      "town": "Scranton",
+      "day": 8,
+      "start": "17:00",
+      "end": "19:00",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "First Friday: Yoga with Mindy at The DRIPBaR in Scranton happens Friday, June 5, 2026 at 5 PM with yoga and wellness activities.",
+      "tags": [],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://discovernepa.com/event/first-friday-yoga-with-mindy/",
+      "recurring": null,
+      "source": "dn",
+      "audience": "community",
+      "cluster": "8-scranton"
     },
     {
       "id": "hm-10016135",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 9,
+      "day": 8,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -5798,14 +5296,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "9-clarks summit"
+      "cluster": "8-clarks summit"
     },
     {
       "id": "hm-10015734",
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 9,
+      "day": 8,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -5831,14 +5329,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "9-wilkes-barre"
+      "cluster": "8-wilkes-barre"
     },
     {
       "id": "hm-10020744",
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 10,
+      "day": 9,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -5858,14 +5356,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "10-wilkes-barre"
+      "cluster": "9-wilkes-barre"
     },
     {
       "id": "dn-10052802",
       "title": "Monroe Farmers Market",
       "venue": "Courthouse Square – Stroudsburg",
       "town": "Stroudsburg",
-      "day": 10,
+      "day": 9,
       "start": "08:00",
       "end": "12:00",
       "category": "market",
@@ -5891,7 +5389,7 @@
       "title": "Pet Palooza",
       "venue": "Kennedy’s Grove",
       "town": "Waymart",
-      "day": 10,
+      "day": 9,
       "start": "09:00",
       "end": "17:00",
       "category": "community",
@@ -5917,7 +5415,7 @@
       "title": "NEPA Ecotour",
       "venue": "Lackawanna Heritage Valley Authority",
       "town": "Scranton",
-      "day": 10,
+      "day": 9,
       "start": "09:00",
       "end": "18:00",
       "category": "community",
@@ -5937,14 +5435,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "10-scranton"
+      "cluster": "9-scranton"
     },
     {
       "id": "dn-10060262",
       "title": "Weatherly Hillclimb",
       "venue": "Weatherly Hillclimb",
       "town": "Weatherly",
-      "day": 10,
+      "day": 9,
       "start": "09:00",
       "end": "16:00",
       "category": "community",
@@ -5966,11 +5464,37 @@
       "audience": "community"
     },
     {
+      "id": "dn-514529",
+      "title": "Superhero 5k Run and Walk",
+      "venue": "Dallas High School",
+      "town": "Dallas",
+      "day": 9,
+      "start": "09:00",
+      "end": "10:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The Super Hero 5K at Dallas High School in Dallas happens Saturday, June 6 at 9 AM supporting Beyond Grateful and inclusive community programs.",
+      "tags": [],
+      "coords": {
+        "x": 0.09849210000000141,
+        "y": 0.39441099999999796
+      },
+      "lat": 41.3450301,
+      "lng": -75.9515079,
+      "url": "https://discovernepa.com/event/superhero-5k-run-and-walk/",
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
+    },
+    {
       "id": "dn-10057088",
       "title": "Wayne County Farmers Market",
       "venue": "Wayne County Farmers’ Market",
       "town": "Honesdale",
-      "day": 10,
+      "day": 9,
       "start": "09:30",
       "end": "12:30",
       "category": "market",
@@ -5996,7 +5520,7 @@
       "title": "Monthly Young Writers Storytelling Workshop",
       "venue": "Circle Centre for the Arts",
       "town": "Wilkes-Barre",
-      "day": 10,
+      "day": 9,
       "start": "09:30",
       "end": "11:30",
       "category": "community",
@@ -6016,14 +5540,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "10-wilkes-barre"
+      "cluster": "9-wilkes-barre"
     },
     {
       "id": "dn-10060659",
       "title": "South Side Farmers Market",
       "venue": "South Side Farmers Market",
       "town": "Scranton",
-      "day": 10,
+      "day": 9,
       "start": "10:00",
       "end": "13:00",
       "category": "market",
@@ -6043,14 +5567,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "10-scranton"
+      "cluster": "9-scranton"
     },
     {
       "id": "hm-10017813",
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 10,
+      "day": 9,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -6074,14 +5598,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "10-wilkes-barre"
+      "cluster": "9-wilkes-barre"
     },
     {
       "id": "lcl-187289",
       "title": "Three Sisters Planting",
       "venue": "Abington Community Garden",
       "town": "South Abington Township",
-      "day": 10,
+      "day": 9,
       "start": "10:00",
       "end": "11:00",
       "category": "community",
@@ -6107,7 +5631,7 @@
       "title": "Introduction to Black and White Analog Darkroom Workshop",
       "venue": "Keystone College",
       "town": "La Plume",
-      "day": 10,
+      "day": 9,
       "start": "10:00",
       "end": "11:30",
       "category": "community",
@@ -6133,7 +5657,7 @@
       "title": "Music and Movement",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 10,
+      "day": 9,
       "start": "10:30",
       "end": "10:30",
       "category": "performance",
@@ -6153,14 +5677,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "10-scranton"
+      "cluster": "9-scranton"
     },
     {
       "id": "dn-10060322",
       "title": "Summer Walking Tours",
       "venue": "Downtown Scranton",
       "town": "Scranton",
-      "day": 10,
+      "day": 9,
       "start": "11:00",
       "end": "12:00",
       "category": "community",
@@ -6180,14 +5704,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "10-scranton"
+      "cluster": "9-scranton"
     },
     {
       "id": "hm-10017444",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 10,
+      "day": 9,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -6211,14 +5735,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "10-scranton"
+      "cluster": "9-scranton"
     },
     {
       "id": "lcl-185256",
       "title": "Mini Art Day: Summer Scrapbooks",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 10,
+      "day": 9,
       "start": "12:00",
       "end": "13:30",
       "category": "art",
@@ -6238,14 +5762,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "10-scranton"
+      "cluster": "9-scranton"
     },
     {
       "id": "dn-511256",
       "title": "Wolfpack Jazz at Public Square",
       "venue": "Downtown Wilkes-Barre",
       "town": "Wilkes-Barre",
-      "day": 10,
+      "day": 9,
       "start": "12:30",
       "end": "16:00",
       "category": "nightlife",
@@ -6265,14 +5789,14 @@
       "recurring": null,
       "source": "dn",
       "audience": "community",
-      "cluster": "10-wilkes-barre"
+      "cluster": "9-wilkes-barre"
     },
     {
       "id": "lcl-185644",
       "title": "Video Game Club: Mario Tennis Fever",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 10,
+      "day": 9,
       "start": "14:00",
       "end": "14:00",
       "category": "nightlife",
@@ -6292,14 +5816,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "10-scranton"
+      "cluster": "9-scranton"
     },
     {
       "id": "dn-505922",
       "title": "Not Your Granny’s Bingo",
       "venue": "Kingston Independent Fire Hall",
       "town": "Kingston",
-      "day": 10,
+      "day": 9,
       "start": "16:30",
       "end": "18:30",
       "category": "community",
@@ -6325,7 +5849,7 @@
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 10,
+      "day": 9,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -6356,7 +5880,7 @@
       "title": "First Saturday Art Walk",
       "venue": "Downtown Stroudsburg",
       "town": "Stroudsburg",
-      "day": 10,
+      "day": 9,
       "start": "18:00",
       "end": "20:00",
       "category": "art",
@@ -6382,7 +5906,7 @@
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 10,
+      "day": 9,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -6408,14 +5932,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "10-wilkes-barre"
+      "cluster": "9-wilkes-barre"
     },
     {
       "id": "hm-108761",
       "title": "D20 Burlesque Pride Edition",
       "venue": "The RitzTheater",
       "town": "Scranton",
-      "day": 10,
+      "day": 9,
       "start": "19:00",
       "end": "21:00",
       "category": "community",
@@ -6435,14 +5959,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "10-scranton"
+      "cluster": "9-scranton"
     },
     {
       "id": "hm-108879",
       "title": "LIVE COMEDY @ the burnt norton: Madelein Murphy",
       "venue": "the burnt norton",
       "town": "Wilkes-Barre",
-      "day": 10,
+      "day": 9,
       "start": "19:00",
       "end": "22:00",
       "category": "performance",
@@ -6465,14 +5989,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "10-wilkes-barre"
+      "cluster": "9-wilkes-barre"
     },
     {
       "id": "hm-10020745",
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 11,
+      "day": 10,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -6492,14 +6016,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "11-wilkes-barre"
+      "cluster": "10-wilkes-barre"
     },
     {
       "id": "lcl-10005595",
       "title": "Weekly Programs",
       "venue": "Carbondale Public Library",
       "town": "Carbondale",
-      "day": 11,
+      "day": 10,
       "start": "00:00",
       "end": "23:59",
       "category": "nightlife",
@@ -6525,7 +6049,7 @@
       "title": "Weatherly Hillclimb",
       "venue": "Weatherly Hillclimb",
       "town": "Weatherly",
-      "day": 11,
+      "day": 10,
       "start": "09:00",
       "end": "16:00",
       "category": "community",
@@ -6551,7 +6075,7 @@
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 11,
+      "day": 10,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -6575,14 +6099,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "11-wilkes-barre"
+      "cluster": "10-wilkes-barre"
     },
     {
       "id": "hm-10017445",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 11,
+      "day": 10,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -6606,14 +6130,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "11-scranton"
+      "cluster": "10-scranton"
     },
     {
       "id": "hm-10019736",
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 11,
+      "day": 10,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -6633,14 +6157,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "11-scranton"
+      "cluster": "10-scranton"
     },
     {
       "id": "dn-509379",
       "title": "Glen Summit Clubhouse & Chapel Open House",
       "venue": "Glen Summit Clubhouse & Chapel",
       "town": "Mountain Top",
-      "day": 11,
+      "day": 10,
       "start": "13:00",
       "end": "15:00",
       "category": "nightlife",
@@ -6666,7 +6190,7 @@
       "title": "Lego Club",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 11,
+      "day": 10,
       "start": "14:00",
       "end": "14:00",
       "category": "nightlife",
@@ -6686,14 +6210,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "11-scranton"
+      "cluster": "10-scranton"
     },
     {
       "id": "lcl-185230",
       "title": "Flower Blossom Release",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 11,
+      "day": 10,
       "start": "15:00",
       "end": "16:00",
       "category": "community",
@@ -6719,7 +6243,7 @@
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 11,
+      "day": 10,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -6750,7 +6274,7 @@
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 11,
+      "day": 10,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -6776,14 +6300,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "11-wilkes-barre"
+      "cluster": "10-wilkes-barre"
     },
     {
       "id": "hm-10017815",
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 12,
+      "day": 11,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -6813,7 +6337,7 @@
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 12,
+      "day": 11,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -6837,14 +6361,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "12-scranton"
+      "cluster": "11-scranton"
     },
     {
       "id": "hm-10019737",
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 12,
+      "day": 11,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -6864,14 +6388,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "12-scranton"
+      "cluster": "11-scranton"
     },
     {
       "id": "lcl-10005274",
       "title": "Caring Hands",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 12,
+      "day": 11,
       "start": "13:00",
       "end": "15:00",
       "category": "community",
@@ -6891,14 +6415,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "12-clarks summit"
+      "cluster": "11-clarks summit"
     },
     {
       "id": "lcl-10006299",
       "title": "First Friends",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 12,
+      "day": 11,
       "start": "15:00",
       "end": "15:00",
       "category": "community",
@@ -6918,14 +6442,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "12-scranton"
+      "cluster": "11-scranton"
     },
     {
       "id": "lcl-186406",
       "title": "Meet the Author: K.M. Scott",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 12,
+      "day": 11,
       "start": "16:30",
       "end": "18:00",
       "category": "community",
@@ -6945,14 +6469,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "12-scranton"
+      "cluster": "11-scranton"
     },
     {
       "id": "lcl-187250",
       "title": "Teen Zine Workshop",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 12,
+      "day": 11,
       "start": "17:00",
       "end": "18:00",
       "category": "community",
@@ -6972,14 +6496,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "12-clarks summit"
+      "cluster": "11-clarks summit"
     },
     {
       "id": "hm-10016138",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 12,
+      "day": 11,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -7004,14 +6528,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "12-clarks summit"
+      "cluster": "11-clarks summit"
     },
     {
       "id": "hm-10015737",
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 12,
+      "day": 11,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -7043,7 +6567,7 @@
       "title": "Bookish Bingo",
       "venue": "Albright Memorial Library, Henkelman Room",
       "town": "Scranton",
-      "day": 12,
+      "day": 11,
       "start": "18:00",
       "end": "19:30",
       "category": "community",
@@ -7063,14 +6587,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "12-scranton"
+      "cluster": "11-scranton"
     },
     {
       "id": "hm-10020746",
       "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 13,
+      "day": 12,
       "start": "00:00",
       "end": "23:59",
       "category": "community",
@@ -7090,14 +6614,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "13-wilkes-barre"
+      "cluster": "12-wilkes-barre"
     },
     {
       "id": "dn-10060273",
       "title": "Public Day",
       "venue": "Irem Country Club",
       "town": "Dallas",
-      "day": 13,
+      "day": 12,
       "start": "10:00",
       "end": "18:00",
       "category": "nightlife",
@@ -7123,7 +6647,7 @@
       "title": "The Whispering: Screen Performance Exhibition",
       "venue": "SordoniArtGallery",
       "town": "Wilkes-Barre",
-      "day": 13,
+      "day": 12,
       "start": "10:00",
       "end": "17:00",
       "category": "art",
@@ -7147,14 +6671,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "13-wilkes-barre"
+      "cluster": "12-wilkes-barre"
     },
     {
       "id": "lcl-10005281",
       "title": "Always in Stitches",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 13,
+      "day": 12,
       "start": "10:00",
       "end": "12:00",
       "category": "community",
@@ -7174,14 +6698,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-clarks summit"
+      "cluster": "12-clarks summit"
     },
     {
       "id": "lcl-186509",
       "title": "Book Lovers’ Book Club: “The Lost and Found Bookshop”",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "10:00",
       "end": "10:00",
       "category": "nightlife",
@@ -7201,14 +6725,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "lcl-10006329",
       "title": "The 10 Warning Signs of Alzheimer’s",
       "venue": "Taylor Community Library",
       "town": "Taylor",
-      "day": 13,
+      "day": 12,
       "start": "10:00",
       "end": "11:00",
       "category": "community",
@@ -7234,7 +6758,7 @@
       "title": "Stories with Cal & Newbery",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "10:30",
       "end": "10:30",
       "category": "community",
@@ -7254,14 +6778,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "hm-10017447",
       "title": "Paint the Planet Pink Celebration of Life Blood Drive",
       "venue": "The University Of Scranton",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "11:00",
       "end": "16:00",
       "category": "art",
@@ -7285,14 +6809,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "hm-10007636",
       "title": "Yoga for Healing with The Greenhouse Project",
       "venue": "The Throop Civic Center",
       "town": "Throop",
-      "day": 13,
+      "day": 12,
       "start": "11:30",
       "end": "12:30",
       "category": "community",
@@ -7318,7 +6842,7 @@
       "title": "Toddler Tumble Time",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "11:30",
       "end": "11:30",
       "category": "community",
@@ -7338,14 +6862,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "hm-10019738",
       "title": "Art Exhibit: “The Anthracite Coal Industry of Northeastern Pennsylvania.”",
       "venue": "Hyland Hall",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "12:00",
       "end": "16:00",
       "category": "art",
@@ -7365,14 +6889,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "lcl-10005287",
       "title": "Mahjong",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 13,
+      "day": 12,
       "start": "13:00",
       "end": "15:00",
       "category": "community",
@@ -7392,14 +6916,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-clarks summit"
+      "cluster": "12-clarks summit"
     },
     {
       "id": "lcl-10006306",
       "title": "Tech Table",
       "venue": "Albright Memorial Library",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "17:00",
       "end": "19:00",
       "category": "community",
@@ -7419,14 +6943,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "lcl-186789",
       "title": "Kids in the Kitchen",
       "venue": "Nancy Kay Holmes Branch Library",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "17:30",
       "end": "17:30",
       "category": "community",
@@ -7446,14 +6970,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "hm-10016139",
       "title": "CSUMC Vacation Bible School",
       "venue": "Clarks Summit United Methodist Church",
       "town": "Clarks Summit",
-      "day": 13,
+      "day": 12,
       "start": "17:45",
       "end": "20:15",
       "category": "community",
@@ -7478,14 +7002,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "13-clarks summit"
+      "cluster": "12-clarks summit"
     },
     {
       "id": "hm-10015738",
       "title": "Art in Motion Mural Trolley Tour",
       "venue": "Luzerne County",
       "town": "Wilkes-Barre",
-      "day": 13,
+      "day": 12,
       "start": "18:00",
       "end": "20:30",
       "category": "art",
@@ -7511,14 +7035,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "13-wilkes-barre"
+      "cluster": "12-wilkes-barre"
     },
     {
       "id": "lcl-185655",
       "title": "Family Puzzle Night",
       "venue": "Lackawanna County Children’s Library",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "18:00",
       "end": "19:30",
       "category": "community",
@@ -7538,14 +7062,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "lcl-186796",
       "title": "Knot Another Stitch",
       "venue": "Albright Memorial Library, Director’s Office",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "18:00",
       "end": "19:30",
       "category": "community",
@@ -7565,14 +7089,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "dn-10056542",
       "title": "Worship In Movement",
       "venue": "Whispering Pines Community Church",
       "town": "Beach Lake",
-      "day": 13,
+      "day": 12,
       "start": "18:30",
       "end": "19:00",
       "category": "community",
@@ -7598,7 +7122,7 @@
       "title": "Mystery Book Club",
       "venue": "Abington Community Library",
       "town": "Clarks Summit",
-      "day": 13,
+      "day": 12,
       "start": "18:30",
       "end": "20:00",
       "category": "nightlife",
@@ -7618,14 +7142,14 @@
       "recurring": null,
       "source": "lcl",
       "audience": "community",
-      "cluster": "13-clarks summit"
+      "cluster": "12-clarks summit"
     },
     {
       "id": "hm-105217",
       "title": "Planet K-Pop: The Ultimate K-Pop Tribute",
       "venue": "Scranton Cultural Center at the Masonic Temple",
       "town": "Scranton",
-      "day": 13,
+      "day": 12,
       "start": "19:00",
       "end": "21:00",
       "category": "performance",
@@ -7651,14 +7175,14 @@
       "recurring": null,
       "source": "hm",
       "audience": "community",
-      "cluster": "13-scranton"
+      "cluster": "12-scranton"
     },
     {
       "id": "dn-10054296",
       "title": "Scranton/Wilkes-Barre RailRiders vs. Lehigh Valley IronPigs",
       "venue": "PNC Field",
       "town": "Moosic",
-      "day": 13,
+      "day": 12,
       "start": "19:05",
       "end": "21:30",
       "category": "nightlife",
@@ -7680,6 +7204,569 @@
       "recurring": null,
       "source": "dn",
       "audience": "community"
+    },
+    {
+      "id": "hm-10020747",
+      "title": "Why Am I Sad by Dana Stirling | Formal/Informal: Innovations in Portraiture",
+      "venue": "SordoniArtGallery",
+      "town": "Wilkes-Barre",
+      "day": 13,
+      "start": "00:00",
+      "end": "23:59",
+      "category": "community",
+      "price": "Free",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Why Am I Sad by Dana Stirling explores mental health and depression through still life photography. An estimated 280 million people worldwide live with depression; this exhibition shares the personal narrative of one of them—Dana Stirling. As a child of immigrants, she grew up navigating dual identities, often feeling ",
+      "tags": [],
+      "coords": {
+        "x": 0.16870000000000118,
+        "y": 0.5045555555555568
+      },
+      "lat": 41.2459,
+      "lng": -75.8813,
+      "url": "https://www.happeningsmagazinepa.com/event/why-am-i-sad-by-dana-stirling-formal-informal-innovations-in-portraiture/2026-06-10/",
+      "recurring": null,
+      "source": "hm",
+      "audience": "community",
+      "cluster": "13-wilkes-barre"
+    },
+    {
+      "id": "dn-10053301",
+      "title": "Hometown Farmers Market",
+      "venue": "Hometown Farmers Market",
+      "town": "Tamaqua",
+      "day": 13,
+      "start": "08:00",
+      "end": "19:00",
+      "category": "market",
+      "price": "See site",
+      "indoor": false,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Visit Hometown Farmers Market in Tamaqua, PA every Wednesday for locally grown produce, meats, baked goods & more. Year-round, rain or shine.",
+      "tags": [],
+      "coords": {
+        "x": 0.05676389999999287,
+        "y": 0.9763041111111052
+      },
+      "lat": 40.8213263,
+      "lng": -75.9932361,
+      "url": "https://discovernepa.com/event/hometown-farmers-market/2026-06-10/",
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
+    },
+    {
+      "id": "scr-41806",
+      "title": "Catholic Charities USA People of Hope Museum",
+      "venue": "Nay Aug Park",
+      "town": "Scranton",
+      "day": 13,
+      "start": "09:00",
+      "end": "16:00",
+      "category": "community",
+      "price": "Free",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "@ Catholic Social Services of the Diocese of Scranton will be hosting Catholic Charities USA’s traveling exhibit called People of Hope: Faith- Filled Stories of Neighbors Helping Neighbors. This free exhibit invites visitors to explore the stories of those who have given and received support through local Catholic Char",
+      "tags": [],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://scrantonpa.gov/event/catholic-charities-usa-people-of-hope-museum/",
+      "recurring": null,
+      "source": "scr",
+      "audience": "community",
+      "cluster": "13-scranton"
+    },
+    {
+      "id": "hm-10017817",
+      "title": "The Whispering: Screen Performance Exhibition",
+      "venue": "SordoniArtGallery",
+      "town": "Wilkes-Barre",
+      "day": 13,
+      "start": "10:00",
+      "end": "17:00",
+      "category": "art",
+      "price": "Free",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The Whispering: Screen Performance Exhibition Echoes carried on fragile feathers. Sept 16 – Oct 8, 2025 Curated by Heather Sincavage, MFA Invited Artists: Jeff Rufus Byrd (US) E. M. Alysse Bowd (CA) Patricia Brace (US) Susan Smith & Bethany Engstrom (US) Nicola Fornoni (IT) Meri Hietala & Maippi Ketola (FI) Heather Lyo",
+      "tags": [
+        "arts",
+        "gallery",
+        "Sordoni Art Gallery"
+      ],
+      "coords": {
+        "x": 0.16870000000000118,
+        "y": 0.5045555555555568
+      },
+      "lat": 41.2459,
+      "lng": -75.8813,
+      "url": "https://www.happeningsmagazinepa.com/event/the-whispering-screen-performance-exhibition/2026-06-10/",
+      "recurring": null,
+      "source": "hm",
+      "audience": "community",
+      "cluster": "13-wilkes-barre"
+    },
+    {
+      "id": "lcl-187739",
+      "title": "Block Party",
+      "venue": "Abington Community Library",
+      "town": "Clarks Summit",
+      "day": 13,
+      "start": "10:00",
+      "end": "11:00",
+      "category": "art",
+      "price": "Free",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Join us for free play time with our large selection of blocks and toys. For ages 2-5; siblings welcome. Please register.",
+      "tags": [],
+      "coords": {
+        "x": 0.3276000000000039,
+        "y": 0.23200000000000254
+      },
+      "lat": 41.4912,
+      "lng": -75.7224,
+      "url": "https://lclshome.org/event/block-party/",
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community",
+      "cluster": "13-clarks summit"
+    },
+    {
+      "id": "lcl-10006279",
+      "title": "Stories with Cal & Newbery",
+      "venue": "Lackawanna County Children’s Library",
+      "town": "Scranton",
+      "day": 13,
+      "start": "10:30",
+      "end": "10:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Join us for a story time featuring stories, songs, finger plays, a craft, and a puppet show with one of the Library’s mascots, Cal or Newbery! For families with children of all ages. Developed with toddlers and preschoolers in mind. Lackawanna County Children’s Library 520 Vine Street, Scranton, PA 18509 570-348-3000 x",
+      "tags": [],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://lclshome.org/event/stories-with-cal-newbery-may-2026/2026-06-10/",
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community",
+      "cluster": "13-scranton"
+    },
+    {
+      "id": "hm-10017448",
+      "title": "Paint the Planet Pink Celebration of Life Blood Drive",
+      "venue": "The University Of Scranton",
+      "town": "Scranton",
+      "day": 13,
+      "start": "11:00",
+      "end": "16:00",
+      "category": "art",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Paint the Planet Pink Celebration of Life Blood Drive held in memory of Greg Policare, Lisa Jones Kutra, and Brian Musto. Paint the Planet Pink®, a 501c3 all-volunteer organization, was established in 2014 as Paint Pittston Pink® and rebranded at the end of 2023. New name, new logo, same mission—“bringing the community",
+      "tags": [
+        "blood",
+        "charity",
+        "fundraiser"
+      ],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://www.happeningsmagazinepa.com/event/paint-the-planet-pink-celebration-of-life-blood-drive/2026-06-10/",
+      "recurring": null,
+      "source": "hm",
+      "audience": "community",
+      "cluster": "13-scranton"
+    },
+    {
+      "id": "lcl-10006293",
+      "title": "Toddler Tumble Time",
+      "venue": "Lackawanna County Children’s Library",
+      "town": "Scranton",
+      "day": 13,
+      "start": "11:30",
+      "end": "11:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Join us as we work on skills such as balancing, throwing, kicking, and jumping. We will be using a combination of movement and one-on-one activities for parents and children. For children ages 1 through 3. Lackawanna County Children’s Library 520 Vine Street, Scranton, PA 18509 570-348-3000 x 3015",
+      "tags": [],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://lclshome.org/event/toddler-tumble-time-2026/2026-06-10/",
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community",
+      "cluster": "13-scranton"
+    },
+    {
+      "id": "lcl-10006337",
+      "title": "Needles & Hooks",
+      "venue": "Taylor Community Library",
+      "town": "Taylor",
+      "day": 13,
+      "start": "13:00",
+      "end": "14:00",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Do you love to crochet or knit — or have you always wanted to learn? Join us for our friendly yarn group at the library. Whether you’re an experienced stitcher or picking up needles or a hook for the first time, this is a relaxed, welcoming space to create, chat, and share ideas. Bring your current project or start som",
+      "tags": [],
+      "coords": {
+        "x": 0.3311999999999955,
+        "y": 0.3382222222222213
+      },
+      "lat": 41.3956,
+      "lng": -75.7188,
+      "url": "https://lclshome.org/event/needles-hooks/2026-06-10/",
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community"
+    },
+    {
+      "id": "lcl-184621",
+      "title": "Movie: Nuremberg",
+      "venue": "Albright Memorial Library, Henkelman Room",
+      "town": "Scranton",
+      "day": 13,
+      "start": "14:00",
+      "end": "16:30",
+      "category": "community",
+      "price": "Free",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Join us every Wednesday at 2:00 PM for a free movie screening at the Albright Memorial Library. This week’s feature is “Nuremberg” (Wednesday, June 10th): American psychiatrist Douglas Kelley (Rami Malek), tasked with determining whether Nazi prisoners are fit to stand trial for their war crimes, finds himself in a com",
+      "tags": [],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://lclshome.org/event/movie-nuremberg/",
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community",
+      "cluster": "13-scranton"
+    },
+    {
+      "id": "key-https___www_keystone_edu_event_intervarsity-bible-study-2_2025-09-04_",
+      "title": "InterVarsity Bible Study",
+      "venue": "Keystone College",
+      "town": "La Plume",
+      "day": 13,
+      "start": "17:00",
+      "end": "18:30",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The InterVarsity club invites you to come to Bible Study on Wednesdays on the second floor of Hibbard Campus Center. All are welcome no matter your faith background. The post InterVarsity Bible Study appeared first on Keystone College.",
+      "tags": [],
+      "coords": {
+        "x": 0.2674999999999983,
+        "y": 0.12577777777778387
+      },
+      "lat": 41.5868,
+      "lng": -75.7825,
+      "url": "https://www.keystone.edu/event/intervarsity-bible-study-2/2026-06-10/",
+      "recurring": null,
+      "source": "key",
+      "audience": "college"
+    },
+    {
+      "id": "hm-10006631",
+      "title": "Vinyasa Yoga",
+      "venue": "The Greenhouse Project",
+      "town": "Scranton",
+      "day": 13,
+      "start": "17:30",
+      "end": "18:30",
+      "category": "community",
+      "price": "$10",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Join us for vinyasa yoga flow Wednesday nights 5:30 PM led by Heather Solimini. A $10 donation suggested and appreciated but more or less is good too. Bring your mat and wear layers. We will be outside weather permitting, under the trees in the grass: think sunscreen, sunglasses, water. Experience the power and healing",
+      "tags": [],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://www.happeningsmagazinepa.com/event/vinyasa-yoga-2/2026-06-10/",
+      "recurring": null,
+      "source": "hm",
+      "audience": "community",
+      "cluster": "13-scranton"
+    },
+    {
+      "id": "hm-10010212",
+      "title": "Vinyasa Yoga Flow with The Greenhouse Project",
+      "venue": "The Greenhouse Project",
+      "town": "Scranton",
+      "day": 13,
+      "start": "17:30",
+      "end": "18:30",
+      "category": "community",
+      "price": "$10",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Vinyasa Yoga Flow (In Person) Instructor: Heather Solimini Ongoing: Wednesdays 5:30 pm (at The Greenhouse Project, Scranton) Experience the power and healing of yoga in the good energy of the greenhouse. These in-person, small-group sessions are casual and uplifting. Join us for Vinyasa Yoga Flow Wednesday nights at 5:",
+      "tags": [],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://www.happeningsmagazinepa.com/event/vinyasa-yoga-flow-with-the-greenhouse-project/2026-06-10/",
+      "recurring": null,
+      "source": "hm",
+      "audience": "community",
+      "cluster": "13-scranton"
+    },
+    {
+      "id": "hm-10016140",
+      "title": "CSUMC Vacation Bible School",
+      "venue": "Clarks Summit United Methodist Church",
+      "town": "Clarks Summit",
+      "day": 13,
+      "start": "17:45",
+      "end": "20:15",
+      "category": "community",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "It’s hard to find your way in a world gone wild. At CSUMC Vacation Bible School, children will journey on the ultimate Alaskan adventure where northern lights glow over majestic mountains, racing rivers, and glistening glaciers. Children from age 2 (potty trained) through the completion of grade 6 will learn about Jesu",
+      "tags": [
+        "bible",
+        "camp",
+        "church",
+        "vacation"
+      ],
+      "coords": {
+        "x": 0.3276000000000039,
+        "y": 0.23200000000000254
+      },
+      "lat": 41.4912,
+      "lng": -75.7224,
+      "url": "https://www.happeningsmagazinepa.com/event/csumc-vacation-bible-school/2026-06-10/",
+      "recurring": null,
+      "source": "hm",
+      "audience": "community",
+      "cluster": "13-clarks summit"
+    },
+    {
+      "id": "hm-10015739",
+      "title": "Art in Motion Mural Trolley Tour",
+      "venue": "Luzerne County",
+      "town": "Wilkes-Barre",
+      "day": 13,
+      "start": "18:00",
+      "end": "20:30",
+      "category": "art",
+      "price": "$50",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The Street Art Society of NEPA presents the End of Summer Mural Trolley Tour! Have you seen all the murals popping up in the valley? Are you curious as to who the artists are and what their vision was for creating their murals? We want to share all those details and more during a fun and interactive trolley tour! Hop o",
+      "tags": [
+        "artists",
+        "arts",
+        "comedy",
+        "soiree",
+        "speaker"
+      ],
+      "coords": {
+        "x": 0.16870000000000118,
+        "y": 0.5045555555555568
+      },
+      "lat": 41.2459,
+      "lng": -75.8813,
+      "url": "https://www.happeningsmagazinepa.com/event/art-in-motion-mural-trolley-tour/2026-06-10/",
+      "recurring": null,
+      "source": "hm",
+      "audience": "community",
+      "cluster": "13-wilkes-barre"
+    },
+    {
+      "id": "lcl-183631",
+      "title": "Tail Waggin’ Tutors Session 1",
+      "venue": "Abington Community Library",
+      "town": "Clarks Summit",
+      "day": 13,
+      "start": "18:00",
+      "end": "18:30",
+      "category": "community",
+      "price": "Free",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Tail Waggin’ Tutors program is designed to boost your child’s reading skills in a fun and furry way! Let your kids read aloud to certified therapy dogs who are eager to listen and provide gentle encouragement. It’s a paws-itively awesome opportunity for your kids to gain confidence and enjoy the magic of reading. Stop ",
+      "tags": [],
+      "coords": {
+        "x": 0.3276000000000039,
+        "y": 0.23200000000000254
+      },
+      "lat": 41.4912,
+      "lng": -75.7224,
+      "url": "https://lclshome.org/event/tail-waggin-tutors-session-1-6/",
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community",
+      "cluster": "13-clarks summit"
+    },
+    {
+      "id": "lcl-186501",
+      "title": "Aromatherapy for Stress Management",
+      "venue": "Albright Memorial Library, Henkelman Room",
+      "town": "Scranton",
+      "day": 13,
+      "start": "18:00",
+      "end": "19:00",
+      "category": "community",
+      "price": "Free",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Participants will learn the benefits of and sample 5 essential oils to create a personalized stress blend. Each participant will take home a customized body lotion and stress ball. Albright Memorial Library 500 Vine Street, Scranton, PA 18509 570-348-3000",
+      "tags": [],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://lclshome.org/event/aromatherapy-for-stress-management-2/",
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community",
+      "cluster": "13-scranton"
+    },
+    {
+      "id": "lcl-183634",
+      "title": "Tail Waggin’ Tutors Session 2",
+      "venue": "Abington Community Library",
+      "town": "Clarks Summit",
+      "day": 13,
+      "start": "18:30",
+      "end": "19:00",
+      "category": "community",
+      "price": "Free",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "Tail Waggin’ Tutors program is designed to boost your child’s reading skills in a fun and furry way! Let your kids read aloud to certified therapy dogs who are eager to listen and provide gentle encouragement. It’s a paws-itively awesome opportunity for your kids to gain confidence and enjoy the magic of reading. Stop ",
+      "tags": [],
+      "coords": {
+        "x": 0.3276000000000039,
+        "y": 0.23200000000000254
+      },
+      "lat": 41.4912,
+      "lng": -75.7224,
+      "url": "https://lclshome.org/event/tail-waggin-tutors-session-2-6/",
+      "recurring": null,
+      "source": "lcl",
+      "audience": "community",
+      "cluster": "13-clarks summit"
+    },
+    {
+      "id": "dn-10054297",
+      "title": "Scranton/Wilkes-Barre RailRiders vs. Lehigh Valley IronPigs",
+      "venue": "PNC Field",
+      "town": "Moosic",
+      "day": 13,
+      "start": "19:05",
+      "end": "21:30",
+      "category": "nightlife",
+      "price": "See site",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "RailRiders vs. Lehigh Valley IronPigs at PNC Field, Moosic runs June 9–14 and Sept. 1–6 with weeknight games plus weekend matinees.",
+      "tags": [
+        "RailRiders"
+      ],
+      "coords": {
+        "x": 0.3646164000000027,
+        "y": 0.37714155555555906
+      },
+      "lat": 41.3605726,
+      "lng": -75.6853836,
+      "url": "https://discovernepa.com/event/scranton-wilkes-barre-railriders-vs-lehigh-valley-ironpigs/2026-06-10/",
+      "recurring": null,
+      "source": "dn",
+      "audience": "community"
+    },
+    {
+      "id": "hm-106270",
+      "title": "The Sweet Caroline Tour starring Jay White",
+      "venue": "Scranton Cultural Center at the Masonic Temple",
+      "town": "Scranton",
+      "day": 13,
+      "start": "19:30",
+      "end": "21:30",
+      "category": "performance",
+      "price": "$39",
+      "indoor": true,
+      "featured": false,
+      "hidden": false,
+      "blurb": "The Sweet Caroline Tour starring Jay White The world’s most authentic Neil Diamond legacy concert! June 10, 7:30 PM Scranton Cultural Center at the Masonic Temple Weinberg Theatre – First Floor Tickets starting at $39 (includes fees) ABOUT THE SHOW Conceived in response to Mr. Diamond’s retirement from the concert stag",
+      "tags": [
+        "entertainment",
+        "music",
+        "nepa",
+        "Scranton Cultural Center",
+        "scranton-area"
+      ],
+      "coords": {
+        "x": 0.38759999999999195,
+        "y": 0.3233333333333357
+      },
+      "lat": 41.409,
+      "lng": -75.6624,
+      "url": "https://www.happeningsmagazinepa.com/event/the-sweet-caroline-tour-starring-jay-white/",
+      "recurring": null,
+      "source": "hm",
+      "audience": "community",
+      "cluster": "13-scranton"
     }
   ]
 }
