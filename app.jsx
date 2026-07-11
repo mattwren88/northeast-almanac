@@ -131,7 +131,6 @@ function writeHash(state) {
 }
 
 function App() {
-  const tweaks = useTweaks(window.TWEAK_DEFAULTS);
   const initial = parseHash();
   const [view, setView] = useStateApp(initial.view || 'calendar'); // calendar | map | list
   const [weekOffset, setWeekOffset] = useStateApp(initial.weekOffset ?? 0);
@@ -173,13 +172,6 @@ function App() {
       setGeneratedAt(generatedAt || null);
     }).catch(() => setEventStatus('error'));
   }, []);
-
-  // Sync view with tweaks layout
-  useEffectApp(() => {
-    if (tweaks.values.layout && tweaks.values.layout !== view) {
-      setView(tweaks.values.layout);
-    }
-  }, [tweaks.values.layout]);
 
   // Restore saved (and merge any ?share=… IDs from a friend's link)
   useEffectApp(() => {
@@ -364,7 +356,6 @@ function App() {
 
   const setLayout = (v) => {
     setView(v);
-    tweaks.set('layout', v);
   };
 
   return (
@@ -665,24 +656,6 @@ function App() {
       <BackToTop />
 
       {aboutOpen && <AboutModal onClose={closeAbout} generatedAt={generatedAt} />}
-
-      {/* TWEAKS */}
-      {tweaks.editing && (
-        <TweaksPanel onClose={tweaks.dismiss} title="Tweaks">
-          <TweakSection title="Layout">
-            <TweakRadio
-              label="Primary view"
-              value={tweaks.values.layout}
-              options={[
-                { label: 'Calendar (week grid)', value: 'calendar' },
-                { label: 'Map of the region', value: 'map' },
-                { label: 'Index (list feed)', value: 'list' },
-              ]}
-              onChange={v => { setView(v); tweaks.set('layout', v); }}
-            />
-          </TweakSection>
-        </TweaksPanel>
-      )}
     </div>
   );
 }
