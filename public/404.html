@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found — The Northeast Almanac</title>
+  <link rel="icon" type="image/svg+xml" href="/northeast-almanac/favicon.svg">
+  <meta name="robots" content="noindex">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('nepa-theme');
+        var dark = saved ? saved === 'dark'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+      } catch (e) {
+        document.documentElement.dataset.theme = 'light';
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: oklch(0.97 0.012 80);
+      --ink: oklch(0.20 0.012 60);
+      --ink-2: oklch(0.38 0.012 60);
+      --ink-3: oklch(0.50 0.014 60);
+      --rule: oklch(0.78 0.014 65);
+      --press-red: oklch(0.50 0.18 25);
+    }
+    :root[data-theme='dark'] {
+      color-scheme: dark;
+      --paper: oklch(0.17 0.010 80);
+      --ink: oklch(0.91 0.012 80);
+      --ink-2: oklch(0.75 0.012 75);
+      --ink-3: oklch(0.62 0.012 70);
+      --rule: oklch(0.40 0.012 65);
+      --press-red: oklch(0.65 0.17 25);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Newsreader', Georgia, serif;
+      font-feature-settings: "ss01", "onum";
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 40rem; text-align: center; }
+    .eyebrow {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--press-red);
+      margin-bottom: 18px;
+    }
+    h1 {
+      font-family: 'Instrument Serif', 'Newsreader', Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(2.6rem, 9vw, 4.5rem);
+      line-height: 1.05;
+      margin: 0 0 6px;
+    }
+    .rule { height: 1px; background: var(--rule); margin: 26px 0; }
+    p { color: var(--ink-2); line-height: 1.55; margin: 0 0 26px; }
+    a.home {
+      display: inline-block;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 11px 20px;
+      border: 1px solid var(--ink);
+      border-radius: 3px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    a.home:hover { background: var(--ink); color: var(--paper); }
+    .fine {
+      margin-top: 30px;
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--ink-3);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="eyebrow">Error 404 · Off the press run</div>
+    <h1>No such page</h1>
+    <div class="rule"></div>
+    <p>
+      This edition doesn't carry that page. It may have been a stale link,
+      a typo, or something we retired between printings.
+    </p>
+    <a class="home" href="/northeast-almanac/">← Back to the almanac</a>
+    <div class="fine">The Northeast Almanac · Northeast Pennsylvania</div>
+  </div>
+</body>
+</html>
