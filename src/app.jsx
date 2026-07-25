@@ -1,6 +1,10 @@
 // Main app — masthead, sidebar, view switching, filters
 
-const { useState: useStateApp, useEffect: useEffectApp, useMemo: useMemoApp, useRef: useRefApp } = React;
+import { Fragment, useState, useEffect, useMemo, useRef } from 'react';
+import { CATEGORIES, AUDIENCES, ALL_AUDIENCES, WEATHER, dateForDay, todayDayOffset, loadEvents } from './lib/data.js';
+import { CalendarView, fmtEventTime } from './calendar.jsx';
+import { MapView, WeekendView, ListView, EventDrawer, WeekendPlan } from './views.jsx';
+import { SOURCES, COMMUNITY_SOURCES, COLLEGE_SOURCES, WEATHER_SOURCE } from './data/sources.js';
 
 function RefreshStamp({ generatedAt, eventStatus }) {
   if (eventStatus === 'mock') {
@@ -130,20 +134,20 @@ function writeHash(state) {
   }
 }
 
-function App() {
+export function App() {
   const initial = parseHash();
-  const [view, setView] = useStateApp(initial.view || 'calendar'); // calendar | map | list
-  const [weekOffset, setWeekOffset] = useStateApp(initial.weekOffset ?? 0);
-  const [activeCats, setActiveCats] = useStateApp(initial.activeCats || ALL_CATS);
-  const [activeAudiences, setActiveAudiences] = useStateApp(initial.activeAudiences || ['community']); // colleges off by default
-  const [activeTown, setActiveTown] = useStateApp(initial.town || ''); // '' = all
-  const [filtersOpen, setFiltersOpen] = useStateApp(false);
-  const [openEventId, setOpenEventId] = useStateApp(initial.openEventId);
-  const [saved, setSaved] = useStateApp([]);
-  const [planOpen, setPlanOpen] = useStateApp(initial.planOpen);
-  const [aboutOpen, setAboutOpen] = useStateApp(false);
-  const [toast, setToast] = useStateApp(null); // { msg, undo? }
-  const toastTimerRef = useRefApp(null);
+  const [view, setView] = useState(initial.view || 'calendar'); // calendar | map | list
+  const [weekOffset, setWeekOffset] = useState(initial.weekOffset ?? 0);
+  const [activeCats, setActiveCats] = useState(initial.activeCats || ALL_CATS);
+  const [activeAudiences, setActiveAudiences] = useState(initial.activeAudiences || ['community']); // colleges off by default
+  const [activeTown, setActiveTown] = useState(initial.town || ''); // '' = all
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [openEventId, setOpenEventId] = useState(initial.openEventId);
+  const [saved, setSaved] = useState([]);
+  const [planOpen, setPlanOpen] = useState(initial.planOpen);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [toast, setToast] = useState(null); // { msg, undo? }
+  const toastTimerRef = useRef(null);
   // Wrap state setters so opens capture focus and closes restore it.
   const viewEvent = (id) => { focusReturn.capture(); setOpenEventId(id); };
   const closeEvent = () => { setOpenEventId(null); focusReturn.restore(); };
@@ -160,12 +164,12 @@ function App() {
     setToast({ msg, undo });
     toastTimerRef.current = setTimeout(() => setToast(null), 5000);
   };
-  const [events, setEvents] = useStateApp([]);
-  const [eventStatus, setEventStatus] = useStateApp('loading'); // loading | live | mock | error
-  const [generatedAt, setGeneratedAt] = useStateApp(null);
+  const [events, setEvents] = useState([]);
+  const [eventStatus, setEventStatus] = useState('loading'); // loading | live | mock | error
+  const [generatedAt, setGeneratedAt] = useState(null);
 
   // Load events from events.json (or mock fallback)
-  useEffectApp(() => {
+  useEffect(() => {
     loadEvents().then(({ events, source, generatedAt }) => {
       setEvents(events);
       setEventStatus(source);
@@ -174,7 +178,7 @@ function App() {
   }, []);
 
   // Restore saved (and merge any ?share=… IDs from a friend's link)
-  useEffectApp(() => {
+  useEffect(() => {
     let s = [];
     try {
       s = JSON.parse(localStorage.getItem('nepa-saved') || '[]');
@@ -189,17 +193,17 @@ function App() {
       setSaved(s);
     }
   }, []);
-  useEffectApp(() => {
+  useEffect(() => {
     localStorage.setItem('nepa-saved', JSON.stringify(saved));
   }, [saved]);
 
   // Write URL hash whenever shareable state changes
-  useEffectApp(() => {
+  useEffect(() => {
     writeHash({ view, weekOffset, activeCats, activeAudiences, town: activeTown, openEventId, planOpen });
   }, [view, weekOffset, activeCats, activeAudiences, activeTown, openEventId, planOpen]);
 
   // Read hash on browser back/forward
-  useEffectApp(() => {
+  useEffect(() => {
     const onHash = () => {
       const h = parseHash();
       setView(h.view || 'calendar');
@@ -215,7 +219,7 @@ function App() {
   }, []);
 
   // Keyboard nav while drawer is open: Esc closes, ←/→ cycle through filtered events
-  const filteredSortedIds = useMemoApp(() => {
+  const filteredSortedIds = useMemo(() => {
     if (!openEventId) return null;
     return [...events]
       .filter(e =>
@@ -226,7 +230,7 @@ function App() {
       .sort((a, b) => a.day - b.day || a.start.localeCompare(b.start))
       .map(e => e.id);
   }, [events, activeCats, activeAudiences, activeTown, openEventId]);
-  useEffectApp(() => {
+  useEffect(() => {
     if (!openEventId && !planOpen && !aboutOpen) return;
     const onKey = (e) => {
       if (e.key === 'Escape') {
@@ -252,13 +256,13 @@ function App() {
     return () => window.removeEventListener('keydown', onKey);
   }, [openEventId, filteredSortedIds, planOpen, aboutOpen]);
 
-  const allTowns = useMemoApp(() => {
+  const allTowns = useMemo(() => {
     const set = new Set();
     events.forEach(e => { if (e.town) set.add(e.town); });
     return [...set].sort((a, b) => a.localeCompare(b));
   }, [events]);
 
-  const filtered = useMemoApp(() => {
+  const filtered = useMemo(() => {
     return events.filter(e =>
       activeCats.includes(e.category) &&
       activeAudiences.includes(e.audience || 'community') &&
@@ -266,12 +270,12 @@ function App() {
     );
   }, [events, activeCats, activeAudiences, activeTown]);
 
-  const featuredThisWeek = useMemoApp(() => {
+  const featuredThisWeek = useMemo(() => {
     const start = weekOffset * 7;
     return events.filter(e => e.featured && e.day >= start && e.day < start + 7);
   }, [events, weekOffset]);
 
-  const eventsById = useMemoApp(() => {
+  const eventsById = useMemo(() => {
     const m = new Map();
     events.forEach(e => m.set(e.id, e));
     return m;
@@ -283,7 +287,7 @@ function App() {
     setSaved(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
   };
 
-  const upcomingSavedCount = useMemoApp(() => {
+  const upcomingSavedCount = useMemo(() => {
     if (events.length === 0) return saved.length;
     const today = todayDayOffset();
     return saved.filter(id => {
@@ -566,21 +570,14 @@ function App() {
           <div className="colophon-block">
             <div className="colophon-k">Compiled from</div>
             <div className="colophon-v">
-              <a href="https://discovernepa.com/events/" target="_blank" rel="noopener noreferrer">DiscoverNEPA</a>
-              {' · '}
-              <a href="https://www.happeningsmagazinepa.com/events/" target="_blank" rel="noopener noreferrer">Happenings Magazine</a>
-              {' · '}
-              <a href="https://lclshome.org/events/" target="_blank" rel="noopener noreferrer">Lackawanna County Library System</a>
-              {' · '}
-              <a href="https://scrantonpa.gov/events/" target="_blank" rel="noopener noreferrer">City of Scranton</a>
-              {' · '}
-              <a href="https://events.scranton.edu/" target="_blank" rel="noopener noreferrer">University of Scranton</a>
-              {' · '}
-              <a href="https://www.marywood.edu/community/news-events" target="_blank" rel="noopener noreferrer">Marywood University</a>
-              {' · '}
-              <a href="https://www.keystone.edu/keystone-events/" target="_blank" rel="noopener noreferrer">Keystone College</a>
+              {SOURCES.map((s, i) => (
+                <Fragment key={s.id}>
+                  {i > 0 && ' · '}
+                  <a href={s.home} target="_blank" rel="noopener noreferrer">{s.name}</a>
+                </Fragment>
+              ))}
               {'. Weather via '}
-              <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a>.
+              <a href={WEATHER_SOURCE.home} target="_blank" rel="noopener noreferrer">{WEATHER_SOURCE.name}</a>.
             </div>
           </div>
           <div className="colophon-block">
@@ -680,20 +677,19 @@ function AboutModal({ onClose, generatedAt }) {
           <h3>Sources</h3>
           <h4 className="about-subhead">Community</h4>
           <ul>
-            <li><a href="https://discovernepa.com/events/" target="_blank" rel="noopener noreferrer">DiscoverNEPA</a></li>
-            <li><a href="https://www.happeningsmagazinepa.com/events/" target="_blank" rel="noopener noreferrer">Happenings Magazine</a></li>
-            <li><a href="https://lclshome.org/events/" target="_blank" rel="noopener noreferrer">Lackawanna County Library System</a></li>
-            <li><a href="https://scrantonpa.gov/events/" target="_blank" rel="noopener noreferrer">City of Scranton</a></li>
+            {COMMUNITY_SOURCES.map(s => (
+              <li key={s.id}><a href={s.home} target="_blank" rel="noopener noreferrer">{s.name}</a></li>
+            ))}
           </ul>
           <h4 className="about-subhead">Colleges (off by default)</h4>
           <ul>
-            <li><a href="https://events.scranton.edu/" target="_blank" rel="noopener noreferrer">University of Scranton</a></li>
-            <li><a href="https://www.marywood.edu/community/news-events" target="_blank" rel="noopener noreferrer">Marywood University</a></li>
-            <li><a href="https://www.keystone.edu/keystone-events/" target="_blank" rel="noopener noreferrer">Keystone College</a></li>
+            {COLLEGE_SOURCES.map(s => (
+              <li key={s.id}><a href={s.home} target="_blank" rel="noopener noreferrer">{s.name}</a></li>
+            ))}
           </ul>
           <h4 className="about-subhead">Weather</h4>
           <ul>
-            <li><a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> — 14-day forecast for Scranton</li>
+            <li><a href={WEATHER_SOURCE.home} target="_blank" rel="noopener noreferrer">{WEATHER_SOURCE.name}</a> — 14-day forecast for Scranton</li>
           </ul>
           <p className="about-fine">
             Only titles and short excerpts are fetched, each linked
@@ -774,14 +770,14 @@ function AboutModal({ onClose, generatedAt }) {
 }
 
 function TownDropdown({ towns, value, onChange }) {
-  const [open, setOpen] = useStateApp(false);
-  const [query, setQuery] = useStateApp('');
-  const [activeIdx, setActiveIdx] = useStateApp(0);
-  const wrapRef = useRefApp(null);
-  const inputRef = useRefApp(null);
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [activeIdx, setActiveIdx] = useState(0);
+  const wrapRef = useRef(null);
+  const inputRef = useRef(null);
 
   // Close on click outside or Esc
-  useEffectApp(() => {
+  useEffect(() => {
     if (!open) return;
     const onDocClick = (e) => {
       if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false);
@@ -796,7 +792,7 @@ function TownDropdown({ towns, value, onChange }) {
   }, [open]);
 
   // Focus search when opening
-  useEffectApp(() => {
+  useEffect(() => {
     if (open) {
       setQuery('');
       setActiveIdx(0);
@@ -804,7 +800,7 @@ function TownDropdown({ towns, value, onChange }) {
     }
   }, [open]);
 
-  const options = useMemoApp(() => {
+  const options = useMemo(() => {
     const q = query.trim().toLowerCase();
     const filtered = q ? towns.filter(t => t.toLowerCase().includes(q)) : towns;
     return [{ value: '', label: 'All towns' }, ...filtered.map(t => ({ value: t, label: t }))];
@@ -998,8 +994,8 @@ function LoadingSkeleton() {
 }
 
 function BackToTop() {
-  const [show, set] = useStateApp(false);
-  useEffectApp(() => {
+  const [show, set] = useState(false);
+  useEffect(() => {
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
@@ -1026,4 +1022,3 @@ function BackToTop() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);

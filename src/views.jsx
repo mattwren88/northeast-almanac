@@ -1,40 +1,46 @@
 // Map view + List view + Event detail drawer + Weekend plan share
 
-const { useState: useStateMV, useMemo: useMemoMV, useEffect: useEffectMV, useRef: useRefMV } = React;
+import { useState, useMemo, useEffect, useRef } from 'react';
+import L from 'leaflet';
+import 'leaflet.markercluster';
+import Fuse from 'fuse.js';
+import { WEATHER, CATEGORIES, dateForDay, todayDayOffset, thisWeekendDays } from './lib/data.js';
+import { fmtTime, fmtEventTime, isAllDay, eventToIcs, eventsToIcs, eventToGcalUrl, eventToOutlookUrl, downloadIcs, slugify } from './calendar.jsx';
+import { BBOX, HORIZON_DAYS } from './lib/constants.js';
+import { SOURCES_BY_ID } from './data/sources.js';
 
-const onCardKey = (handler) => (e) => {
+export const onCardKey = (handler) => (e) => {
   if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); }
 };
 
-const MAP_BBOX = { latMin: 40.80, latMax: 41.70, lngMin: -76.05, lngMax: -75.05 };
-function eventLatLng(ev) {
+export function eventLatLng(ev) {
   if (Number.isFinite(ev.lat) && Number.isFinite(ev.lng)) return [ev.lat, ev.lng];
   if (ev.coords && Number.isFinite(ev.coords.x) && Number.isFinite(ev.coords.y)) {
-    const lat = MAP_BBOX.latMax - ev.coords.y * (MAP_BBOX.latMax - MAP_BBOX.latMin);
-    const lng = MAP_BBOX.lngMin + ev.coords.x * (MAP_BBOX.lngMax - MAP_BBOX.lngMin);
+    const lat = BBOX.latMax - ev.coords.y * (BBOX.latMax - BBOX.latMin);
+    const lng = BBOX.lngMin + ev.coords.x * (BBOX.lngMax - BBOX.lngMin);
     return [lat, lng];
   }
   return null;
 }
 
 // ============ MAP VIEW ============
-function MapView({ events, saved, onSave, onOpen }) {
+export function MapView({ events, saved, onSave, onOpen }) {
   const today = todayDayOffset();
   // Anchor the strip to today: show 7 days starting today, clamped so we
   // always emit 7 valid offsets within the 14-day horizon.
   const startDay = Math.max(0, Math.min(today, 14 - 7));
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => startDay + i);
   const initialDay = days.includes(today) ? today : startDay;
-  const [activeDay, setActiveDay] = useStateMV(initialDay);
+  const [activeDay, setActiveDay] = useState(initialDay);
   const dayEvents = events.filter(e => e.day === activeDay);
 
-  const mapElRef = useRefMV(null);
-  const mapRef = useRefMV(null);
-  const layerRef = useRefMV(null);
+  const mapElRef = useRef(null);
+  const mapRef = useRef(null);
+  const layerRef = useRef(null);
 
-  useEffectMV(() => {
-    if (!mapElRef.current || !window.L || mapRef.current) return;
-    const map = window.L.map(mapElRef.current, {
+  useEffect(() => {
+    if (!mapElRef.current || !L || mapRef.current) return;
+    const map = L.map(mapElRef.current, {
       center: [41.25, -75.55],
       zoom: 9,
       minZoom: 8,
@@ -44,7 +50,7 @@ function MapView({ events, saved, onSave, onOpen }) {
       zoomControl: true,
       scrollWheelZoom: true,
     });
-    window.L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO',
       subdomains: 'abcd',
       maxZoom: 19,
@@ -55,23 +61,23 @@ function MapView({ events, saved, onSave, onOpen }) {
 
   // Build the marker layer when events or activeDay change. Stash the event id
   // on each marker so the saved-state effect can restyle without rebuilding.
-  useEffectMV(() => {
+  useEffect(() => {
     const map = mapRef.current;
-    if (!map || !window.L) return;
+    if (!map || !L) return;
     if (layerRef.current) { layerRef.current.remove(); layerRef.current = null; }
-    const layer = window.L.markerClusterGroup
-      ? window.L.markerClusterGroup({
+    const layer = L.markerClusterGroup
+      ? L.markerClusterGroup({
           showCoverageOnHover: false,
           spiderfyOnMaxZoom: true,
           maxClusterRadius: 45,
           disableClusteringAtZoom: 13,
         })
-      : window.L.layerGroup();
+      : L.layerGroup();
     dayEvents.forEach(ev => {
       const ll = eventLatLng(ev);
       if (!ll) return;
       const cat = CATEGORIES[ev.category] || { color: '#666', label: ev.category };
-      const marker = window.L.circleMarker(ll, {
+      const marker = L.circleMarker(ll, {
         radius: ev.featured ? 9 : 7,
         color: '#1a1a1a',
         weight: 1,
@@ -91,7 +97,7 @@ function MapView({ events, saved, onSave, onOpen }) {
 
   // Update only the saved-stroke weight on existing markers when `saved` changes.
   // Avoids destroying + re-clustering all markers on every star toggle.
-  useEffectMV(() => {
+  useEffect(() => {
     const layer = layerRef.current;
     if (!layer) return;
     const savedSet = new Set(saved);
@@ -160,9 +166,9 @@ function MapView({ events, saved, onSave, onOpen }) {
 }
 
 // ============ WEEKEND VIEW ============
-function WeekendView({ events, saved, onSave, onOpen }) {
+export function WeekendView({ events, saved, onSave, onOpen }) {
   const days = thisWeekendDays();
-  const eventsByDay = useMemoMV(() => {
+  const eventsByDay = useMemo(() => {
     const m = {};
     events.forEach(e => { (m[e.day] ||= []).push(e); });
     Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
@@ -266,27 +272,25 @@ function WeekendView({ events, saved, onSave, onOpen }) {
 }
 
 // ============ LIST VIEW ============
-const HORIZON_DAYS = 14;
 function useDebouncedValue(value, delayMs) {
-  const [debounced, setDebounced] = useStateMV(value);
-  useEffectMV(() => {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
     const id = setTimeout(() => setDebounced(value), delayMs);
     return () => clearTimeout(id);
   }, [value, delayMs]);
   return debounced;
 }
-function ListView({ events, saved, onSave, onOpen, weekOffset, filterCount = 0, onResetFilters }) {
-  const [query, setQuery] = useStateMV('');
+export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCount = 0, onResetFilters }) {
+  const [query, setQuery] = useState('');
   const debouncedQuery = useDebouncedValue(query, 150);
-  const minIso = useMemoMV(() => dateForDay(0).iso, []);
-  const maxIso = useMemoMV(() => dateForDay(HORIZON_DAYS - 1).iso, []);
-  const todayIso = useMemoMV(() => dateForDay(Math.max(0, todayDayOffset())).iso, []);
-  const [fromIso, setFromIso] = useStateMV(todayIso);
-  const [toIso, setToIso] = useStateMV(maxIso);
+  const minIso = useMemo(() => dateForDay(0).iso, []);
+  const maxIso = useMemo(() => dateForDay(HORIZON_DAYS - 1).iso, []);
+  const todayIso = useMemo(() => dateForDay(Math.max(0, todayDayOffset())).iso, []);
+  const [fromIso, setFromIso] = useState(todayIso);
+  const [toIso, setToIso] = useState(maxIso);
 
-  const fuse = useMemoMV(() => {
-    if (!window.Fuse) return null;
-    return new window.Fuse(events, {
+  const fuse = useMemo(() => {
+    return new Fuse(events, {
       keys: ['title', 'venue', 'town', 'blurb', 'tags', 'category'],
       threshold: 0.35,
       ignoreLocation: true,
@@ -294,7 +298,7 @@ function ListView({ events, saved, onSave, onOpen, weekOffset, filterCount = 0, 
     });
   }, [events]);
 
-  const searched = useMemoMV(() => {
+  const searched = useMemo(() => {
     const q = debouncedQuery.trim();
     if (!q) return events;
     if (!fuse) {
@@ -309,7 +313,7 @@ function ListView({ events, saved, onSave, onOpen, weekOffset, filterCount = 0, 
     return fuse.search(q).map(r => r.item);
   }, [events, debouncedQuery, fuse]);
 
-  const dates = useMemoMV(() => {
+  const dates = useMemo(() => {
     const out = {};
     for (let d = 0; d < HORIZON_DAYS; d++) out[d] = dateForDay(d);
     return out;
@@ -323,7 +327,7 @@ function ListView({ events, saved, onSave, onOpen, weekOffset, filterCount = 0, 
   const visibleDays = [];
   for (let d = 0; d < HORIZON_DAYS; d++) if (dayInRange(d)) visibleDays.push(d);
 
-  const searchedByDay = useMemoMV(() => {
+  const searchedByDay = useMemo(() => {
     const m = {};
     searched.forEach(e => { (m[e.day] ||= []).push(e); });
     Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
@@ -331,7 +335,7 @@ function ListView({ events, saved, onSave, onOpen, weekOffset, filterCount = 0, 
   }, [searched]);
 
   const clearRange = () => { setFromIso(todayIso); setToIso(maxIso); };
-  const totalShown = useMemoMV(
+  const totalShown = useMemo(
     () => searched.filter(e => dayInRange(e.day)).length,
     [searched, fromIso, toIso, dates]
   );
@@ -466,21 +470,15 @@ function ListView({ events, saved, onSave, onOpen, weekOffset, filterCount = 0, 
 }
 
 // ============ EVENT DETAIL DRAWER ============
-const EVENT_SOURCES = {
-  dn:  { label: 'DiscoverNEPA',                home: 'https://discovernepa.com/events/' },
-  hm:  { label: 'Happenings Magazine',         home: 'https://www.happeningsmagazinepa.com/events/' },
-  lcl: { label: 'Lackawanna County Libraries', home: 'https://lclshome.org/events/' },
-  scr: { label: 'City of Scranton',            home: 'https://scrantonpa.gov/events/' },
-};
 function eventSource(ev) {
-  if (ev.source && EVENT_SOURCES[ev.source]) return EVENT_SOURCES[ev.source];
+  if (ev.source && SOURCES_BY_ID[ev.source]) return SOURCES_BY_ID[ev.source];
   const match = /^([a-z]+)-/.exec(ev.id || '');
-  return match ? EVENT_SOURCES[match[1]] : null;
+  return match ? SOURCES_BY_ID[match[1]] : null;
 }
 
-function EventDrawer({ event, isSaved, onSave, onClose }) {
-  const gcalUrl = useMemoMV(() => event ? eventToGcalUrl(event) : '', [event]);
-  const outlookUrl = useMemoMV(() => event ? eventToOutlookUrl(event) : '', [event]);
+export function EventDrawer({ event, isSaved, onSave, onClose }) {
+  const gcalUrl = useMemo(() => event ? eventToGcalUrl(event) : '', [event]);
+  const outlookUrl = useMemo(() => event ? eventToOutlookUrl(event) : '', [event]);
   if (!event) return null;
   const cat = CATEGORIES[event.category];
   const date = dateForDay(event.day);
@@ -537,7 +535,7 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
             <div className="drawer-source">
               <span className="drawer-source-k">Listing via</span>
               <a className="drawer-source-v" href={src.home} target="_blank" rel="noopener noreferrer">
-                {src.label} ↗
+                {src.name} ↗
               </a>
             </div>
           )}
@@ -591,9 +589,9 @@ function EventDrawer({ event, isSaved, onSave, onClose }) {
 }
 
 // ============ SAVED PLAN SIDEBAR ============
-function WeekendPlan({ events, eventsById, saved, onRemove, onClose, onShare, onClearPast }) {
+export function WeekendPlan({ events, eventsById, saved, onRemove, onClose, onShare, onClearPast }) {
   const lookup = eventsById || new Map(events.map(e => [e.id, e]));
-  const { upcoming, past, byDay } = useMemoMV(() => {
+  const { upcoming, past, byDay } = useMemo(() => {
     const today = todayDayOffset();
     const all = saved.map(id => lookup.get(id)).filter(Boolean)
       .sort((a, b) => a.day - b.day || a.start.localeCompare(b.start));
@@ -682,4 +680,3 @@ function WeekendPlan({ events, eventsById, saved, onRemove, onClose, onShare, on
   );
 }
 
-Object.assign(window, { MapView, ListView, EventDrawer, WeekendPlan, WeekendView });

@@ -4,10 +4,23 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "scrape": "node scripts/build-events.mjs",
-    "serve": "python3 -m http.server 8000"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "scrape": "node scripts/build-events.mjs"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "fuse.js": "^7.4.2",
+    "leaflet": "^1.9.4",
+    "leaflet.markercluster": "^1.5.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.3",
+    "vite": "^8.1.4"
   }
 }

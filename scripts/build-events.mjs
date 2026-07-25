@@ -4,12 +4,14 @@
 // in the shape the app expects.
 //
 // Usage: node scripts/build-events.mjs
-// Output: ./events.json (events array, anchorDate, generatedAt)
+// Output: ./public/events.json (events array, anchorDate, generatedAt)
 
 import { writeFile, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
+import { BBOX, HORIZON_DAYS } from '../src/lib/constants.js';
+import { COMMUNITY_SOURCES as SOURCES, COLLEGE_SOURCES } from '../src/data/sources.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
@@ -18,59 +20,13 @@ const ROOT = resolve(HERE, '..');
 // If you fork this, update the URL to point at your own repo.
 const UA = 'Northeast-Almanac/1.0 (+https://github.com/mattwren88/northeast-almanac; non-commercial regional event aggregator; contact via GitHub Issues)';
 
-// Each source must expose a Tribe Events Calendar REST endpoint with the
-// standard shape: { events: [...], total, total_pages }. `id` becomes the
-// event-id prefix (kept short and stable so curated.json keys keep matching).
-// Order matters: earlier sources win on dedupe collisions.
-//
-// robots.txt review (verified 2026-05-09):
-//   discovernepa.com         — User-agent: * allows /wp-json/. AI-training crawlers
-//                              are blocked; we are not one. ✓
-//   happeningsmagazinepa.com — Disallows specific /calendar/action~* views; the
-//                              /wp-json/tribe/events/v1/events REST endpoint is
-//                              not blocked. ✓
-//   lclshome.org             — Only /wp-admin/ blocked. ✓
-//   scrantonpa.gov           — Only /wp-admin/ blocked. ✓
-// Re-verify if you fork this and aim a new UA at any of them.
-const SOURCES = [
-  { id: 'dn',  name: 'DiscoverNEPA',         base: 'https://discovernepa.com/wp-json/tribe/events/v1/events' },
-  { id: 'hm',  name: 'Happenings Magazine',  base: 'https://www.happeningsmagazinepa.com/wp-json/tribe/events/v1/events' },
-  { id: 'lcl', name: 'Lackawanna Libraries', base: 'https://lclshome.org/wp-json/tribe/events/v1/events' },
-  { id: 'scr', name: 'City of Scranton',     base: 'https://scrantonpa.gov/wp-json/tribe/events/v1/events' },
-];
-
-// College sources — different feed shapes (custom JSON, 25Live RSS, WordPress RSS).
-// Audience: 'college' so the frontend can hide them by default behind a toggle.
-//
-// robots.txt review (verified 2026-05-09):
-//   events.scranton.edu       — no robots.txt at host root; standard public events feed. ✓
-//   25livepub.collegenet.com  — User-agent: * Disallow: (empty) → fully allowed. ✓
-//   www.keystone.edu          — User-agent: * Disallow: (empty), Crawl-delay: 10 — we
-//                              hit it once per daily run, well under that. ✓
-const COLLEGE_SOURCES = [
-  {
-    id: 'uosc', name: 'University of Scranton', type: 'uos-json',
-    url: 'https://events.scranton.edu/_data/current-live.json',
-    town: 'Scranton', coords: [41.4044, -75.6601],
-  },
-  {
-    id: 'mary', name: 'Marywood University', type: 'rss-trumba',
-    url: 'https://25livepub.collegenet.com/calendars/marywood-calendar-month.rss?filterview=All+Events&filter2=_*Academic+Affairs_*Academics_*Alumni+Events_*Art+Dept.._*Art+Exhibits_*Athletic+Games_*Athletics_*Camps_*Campus+Ministry_*Career+Services_*Clinics_*Community+Event_*Conferences+and+Events_*CSD+Dept.._*Development_*Housing+and+Residence+Life_*Kresge+Gallery_*Mahady+Gallery_*Maslow+Gallery_*Military+and+Veteran+Services_*Music_*Nursing_*Physician+Assistant+Program_*Psychology+and+Counseling+Dept.._*Registrar_*School+of+Business+Dept.._*School+of+Humanities_*School+of+Visual+%26+Performing+Arts_*Social+Sciences+Dept.._*Social+Work+Dept.._*Student+Accounts_*Student+Engagement_*Student+Exhibition_*Student+Health+Services_*Suraci+Gallery_&filterfield2=25983',
-    town: 'Scranton', coords: [41.4218, -75.6519],
-  },
-  {
-    id: 'key', name: 'Keystone College', type: 'rss-wp',
-    url: 'https://www.keystone.edu/events/feed/',
-    town: 'La Plume', coords: [41.5868, -75.7825],
-  },
-];
+// Source registry (endpoints, feed types, robots.txt review notes) lives in
+// src/data/sources.js — shared with the footer/About/drawer attribution UI.
+// Each community source must expose a Tribe Events Calendar REST endpoint with
+// the standard shape: { events: [...], total, total_pages }.
 
 const WEATHER_API = 'https://api.open-meteo.com/v1/forecast';
-const HORIZON_DAYS = 14;
 const PER_PAGE = 50;
-
-// NEPA bounding box — drop events outside it from the map view
-const BBOX = { latMin: 40.80, latMax: 41.70, lngMin: -76.05, lngMax: -75.05 };
 
 // Single weather point for the region (Scranton). Editorial-level forecast — close enough.
 const WX_LAT = 41.41;
@@ -256,7 +212,7 @@ async function fetchWeather() {
 }
 
 async function fetchPage(source, page, startYmd, endYmd, ifModifiedSince) {
-  const url = `${source.base}?per_page=${PER_PAGE}&page=${page}&start_date=${startYmd}&end_date=${endYmd}`;
+  const url = `${source.api}?per_page=${PER_PAGE}&page=${page}&start_date=${startYmd}&end_date=${endYmd}`;
   const headers = { 'User-Agent': UA, 'Accept': 'application/json' };
   if (ifModifiedSince && page === 1) headers['If-Modified-Since'] = ifModifiedSince;
   const res = await fetch(url, { headers });
@@ -361,7 +317,7 @@ async function loadCurated() {
 
 async function previousEventCount() {
   try {
-    const raw = await readFile(resolve(ROOT, 'events.json'), 'utf8');
+    const raw = await readFile(resolve(ROOT, 'public/events.json'), 'utf8');
     const j = JSON.parse(raw);
     return Array.isArray(j.events) ? j.events.length : 0;
   } catch {
@@ -371,7 +327,7 @@ async function previousEventCount() {
 
 async function loadPreviousJson() {
   try {
-    const raw = await readFile(resolve(ROOT, 'events.json'), 'utf8');
+    const raw = await readFile(resolve(ROOT, 'public/events.json'), 'utf8');
     return JSON.parse(raw);
   } catch {
     return null;
@@ -525,7 +481,7 @@ function normalizeCollegeEvent({ source, raw, anchorYmd, startD, endD, title, bl
 }
 
 async function fetchUofSJson(source, anchorYmd) {
-  const res = await fetch(source.url, { headers: { 'User-Agent': UA, 'Accept': 'application/json' } });
+  const res = await fetch(source.api, { headers: { 'User-Agent': UA, 'Accept': 'application/json' } });
   if (!res.ok) throw new Error(`${source.name} ${res.status}`);
   const j = await res.json();
   const events = Array.isArray(j.events) ? j.events : [];
@@ -545,7 +501,7 @@ async function fetchUofSJson(source, anchorYmd) {
 }
 
 async function fetchRssCollege(source, anchorYmd) {
-  const res = await fetch(source.url, { headers: { 'User-Agent': UA, 'Accept': 'application/rss+xml, application/xml' }, redirect: 'follow' });
+  const res = await fetch(source.api, { headers: { 'User-Agent': UA, 'Accept': 'application/rss+xml, application/xml' }, redirect: 'follow' });
   if (!res.ok) throw new Error(`${source.name} ${res.status}`);
   const xml = await res.text();
   const items = parseRssItems(xml);
@@ -678,8 +634,8 @@ async function main() {
     events: valid,
   };
 
-  await writeFile(resolve(ROOT, 'events.json'), JSON.stringify(out, null, 2));
-  console.log(`Wrote events.json (${valid.length} events, anchor ${anchorYmd}; previous: ${prevCount}).`);
+  await writeFile(resolve(ROOT, 'public/events.json'), JSON.stringify(out, null, 2));
+  console.log(`Wrote public/events.json (${valid.length} events, anchor ${anchorYmd}; previous: ${prevCount}).`);
 }
 
 main().catch(err => {

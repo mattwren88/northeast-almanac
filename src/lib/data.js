@@ -1,15 +1,15 @@
 // NEPA Events — populated at runtime from events.json (built by scripts/build-events.mjs).
 // Day 0 = the anchorDate from events.json (the day the scraper ran).
 //
-// MOCK_EVENT_DATA below is the original design-bundle dataset. It's used as a fallback
-// when events.json is missing (e.g., before the first scrape) so the prototype still renders.
+// The mock dataset is the original design-bundle data. It's used as a fallback
+// when events.json is missing (e.g., before the first scrape) so the app still renders.
 
-// MOCK_EVENT_DATA is lazy-loaded from mock-events.json on the fallback path.
+// Mock events are lazy-loaded from mock-events.json on the fallback path.
 let _mockEventsCache = null;
 async function loadMockEvents() {
   if (_mockEventsCache) return _mockEventsCache;
   try {
-    const r = await fetch('mock-events.json', { cache: 'force-cache' });
+    const r = await fetch(`${import.meta.env.BASE_URL}mock-events.json`, { cache: 'force-cache' });
     if (!r.ok) throw new Error(`mock-events.json ${r.status}`);
     _mockEventsCache = await r.json();
   } catch (err) {
@@ -19,9 +19,9 @@ async function loadMockEvents() {
   return _mockEventsCache;
 }
 
-
-// Weather forecast for the 14-day window
-const WEATHER = [
+// Weather forecast for the 14-day window — replaced in place with the live
+// forecast when events.json loads, so keep reads lazy (WEATHER[d] at render time).
+export const WEATHER = [
   { day: 0, label: 'Sat', cond: 'sun', high: 68, low: 49, icon: '☀' },
   { day: 1, label: 'Sun', cond: 'partly', high: 71, low: 52, icon: '⛅' },
   { day: 2, label: 'Mon', cond: 'rain', high: 58, low: 46, icon: '☂' },
@@ -38,13 +38,16 @@ const WEATHER = [
   { day: 13, label: 'Fri', cond: 'sun', high: 71, low: 54, icon: '☀' },
 ];
 
-// Pretty date strings — anchored to window.ANCHOR_DATE (set when events.json loads)
-// or today if events haven't loaded yet.
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-function dateForDay(d) {
-  const anchor = window.ANCHOR_DATE
-    ? new Date(window.ANCHOR_DATE + 'T00:00:00')
+// Anchor date (YYYY-MM-DD) — set when events.json loads; null until then.
+let anchorDate = null;
+
+// Pretty date strings — anchored to the loaded anchor date, or today if
+// events haven't loaded yet.
+export const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+export const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+export function dateForDay(d) {
+  const anchor = anchorDate
+    ? new Date(anchorDate + 'T00:00:00')
     : (() => { const t = new Date(); t.setHours(0,0,0,0); return t; })();
   const dt = new Date(anchor.getTime() + d * 86400000);
   return {
@@ -58,9 +61,9 @@ function dateForDay(d) {
 // Day offset (relative to anchor) for "today" — events.json's anchorDate
 // can lag actual today by a day or two depending on cron run, so the calendar
 // "today" highlight needs to reflect real today, not day=0 (anchor).
-function todayDayOffset() {
-  if (!window.ANCHOR_DATE) return 0;
-  const anchor = new Date(window.ANCHOR_DATE + 'T00:00:00');
+export function todayDayOffset() {
+  if (!anchorDate) return 0;
+  const anchor = new Date(anchorDate + 'T00:00:00');
   const t = new Date(); t.setHours(0, 0, 0, 0);
   return Math.round((t.getTime() - anchor.getTime()) / 86400000);
 }
@@ -68,7 +71,7 @@ function todayDayOffset() {
 // Returns day offsets covering the upcoming Fri/Sat/Sun cluster, starting
 // from today (not the anchor). If today is mid-weekend, only the remaining
 // weekend days are returned. Always at most 3 days.
-function thisWeekendDays() {
+export function thisWeekendDays() {
   const startToday = todayDayOffset();
   const out = [];
   let started = false;
@@ -82,12 +85,12 @@ function thisWeekendDays() {
   return out;
 }
 
-async function loadEvents() {
+export async function loadEvents() {
   try {
-    const res = await fetch('events.json', { cache: 'no-store' });
+    const res = await fetch(`${import.meta.env.BASE_URL}events.json`, { cache: 'no-store' });
     if (!res.ok) throw new Error(`events.json ${res.status}`);
     const j = await res.json();
-    window.ANCHOR_DATE = j.anchorDate;
+    anchorDate = j.anchorDate;
     if (Array.isArray(j.weather) && j.weather.length) {
       // Replace WEATHER contents in place so existing `WEATHER[d]` reads pick up the live forecast.
       WEATHER.length = 0;
@@ -103,13 +106,13 @@ async function loadEvents() {
   }
 }
 
-const AUDIENCES = {
+export const AUDIENCES = {
   community: { label: 'Community', description: 'Public events from regional venues and publishers' },
   college:   { label: 'Colleges',  description: 'University of Scranton, Marywood, Keystone (lots of academic dates)' },
 };
-const ALL_AUDIENCES = Object.keys(AUDIENCES);
+export const ALL_AUDIENCES = Object.keys(AUDIENCES);
 
-const CATEGORIES = {
+export const CATEGORIES = {
   market:      { label: 'Markets',         color: '#E07A1F', icon: '🛍' },
   food:        { label: 'Food & Drink',    color: '#D63838', icon: '🍴' },
   outdoor:     { label: 'Outdoors',        color: '#2F8F4E', icon: '🌲' },
@@ -118,5 +121,3 @@ const CATEGORIES = {
   nightlife:   { label: 'Nightlife',       color: '#1F5FCC', icon: '🌙' },
   community:   { label: 'Community',       color: '#C9A227', icon: '👥' },
 };
-
-Object.assign(window, { WEATHER, CATEGORIES, AUDIENCES, ALL_AUDIENCES, dateForDay, MONTHS, DAYS, loadEvents, thisWeekendDays, todayDayOffset });

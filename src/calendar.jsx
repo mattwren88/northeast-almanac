@@ -1,10 +1,11 @@
 // Calendar view — week grid with editorial styling
 
-const { useState, useMemo, useEffect: useEffectCal } = React;
+import { useState, useMemo, useEffect } from 'react';
+import { WEATHER, CATEGORIES, dateForDay, todayDayOffset } from './lib/data.js';
 
-function useIsMobile() {
+export function useIsMobile() {
   const [m, set] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 800px)').matches);
-  useEffectCal(() => {
+  useEffect(() => {
     const mq = window.matchMedia('(max-width: 800px)');
     const h = (e) => set(e.matches);
     mq.addEventListener('change', h);
@@ -13,7 +14,7 @@ function useIsMobile() {
   return m;
 }
 
-function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset, weatherAware, filterCount = 0, onResetFilters }) {
+export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset, weatherAware, filterCount = 0, onResetFilters }) {
   const isMobile = useIsMobile();
   const todayD = todayDayOffset();
   // On mobile we anchor the week to today (clamped within the 14-day horizon)
@@ -151,18 +152,18 @@ function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset
   );
 }
 
-function fmtTime(t) {
+export function fmtTime(t) {
   const [h, m] = t.split(':').map(Number);
   const ampm = h >= 12 ? 'PM' : 'AM';
   const hh = h % 12 === 0 ? 12 : h % 12;
   return m === 0 ? `${hh} ${ampm}` : `${hh}:${m.toString().padStart(2, '0')} ${ampm}`;
 }
 
-function isAllDay(ev) {
+export function isAllDay(ev) {
   return ev && ev.start === '00:00' && ev.end === '23:59';
 }
 
-function fmtEventTime(ev, { range = false } = {}) {
+export function fmtEventTime(ev, { range = false } = {}) {
   if (isAllDay(ev)) return 'All day';
   if (!range) return fmtTime(ev.start);
   return `${fmtTime(ev.start)} – ${fmtTime(ev.end)}`;
@@ -216,7 +217,7 @@ function eventToVevent(ev) {
   return lines.join('\r\n');
 }
 
-function eventToIcs(ev) {
+export function eventToIcs(ev) {
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -227,7 +228,7 @@ function eventToIcs(ev) {
   ].join('\r\n');
 }
 
-function eventsToIcs(events) {
+export function eventsToIcs(events) {
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -238,7 +239,7 @@ function eventsToIcs(events) {
   ].join('\r\n');
 }
 
-function eventToGcalUrl(ev) {
+export function eventToGcalUrl(ev) {
   const iso = dateForDay(ev.day).iso;
   const ymd = iso.replace(/-/g, '');
   let dates;
@@ -264,7 +265,7 @@ function eventToGcalUrl(ev) {
   return `https://calendar.google.com/calendar/render?${p.toString()}`;
 }
 
-function eventToOutlookUrl(ev) {
+export function eventToOutlookUrl(ev) {
   const iso = dateForDay(ev.day).iso;
   const allDay = isAllDay(ev);
   let startdt, enddt;
@@ -294,11 +295,11 @@ function eventToOutlookUrl(ev) {
   return `https://outlook.live.com/calendar/0/deeplink/compose?${p.toString()}`;
 }
 
-function slugify(s) {
+export function slugify(s) {
   return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'event';
 }
 
-function downloadIcs(filename, ics) {
+export function downloadIcs(filename, ics) {
   const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -310,4 +311,3 @@ function downloadIcs(filename, ics) {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-Object.assign(window, { CalendarView, fmtTime, isAllDay, fmtEventTime, eventToIcs, eventsToIcs, downloadIcs, slugify, useIsMobile, eventToGcalUrl, eventToOutlookUrl });
