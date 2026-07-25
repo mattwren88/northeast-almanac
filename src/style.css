@@ -3,6 +3,8 @@
    ============================================ */
 
 :root {
+  color-scheme: light;
+
   --paper: oklch(0.97 0.012 80);
   --paper-2: oklch(0.94 0.014 78);
   --paper-3: oklch(0.99 0.008 80);
@@ -15,9 +17,62 @@
   --press-red-dim: oklch(0.50 0.18 25 / 0.12);
   --gold: oklch(0.62 0.12 75);
 
+  /* Text sitting on an inverted (ink-filled) surface */
+  --ink-inverse: oklch(0.85 0.012 60);
+  --ink-inverse-2: oklch(0.78 0.012 60);
+  --on-ink-line: oklch(1 0 0 / 0.4);
+  --on-ink-wash: oklch(1 0 0 / 0.12);
+
+  /* Modal backdrops, paper texture, and the L/C/H triple shadows are mixed from */
+  --scrim: oklch(0.20 0.012 60 / 0.4);
+  --scrim-strong: oklch(0.20 0.012 60 / 0.5);
+  --texture-dot: oklch(0.85 0.02 65 / 0.08);
+  --shadow-base: 0.20 0.012 60;
+
+  /* Weather advisory banner */
+  --wx-bg: oklch(0.95 0.04 240);
+  --wx-border: oklch(0.78 0.06 240);
+  --wx-ink: oklch(0.30 0.08 240);
+  --wx-ink-strong: oklch(0.22 0.10 240);
+
   --serif: 'Newsreader', 'Source Serif Pro', Georgia, serif;
   --display: 'Instrument Serif', 'Newsreader', Georgia, serif;
   --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Dark theme — same warm hue family, lightness inverted. The data-theme
+   attribute is stamped on <html> by the inline bootstrap in index.html
+   (system preference, or the reader's saved choice). */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --paper: oklch(0.17 0.010 80);
+  --paper-2: oklch(0.13 0.010 78);
+  --paper-3: oklch(0.22 0.011 80);
+  --ink: oklch(0.91 0.012 80);
+  --ink-2: oklch(0.75 0.012 75);
+  --ink-3: oklch(0.62 0.012 70);
+  --rule: oklch(0.40 0.012 65);
+  --rule-soft: oklch(0.29 0.010 65);
+  --press-red: oklch(0.65 0.17 25);
+  --press-red-dim: oklch(0.65 0.17 25 / 0.18);
+  --gold: oklch(0.74 0.11 75);
+
+  /* On dark, the "inverted" surface is light — so this text goes dark. */
+  --ink-inverse: oklch(0.22 0.012 60);
+  --ink-inverse-2: oklch(0.32 0.012 60);
+  --on-ink-line: oklch(0 0 0 / 0.35);
+  --on-ink-wash: oklch(0 0 0 / 0.12);
+
+  --scrim: oklch(0.08 0.008 60 / 0.62);
+  --scrim-strong: oklch(0.08 0.008 60 / 0.72);
+  --texture-dot: oklch(0.75 0.02 65 / 0.05);
+  --shadow-base: 0.02 0.004 60;
+
+  --wx-bg: oklch(0.26 0.045 240);
+  --wx-border: oklch(0.42 0.06 240);
+  --wx-ink: oklch(0.84 0.06 240);
+  --wx-ink-strong: oklch(0.92 0.08 240);
 }
 
 * { box-sizing: border-box; }
@@ -39,11 +94,13 @@ body::before {
   position: fixed; inset: 0;
   pointer-events: none;
   background-image:
-    radial-gradient(oklch(0.85 0.02 65 / 0.08) 1px, transparent 1px);
+    radial-gradient(var(--texture-dot) 1px, transparent 1px);
   background-size: 4px 4px;
   z-index: 1;
   mix-blend-mode: multiply;
 }
+/* Multiply darkens; on dark paper the grain has to lighten instead. */
+:root[data-theme='dark'] body::before { mix-blend-mode: screen; }
 
 .paper {
   max-width: 1480px;
@@ -575,7 +632,7 @@ body::before {
   font-size: 10px;
   color: var(--ink-3);
 }
-.map-day-pill.is-active .map-day-pill-count { color: oklch(0.85 0.012 60); }
+.map-day-pill.is-active .map-day-pill-count { color: var(--ink-inverse); }
 
 .map-canvas-wrap {
   display: grid;
@@ -711,7 +768,7 @@ body::before {
 .map-pin-venue {
   display: block;
   font-size: 10px;
-  color: oklch(0.78 0.012 60);
+  color: var(--ink-inverse-2);
 }
 .map-pin:hover { z-index: 10; }
 .map-pin:hover .map-pin-card { display: block; }
@@ -982,7 +1039,7 @@ body::before {
 .drawer-backdrop {
   position: fixed;
   inset: 0;
-  background: oklch(0.20 0.012 60 / 0.4);
+  background: var(--scrim);
   z-index: 50;
   display: flex;
   justify-content: flex-end;
@@ -997,7 +1054,7 @@ body::before {
   display: flex;
   position: relative;
   animation: slideIn 0.25s ease-out;
-  box-shadow: -8px 0 24px oklch(0.20 0.012 60 / 0.15);
+  box-shadow: -8px 0 24px oklch(var(--shadow-base) / 0.15);
 }
 @keyframes slideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 .drawer-rail { width: 6px; }
@@ -1179,7 +1236,7 @@ body::before {
 .plan-backdrop {
   position: fixed;
   inset: 0;
-  background: oklch(0.20 0.012 60 / 0.4);
+  background: var(--scrim);
   z-index: 60;
   display: flex;
   justify-content: flex-end;
@@ -1450,7 +1507,7 @@ body::before {
     max-height: 88vh;
     flex-direction: column;
     border-radius: 18px 18px 0 0;
-    box-shadow: 0 -6px 24px oklch(0.20 0.012 60 / 0.25);
+    box-shadow: 0 -6px 24px oklch(var(--shadow-base) / 0.25);
     animation: drawerSlideUp 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
     padding-top: 14px;
     overflow: hidden;
@@ -1724,7 +1781,7 @@ body::before {
 .about-backdrop {
   position: fixed;
   inset: 0;
-  background: oklch(0.20 0.012 60 / 0.5);
+  background: var(--scrim-strong);
   z-index: 60;
   display: flex;
   align-items: center;
@@ -1848,7 +1905,7 @@ body::before {
     padding: 28px 22px 24px;
     border-radius: 18px 18px 0 0;
     border-bottom: none;
-    box-shadow: 0 -6px 24px oklch(0.20 0.012 60 / 0.25);
+    box-shadow: 0 -6px 24px oklch(var(--shadow-base) / 0.25);
     animation: drawerSlideUp 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   .about-title { font-size: 30px; }
@@ -1862,12 +1919,12 @@ body::before {
   gap: 10px;
   margin: 14px;
   padding: 10px 14px;
-  background: oklch(0.95 0.04 240);
-  border: 1px solid oklch(0.78 0.06 240);
+  background: var(--wx-bg);
+  border: 1px solid var(--wx-border);
   border-radius: 6px;
   font-family: var(--mono);
   font-size: 12px;
-  color: oklch(0.30 0.08 240);
+  color: var(--wx-ink);
   letter-spacing: 0.01em;
 }
 .wx-advisory-icon {
@@ -1876,7 +1933,7 @@ body::before {
 }
 .wx-advisory strong {
   font-weight: 700;
-  color: oklch(0.22 0.10 240);
+  color: var(--wx-ink-strong);
 }
 @media (max-width: 800px) {
   .wx-advisory { font-size: 11px; }
@@ -2071,7 +2128,7 @@ body::before {
   background: var(--paper-3);
   border: 1px solid var(--rule);
   border-radius: 4px;
-  box-shadow: 0 4px 12px oklch(0.20 0.012 60 / 0.08);
+  box-shadow: 0 4px 12px oklch(var(--shadow-base) / 0.08);
   animation: filtersPanelIn 0.2s ease-out;
 }
 @keyframes filtersPanelIn {
@@ -2364,7 +2421,7 @@ body::before {
   background: var(--paper-3);
   border: 1px solid var(--ink);
   border-radius: 3px;
-  box-shadow: 0 8px 20px oklch(0.20 0.012 60 / 0.18);
+  box-shadow: 0 8px 20px oklch(var(--shadow-base) / 0.18);
   overflow: hidden;
   animation: townDdIn 0.14s ease-out;
 }
@@ -2555,7 +2612,7 @@ body::before {
   background: var(--ink);
   color: var(--paper);
   border-radius: 6px;
-  box-shadow: 0 4px 16px oklch(0 0 0 / 0.18);
+  box-shadow: 0 4px 16px oklch(var(--shadow-base) / 0.18);
   font-family: var(--serif);
   font-size: 14px;
   max-width: calc(100vw - 32px);
@@ -2574,11 +2631,11 @@ body::before {
   padding: 6px 12px;
   background: transparent;
   color: var(--paper);
-  border: 1px solid oklch(1 0 0 / 0.4);
+  border: 1px solid var(--on-ink-line);
   border-radius: 3px;
   cursor: pointer;
 }
-.toast-undo:hover { background: oklch(1 0 0 / 0.12); border-color: var(--paper); }
+.toast-undo:hover { background: var(--on-ink-wash); border-color: var(--paper); }
 .toast-dismiss {
   background: none;
   border: none;
@@ -2644,7 +2701,7 @@ body::before {
     border-left: none;
     border-right: none;
     border-bottom: none;
-    box-shadow: 0 -8px 24px oklch(0 0 0 / 0.18);
+    box-shadow: 0 -8px 24px oklch(var(--shadow-base) / 0.18);
     z-index: 9000;
     animation: filtersSheetIn 0.22s ease-out;
   }
@@ -2657,7 +2714,67 @@ body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: oklch(0 0 0 / 0.4);
+    background: var(--scrim);
     z-index: -1;
   }
+}
+
+/* ============ DARK MODE: MAP ============ */
+/* CARTO Voyager only ships light tiles, so invert them back into the dark
+   palette. hue-rotate undoes the color flip that invert() causes; the small
+   grayscale/contrast pull keeps roads and labels from glowing. */
+:root[data-theme='dark'] .leaflet-tile {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.88) grayscale(0.22);
+}
+:root[data-theme='dark'] .leaflet-canvas,
+:root[data-theme='dark'] .leaflet-container {
+  background: var(--paper-2);
+}
+/* Leaflet's own chrome (zoom buttons, attribution, tooltips) is hardcoded light. */
+:root[data-theme='dark'] .leaflet-bar a,
+:root[data-theme='dark'] .leaflet-control-attribution {
+  background: var(--paper-3);
+  color: var(--ink-2);
+}
+:root[data-theme='dark'] .leaflet-bar a:hover { background: var(--paper); }
+:root[data-theme='dark'] .leaflet-control-attribution a { color: var(--ink); }
+:root[data-theme='dark'] .leaflet-tooltip {
+  background: var(--paper-3);
+  color: var(--ink);
+  border-color: var(--rule);
+  box-shadow: 0 2px 8px oklch(var(--shadow-base) / 0.5);
+}
+:root[data-theme='dark'] .leaflet-tooltip-top::before { border-top-color: var(--rule); }
+/* Cluster bubbles ship as translucent lime/orange discs — retint to the paper palette. */
+:root[data-theme='dark'] .marker-cluster div {
+  background: var(--paper-3);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+}
+:root[data-theme='dark'] .marker-cluster { background: oklch(0.22 0.011 80 / 0.35); }
+
+/* ============ THEME TOGGLE ============ */
+.mast-theme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  color: var(--ink-2);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.mast-theme:hover {
+  background: var(--paper-3);
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+.mast-theme svg { width: 17px; height: 17px; display: block; }
+.mast-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

@@ -5,6 +5,7 @@ import { CATEGORIES, AUDIENCES, ALL_AUDIENCES, WEATHER, dateForDay, todayDayOffs
 import { CalendarView, fmtEventTime } from './calendar.jsx';
 import { MapView, WeekendView, ListView, EventDrawer, WeekendPlan } from './views.jsx';
 import { SOURCES, COMMUNITY_SOURCES, COLLEGE_SOURCES, WEATHER_SOURCE } from './data/sources.js';
+import { useTheme } from './theme.js';
 
 function RefreshStamp({ generatedAt, eventStatus }) {
   if (eventStatus === 'mock') {
@@ -86,6 +87,42 @@ const IndexGlyph = () => (
     <line x1="7.5" y1="14.5" x2="17" y2="14.5" />
   </svg>
 );
+const SunGlyph = () => (
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
+    <circle cx="10" cy="10" r="3.6" />
+    {[0, 45, 90, 135, 180, 225, 270, 315].map(deg => (
+      <line
+        key={deg}
+        x1={10 + 6 * Math.cos((deg * Math.PI) / 180)}
+        y1={10 + 6 * Math.sin((deg * Math.PI) / 180)}
+        x2={10 + 7.8 * Math.cos((deg * Math.PI) / 180)}
+        y2={10 + 7.8 * Math.sin((deg * Math.PI) / 180)}
+      />
+    ))}
+  </svg>
+);
+const MoonGlyph = () => (
+  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+    <path d="M15.5 12.4A6.4 6.4 0 0 1 7.6 4.5a6.4 6.4 0 1 0 7.9 7.9 Z" />
+  </svg>
+);
+
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+  const dark = theme === 'dark';
+  return (
+    <button
+      className="mast-theme"
+      onClick={toggleTheme}
+      aria-label={dark ? 'Switch to light theme' : 'Switch to dark theme'}
+      aria-pressed={dark}
+      title={dark ? 'Switch to light theme' : 'Switch to dark theme'}
+    >
+      {dark ? <SunGlyph /> : <MoonGlyph />}
+    </button>
+  );
+}
+
 const VIEW_TILES = [
   { key: 'calendar', label: 'Week',    Glyph: WeekGlyph },
   { key: 'weekend',  label: 'Weekend', Glyph: WeekendGlyph },
@@ -382,11 +419,14 @@ export function App() {
             <span className="mast-the">The</span>
             <span className="mast-name">Northeast Almanac</span>
           </h1>
-          <button className="mast-plan" onClick={openPlan}>
-            <span className="mast-plan-star">★</span>
-            <span className="mast-plan-text">My Plan</span>
-            {upcomingSavedCount > 0 && <span className="mast-plan-count">{upcomingSavedCount}</span>}
-          </button>
+          <div className="mast-actions">
+            <ThemeToggle />
+            <button className="mast-plan" onClick={openPlan}>
+              <span className="mast-plan-star">★</span>
+              <span className="mast-plan-text">My Plan</span>
+              {upcomingSavedCount > 0 && <span className="mast-plan-count">{upcomingSavedCount}</span>}
+            </button>
+          </div>
         </div>
         <div className="mast-rule thin" />
         <div className="mast-tagline">
