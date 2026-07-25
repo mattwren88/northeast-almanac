@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npx eslint .
+
+      - name: Check formatting
+        run: npx prettier --check .
+
+      - name: Build
+        run: npm run build
+
+      # The scraper has no test suite and only runs on a schedule, so a syntax
+      # error in it would otherwise surface a day later in a failed cron run.
+      - name: Syntax-check scraper
+        run: node --check scripts/build-events.mjs
