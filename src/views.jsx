@@ -5,12 +5,25 @@ import L from 'leaflet';
 import 'leaflet.markercluster';
 import Fuse from 'fuse.js';
 import { WEATHER, CATEGORIES, dateForDay, todayDayOffset, thisWeekendDays } from './lib/data.js';
-import { fmtTime, fmtEventTime, isAllDay, eventToIcs, eventsToIcs, eventToGcalUrl, eventToOutlookUrl, downloadIcs, slugify } from './calendar.jsx';
+import {
+  fmtTime,
+  fmtEventTime,
+  isAllDay,
+  eventToIcs,
+  eventsToIcs,
+  eventToGcalUrl,
+  eventToOutlookUrl,
+  downloadIcs,
+  slugify,
+} from './calendar.jsx';
 import { BBOX, HORIZON_DAYS } from './lib/constants.js';
 import { SOURCES_BY_ID } from './data/sources.js';
 
-export const onCardKey = (handler) => (e) => {
-  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); }
+export const onCardKey = handler => e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    handler();
+  }
 };
 
 export function eventLatLng(ev) {
@@ -24,7 +37,7 @@ export function eventLatLng(ev) {
 }
 
 // ============ MAP VIEW ============
-export function MapView({ events, saved, onSave, onOpen }) {
+export function MapView({ events, saved, onOpen }) {
   const today = todayDayOffset();
   // Anchor the strip to today: show 7 days starting today, clamped so we
   // always emit 7 valid offsets within the 14-day horizon.
@@ -45,7 +58,10 @@ export function MapView({ events, saved, onSave, onOpen }) {
       zoom: 9,
       minZoom: 8,
       maxZoom: 15,
-      maxBounds: [[40.55, -76.5], [41.95, -74.6]],
+      maxBounds: [
+        [40.55, -76.5],
+        [41.95, -74.6],
+      ],
       maxBoundsViscosity: 0.8,
       zoomControl: true,
       scrollWheelZoom: true,
@@ -56,7 +72,10 @@ export function MapView({ events, saved, onSave, onOpen }) {
       maxZoom: 19,
     }).addTo(map);
     mapRef.current = map;
-    return () => { map.remove(); mapRef.current = null; };
+    return () => {
+      map.remove();
+      mapRef.current = null;
+    };
   }, []);
 
   // Build the marker layer when events or activeDay change. Stash the event id
@@ -64,7 +83,10 @@ export function MapView({ events, saved, onSave, onOpen }) {
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !L) return;
-    if (layerRef.current) { layerRef.current.remove(); layerRef.current = null; }
+    if (layerRef.current) {
+      layerRef.current.remove();
+      layerRef.current = null;
+    }
     const layer = L.markerClusterGroup
       ? L.markerClusterGroup({
           showCoverageOnHover: false,
@@ -92,7 +114,9 @@ export function MapView({ events, saved, onSave, onOpen }) {
     });
     layer.addTo(map);
     layerRef.current = layer;
-    return () => { layer.remove(); };
+    return () => {
+      layer.remove();
+    };
   }, [events, activeDay]);
 
   // Update only the saved-stroke weight on existing markers when `saved` changes.
@@ -120,7 +144,10 @@ export function MapView({ events, saved, onSave, onOpen }) {
               className={`map-day-pill ${activeDay === d ? 'is-active' : ''} ${isToday ? 'is-today' : ''}`}
               onClick={() => setActiveDay(d)}
             >
-              <span className="map-day-pill-wd">{date.weekday}{isToday && <span className="map-today-dot">·</span>}</span>
+              <span className="map-day-pill-wd">
+                {date.weekday}
+                {isToday && <span className="map-today-dot">·</span>}
+              </span>
               <span className="map-day-pill-num">{date.date}</span>
               <span className="map-day-pill-count">{count}</span>
             </button>
@@ -135,7 +162,9 @@ export function MapView({ events, saved, onSave, onOpen }) {
             {Object.entries(CATEGORIES).map(([key, cat]) => (
               <div key={key} className="map-legend-row">
                 <span className="map-legend-dot" style={{ background: cat.color }} />
-                <span className="map-legend-label">{cat.icon} {cat.label}</span>
+                <span className="map-legend-label">
+                  {cat.icon} {cat.label}
+                </span>
               </div>
             ))}
           </div>
@@ -143,21 +172,26 @@ export function MapView({ events, saved, onSave, onOpen }) {
 
         <div className="map-side">
           <div className="map-side-head">
-            <div className="map-side-date">{dateForDay(activeDay).weekday}, {dateForDay(activeDay).month} {dateForDay(activeDay).date}</div>
+            <div className="map-side-date">
+              {dateForDay(activeDay).weekday}, {dateForDay(activeDay).month}{' '}
+              {dateForDay(activeDay).date}
+            </div>
             <div className="map-side-sub">{dayEvents.length} events</div>
           </div>
           <div className="map-side-list">
-            {dayEvents.sort((a,b) => a.start.localeCompare(b.start)).map(ev => {
-              const cat = CATEGORIES[ev.category];
-              return (
-                <button key={ev.id} className="map-side-item" onClick={() => onOpen(ev.id)}>
-                  <span className="map-side-dot" style={{ background: cat.color }} />
-                  <span className="map-side-time">{fmtEventTime(ev)}</span>
-                  <span className="map-side-title">{ev.title}</span>
-                  <span className="map-side-town">{ev.town}</span>
-                </button>
-              );
-            })}
+            {dayEvents
+              .sort((a, b) => a.start.localeCompare(b.start))
+              .map(ev => {
+                const cat = CATEGORIES[ev.category];
+                return (
+                  <button key={ev.id} className="map-side-item" onClick={() => onOpen(ev.id)}>
+                    <span className="map-side-dot" style={{ background: cat.color }} />
+                    <span className="map-side-time">{fmtEventTime(ev)}</span>
+                    <span className="map-side-title">{ev.title}</span>
+                    <span className="map-side-town">{ev.town}</span>
+                  </button>
+                );
+              })}
           </div>
         </div>
       </div>
@@ -170,7 +204,9 @@ export function WeekendView({ events, saved, onSave, onOpen }) {
   const days = thisWeekendDays();
   const eventsByDay = useMemo(() => {
     const m = {};
-    events.forEach(e => { (m[e.day] ||= []).push(e); });
+    events.forEach(e => {
+      (m[e.day] ||= []).push(e);
+    });
     Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
     return m;
   }, [events]);
@@ -209,14 +245,16 @@ export function WeekendView({ events, saved, onSave, onOpen }) {
                 </div>
                 <div className="weekend-col-num">{date.date}</div>
                 <div className="weekend-col-meta">
-                  <span className="cal-wx" title={wx.cond}>{wx.icon} {wx.high}°/{wx.low}°</span>
-                  <span className="cal-count">{dayEvents.length} {dayEvents.length === 1 ? 'event' : 'events'}</span>
+                  <span className="cal-wx" title={wx.cond}>
+                    {wx.icon} {wx.high}°/{wx.low}°
+                  </span>
+                  <span className="cal-count">
+                    {dayEvents.length} {dayEvents.length === 1 ? 'event' : 'events'}
+                  </span>
                 </div>
               </div>
               <div className="weekend-events">
-                {dayEvents.length === 0 && (
-                  <div className="cal-empty">— Nothing yet —</div>
-                )}
+                {dayEvents.length === 0 && <div className="cal-empty">— Nothing yet —</div>}
                 {dayEvents.map(ev => {
                   const cat = CATEGORIES[ev.category];
                   const isSaved = saved.includes(ev.id);
@@ -233,7 +271,9 @@ export function WeekendView({ events, saved, onSave, onOpen }) {
                       <div className="evt-bar" style={{ background: cat.color }} />
                       <div className="evt-body">
                         <div className="evt-meta-row">
-                          <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>{fmtEventTime(ev)}</span>
+                          <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>
+                            {fmtEventTime(ev)}
+                          </span>
                           {ev.featured && <span className="evt-pick">Editor's pick</span>}
                           {ev.recurring && <span className="evt-recur">↻</span>}
                         </div>
@@ -250,7 +290,10 @@ export function WeekendView({ events, saved, onSave, onOpen }) {
                           <span className="evt-price">{ev.price}</span>
                           <button
                             className={`evt-save ${isSaved ? 'is-saved' : ''}`}
-                            onClick={(e) => { e.stopPropagation(); onSave(ev.id); }}
+                            onClick={e => {
+                              e.stopPropagation();
+                              onSave(ev.id);
+                            }}
                             aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
                             aria-pressed={isSaved}
                             title={isSaved ? 'Remove from plan' : 'Save to plan'}
@@ -280,7 +323,7 @@ function useDebouncedValue(value, delayMs) {
   }, [value, delayMs]);
   return debounced;
 }
-export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCount = 0, onResetFilters }) {
+export function ListView({ events, saved, onSave, onOpen, filterCount = 0, onResetFilters }) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebouncedValue(query, 150);
   const minIso = useMemo(() => dateForDay(0).iso, []);
@@ -303,11 +346,12 @@ export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCoun
     if (!q) return events;
     if (!fuse) {
       const ql = q.toLowerCase();
-      return events.filter(e =>
-        e.title.toLowerCase().includes(ql) ||
-        e.venue.toLowerCase().includes(ql) ||
-        e.town.toLowerCase().includes(ql) ||
-        (e.blurb || '').toLowerCase().includes(ql)
+      return events.filter(
+        e =>
+          e.title.toLowerCase().includes(ql) ||
+          e.venue.toLowerCase().includes(ql) ||
+          e.town.toLowerCase().includes(ql) ||
+          (e.blurb || '').toLowerCase().includes(ql),
       );
     }
     return fuse.search(q).map(r => r.item);
@@ -319,7 +363,7 @@ export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCoun
     return out;
   }, []);
 
-  const dayInRange = (d) => {
+  const dayInRange = d => {
     const iso = dates[d].iso;
     return iso >= fromIso && iso <= toIso;
   };
@@ -329,15 +373,20 @@ export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCoun
 
   const searchedByDay = useMemo(() => {
     const m = {};
-    searched.forEach(e => { (m[e.day] ||= []).push(e); });
+    searched.forEach(e => {
+      (m[e.day] ||= []).push(e);
+    });
     Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
     return m;
   }, [searched]);
 
-  const clearRange = () => { setFromIso(todayIso); setToIso(maxIso); };
+  const clearRange = () => {
+    setFromIso(todayIso);
+    setToIso(maxIso);
+  };
   const totalShown = useMemo(
     () => searched.filter(e => dayInRange(e.day)).length,
-    [searched, fromIso, toIso, dates]
+    [searched, fromIso, toIso, dates],
   );
   const todayD = todayDayOffset();
 
@@ -349,7 +398,7 @@ export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCoun
           className="list-search"
           placeholder="Search events, venues, towns…"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={e => setQuery(e.target.value)}
         />
         <div className="list-range">
           <label className="list-range-label">From</label>
@@ -359,7 +408,7 @@ export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCoun
             value={fromIso}
             min={minIso}
             max={maxIso}
-            onChange={(e) => setFromIso(e.target.value || minIso)}
+            onChange={e => setFromIso(e.target.value || minIso)}
           />
           <label className="list-range-label">to</label>
           <input
@@ -368,28 +417,35 @@ export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCoun
             value={toIso}
             min={minIso}
             max={maxIso}
-            onChange={(e) => setToIso(e.target.value || maxIso)}
+            onChange={e => setToIso(e.target.value || maxIso)}
           />
-          <button className="list-clear" onClick={clearRange}>Reset</button>
+          <button className="list-clear" onClick={clearRange}>
+            Reset
+          </button>
         </div>
-        <div className="list-count">{totalShown} {totalShown === 1 ? 'event' : 'events'}</div>
+        <div className="list-count">
+          {totalShown} {totalShown === 1 ? 'event' : 'events'}
+        </div>
       </div>
       {totalShown === 0 && visibleDays.length > 0 && (
         <div className="list-empty">
-          {debouncedQuery.trim()
-            ? <>No events match <strong>"{debouncedQuery.trim()}"</strong>.</>
-            : filterCount > 0
-              ? <>No events match your filters.</>
-              : <>No events in this range.</>
-          }
+          {debouncedQuery.trim() ? (
+            <>
+              No events match <strong>"{debouncedQuery.trim()}"</strong>.
+            </>
+          ) : filterCount > 0 ? (
+            <>No events match your filters.</>
+          ) : (
+            <>No events in this range.</>
+          )}
           {filterCount > 0 && onResetFilters && (
-            <button className="list-empty-reset" onClick={onResetFilters}>Reset filters</button>
+            <button className="list-empty-reset" onClick={onResetFilters}>
+              Reset filters
+            </button>
           )}
         </div>
       )}
-      {visibleDays.length === 0 && (
-        <div className="list-empty">No events in this range.</div>
-      )}
+      {visibleDays.length === 0 && <div className="list-empty">No events in this range.</div>}
       {visibleDays.map(d => {
         const date = dates[d];
         const wx = WEATHER[d];
@@ -401,11 +457,16 @@ export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCoun
             <header className="list-day-head">
               <div className="list-day-num">{date.date}</div>
               <div className="list-day-info">
-                <div className="list-day-wd">{date.weekday}{isToday && <span className="list-today-dot">today</span>}</div>
+                <div className="list-day-wd">
+                  {date.weekday}
+                  {isToday && <span className="list-today-dot">today</span>}
+                </div>
                 <div className="list-day-month">{date.month}</div>
               </div>
               <div className="list-day-rule" />
-              <div className="list-day-wx">{wx.icon} {wx.high}° / {wx.low}°</div>
+              <div className="list-day-wx">
+                {wx.icon} {wx.high}° / {wx.low}°
+              </div>
               <div className="list-day-count">{dayEvents.length} events</div>
             </header>
             <div className="list-day-items">
@@ -434,10 +495,14 @@ export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCoun
                     </div>
                     <div className="list-item-body">
                       <div className="list-item-meta">
-                        <span className="list-item-cat" style={{ color: cat.color }}>{cat.label}</span>
+                        <span className="list-item-cat" style={{ color: cat.color }}>
+                          {cat.label}
+                        </span>
                         {ev.featured && <span className="list-item-tag pick">Editor's pick</span>}
                         {ev.hidden && <span className="list-item-tag hidden">Hidden gem</span>}
-                        {ev.recurring && <span className="list-item-tag recur">{ev.recurring}</span>}
+                        {ev.recurring && (
+                          <span className="list-item-tag recur">{ev.recurring}</span>
+                        )}
                       </div>
                       <h3 className="list-item-title">{ev.title}</h3>
                       <p className="list-item-blurb">{ev.blurb}</p>
@@ -451,7 +516,10 @@ export function ListView({ events, saved, onSave, onOpen, weekOffset, filterCoun
                     </div>
                     <button
                       className={`list-item-save ${isSaved ? 'is-saved' : ''}`}
-                      onClick={(e) => { e.stopPropagation(); onSave(ev.id); }}
+                      onClick={e => {
+                        e.stopPropagation();
+                        onSave(ev.id);
+                      }}
                       aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
                       aria-pressed={isSaved}
                       title={isSaved ? 'Remove from plan' : 'Save to plan'}
@@ -477,8 +545,8 @@ function eventSource(ev) {
 }
 
 export function EventDrawer({ event, isSaved, onSave, onClose }) {
-  const gcalUrl = useMemo(() => event ? eventToGcalUrl(event) : '', [event]);
-  const outlookUrl = useMemo(() => event ? eventToOutlookUrl(event) : '', [event]);
+  const gcalUrl = useMemo(() => (event ? eventToGcalUrl(event) : ''), [event]);
+  const outlookUrl = useMemo(() => (event ? eventToOutlookUrl(event) : ''), [event]);
   if (!event) return null;
   const cat = CATEGORIES[event.category];
   const date = dateForDay(event.day);
@@ -486,9 +554,24 @@ export function EventDrawer({ event, isSaved, onSave, onClose }) {
   const src = eventSource(event);
   return (
     <div className="drawer-backdrop" onClick={onClose}>
-      <aside className="drawer" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={event.title}>
-        <button className="drawer-close" onClick={onClose} aria-label="Close event details" autoFocus>×</button>
-        <div className="drawer-keyhint" aria-hidden="true">← → to browse · Esc to close</div>
+      <aside
+        className="drawer"
+        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={event.title}
+      >
+        <button
+          className="drawer-close"
+          onClick={onClose}
+          aria-label="Close event details"
+          autoFocus
+        >
+          ×
+        </button>
+        <div className="drawer-keyhint" aria-hidden="true">
+          ← → to browse · Esc to close
+        </div>
         <div className="drawer-rail" style={{ background: cat.color }} />
         <div className="drawer-body">
           <div className="drawer-cat" style={{ color: cat.color }}>
@@ -498,7 +581,8 @@ export function EventDrawer({ event, isSaved, onSave, onClose }) {
           </div>
           <h2 className="drawer-title">{event.title}</h2>
           <div className="drawer-when">
-            {date.weekday}, {date.month} {date.date} &nbsp;·&nbsp; {isAllDay(event) ? 'All day' : `${fmtTime(event.start)} – ${fmtTime(event.end)}`}
+            {date.weekday}, {date.month} {date.date} &nbsp;·&nbsp;{' '}
+            {isAllDay(event) ? 'All day' : `${fmtTime(event.start)} – ${fmtTime(event.end)}`}
           </div>
           <div className="drawer-where">
             <div className="drawer-venue">{event.venue}</div>
@@ -517,7 +601,9 @@ export function EventDrawer({ event, isSaved, onSave, onClose }) {
             </div>
             <div className="drawer-stat">
               <div className="drawer-stat-k">Forecast</div>
-              <div className="drawer-stat-v">{wx.icon} {wx.high}° / {wx.low}°</div>
+              <div className="drawer-stat-v">
+                {wx.icon} {wx.high}° / {wx.low}°
+              </div>
             </div>
             {event.recurring && (
               <div className="drawer-stat">
@@ -528,13 +614,22 @@ export function EventDrawer({ event, isSaved, onSave, onClose }) {
           </div>
 
           <div className="drawer-tags">
-            {event.tags.map(t => <span key={t} className="drawer-chip">#{t}</span>)}
+            {event.tags.map(t => (
+              <span key={t} className="drawer-chip">
+                #{t}
+              </span>
+            ))}
           </div>
 
           {src && (
             <div className="drawer-source">
               <span className="drawer-source-k">Listing via</span>
-              <a className="drawer-source-v" href={src.home} target="_blank" rel="noopener noreferrer">
+              <a
+                className="drawer-source-v"
+                href={src.home}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {src.name} ↗
               </a>
             </div>
@@ -555,17 +650,23 @@ export function EventDrawer({ event, isSaved, onSave, onClose }) {
                   href={gcalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                >Google</a>
+                >
+                  Google
+                </a>
                 <button
                   className="drawer-cal-btn"
                   onClick={() => downloadIcs(`${slugify(event.title)}.ics`, eventToIcs(event))}
-                >Apple (.ics)</button>
+                >
+                  Apple (.ics)
+                </button>
                 <a
                   className="drawer-cal-btn"
                   href={outlookUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                >Outlook</a>
+                >
+                  Outlook
+                </a>
               </div>
             </div>
             {event.url && (
@@ -577,7 +678,9 @@ export function EventDrawer({ event, isSaved, onSave, onClose }) {
                     href={event.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                  >View original listing ↗</a>
+                  >
+                    View original listing ↗
+                  </a>
                 </div>
               </div>
             )}
@@ -589,16 +692,28 @@ export function EventDrawer({ event, isSaved, onSave, onClose }) {
 }
 
 // ============ SAVED PLAN SIDEBAR ============
-export function WeekendPlan({ events, eventsById, saved, onRemove, onClose, onShare, onClearPast }) {
+export function WeekendPlan({
+  events,
+  eventsById,
+  saved,
+  onRemove,
+  onClose,
+  onShare,
+  onClearPast,
+}) {
   const lookup = eventsById || new Map(events.map(e => [e.id, e]));
   const { upcoming, past, byDay } = useMemo(() => {
     const today = todayDayOffset();
-    const all = saved.map(id => lookup.get(id)).filter(Boolean)
+    const all = saved
+      .map(id => lookup.get(id))
+      .filter(Boolean)
       .sort((a, b) => a.day - b.day || a.start.localeCompare(b.start));
     const upcoming = all.filter(e => e.day >= today);
     const past = all.filter(e => e.day < today);
     const byDay = {};
-    upcoming.forEach(e => { (byDay[e.day] ||= []).push(e); });
+    upcoming.forEach(e => {
+      (byDay[e.day] ||= []).push(e);
+    });
     return { upcoming, past, byDay };
   }, [saved, lookup]);
 
@@ -607,11 +722,19 @@ export function WeekendPlan({ events, eventsById, saved, onRemove, onClose, onSh
 
   return (
     <div className="plan-backdrop" onClick={onClose}>
-      <aside className="plan" onClick={e => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Your plan">
+      <aside
+        className="plan"
+        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Your plan"
+      >
         <header className="plan-head">
           <div className="plan-eyebrow">YOUR PLAN</div>
           <h2 className="plan-title">Your Plan</h2>
-          <button className="plan-close" onClick={onClose} aria-label="Close plan" autoFocus>×</button>
+          <button className="plan-close" onClick={onClose} aria-label="Close plan" autoFocus>
+            ×
+          </button>
         </header>
         {isEmpty && (
           <div className="plan-empty">
@@ -639,15 +762,18 @@ export function WeekendPlan({ events, eventsById, saved, onRemove, onClose, onSh
                       {date.weekday}, {date.month} {date.date}
                     </div>
                     {evs.map(ev => {
-                      const cat = CATEGORIES[ev.category];
                       return (
                         <div key={ev.id} className="plan-item">
                           <div className="plan-item-time">{fmtEventTime(ev)}</div>
                           <div className="plan-item-body">
                             <div className="plan-item-title">{ev.title}</div>
-                            <div className="plan-item-where">{ev.venue} · {ev.town}</div>
+                            <div className="plan-item-where">
+                              {ev.venue} · {ev.town}
+                            </div>
                           </div>
-                          <button className="plan-item-x" onClick={() => onRemove(ev.id)}>×</button>
+                          <button className="plan-item-x" onClick={() => onRemove(ev.id)}>
+                            ×
+                          </button>
                         </div>
                       );
                     })}
@@ -679,4 +805,3 @@ export function WeekendPlan({ events, eventsById, saved, onRemove, onClose, onSh
     </div>
   );
 }
-

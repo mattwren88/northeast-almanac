@@ -29,17 +29,17 @@ in the masthead.
 
 ### Layout
 
-| Path | What's in it |
-| --- | --- |
-| `src/app.jsx` | Masthead, toolbar, filters, colophon, About modal, plan/toasts |
-| `src/calendar.jsx` | Week grid, plus the time-formatting and `.ics`/calendar-link helpers |
-| `src/views.jsx` | Map (Leaflet), Weekend, Index (Fuse search), event drawer, saved plan |
-| `src/lib/data.js` | Event loading, the day↔date anchor math, categories, weather |
-| `src/lib/constants.js` | `BBOX` and `HORIZON_DAYS`, shared with the scraper |
-| `src/data/sources.js` | The one source registry — UI attribution *and* scraper endpoints |
-| `src/theme.js` | Light/dark theme state |
-| `scripts/build-events.mjs` | The scraper |
-| `curated.json` | Manual `featured` / `hidden` overrides, applied at scrape time |
+| Path                       | What's in it                                                          |
+| -------------------------- | --------------------------------------------------------------------- |
+| `src/app.jsx`              | Masthead, toolbar, filters, colophon, About modal, plan/toasts        |
+| `src/calendar.jsx`         | Week grid, plus the time-formatting and `.ics`/calendar-link helpers  |
+| `src/views.jsx`            | Map (Leaflet), Weekend, Index (Fuse search), event drawer, saved plan |
+| `src/lib/data.js`          | Event loading, the day↔date anchor math, categories, weather          |
+| `src/lib/constants.js`     | `BBOX` and `HORIZON_DAYS`, shared with the scraper                    |
+| `src/data/sources.js`      | The one source registry — UI attribution _and_ scraper endpoints      |
+| `src/theme.js`             | Light/dark theme state                                                |
+| `scripts/build-events.mjs` | The scraper                                                           |
+| `curated.json`             | Manual `featured` / `hidden` overrides, applied at scrape time        |
 
 Adding or changing a source means editing `src/data/sources.js` only — the footer,
 the About modal, the drawer's "Listing via" credit, and the scraper all read from it.

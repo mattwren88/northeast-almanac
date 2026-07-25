@@ -4,24 +4,33 @@ import { useState, useMemo, useEffect } from 'react';
 import { WEATHER, CATEGORIES, dateForDay, todayDayOffset } from './lib/data.js';
 
 export function useIsMobile() {
-  const [m, set] = useState(() => typeof window !== 'undefined' && window.matchMedia('(max-width: 800px)').matches);
+  const [m, set] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 800px)').matches,
+  );
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 800px)');
-    const h = (e) => set(e.matches);
+    const h = e => set(e.matches);
     mq.addEventListener('change', h);
     return () => mq.removeEventListener('change', h);
   }, []);
   return m;
 }
 
-export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWeekOffset, weatherAware, filterCount = 0, onResetFilters }) {
+export function CalendarView({
+  events,
+  saved,
+  onSave,
+  onOpen,
+  weekOffset,
+  setWeekOffset,
+  weatherAware,
+  filterCount = 0,
+}) {
   const isMobile = useIsMobile();
   const todayD = todayDayOffset();
   // On mobile we anchor the week to today (clamped within the 14-day horizon)
   // and ignore weekOffset — Prev/Next is hidden.
-  const startDay = isMobile
-    ? Math.max(0, Math.min(todayD, 14 - 7))
-    : weekOffset * 7;
+  const startDay = isMobile ? Math.max(0, Math.min(todayD, 14 - 7)) : weekOffset * 7;
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => startDay + i);
   const dates = useMemo(() => {
     const out = {};
@@ -30,7 +39,9 @@ export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWee
   }, []);
   const eventsByDay = useMemo(() => {
     const m = {};
-    events.forEach(e => { (m[e.day] ||= []).push(e); });
+    events.forEach(e => {
+      (m[e.day] ||= []).push(e);
+    });
     Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
     return m;
   }, [events]);
@@ -46,7 +57,9 @@ export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWee
               className="cal-nav-btn"
               onClick={() => setWeekOffset(Math.max(0, weekOffset - 1))}
               disabled={weekOffset === 0}
-            >‹ Prev</button>
+            >
+              ‹ Prev
+            </button>
           )}
           <div className="cal-week-label">
             <span className="cal-week-em">{isMobile ? 'Next 7 days from' : 'Week of'}</span>{' '}
@@ -59,7 +72,9 @@ export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWee
               className="cal-nav-btn"
               onClick={() => setWeekOffset(Math.min(1, weekOffset + 1))}
               disabled={weekOffset === 1}
-            >Next ›</button>
+            >
+              Next ›
+            </button>
           )}
         </div>
       </div>
@@ -84,14 +99,20 @@ export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWee
                 </div>
                 <div className="cal-day-num">{date.date}</div>
                 <div className="cal-day-meta">
-                  <span className="cal-wx" title={wx.cond}>{wx.icon} {wx.high}°/{wx.low}°</span>
-                  <span className="cal-count">{dayEvents.length} {dayEvents.length === 1 ? 'event' : 'events'}</span>
+                  <span className="cal-wx" title={wx.cond}>
+                    {wx.icon} {wx.high}°/{wx.low}°
+                  </span>
+                  <span className="cal-count">
+                    {dayEvents.length} {dayEvents.length === 1 ? 'event' : 'events'}
+                  </span>
                 </div>
               </div>
 
               <div className="cal-events">
                 {dayEvents.length === 0 && (
-                  <div className="cal-empty">{filterCount > 0 ? '— Filtered out —' : '— Nothing yet —'}</div>
+                  <div className="cal-empty">
+                    {filterCount > 0 ? '— Filtered out —' : '— Nothing yet —'}
+                  </div>
                 )}
                 {dayEvents.map(ev => {
                   const cat = CATEGORIES[ev.category];
@@ -102,7 +123,12 @@ export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWee
                       key={ev.id}
                       className={`evt ${dimmed ? 'evt-dim' : ''} ${ev.featured ? 'evt-featured' : ''}`}
                       onClick={() => onOpen(ev.id)}
-                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(ev.id); } }}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          onOpen(ev.id);
+                        }
+                      }}
                       role="button"
                       tabIndex={0}
                       aria-label={`${ev.title} at ${ev.venue}, ${ev.town}`}
@@ -110,7 +136,9 @@ export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWee
                       <div className="evt-bar" style={{ background: cat.color }} />
                       <div className="evt-body">
                         <div className="evt-meta-row">
-                          <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>{fmtEventTime(ev)}</span>
+                          <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>
+                            {fmtEventTime(ev)}
+                          </span>
                           {ev.featured && <span className="evt-pick">Editor's pick</span>}
                           {ev.hidden && <span className="evt-hidden">Hidden gem</span>}
                           {ev.recurring && <span className="evt-recur">↻</span>}
@@ -128,7 +156,10 @@ export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWee
                           <span className="evt-price">{ev.price}</span>
                           <button
                             className={`evt-save ${isSaved ? 'is-saved' : ''}`}
-                            onClick={(e) => { e.stopPropagation(); onSave(ev.id); }}
+                            onClick={e => {
+                              e.stopPropagation();
+                              onSave(ev.id);
+                            }}
                             aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
                             aria-pressed={isSaved}
                             title={isSaved ? 'Remove from plan' : 'Save to plan'}
@@ -136,9 +167,7 @@ export function CalendarView({ events, saved, onSave, onOpen, weekOffset, setWee
                             {isSaved ? '★' : '☆'}
                           </button>
                         </div>
-                        {dimmed && (
-                          <div className="evt-warn">Outdoor · rain forecast</div>
-                        )}
+                        {dimmed && <div className="evt-warn">Outdoor · rain forecast</div>}
                       </div>
                     </article>
                   );
@@ -169,7 +198,9 @@ export function fmtEventTime(ev, { range = false } = {}) {
   return `${fmtTime(ev.start)} – ${fmtTime(ev.end)}`;
 }
 
-function pad2(n) { return String(n).padStart(2, '0'); }
+function pad2(n) {
+  return String(n).padStart(2, '0');
+}
 
 function eventIcsDates(ev) {
   const iso = dateForDay(ev.day).iso;
@@ -180,7 +211,7 @@ function eventIcsDates(ev) {
     const endYmd = `${next.getFullYear()}${pad2(next.getMonth() + 1)}${pad2(next.getDate())}`;
     return { dtstart: `;VALUE=DATE:${ymd}`, dtend: `;VALUE=DATE:${endYmd}`, allDay: true };
   }
-  const stamp = (t) => {
+  const stamp = t => {
     const [h, m] = t.split(':').map(Number);
     return `${ymd}T${pad2(h)}${pad2(m)}00`;
   };
@@ -249,7 +280,7 @@ export function eventToGcalUrl(ev) {
     const endYmd = `${next.getFullYear()}${pad2(next.getMonth() + 1)}${pad2(next.getDate())}`;
     dates = `${ymd}/${endYmd}`;
   } else {
-    const stamp = (t) => {
+    const stamp = t => {
       const [h, m] = t.split(':').map(Number);
       return `${ymd}T${pad2(h)}${pad2(m)}00`;
     };
@@ -275,7 +306,7 @@ export function eventToOutlookUrl(ev) {
     next.setDate(next.getDate() + 1);
     enddt = `${next.getFullYear()}-${pad2(next.getMonth() + 1)}-${pad2(next.getDate())}`;
   } else {
-    const stamp = (t) => {
+    const stamp = t => {
       const [h, m] = t.split(':').map(Number);
       return `${iso}T${pad2(h)}:${pad2(m)}:00`;
     };
@@ -296,7 +327,13 @@ export function eventToOutlookUrl(ev) {
 }
 
 export function slugify(s) {
-  return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'event';
+  return (
+    String(s)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 60) || 'event'
+  );
 }
 
 export function downloadIcs(filename, ics) {
@@ -310,4 +347,3 @@ export function downloadIcs(filename, ics) {
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-

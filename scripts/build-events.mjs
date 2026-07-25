@@ -18,7 +18,8 @@ const ROOT = resolve(HERE, '..');
 
 // Identify the bot honestly so site owners can contact / allow-list / block us.
 // If you fork this, update the URL to point at your own repo.
-const UA = 'Northeast-Almanac/1.0 (+https://github.com/mattwren88/northeast-almanac; non-commercial regional event aggregator; contact via GitHub Issues)';
+const UA =
+  'Northeast-Almanac/1.0 (+https://github.com/mattwren88/northeast-almanac; non-commercial regional event aggregator; contact via GitHub Issues)';
 
 // Source registry (endpoints, feed types, robots.txt review notes) lives in
 // src/data/sources.js — shared with the footer/About/drawer attribution UI.
@@ -38,18 +39,22 @@ const CATEGORY_RULES = [
   [/food|drink|wine|beer|brew|tasting|dinner|cocktail|distill/i, 'food'],
   [/hike|hiking|trail|outdoor|nature|park|bike|cycl|kayak|paddle|fish|bird|garden/i, 'outdoor'],
   [/art|gallery|exhibit|paint|draw|craft|studio/i, 'art'],
-  [/theater|theatre|concert|symphony|opera|music|comedy|stand-?up|reading|poetry|dance|perform|show/i, 'performance'],
+  [
+    /theater|theatre|concert|symphony|opera|music|comedy|stand-?up|reading|poetry|dance|perform|show/i,
+    'performance',
+  ],
   [/bar|pub|nightlife|dj|trivia|karaoke|open mic|club/i, 'nightlife'],
 ];
 const DEFAULT_CATEGORY = 'community';
 
 // Outdoor heuristic — overrides indoor=true default
-const OUTDOOR_RULES = /outdoor|hike|trail|park|garden|festival|fair|market|cruise|bike|cycl|kayak|paddle|bird|farmer/i;
+const OUTDOOR_RULES =
+  /outdoor|hike|trail|park|garden|festival|fair|market|cruise|bike|cycl|kayak|paddle|bird|farmer/i;
 
 // City normalization — DiscoverNEPA sometimes has variants
 const TOWN_FIX = {
   'wilkes barre': 'Wilkes-Barre',
-  'wilkesbarre': 'Wilkes-Barre',
+  wilkesbarre: 'Wilkes-Barre',
   'wilkes-barre': 'Wilkes-Barre',
 };
 
@@ -58,43 +63,43 @@ const TOWN_FIX = {
 // Towns outside the BBOX above are intentionally omitted (would be filtered anyway).
 const TOWN_COORDS = {
   // Lackawanna County
-  'scranton':         [41.4090, -75.6624],
-  'dunmore':          [41.4234, -75.6322],
-  'carbondale':       [41.5740, -75.5005],
-  'old forge':        [41.3712, -75.7405],
-  'taylor':           [41.3956, -75.7188],
-  'moosic':           [41.3534, -75.7383],
-  'throop':           [41.4517, -75.6066],
-  'olyphant':         [41.4673, -75.6005],
-  'archbald':         [41.5006, -75.5374],
-  'jessup':           [41.4734, -75.5605],
-  'jermyn':           [41.5290, -75.5444],
-  'mayfield':         [41.5409, -75.5377],
-  'clarks summit':    [41.4912, -75.7224],
-  'south abington township': [41.4756, -75.7060],
+  scranton: [41.409, -75.6624],
+  dunmore: [41.4234, -75.6322],
+  carbondale: [41.574, -75.5005],
+  'old forge': [41.3712, -75.7405],
+  taylor: [41.3956, -75.7188],
+  moosic: [41.3534, -75.7383],
+  throop: [41.4517, -75.6066],
+  olyphant: [41.4673, -75.6005],
+  archbald: [41.5006, -75.5374],
+  jessup: [41.4734, -75.5605],
+  jermyn: [41.529, -75.5444],
+  mayfield: [41.5409, -75.5377],
+  'clarks summit': [41.4912, -75.7224],
+  'south abington township': [41.4756, -75.706],
   // Luzerne County
-  'wilkes-barre':     [41.2459, -75.8813],
-  'kingston':         [41.2670, -75.8966],
-  'plains':           [41.2787, -75.8480],
-  'pittston':         [41.3262, -75.7896],
-  'west pittston':    [41.3287, -75.7918],
-  'hazleton':         [40.9584, -75.9747],
-  'nanticoke':        [41.2009, -76.0001],
-  'mountain top':     [41.1450, -75.8888],
-  'dallas':           [41.3404, -75.9646],
-  'shavertown':       [41.3206, -75.9529],
+  'wilkes-barre': [41.2459, -75.8813],
+  kingston: [41.267, -75.8966],
+  plains: [41.2787, -75.848],
+  pittston: [41.3262, -75.7896],
+  'west pittston': [41.3287, -75.7918],
+  hazleton: [40.9584, -75.9747],
+  nanticoke: [41.2009, -76.0001],
+  'mountain top': [41.145, -75.8888],
+  dallas: [41.3404, -75.9646],
+  shavertown: [41.3206, -75.9529],
   // Wayne County
-  'honesdale':        [41.5762, -75.2549],
-  'hawley':           [41.4762, -75.1819],
+  honesdale: [41.5762, -75.2549],
+  hawley: [41.4762, -75.1819],
   // Carbon County
-  'jim thorpe':       [40.8718, -75.7327],
-  'lehighton':        [40.8345, -75.7113],
+  'jim thorpe': [40.8718, -75.7327],
+  lehighton: [40.8345, -75.7113],
   // Monroe County
-  'stroudsburg':      [40.9865, -75.1945],
+  stroudsburg: [40.9865, -75.1945],
   'east stroudsburg': [41.0023, -75.1791],
-  'mount pocono':     [41.1212, -75.3613],
+  'mount pocono': [41.1212, -75.3613],
   // Wyoming County
-  'tunkhannock':      [41.5384, -75.9474],
+  tunkhannock: [41.5384, -75.9474],
 };
 
 function townCoords(town) {
@@ -124,7 +129,10 @@ function decodeEntities(s = '') {
 function stripHtml(s = '') {
   // Decode first so RSS-style encoded markup (&lt;br/&gt;, &amp;nbsp;) is
   // recognized as tags/whitespace by the strip pass below.
-  return decodeEntities(decodeEntities(s)).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  return decodeEntities(decodeEntities(s))
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 function fmtTime(isoLocal) {
@@ -173,47 +181,47 @@ function fixTown(t) {
 // WMO weather codes → our { cond, icon }
 // https://open-meteo.com/en/docs (codes table)
 function wxFromCode(code) {
-  if (code === 0) return { cond: 'sun',    icon: '☀' };
-  if (code <= 2)  return { cond: 'partly', icon: '⛅' };
-  if (code === 3) return { cond: 'cloud',  icon: '☁' };
-  if (code <= 48) return { cond: 'fog',    icon: '🌫' };
-  if (code <= 67) return { cond: 'rain',   icon: '☂' };
-  if (code <= 77) return { cond: 'snow',   icon: '❄' };
-  if (code <= 82) return { cond: 'rain',   icon: '☂' };
-  if (code <= 86) return { cond: 'snow',   icon: '❄' };
+  if (code === 0) return { cond: 'sun', icon: '☀' };
+  if (code <= 2) return { cond: 'partly', icon: '⛅' };
+  if (code === 3) return { cond: 'cloud', icon: '☁' };
+  if (code <= 48) return { cond: 'fog', icon: '🌫' };
+  if (code <= 67) return { cond: 'rain', icon: '☂' };
+  if (code <= 77) return { cond: 'snow', icon: '❄' };
+  if (code <= 82) return { cond: 'rain', icon: '☂' };
+  if (code <= 86) return { cond: 'snow', icon: '❄' };
   return { cond: 'storm', icon: '⛈' };
 }
 
 async function fetchWeather() {
   const params = new URLSearchParams({
-    latitude:         String(WX_LAT),
-    longitude:        String(WX_LNG),
-    daily:            'temperature_2m_max,temperature_2m_min,weather_code',
+    latitude: String(WX_LAT),
+    longitude: String(WX_LNG),
+    daily: 'temperature_2m_max,temperature_2m_min,weather_code',
     temperature_unit: 'fahrenheit',
-    timezone:         'America/New_York',
-    forecast_days:    String(HORIZON_DAYS),
+    timezone: 'America/New_York',
+    forecast_days: String(HORIZON_DAYS),
   });
   const res = await fetch(`${WEATHER_API}?${params}`, { headers: { 'User-Agent': UA } });
   if (!res.ok) throw new Error(`Open-Meteo ${res.status}`);
   const j = await res.json();
-  const dayLabels = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   return j.daily.time.map((date, i) => {
     const wx = wxFromCode(j.daily.weather_code[i]);
     const dt = new Date(date + 'T00:00:00');
     return {
-      day:   i,
+      day: i,
       label: dayLabels[dt.getDay()],
-      cond:  wx.cond,
-      icon:  wx.icon,
-      high:  Math.round(j.daily.temperature_2m_max[i]),
-      low:   Math.round(j.daily.temperature_2m_min[i]),
+      cond: wx.cond,
+      icon: wx.icon,
+      high: Math.round(j.daily.temperature_2m_max[i]),
+      low: Math.round(j.daily.temperature_2m_min[i]),
     };
   });
 }
 
 async function fetchPage(source, page, startYmd, endYmd, ifModifiedSince) {
   const url = `${source.api}?per_page=${PER_PAGE}&page=${page}&start_date=${startYmd}&end_date=${endYmd}`;
-  const headers = { 'User-Agent': UA, 'Accept': 'application/json' };
+  const headers = { 'User-Agent': UA, Accept: 'application/json' };
   if (ifModifiedSince && page === 1) headers['If-Modified-Since'] = ifModifiedSince;
   const res = await fetch(url, { headers });
   if (res.status === 304) return { notModified: true };
@@ -337,22 +345,30 @@ async function loadPreviousJson() {
 function isValidEvent(e) {
   return (
     e &&
-    typeof e.id === 'string' && e.id.length > 0 &&
-    typeof e.title === 'string' && e.title.length > 0 &&
-    typeof e.start === 'string' && /^\d{2}:\d{2}$/.test(e.start) &&
-    Number.isInteger(e.day) && e.day >= 0 && e.day < HORIZON_DAYS &&
-    Number.isFinite(e?.coords?.x) && e.coords.x >= 0 && e.coords.x <= 1 &&
-    Number.isFinite(e?.coords?.y) && e.coords.y >= 0 && e.coords.y <= 1 &&
+    typeof e.id === 'string' &&
+    e.id.length > 0 &&
+    typeof e.title === 'string' &&
+    e.title.length > 0 &&
+    typeof e.start === 'string' &&
+    /^\d{2}:\d{2}$/.test(e.start) &&
+    Number.isInteger(e.day) &&
+    e.day >= 0 &&
+    e.day < HORIZON_DAYS &&
+    Number.isFinite(e?.coords?.x) &&
+    e.coords.x >= 0 &&
+    e.coords.x <= 1 &&
+    Number.isFinite(e?.coords?.y) &&
+    e.coords.y >= 0 &&
+    e.coords.y <= 1 &&
     typeof e.category === 'string' &&
-    typeof e.town === 'string' && e.town.length > 0
+    typeof e.town === 'string' &&
+    e.town.length > 0
   );
 }
 
 // Sanity guards. Each returns a string (failure reason) or null (pass).
 function guardHardFloor(events, MIN = 10) {
-  return events.length < MIN
-    ? `only ${events.length} valid events; hard floor is ${MIN}`
-    : null;
+  return events.length < MIN ? `only ${events.length} valid events; hard floor is ${MIN}` : null;
 }
 
 function guardSharpDrop(newCount, prevCount, ratio = 0.5, prevMin = 20) {
@@ -387,11 +403,18 @@ function dateToETParts(d) {
   if (!d || isNaN(d.getTime())) return null;
   const fmt = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'America/New_York',
-    year: 'numeric', month: '2-digit', day: '2-digit',
-    hour: '2-digit', minute: '2-digit', hour12: false,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
   });
   const p = Object.fromEntries(fmt.formatToParts(d).map(x => [x.type, x.value]));
-  return { ymd: `${p.year}-${p.month}-${p.day}`, hm: `${p.hour === '24' ? '00' : p.hour}:${p.minute}` };
+  return {
+    ymd: `${p.year}-${p.month}-${p.day}`,
+    hm: `${p.hour === '24' ? '00' : p.hour}:${p.minute}`,
+  };
 }
 
 // Tiny RSS parser — returns array of plain objects from <item>…</item> blocks.
@@ -399,25 +422,35 @@ function parseRssItems(xml) {
   const out = [];
   const itemRx = /<item[\s\S]*?<\/item>/g;
   const items = xml.match(itemRx) || [];
-  const cdata = (s) => s.replace(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/, '$1');
+  const cdata = s => s.replace(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/, '$1');
   const pluck = (block, tag) => {
     const m = block.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
     return m ? cdata(m[1]).trim() : '';
   };
   for (const block of items) {
     out.push({
-      title:       pluck(block, 'title'),
-      link:        pluck(block, 'link'),
+      title: pluck(block, 'title'),
+      link: pluck(block, 'link'),
       description: pluck(block, 'description'),
-      pubDate:     pluck(block, 'pubDate'),
-      category:    pluck(block, 'category'),
-      guid:        pluck(block, 'guid'),
+      pubDate: pluck(block, 'pubDate'),
+      category: pluck(block, 'category'),
+      guid: pluck(block, 'guid'),
     });
   }
   return out;
 }
 
-function normalizeCollegeEvent({ source, raw, anchorYmd, startD, endD, title, blurb, url, allDay }) {
+function normalizeCollegeEvent({
+  source,
+  raw,
+  anchorYmd,
+  startD,
+  endD,
+  title,
+  blurb,
+  url,
+  allDay,
+}) {
   if (!startD || isNaN(startD.getTime())) return null;
   const sp = dateToETParts(startD);
   if (!sp) return null;
@@ -426,7 +459,8 @@ function normalizeCollegeEvent({ source, raw, anchorYmd, startD, endD, title, bl
 
   let start, end;
   if (allDay) {
-    start = '00:00'; end = '23:59';
+    start = '00:00';
+    end = '23:59';
   } else {
     start = sp.hm;
     const ep = endD ? dateToETParts(endD) : null;
@@ -453,7 +487,8 @@ function normalizeCollegeEvent({ source, raw, anchorYmd, startD, endD, title, bl
   const category = inferCategory(fakeRaw);
   const indoor = !OUTDOOR_RULES.test(title);
   const id = `${source.id}-${(raw && (raw.id || raw.guid || raw.link)) || randomUUID().slice(0, 8)}`
-    .replace(/[^a-z0-9-]/gi, '_').slice(0, 80);
+    .replace(/[^a-z0-9-]/gi, '_')
+    .slice(0, 80);
 
   return {
     id,
@@ -481,45 +516,60 @@ function normalizeCollegeEvent({ source, raw, anchorYmd, startD, endD, title, bl
 }
 
 async function fetchUofSJson(source, anchorYmd) {
-  const res = await fetch(source.api, { headers: { 'User-Agent': UA, 'Accept': 'application/json' } });
+  const res = await fetch(source.api, {
+    headers: { 'User-Agent': UA, Accept: 'application/json' },
+  });
   if (!res.ok) throw new Error(`${source.name} ${res.status}`);
   const j = await res.json();
   const events = Array.isArray(j.events) ? j.events : [];
-  return events.map(raw => {
-    const startD = raw.startDate ? new Date(raw.startDate) : null;
-    const endD = raw.endDate ? new Date(raw.endDate) : null;
-    const allDay = String(raw.allDay).toLowerCase() === 'true';
-    return normalizeCollegeEvent({
-      source, raw, anchorYmd,
-      startD, endD,
-      title: stripHtml(raw.title),
-      blurb: stripHtml(raw.description),
-      url: raw.url,
-      allDay,
-    });
-  }).filter(Boolean);
+  return events
+    .map(raw => {
+      const startD = raw.startDate ? new Date(raw.startDate) : null;
+      const endD = raw.endDate ? new Date(raw.endDate) : null;
+      const allDay = String(raw.allDay).toLowerCase() === 'true';
+      return normalizeCollegeEvent({
+        source,
+        raw,
+        anchorYmd,
+        startD,
+        endD,
+        title: stripHtml(raw.title),
+        blurb: stripHtml(raw.description),
+        url: raw.url,
+        allDay,
+      });
+    })
+    .filter(Boolean);
 }
 
 async function fetchRssCollege(source, anchorYmd) {
-  const res = await fetch(source.api, { headers: { 'User-Agent': UA, 'Accept': 'application/rss+xml, application/xml' }, redirect: 'follow' });
+  const res = await fetch(source.api, {
+    headers: { 'User-Agent': UA, Accept: 'application/rss+xml, application/xml' },
+    redirect: 'follow',
+  });
   if (!res.ok) throw new Error(`${source.name} ${res.status}`);
   const xml = await res.text();
   const items = parseRssItems(xml);
-  return items.map(raw => {
-    const startD = raw.pubDate ? new Date(raw.pubDate) : null;
-    if (!startD) return null;
-    const sp = dateToETParts(startD);
-    // Trumba/25Live academic feeds often have no real time → 04:00 GMT = 00:00 ET = all-day.
-    const allDay = sp && sp.hm === '00:00';
-    return normalizeCollegeEvent({
-      source, raw, anchorYmd,
-      startD, endD: null,
-      title: stripHtml(raw.title),
-      blurb: stripHtml(raw.description).slice(0, 320),
-      url: raw.link,
-      allDay,
-    });
-  }).filter(Boolean);
+  return items
+    .map(raw => {
+      const startD = raw.pubDate ? new Date(raw.pubDate) : null;
+      if (!startD) return null;
+      const sp = dateToETParts(startD);
+      // Trumba/25Live academic feeds often have no real time → 04:00 GMT = 00:00 ET = all-day.
+      const allDay = sp && sp.hm === '00:00';
+      return normalizeCollegeEvent({
+        source,
+        raw,
+        anchorYmd,
+        startD,
+        endD: null,
+        title: stripHtml(raw.title),
+        blurb: stripHtml(raw.description).slice(0, 320),
+        url: raw.link,
+        allDay,
+      });
+    })
+    .filter(Boolean);
 }
 
 async function fetchCollegeSource(source, anchorYmd) {
@@ -534,7 +584,9 @@ async function main() {
   const anchorYmd = ymd(today);
   const endYmd = ymd(end);
 
-  console.log(`Fetching events ${anchorYmd} → ${endYmd} from ${SOURCES.length} community + ${COLLEGE_SOURCES.length} college sources…`);
+  console.log(
+    `Fetching events ${anchorYmd} → ${endYmd} from ${SOURCES.length} community + ${COLLEGE_SOURCES.length} college sources…`,
+  );
 
   // If-Modified-Since: send last run's timestamp; if a source returns 304, reuse
   // the events we already have for that source from the previous events.json.
@@ -550,20 +602,29 @@ async function main() {
     }
   }
 
-  const sourceFetches = SOURCES.map(async (source) => {
+  const sourceFetches = SOURCES.map(async source => {
     try {
       // Only attempt 304 reuse if the previous run shares the same anchor date
       // (otherwise day offsets would be wrong).
       const canReuse = previousJson && previousJson.anchorDate === anchorYmd;
-      const result = await fetchSource(source, anchorYmd, endYmd, canReuse ? ifModifiedSince : null);
+      const result = await fetchSource(
+        source,
+        anchorYmd,
+        endYmd,
+        canReuse ? ifModifiedSince : null,
+      );
       if (result.notModified) {
         const cached = previousBySource[source.id] || [];
-        console.log(`  [${source.id}] ${source.name}: 304 Not Modified — reusing ${cached.length} cached events`);
+        console.log(
+          `  [${source.id}] ${source.name}: 304 Not Modified — reusing ${cached.length} cached events`,
+        );
         return cached;
       }
       const raw = result.events;
       const normalized = raw.map(r => normalize(r, anchorYmd, source)).filter(Boolean);
-      console.log(`  [${source.id}] ${source.name}: ${raw.length} raw, ${normalized.length} kept after window+bbox`);
+      console.log(
+        `  [${source.id}] ${source.name}: ${raw.length} raw, ${normalized.length} kept after window+bbox`,
+      );
       return normalized;
     } catch (err) {
       console.warn(`  [${source.id}] ${source.name} failed: ${err.message} — skipping`);
@@ -571,10 +632,12 @@ async function main() {
     }
   });
 
-  const collegeFetches = COLLEGE_SOURCES.map(async (source) => {
+  const collegeFetches = COLLEGE_SOURCES.map(async source => {
     try {
       const events = await fetchCollegeSource(source, anchorYmd);
-      console.log(`  [${source.id}] ${source.name} (college): ${events.length} kept after window+bbox`);
+      console.log(
+        `  [${source.id}] ${source.name} (college): ${events.length} kept after window+bbox`,
+      );
       return events;
     } catch (err) {
       console.warn(`  [${source.id}] ${source.name} (college) failed: ${err.message} — skipping`);
@@ -592,7 +655,9 @@ async function main() {
   ]);
 
   const normalized = [...perSource.flat(), ...perCollege.flat()];
-  console.log(`  ${normalized.length} total normalized events; weather: ${weather ? `${weather.length} days` : 'unavailable'}`);
+  console.log(
+    `  ${normalized.length} total normalized events; weather: ${weather ? `${weather.length} days` : 'unavailable'}`,
+  );
 
   const deduped = dedupe(normalized);
   console.log(`  ${deduped.length} after dedupe`);
@@ -635,7 +700,9 @@ async function main() {
   };
 
   await writeFile(resolve(ROOT, 'public/events.json'), JSON.stringify(out, null, 2));
-  console.log(`Wrote public/events.json (${valid.length} events, anchor ${anchorYmd}; previous: ${prevCount}).`);
+  console.log(
+    `Wrote public/events.json (${valid.length} events, anchor ${anchorYmd}; previous: ${prevCount}).`,
+  );
 }
 
 main().catch(err => {

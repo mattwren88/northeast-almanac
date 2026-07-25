@@ -20,7 +20,7 @@ export function useTheme() {
   // Follow the system while the reader hasn't made an explicit choice.
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const onChange = (e) => {
+    const onChange = e => {
       if (localStorage.getItem(STORAGE_KEY)) return;
       setTheme(e.matches ? 'dark' : 'light');
     };

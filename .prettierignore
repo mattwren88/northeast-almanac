@@ -1,0 +1,10 @@
+dist/
+node_modules/
+package-lock.json
+public/events.json
+public/mock-events.json
+curated.json
+.playwright-mcp/
+
+# Hand-tuned editorial CSS — column alignment and grouping are deliberate.
+src/style.css

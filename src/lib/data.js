@@ -43,12 +43,29 @@ let anchorDate = null;
 
 // Pretty date strings — anchored to the loaded anchor date, or today if
 // events haven't loaded yet.
-export const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-export const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+export const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+export const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export function dateForDay(d) {
   const anchor = anchorDate
     ? new Date(anchorDate + 'T00:00:00')
-    : (() => { const t = new Date(); t.setHours(0,0,0,0); return t; })();
+    : (() => {
+        const t = new Date();
+        t.setHours(0, 0, 0, 0);
+        return t;
+      })();
   const dt = new Date(anchor.getTime() + d * 86400000);
   return {
     weekday: DAYS[dt.getDay()],
@@ -64,7 +81,8 @@ export function dateForDay(d) {
 export function todayDayOffset() {
   if (!anchorDate) return 0;
   const anchor = new Date(anchorDate + 'T00:00:00');
-  const t = new Date(); t.setHours(0, 0, 0, 0);
+  const t = new Date();
+  t.setHours(0, 0, 0, 0);
   return Math.round((t.getTime() - anchor.getTime()) / 86400000);
 }
 
@@ -79,8 +97,10 @@ export function thisWeekendDays() {
     if (d < 0) continue;
     const wd = dateForDay(d).weekday;
     const isWE = wd === 'Fri' || wd === 'Sat' || wd === 'Sun';
-    if (isWE) { out.push(d); started = true; }
-    else if (started) break;
+    if (isWE) {
+      out.push(d);
+      started = true;
+    } else if (started) break;
   }
   return out;
 }
@@ -97,7 +117,7 @@ export async function loadEvents() {
       WEATHER.push(...j.weather);
     }
     // Backfill audience for older events.json (pre-college-sources).
-    const events = (j.events || []).map(e => e.audience ? e : { ...e, audience: 'community' });
+    const events = (j.events || []).map(e => (e.audience ? e : { ...e, audience: 'community' }));
     return { events, source: 'live', generatedAt: j.generatedAt };
   } catch (err) {
     console.warn('Live events.json unavailable; falling back to mock data.', err);
@@ -107,17 +127,23 @@ export async function loadEvents() {
 }
 
 export const AUDIENCES = {
-  community: { label: 'Community', description: 'Public events from regional venues and publishers' },
-  college:   { label: 'Colleges',  description: 'University of Scranton, Marywood, Keystone (lots of academic dates)' },
+  community: {
+    label: 'Community',
+    description: 'Public events from regional venues and publishers',
+  },
+  college: {
+    label: 'Colleges',
+    description: 'University of Scranton, Marywood, Keystone (lots of academic dates)',
+  },
 };
 export const ALL_AUDIENCES = Object.keys(AUDIENCES);
 
 export const CATEGORIES = {
-  market:      { label: 'Markets',         color: '#E07A1F', icon: '🛍' },
-  food:        { label: 'Food & Drink',    color: '#D63838', icon: '🍴' },
-  outdoor:     { label: 'Outdoors',        color: '#2F8F4E', icon: '🌲' },
-  art:         { label: 'Art',             color: '#7A3FBF', icon: '🎨' },
+  market: { label: 'Markets', color: '#E07A1F', icon: '🛍' },
+  food: { label: 'Food & Drink', color: '#D63838', icon: '🍴' },
+  outdoor: { label: 'Outdoors', color: '#2F8F4E', icon: '🌲' },
+  art: { label: 'Art', color: '#7A3FBF', icon: '🎨' },
   performance: { label: 'Theater & Music', color: '#D6248A', icon: '🎭' },
-  nightlife:   { label: 'Nightlife',       color: '#1F5FCC', icon: '🌙' },
-  community:   { label: 'Community',       color: '#C9A227', icon: '👥' },
+  nightlife: { label: 'Nightlife', color: '#1F5FCC', icon: '🌙' },
+  community: { label: 'Community', color: '#C9A227', icon: '👥' },
 };
