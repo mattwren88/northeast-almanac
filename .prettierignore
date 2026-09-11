@@ -11,3 +11,7 @@ curated.json
 
 # Hand-tuned editorial CSS — column alignment and grouping are deliberate.
 src/style.css
+
+# Design handoff exports and editor settings, not shipped source.
+design_handoff_almanac_polish/
+.vscode/
