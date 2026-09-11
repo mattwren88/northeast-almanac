@@ -266,7 +266,7 @@ function eventToVevent(ev) {
   const { dtstart, dtend } = eventIcsDates(ev);
   const lines = [
     'BEGIN:VEVENT',
-    `UID:${ev.id}@nepa-almanac`,
+    `UID:${ev.id}@nepa-gazette`,
     `DTSTAMP:${icsStamp()}`,
     `DTSTART${dtstart}`,
     `DTEND${dtend}`,
@@ -283,7 +283,7 @@ export function eventToIcs(ev) {
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Northeast Almanac//EN',
+    'PRODID:-//Northeast Gazette//EN',
     'CALSCALE:GREGORIAN',
     eventToVevent(ev),
     'END:VCALENDAR',
@@ -294,7 +294,7 @@ export function eventsToIcs(events) {
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Northeast Almanac//EN',
+    'PRODID:-//Northeast Gazette//EN',
     'CALSCALE:GREGORIAN',
     ...events.map(eventToVevent),
     'END:VCALENDAR',

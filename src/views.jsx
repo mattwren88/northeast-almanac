@@ -795,7 +795,7 @@ export function WeekendPlan({
             <footer className="plan-foot">
               <button
                 className="plan-share"
-                onClick={() => downloadIcs('northeast-almanac-plan.ics', eventsToIcs(upcoming))}
+                onClick={() => downloadIcs('northeast-gazette-plan.ics', eventsToIcs(upcoming))}
               >
                 ↓ Download for calendar app
               </button>

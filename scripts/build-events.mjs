@@ -19,7 +19,7 @@ const ROOT = resolve(HERE, '..');
 // Identify the bot honestly so site owners can contact / allow-list / block us.
 // If you fork this, update the URL to point at your own repo.
 const UA =
-  'Northeast-Almanac/1.0 (+https://github.com/mattwren88/northeast-almanac; non-commercial regional event aggregator; contact via GitHub Issues)';
+  'Northeast-Gazette/1.0 (+https://github.com/mattwren88/northeast-gazette; non-commercial regional event aggregator; contact via GitHub Issues)';
 
 // Source registry (endpoints, feed types, robots.txt review notes) lives in
 // src/data/sources.js — shared with the footer/About/drawer attribution UI.
