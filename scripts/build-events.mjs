@@ -19,7 +19,7 @@ const ROOT = resolve(HERE, '..');
 // Identify the bot honestly so site owners can contact / allow-list / block us.
 // If you fork this, update the URL to point at your own repo.
 const UA =
-  'Northeast-Almanac/1.0 (+https://github.com/mattwren88/northeast-almanac; non-commercial regional event aggregator; contact via GitHub Issues)';
+  'Northeast-Gazette/1.0 (+https://github.com/mattwren88/northeast-gazette; non-commercial regional event aggregator; contact via GitHub Issues)';
 
 // Source registry (endpoints, feed types, robots.txt review notes) lives in
 // src/data/sources.js — shared with the footer/About/drawer attribution UI.
@@ -28,6 +28,10 @@ const UA =
 
 const WEATHER_API = 'https://api.open-meteo.com/v1/forecast';
 const PER_PAGE = 50;
+
+// Per-request ceiling. Without it, a source that accepts the connection and then
+// stalls hangs the whole daily job indefinitely.
+const FETCH_TIMEOUT_MS = 15000;
 
 // Single weather point for the region (Scranton). Editorial-level forecast — close enough.
 const WX_LAT = 41.41;
@@ -108,10 +112,19 @@ function townCoords(town) {
   return TOWN_COORDS[key] || null;
 }
 
+// fromCodePoint, not fromCharCode: the latter truncates to 16 bits and so mangles
+// astral-plane characters (emoji in scraped titles). It also throws on values
+// outside the Unicode range, so leave anything malformed as the literal entity.
+function codePoint(digits, radix, original) {
+  const n = parseInt(digits, radix);
+  if (!Number.isInteger(n) || n < 0 || n > 0x10ffff) return original;
+  return String.fromCodePoint(n);
+}
+
 function decodeEntities(s = '') {
   return s
-    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
-    .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)))
+    .replace(/&#(\d+);/g, (m, n) => codePoint(n, 10, m))
+    .replace(/&#x([0-9a-fA-F]+);/g, (m, n) => codePoint(n, 16, m))
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, "'")
@@ -201,7 +214,10 @@ async function fetchWeather() {
     timezone: 'America/New_York',
     forecast_days: String(HORIZON_DAYS),
   });
-  const res = await fetch(`${WEATHER_API}?${params}`, { headers: { 'User-Agent': UA } });
+  const res = await fetch(`${WEATHER_API}?${params}`, {
+    headers: { 'User-Agent': UA },
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+  });
   if (!res.ok) throw new Error(`Open-Meteo ${res.status}`);
   const j = await res.json();
   const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -223,7 +239,7 @@ async function fetchPage(source, page, startYmd, endYmd, ifModifiedSince) {
   const url = `${source.api}?per_page=${PER_PAGE}&page=${page}&start_date=${startYmd}&end_date=${endYmd}`;
   const headers = { 'User-Agent': UA, Accept: 'application/json' };
   if (ifModifiedSince && page === 1) headers['If-Modified-Since'] = ifModifiedSince;
-  const res = await fetch(url, { headers });
+  const res = await fetch(url, { headers, signal: AbortSignal.timeout(FETCH_TIMEOUT_MS) });
   if (res.status === 304) return { notModified: true };
   if (res.status === 404) return { events: [], total: 0 };
   if (!res.ok) throw new Error(`${source.name} ${res.status} on page ${page}`);
@@ -518,6 +534,7 @@ function normalizeCollegeEvent({
 async function fetchUofSJson(source, anchorYmd) {
   const res = await fetch(source.api, {
     headers: { 'User-Agent': UA, Accept: 'application/json' },
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`${source.name} ${res.status}`);
   const j = await res.json();
@@ -546,6 +563,7 @@ async function fetchRssCollege(source, anchorYmd) {
   const res = await fetch(source.api, {
     headers: { 'User-Agent': UA, Accept: 'application/rss+xml, application/xml' },
     redirect: 'follow',
+    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`${source.name} ${res.status}`);
   const xml = await res.text();

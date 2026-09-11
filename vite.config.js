@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig({
-  base: '/northeast-almanac/',
+// GitHub Pages serves from a subpath; local dev serves from the root.
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/northeast-gazette/' : '/',
   plugins: [react()],
-});
+}));

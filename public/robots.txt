@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://mattwren88.github.io/northeast-gazette/sitemap.xml

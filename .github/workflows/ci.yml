@@ -11,6 +11,8 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
+    # Without this, a hung step burns runner minutes against GitHub's 6h default.
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 

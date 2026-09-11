@@ -58,6 +58,13 @@ export const MONTHS = [
   'Dec',
 ];
 export const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+// Local Y-M-D. Deliberately not toISOString(), which converts to UTC and so
+// reports the previous day for any reader east of Greenwich.
+function localIso(dt) {
+  const z = n => String(n).padStart(2, '0');
+  return `${dt.getFullYear()}-${z(dt.getMonth() + 1)}-${z(dt.getDate())}`;
+}
+
 export function dateForDay(d) {
   const anchor = anchorDate
     ? new Date(anchorDate + 'T00:00:00')
@@ -66,12 +73,15 @@ export function dateForDay(d) {
         t.setHours(0, 0, 0, 0);
         return t;
       })();
-  const dt = new Date(anchor.getTime() + d * 86400000);
+  // Step by calendar day, not by 86400000 ms — adding a fixed 24h across a DST
+  // boundary lands on 23:00 the previous day, which would repeat a date. The
+  // Date constructor normalizes out-of-range day-of-month for us.
+  const dt = new Date(anchor.getFullYear(), anchor.getMonth(), anchor.getDate() + d);
   return {
     weekday: DAYS[dt.getDay()],
     month: MONTHS[dt.getMonth()],
     date: dt.getDate(),
-    iso: dt.toISOString().slice(0, 10),
+    iso: localIso(dt),
   };
 }
 
@@ -107,7 +117,9 @@ export function thisWeekendDays() {
 
 export async function loadEvents() {
   try {
-    const res = await fetch(`${import.meta.env.BASE_URL}events.json`, { cache: 'no-store' });
+    // 'no-cache' (not 'no-store'): still revalidates on every load, but lets the
+    // server answer with a bodyless 304 instead of re-sending the whole file.
+    const res = await fetch(`${import.meta.env.BASE_URL}events.json`, { cache: 'no-cache' });
     if (!res.ok) throw new Error(`events.json ${res.status}`);
     const j = await res.json();
     anchorDate = j.anchorDate;

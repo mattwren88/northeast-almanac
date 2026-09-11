@@ -1,7 +1,27 @@
 // Calendar view — week grid with editorial styling
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { WEATHER, CATEGORIES, dateForDay, todayDayOffset } from './lib/data.js';
+
+// True only while the card-settle animation should actually be running.
+// The settle uses animation-fill-mode: both so staggered cards stay hidden
+// through their delay — but a *filling* animation keeps overriding normal
+// declarations after it ends, which silently kills `.evt:hover` (the lift)
+// and `.evt-dim` (rain dimming). So the animation is attached for its
+// duration only, then removed to hand styling back to the cascade.
+export function useFilterSettle(filterTick) {
+  const [settling, setSettling] = useState(false);
+  const prevTick = useRef(filterTick);
+  useEffect(() => {
+    if (prevTick.current === filterTick) return;
+    prevTick.current = filterTick;
+    setSettling(true);
+    // 300ms duration + the longest stagger (35ms × 8) + a frame of slack.
+    const id = setTimeout(() => setSettling(false), 620);
+    return () => clearTimeout(id);
+  }, [filterTick]);
+  return settling;
+}
 
 export function useIsMobile() {
   const [m, set] = useState(
@@ -19,15 +39,33 @@ export function useIsMobile() {
 export function CalendarView({
   events,
   saved,
-  onSave,
   onOpen,
   weekOffset,
   setWeekOffset,
   weatherAware,
   filterCount = 0,
+  filterTick = 0,
 }) {
   const isMobile = useIsMobile();
   const todayD = todayDayOffset();
+  const settling = useFilterSettle(filterTick);
+  // Week-navigation slide: `dir` is which way we last moved, `navTick` flips
+  // between two identical keyframe sets so consecutive same-direction moves
+  // re-trigger the animation (setting the same animation-name twice is a no-op).
+  const [dir, setDir] = useState(1);
+  const [navTick, setNavTick] = useState(0);
+  const goPrev = () => {
+    setDir(-1);
+    setNavTick(t => t + 1);
+    setWeekOffset(Math.max(0, weekOffset - 1));
+  };
+  const goNext = () => {
+    setDir(1);
+    setNavTick(t => t + 1);
+    setWeekOffset(Math.min(1, weekOffset + 1));
+  };
+  const navAnim =
+    dir === 1 ? (navTick % 2 === 0 ? 'naInR1' : 'naInR2') : navTick % 2 === 0 ? 'naInL1' : 'naInL2';
   // On mobile we anchor the week to today (clamped within the 14-day horizon)
   // and ignore weekOffset — Prev/Next is hidden.
   const startDay = isMobile ? Math.max(0, Math.min(todayD, 14 - 7)) : weekOffset * 7;
@@ -53,11 +91,7 @@ export function CalendarView({
       <div className="cal-header">
         <div className="cal-nav">
           {!isMobile && (
-            <button
-              className="cal-nav-btn"
-              onClick={() => setWeekOffset(Math.max(0, weekOffset - 1))}
-              disabled={weekOffset === 0}
-            >
+            <button className="cal-nav-btn" onClick={goPrev} disabled={weekOffset === 0}>
               ‹ Prev
             </button>
           )}
@@ -68,44 +102,44 @@ export function CalendarView({
             {endDate.month} {endDate.date}
           </div>
           {!isMobile && (
-            <button
-              className="cal-nav-btn"
-              onClick={() => setWeekOffset(Math.min(1, weekOffset + 1))}
-              disabled={weekOffset === 1}
-            >
+            <button className="cal-nav-btn" onClick={goNext} disabled={weekOffset === 1}>
               Next ›
             </button>
           )}
         </div>
       </div>
 
-      <div className="cal-grid">
+      <div
+        className="cal-grid cal-grid-anim"
+        style={navTick > 0 ? { animationName: navAnim } : undefined}
+      >
         {days.map(d => {
           const date = dates[d];
           const wx = WEATHER[d];
           const dayEvents = eventsByDay[d] || [];
           const isWeekend = date.weekday === 'Sat' || date.weekday === 'Sun';
           const isToday = d === todayD;
+          // "Loud" days — today, or (weekend emphasis, hardcoded on) a Sat/Sun.
+          const isLoud = isToday || isWeekend;
+          const cardAnim = filterTick % 2 === 0 ? 'naCard1' : 'naCard2';
 
           return (
             <div
               key={d}
-              className={`cal-col ${isWeekend ? 'is-weekend' : ''} ${isToday ? 'is-today' : ''}`}
+              className={`cal-col ${isLoud ? 'is-loud' : ''} ${isToday ? 'is-today' : ''}`}
             >
               <div className="cal-col-head">
-                <div className="cal-day-name">
-                  {date.weekday}
+                <div className="cal-head-row1">
+                  <span className="cal-day-name">{date.weekday}</span>
                   {isToday && <span className="cal-today-dot">today</span>}
+                  <span className="cal-wx" title={`${wx.cond} · ${wx.high}°/${wx.low}°`}>
+                    <span className="cal-wx-glyph">{wx.icon}</span>
+                    <span className="cal-wx-temp">
+                      {wx.high}°/{wx.low}°
+                    </span>
+                  </span>
                 </div>
                 <div className="cal-day-num">{date.date}</div>
-                <div className="cal-day-meta">
-                  <span className="cal-wx" title={wx.cond}>
-                    {wx.icon} {wx.high}°/{wx.low}°
-                  </span>
-                  <span className="cal-count">
-                    {dayEvents.length} {dayEvents.length === 1 ? 'event' : 'events'}
-                  </span>
-                </div>
               </div>
 
               <div className="cal-events">
@@ -114,14 +148,22 @@ export function CalendarView({
                     {filterCount > 0 ? '— Filtered out —' : '— Nothing yet —'}
                   </div>
                 )}
-                {dayEvents.map(ev => {
+                {dayEvents.map((ev, i) => {
                   const cat = CATEGORIES[ev.category];
                   const isSaved = saved.includes(ev.id);
                   const dimmed = weatherAware && wx.cond === 'rain' && !ev.indoor;
                   return (
                     <article
                       key={ev.id}
-                      className={`evt ${dimmed ? 'evt-dim' : ''} ${ev.featured ? 'evt-featured' : ''}`}
+                      className={`evt ${settling ? 'evt-anim' : ''} ${dimmed ? 'evt-dim' : ''} ${ev.featured ? 'evt-featured' : ''}`}
+                      style={
+                        settling
+                          ? {
+                              animationName: cardAnim,
+                              animationDelay: `${35 * Math.min(i, 8)}ms`,
+                            }
+                          : undefined
+                      }
                       onClick={() => onOpen(ev.id)}
                       onKeyDown={e => {
                         if (e.key === 'Enter' || e.key === ' ') {
@@ -135,37 +177,26 @@ export function CalendarView({
                     >
                       <div className="evt-bar" style={{ background: cat.color }} />
                       <div className="evt-body">
-                        <div className="evt-meta-row">
-                          <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>
-                            {fmtEventTime(ev)}
-                          </span>
-                          {ev.featured && <span className="evt-pick">Editor's pick</span>}
-                          {ev.hidden && <span className="evt-hidden">Hidden gem</span>}
-                          {ev.recurring && <span className="evt-recur">↻</span>}
-                        </div>
+                        <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>
+                          {fmtEventTime(ev)}
+                        </span>
                         <h3 className="evt-title">{ev.title}</h3>
                         <div className="evt-where">
                           <span className="evt-venue">{ev.venue}</span>
                           <span className="evt-sep">·</span>
                           <span className="evt-town">{ev.town}</span>
                         </div>
+                        {ev.blurb && <p className="evt-blurb">{ev.blurb}</p>}
                         <div className="evt-foot">
                           <span className="evt-cat" style={{ color: cat.color }}>
                             {cat.label.toUpperCase()}
                           </span>
-                          <span className="evt-price">{ev.price}</span>
-                          <button
-                            className={`evt-save ${isSaved ? 'is-saved' : ''}`}
-                            onClick={e => {
-                              e.stopPropagation();
-                              onSave(ev.id);
-                            }}
-                            aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
-                            aria-pressed={isSaved}
-                            title={isSaved ? 'Remove from plan' : 'Save to plan'}
-                          >
-                            {isSaved ? '★' : '☆'}
-                          </button>
+                          {ev.featured && <span className="evt-pick">Pick</span>}
+                          {isSaved && (
+                            <span className="evt-star" aria-hidden="true">
+                              ★
+                            </span>
+                          )}
                         </div>
                         {dimmed && <div className="evt-warn">Outdoor · rain forecast</div>}
                       </div>
@@ -235,7 +266,7 @@ function eventToVevent(ev) {
   const { dtstart, dtend } = eventIcsDates(ev);
   const lines = [
     'BEGIN:VEVENT',
-    `UID:${ev.id}@nepa-almanac`,
+    `UID:${ev.id}@nepa-gazette`,
     `DTSTAMP:${icsStamp()}`,
     `DTSTART${dtstart}`,
     `DTEND${dtend}`,
@@ -252,7 +283,7 @@ export function eventToIcs(ev) {
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Northeast Almanac//EN',
+    'PRODID:-//Northeast Gazette//EN',
     'CALSCALE:GREGORIAN',
     eventToVevent(ev),
     'END:VCALENDAR',
@@ -263,7 +294,7 @@ export function eventsToIcs(events) {
   return [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Northeast Almanac//EN',
+    'PRODID:-//Northeast Gazette//EN',
     'CALSCALE:GREGORIAN',
     ...events.map(eventToVevent),
     'END:VCALENDAR',

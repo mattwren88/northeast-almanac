@@ -13,6 +13,7 @@ permissions:
 jobs:
   scrape:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     outputs:
       changed: ${{ steps.commit.outputs.changed }}
     steps:
@@ -28,7 +29,7 @@ jobs:
       - name: Commit refreshed events.json
         id: commit
         run: |
-          git config user.name  "northeast-almanac bot"
+          git config user.name  "northeast-gazette bot"
           git config user.email "actions@users.noreply.github.com"
           if git diff --quiet public/events.json; then
             echo "No changes to events.json"
