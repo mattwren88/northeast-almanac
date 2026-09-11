@@ -21,6 +21,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       # Always build the tip of main. A scheduled scrape calls this workflow at
       # the SHA it started from, which predates the events.json it just pushed.
@@ -46,6 +47,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

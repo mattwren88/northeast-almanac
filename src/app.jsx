@@ -1,6 +1,6 @@
 // Main app — masthead, sidebar, view switching, filters
 
-import { Fragment, useState, useEffect, useMemo, useRef } from 'react';
+import { Fragment, useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import {
   CATEGORIES,
   AUDIENCES,
@@ -253,6 +253,11 @@ export function App() {
   const [activeTown, setActiveTown] = useState(initial.town || ''); // '' = all
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [openEventId, setOpenEventId] = useState(initial.openEventId);
+  const [drawerClosing, setDrawerClosing] = useState(false);
+  // Bumped on every category toggle, town pick, and filter reset — drives the
+  // card-settle animation in the grid views (alternates between two identical
+  // keyframe sets so back-to-back changes still re-trigger it).
+  const [filterTick, setFilterTick] = useState(0);
   const [saved, setSaved] = useState(() => restoreSavedPlan(initial.sharedIds));
   // A shared link lands with the plan open so the recipient sees what was sent.
   const [planOpen, setPlanOpen] = useState(
@@ -266,10 +271,15 @@ export function App() {
     focusReturn.capture();
     setOpenEventId(id);
   };
-  const closeEvent = () => {
-    setOpenEventId(null);
-    focusReturn.restore();
-  };
+  const closeEvent = useCallback(() => {
+    if (drawerClosing) return; // guard re-entry while the exit animation plays
+    setDrawerClosing(true);
+    setTimeout(() => {
+      setDrawerClosing(false);
+      setOpenEventId(null);
+      focusReturn.restore();
+    }, 200);
+  }, [drawerClosing]);
   const openPlan = () => {
     focusReturn.capture();
     setPlanOpen(true);
@@ -316,7 +326,12 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('nepa-saved', JSON.stringify(saved));
+    try {
+      localStorage.setItem('nepa-saved', JSON.stringify(saved));
+    } catch {
+      // Safari private mode throws on write; a throw here would unmount the tree.
+      // The plan stays in memory for the session — losing persistence beats a blank page.
+    }
   }, [saved]);
 
   // Write URL hash whenever shareable state changes
@@ -385,7 +400,7 @@ export function App() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [openEventId, filteredSortedIds, planOpen, aboutOpen]);
+  }, [openEventId, filteredSortedIds, planOpen, aboutOpen, closeEvent]);
 
   const allTowns = useMemo(() => {
     const set = new Set();
@@ -465,6 +480,12 @@ export function App() {
 
   const toggleCat = cat => {
     setActiveCats(cs => (cs.includes(cat) ? cs.filter(c => c !== cat) : [...cs, cat]));
+    setFilterTick(t => t + 1);
+  };
+
+  const setActiveTownTicked = t => {
+    setActiveTown(t);
+    setFilterTick(n => n + 1);
   };
 
   const toggleAudience = a => {
@@ -477,10 +498,12 @@ export function App() {
     setActiveCats(ALL_CATS);
     setActiveAudiences(['community']);
     setActiveTown('');
+    setFilterTick(t => t + 1);
     showToast('Filters reset', () => {
       setActiveCats(prev.cats);
       setActiveAudiences(prev.audiences);
       setActiveTown(prev.town);
+      setFilterTick(t => t + 1);
     });
   };
 
@@ -596,15 +619,16 @@ export function App() {
           toggleAudience={toggleAudience}
           allTowns={allTowns}
           activeTown={activeTown}
-          setActiveTown={setActiveTown}
+          setActiveTown={setActiveTownTicked}
           onReset={resetFilters}
           onClose={toggleFilters}
           filterCount={filterCount}
         />
       )}
 
-      {/* EDITOR'S PICKS RAIL */}
-      {featuredThisWeek.length > 0 && view !== 'map' && (
+      {/* EDITOR'S PICKS RAIL — cut from the week grid and weekend view; the
+          featured events already appear there with a "Pick" chip on the card. */}
+      {featuredThisWeek.length > 0 && view === 'list' && (
         <section className="picks">
           <div className="picks-head">
             <h2 className="picks-title">
@@ -707,11 +731,17 @@ export function App() {
                 setWeekOffset={setWeekOffset}
                 weatherAware={true}
                 filterCount={filterCount}
+                filterTick={filterTick}
                 onResetFilters={resetFilters}
               />
             )}
             {view === 'weekend' && (
-              <WeekendView events={filtered} saved={saved} onSave={toggleSave} onOpen={viewEvent} />
+              <WeekendView
+                events={filtered}
+                saved={saved}
+                onOpen={viewEvent}
+                filterTick={filterTick}
+              />
             )}
             {view === 'map' && (
               <MapView
@@ -810,6 +840,7 @@ export function App() {
           isSaved={saved.includes(openEvent.id)}
           onSave={toggleSave}
           onClose={closeEvent}
+          closing={drawerClosing}
         />
       )}
       {planOpen && (

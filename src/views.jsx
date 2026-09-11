@@ -1,11 +1,12 @@
 // Map view + List view + Event detail drawer + Weekend plan share
 
-import { useState, useMemo, useEffect, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import L from 'leaflet';
 import 'leaflet.markercluster';
 import Fuse from 'fuse.js';
 import { WEATHER, CATEGORIES, dateForDay, todayDayOffset, thisWeekendDays } from './lib/data.js';
 import {
+  useFilterSettle,
   fmtTime,
   fmtEventTime,
   isAllDay,
@@ -200,7 +201,8 @@ export function MapView({ events, saved, onOpen }) {
 }
 
 // ============ WEEKEND VIEW ============
-export function WeekendView({ events, saved, onSave, onOpen }) {
+export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
+  const settling = useFilterSettle(filterTick);
   const days = thisWeekendDays();
   const eventsByDay = useMemo(() => {
     const m = {};
@@ -236,32 +238,40 @@ export function WeekendView({ events, saved, onSave, onOpen }) {
           const wx = WEATHER[d];
           const dayEvents = eventsByDay[d] || [];
           const isToday = d === todayD;
+          const cardAnim = filterTick % 2 === 0 ? 'naCard1' : 'naCard2';
           return (
             <div key={d} className={`weekend-col ${isToday ? 'is-today' : ''}`}>
               <div className="weekend-col-head">
-                <div className="weekend-col-wd">
-                  {date.weekday}
+                <div className="weekend-head-row1">
+                  <span className="weekend-col-wd">{date.weekday}</span>
                   {isToday && <span className="cal-today-dot">today</span>}
+                  <span className="cal-wx weekend-wx" title={`${wx.cond} · ${wx.high}°/${wx.low}°`}>
+                    <span className="cal-wx-glyph">{wx.icon}</span>
+                    <span className="cal-wx-temp">
+                      {wx.high}°/{wx.low}°
+                    </span>
+                  </span>
                 </div>
                 <div className="weekend-col-num">{date.date}</div>
-                <div className="weekend-col-meta">
-                  <span className="cal-wx" title={wx.cond}>
-                    {wx.icon} {wx.high}°/{wx.low}°
-                  </span>
-                  <span className="cal-count">
-                    {dayEvents.length} {dayEvents.length === 1 ? 'event' : 'events'}
-                  </span>
-                </div>
               </div>
               <div className="weekend-events">
                 {dayEvents.length === 0 && <div className="cal-empty">— Nothing yet —</div>}
-                {dayEvents.map(ev => {
+                {dayEvents.map((ev, i) => {
                   const cat = CATEGORIES[ev.category];
                   const isSaved = saved.includes(ev.id);
+                  const dimmed = wx.cond === 'rain' && !ev.indoor;
                   return (
                     <article
                       key={ev.id}
-                      className={`evt ${ev.featured ? 'evt-featured' : ''}`}
+                      className={`evt ${settling ? 'evt-anim' : ''} ${dimmed ? 'evt-dim' : ''} ${ev.featured ? 'evt-featured' : ''}`}
+                      style={
+                        settling
+                          ? {
+                              animationName: cardAnim,
+                              animationDelay: `${35 * Math.min(i, 8)}ms`,
+                            }
+                          : undefined
+                      }
                       onClick={() => onOpen(ev.id)}
                       onKeyDown={onCardKey(() => onOpen(ev.id))}
                       role="button"
@@ -270,37 +280,28 @@ export function WeekendView({ events, saved, onSave, onOpen }) {
                     >
                       <div className="evt-bar" style={{ background: cat.color }} />
                       <div className="evt-body">
-                        <div className="evt-meta-row">
-                          <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>
-                            {fmtEventTime(ev)}
-                          </span>
-                          {ev.featured && <span className="evt-pick">Editor's pick</span>}
-                          {ev.recurring && <span className="evt-recur">↻</span>}
-                        </div>
+                        <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>
+                          {fmtEventTime(ev)}
+                        </span>
                         <h3 className="evt-title">{ev.title}</h3>
                         <div className="evt-where">
                           <span className="evt-venue">{ev.venue}</span>
                           <span className="evt-sep">·</span>
                           <span className="evt-town">{ev.town}</span>
                         </div>
+                        {ev.blurb && <p className="evt-blurb">{ev.blurb}</p>}
                         <div className="evt-foot">
                           <span className="evt-cat" style={{ color: cat.color }}>
                             {cat.label.toUpperCase()}
                           </span>
-                          <span className="evt-price">{ev.price}</span>
-                          <button
-                            className={`evt-save ${isSaved ? 'is-saved' : ''}`}
-                            onClick={e => {
-                              e.stopPropagation();
-                              onSave(ev.id);
-                            }}
-                            aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
-                            aria-pressed={isSaved}
-                            title={isSaved ? 'Remove from plan' : 'Save to plan'}
-                          >
-                            {isSaved ? '★' : '☆'}
-                          </button>
+                          {ev.featured && <span className="evt-pick">Pick</span>}
+                          {isSaved && (
+                            <span className="evt-star" aria-hidden="true">
+                              ★
+                            </span>
+                          )}
                         </div>
+                        {dimmed && <div className="evt-warn">Outdoor · rain forecast</div>}
                       </div>
                     </article>
                   );
@@ -363,10 +364,13 @@ export function ListView({ events, saved, onSave, onOpen, filterCount = 0, onRes
     return out;
   }, []);
 
-  const dayInRange = d => {
-    const iso = dates[d].iso;
-    return iso >= fromIso && iso <= toIso;
-  };
+  const dayInRange = useCallback(
+    d => {
+      const iso = dates[d].iso;
+      return iso >= fromIso && iso <= toIso;
+    },
+    [dates, fromIso, toIso],
+  );
 
   const visibleDays = [];
   for (let d = 0; d < HORIZON_DAYS; d++) if (dayInRange(d)) visibleDays.push(d);
@@ -386,7 +390,7 @@ export function ListView({ events, saved, onSave, onOpen, filterCount = 0, onRes
   };
   const totalShown = useMemo(
     () => searched.filter(e => dayInRange(e.day)).length,
-    [searched, fromIso, toIso, dates],
+    [searched, dayInRange],
   );
   const todayD = todayDayOffset();
 
@@ -544,7 +548,7 @@ function eventSource(ev) {
   return match ? SOURCES_BY_ID[match[1]] : null;
 }
 
-export function EventDrawer({ event, isSaved, onSave, onClose }) {
+export function EventDrawer({ event, isSaved, onSave, onClose, closing = false }) {
   const gcalUrl = useMemo(() => (event ? eventToGcalUrl(event) : ''), [event]);
   const outlookUrl = useMemo(() => (event ? eventToOutlookUrl(event) : ''), [event]);
   if (!event) return null;
@@ -553,9 +557,9 @@ export function EventDrawer({ event, isSaved, onSave, onClose }) {
   const wx = WEATHER[event.day];
   const src = eventSource(event);
   return (
-    <div className="drawer-backdrop" onClick={onClose}>
+    <div className={`drawer-backdrop ${closing ? 'is-closing' : ''}`} onClick={onClose}>
       <aside
-        className="drawer"
+        className={`drawer ${closing ? 'is-closing' : ''}`}
         onClick={e => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -701,8 +705,8 @@ export function WeekendPlan({
   onShare,
   onClearPast,
 }) {
-  const lookup = eventsById || new Map(events.map(e => [e.id, e]));
   const { upcoming, past, byDay } = useMemo(() => {
+    const lookup = eventsById || new Map(events.map(e => [e.id, e]));
     const today = todayDayOffset();
     const all = saved
       .map(id => lookup.get(id))
@@ -715,7 +719,7 @@ export function WeekendPlan({
       (byDay[e.day] ||= []).push(e);
     });
     return { upcoming, past, byDay };
-  }, [saved, lookup]);
+  }, [saved, events, eventsById]);
 
   const isEmpty = upcoming.length === 0 && past.length === 0;
   const onlyPast = upcoming.length === 0 && past.length > 0;

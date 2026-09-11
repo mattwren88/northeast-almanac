@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/tokens/motion.css">
+  <link rel="stylesheet" href="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/tokens/projects.css">
+  <link rel="stylesheet" href="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/tokens/base.css">
+  <link rel="stylesheet" href="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/components/components.css">
+  <link rel="stylesheet" href="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/styles.css">
+  <script src="_ds/matt-wren-design-system-73944f96-99ce-4398-9ca3-97bcaf8b2fb0/_ds_bundle.js"></script>
+  <script src="almanac-data.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--na-paper); }
+    a { color: var(--na-ink); }
+    a:hover { color: var(--na-press-red); }
+    [data-brand='almanac'][data-theme='dark'] {
+      --na-paper: oklch(0.17 0.010 80);
+      --na-paper-2: oklch(0.13 0.010 78);
+      --na-paper-3: oklch(0.22 0.011 80);
+      --na-ink: oklch(0.91 0.012 80);
+      --na-ink-2: oklch(0.75 0.012 75);
+      --na-ink-3: oklch(0.62 0.012 70);
+      --na-rule: oklch(0.40 0.012 65);
+      --na-rule-soft: oklch(0.29 0.010 65);
+      --na-press-red: oklch(0.65 0.17 25);
+      --na-press-red-dim: oklch(0.65 0.17 25 / 0.18);
+      --na-gold: oklch(0.74 0.11 75);
+      --na-ink-inverse: oklch(0.22 0.012 60);
+      --na-texture-dot: oklch(0.75 0.02 65 / 0.05);
+      --na-scrim: oklch(0.08 0.008 60 / 0.62);
+      --na-wx-bg: oklch(0.26 0.045 240);
+      --na-wx-border: oklch(0.42 0.06 240);
+      --na-wx-ink: oklch(0.84 0.06 240);
+      --na-wx-ink-strong: oklch(0.92 0.08 240);
+    }
+    [data-brand='almanac'][data-theme='light'] {
+      --na-scrim: oklch(0.20 0.012 60 / 0.4);
+      --na-wx-bg: oklch(0.95 0.04 240);
+      --na-wx-border: oklch(0.78 0.06 240);
+      --na-wx-ink: oklch(0.30 0.08 240);
+      --na-wx-ink-strong: oklch(0.22 0.10 240);
+    }
+    .na-grain { mix-blend-mode: multiply; }
+    [data-theme='dark'] .na-grain { mix-blend-mode: screen; }
+    .na-scroll { scrollbar-width: thin; scrollbar-color: var(--na-rule) transparent; }
+    .na-scroll::-webkit-scrollbar { width: 6px; }
+    .na-scroll::-webkit-scrollbar-thumb { background: var(--na-rule); border-radius: 3px; }
+    .na-scroll::-webkit-scrollbar-track { background: transparent; }
+    @keyframes naFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes naSlideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @keyframes naPanelIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes naViewIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</helmet>
+
+<div data-brand="almanac" data-theme="{{ theme }}" style="background: var(--na-paper); color: var(--na-ink); font-family: var(--na-serif); font-size: 16px; line-height: 1.45; font-feature-settings: 'ss01','onum'; -webkit-font-smoothing: antialiased; min-height: 100vh; width: 1440px; zoom: {{ zoom }};">
+  <div class="na-grain" style="position: fixed; inset: 0; pointer-events: none; background-image: radial-gradient(var(--na-texture-dot) 1px, transparent 1px); background-size: 4px 4px; z-index: 1;"></div>
+
+  <div style="max-width: 1480px; margin: 0 auto; padding: 28px 36px 80px; position: relative; z-index: 2;">
+
+    <header style="padding-bottom: 4px;">
+      <div style="display: flex; justify-content: space-between; font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--na-ink-2); padding-bottom: 6px;">
+        <div>VOL. III · NO. 17</div>
+        <div>SATURDAY, APRIL 18, 2026 — TWO-WEEK ALMANAC</div>
+        <div>FREE · PA</div>
+      </div>
+      <div style="height: 4px; background: var(--na-ink);"></div>
+      <div style="height: 1px; background: var(--na-ink); margin-top: 3px;"></div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; padding: 8px 0 6px; gap: 24px;">
+        <h1 style="margin: 0; font-family: var(--na-display); font-weight: 400; line-height: 0.85; display: flex; flex-direction: column; align-items: flex-start;">
+          <span style="font-style: italic; font-size: 28px; color: var(--na-ink-2); margin-bottom: -2px; margin-left: 2px;">The</span>
+          <span style="font-size: clamp(56px, 9vw, 124px); letter-spacing: -0.025em; color: var(--na-ink);">Northeast Almanac</span>
+        </h1>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button onClick="{{ toggleTheme }}" title="Switch theme" aria-label="Switch theme" style="display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; padding: 0; background: none; border: 1px solid var(--na-rule); border-radius: 3px; color: var(--na-ink-2); cursor: pointer; transition: background .15s ease, color .15s ease, border-color .15s ease;" style-hover="background: var(--na-paper-3); color: var(--na-ink); border-color: var(--na-ink-3);">{{ themeGlyph }}</button>
+          <button onClick="{{ openPlan }}" style="display: flex; align-items: center; gap: 10px; background: var(--na-ink); color: var(--na-paper); border: none; padding: 12px 20px; font-family: var(--na-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background .15s; align-self: center;" style-hover="background: var(--na-press-red);">
+            <span style="color: var(--na-gold); font-size: 16px;">★</span>
+            <span>My Plan</span>
+            <sc-if value="{{ hasSaved }}"><span style="background: var(--na-press-red); color: var(--na-paper); padding: 2px 7px; border-radius: 10px; font-size: 11px;">{{ savedCount }}</span></sc-if>
+          </button>
+        </div>
+      </div>
+      <div style="height: 1px; background: var(--na-ink);"></div>
+      <div style="font-family: var(--na-serif); font-style: italic; font-size: 17px; color: var(--na-ink-2); max-width: 920px; padding: 8px 0 0; line-height: 1.4; text-wrap: pretty;">A standing chronicle of markets, gallery openings, hikes, dive bars, opera-house touring acts, and other goings-on across the Lackawanna, Wyoming, and Pocono valleys — refreshed daily at dawn.</div>
+      <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; padding: 4px 0 0; color: var(--na-ink-3);">Refreshed 4 hours ago</div>
+    </header>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: center; padding: 12px 0 10px; margin-top: 6px; border-top: 1px solid var(--na-rule); border-bottom: 1px solid var(--na-rule);">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <sc-for list="{{ viewTiles }}" as="t" hint-placeholder-count="4">
+          <button onClick="{{ t.select }}" aria-label="{{ t.label }}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 64px; height: 64px; padding: 8px 4px; background: {{ t.bg }}; color: {{ t.fg }}; border: 1px solid {{ t.border }}; border-radius: 4px; cursor: pointer; transition: background .12s, border-color .12s, color .12s;">
+            <span style="width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;">{{ t.glyph }}</span>
+            <span style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;">{{ t.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px; margin-left: auto;">
+        <button onClick="{{ toggleFilters }}" style="display: inline-flex; align-items: center; gap: 10px; height: 64px; padding: 0 18px; background: {{ filtersBtnBg }}; color: {{ filtersBtnFg }}; border: 1px solid {{ filtersBtnBorder }}; border-radius: 4px; cursor: pointer; font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; transition: background .12s, border-color .12s;">
+          <span style="font-size: 18px; line-height: 1;">≡</span>
+          <span>Filters</span>
+          <sc-if value="{{ hasFilters }}"><span style="display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; background: var(--na-press-red); color: var(--na-paper); border-radius: 9px; font-size: 10px; font-weight: 700;">{{ filterCount }}</span></sc-if>
+          <span style="font-size: 8px; opacity: 0.6;">{{ filtersCaret }}</span>
+        </button>
+      </div>
+    </div>
+
+    <sc-if value="{{ filtersOpen }}">
+      <div role="region" aria-label="Filters" style="margin: 16px 0; background: var(--na-paper-3); border: 1px solid var(--na-rule); border-radius: 4px; box-shadow: 0 4px 12px oklch(0.2 0.012 60 / 0.08); animation: naPanelIn .2s ease-out;">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 18px 22px 16px;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--na-rule-soft);">
+              <span style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--na-ink); font-weight: 700;">Source</span>
+              <span style="font-family: var(--na-serif); font-style: italic; font-size: 11px; color: var(--na-ink-3); text-align: right;">community by default · colleges add ~50 academic dates</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <sc-for list="{{ audienceRows }}" as="a" hint-placeholder-count="2">
+                <div onClick="{{ a.toggle }}" style="display: flex; align-items: flex-start; gap: 10px; padding: 8px 10px; border: 1px solid transparent; border-radius: 3px; cursor: pointer; transition: background .12s;" style-hover="background: var(--na-paper-2);">
+                  <span style="flex-shrink: 0; width: 16px; height: 16px; border: 1.5px solid {{ a.markBorder }}; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: var(--na-paper); margin-top: 1px; background: {{ a.markBg }};">{{ a.mark }}</span>
+                  <span style="display: flex; flex-direction: column; gap: 2px;">
+                    <span style="font-family: var(--na-serif); font-size: 14px; color: var(--na-ink); font-weight: 600;">{{ a.label }}</span>
+                    <span style="font-family: var(--na-mono); font-size: 10px; color: var(--na-ink-3); letter-spacing: 0.02em;">{{ a.description }}</span>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--na-rule-soft);">
+              <span style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--na-ink); font-weight: 700;">Category</span>
+              <span style="font-family: var(--na-serif); font-style: italic; font-size: 11px; color: var(--na-ink-3); text-align: right;">{{ catsOnLabel }}</span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <sc-for list="{{ catRows }}" as="c" hint-placeholder-count="7">
+                <div onClick="{{ c.toggle }}" style="display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px; background: {{ c.bg }}; border: 1px solid {{ c.border }}; border-radius: 3px; cursor: pointer; font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: {{ c.fg }}; transition: border-color .12s, background .12s;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: {{ c.color }}; opacity: {{ c.dotOpacity }};"></span>
+                  <span>{{ c.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--na-rule-soft);">
+              <span style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--na-ink); font-weight: 700;">Town</span>
+              <span style="font-family: var(--na-serif); font-style: italic; font-size: 11px; color: var(--na-ink-3); text-align: right;">{{ townCountLabel }}</span>
+            </div>
+            <div style="position: relative; width: 100%;">
+              <button onClick="{{ toggleTownDd }}" style="width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 12px; background: var(--na-paper-2); color: var(--na-ink); border: 1px solid {{ townTriggerBorder }}; border-radius: 3px; cursor: pointer; font-family: var(--na-serif); font-size: 14px; text-align: left;">
+                <span style="font-weight: {{ townLabelWeight }};">{{ townLabel }}</span>
+                <span style="font-size: 8px; color: var(--na-ink-3); flex-shrink: 0;">{{ townCaret }}</span>
+              </button>
+              <sc-if value="{{ townDdOpen }}">
+                <div style="position: absolute; top: calc(100% + 4px); left: 0; right: 0; z-index: 50; background: var(--na-paper-3); border: 1px solid var(--na-ink); border-radius: 3px; box-shadow: 0 8px 20px oklch(0.2 0.012 60 / 0.18); overflow: hidden; animation: naPanelIn .14s ease-out;">
+                  <div style="padding: 8px; border-bottom: 1px solid var(--na-rule-soft); background: var(--na-paper-2);">
+                    <input type="search" placeholder="{{ townSearchPlaceholder }}" value="{{ townQuery }}" onChange="{{ setTownQuery }}" aria-label="Search towns" style="width: 100%; padding: 6px 10px; font-family: var(--na-mono); font-size: 12px; background: var(--na-paper-3); color: var(--na-ink); border: 1px solid var(--na-rule); border-radius: 3px; outline: none;">
+                  </div>
+                  <div class="na-scroll" role="listbox" aria-label="Towns" style="max-height: 240px; overflow-y: auto; padding: 4px 0;">
+                    <sc-for list="{{ townOptions }}" as="o" hint-placeholder-count="6">
+                      <button onClick="{{ o.pick }}" role="option" style="width: 100%; display: flex; align-items: center; gap: 10px; padding: 7px 12px; background: transparent; border: none; cursor: pointer; font-family: var(--na-serif); font-size: 13.5px; color: {{ o.fg }}; font-weight: {{ o.weight }}; font-style: {{ o.fontStyle }}; text-align: left; transition: background .08s, color .08s;" style-hover="background: var(--na-paper-2); color: var(--na-ink);">
+                        <span style="flex-shrink: 0; width: 14px; font-size: 12px; font-weight: 700; color: var(--na-press-red); text-align: center;">{{ o.mark }}</span>
+                        <span>{{ o.label }}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 22px; border-top: 1px solid var(--na-rule-soft); background: var(--na-paper-2); border-radius: 0 0 4px 4px;">
+          <button onClick="{{ resetFilters }}" style="font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; padding: 7px 14px; border-radius: 3px; cursor: pointer; border: 1px solid var(--na-rule); background: transparent; color: var(--na-press-red); opacity: {{ resetOpacity }};">Reset all</button>
+          <button onClick="{{ toggleFilters }}" style="font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; padding: 7px 14px; border-radius: 3px; cursor: pointer; border: 1px solid var(--na-ink); background: var(--na-ink); color: var(--na-paper);">Done</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ showPicks }}">
+      <section style="padding: 28px 0 24px; border-bottom: 1px solid var(--na-rule);">
+        <div style="margin-bottom: 16px;">
+          <h2 style="font-family: var(--na-display); font-size: 32px; font-weight: 400; margin: 0; letter-spacing: -0.01em;">Editor's Picks <span style="font-style: italic; color: var(--na-ink-3); font-size: 22px;">— this fortnight</span></h2>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); border-left: 1px solid var(--na-rule);">
+          <sc-for list="{{ picks }}" as="p" hint-placeholder-count="4">
+            <article onClick="{{ p.open }}" style="padding: 14px 20px; border-right: 1px solid var(--na-rule); cursor: pointer; transition: background .15s;" style-hover="background: var(--na-paper-3);">
+              <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--na-press-red);">{{ p.num }}</div>
+              <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.15em; margin-top: 4px; color: {{ p.catColor }};">{{ p.catLabel }}</div>
+              <h3 style="font-family: var(--na-display); font-size: 22px; font-weight: 400; line-height: 1.05; margin: 6px 0 8px; letter-spacing: -0.005em;">{{ p.title }}</h3>
+              <p style="font-size: 13.5px; line-height: 1.42; color: var(--na-ink-2); margin: 0 0 12px; text-wrap: pretty;">{{ p.blurb }}</p>
+              <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--na-ink-3); display: flex; flex-direction: column; gap: 2px; border-top: 1px dotted var(--na-rule); padding-top: 8px;">
+                <span>{{ p.when }}</span>
+                <span>{{ p.where }}</span>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <sc-if value="{{ showAdvisory }}">
+      <div role="note" style="display: flex; align-items: center; gap: 10px; margin: 14px; padding: 10px 14px; background: var(--na-wx-bg); border: 1px solid var(--na-wx-border); border-radius: 6px; font-family: var(--na-mono); font-size: 12px; color: var(--na-wx-ink); letter-spacing: 0.01em;">
+        <span style="font-size: 16px; line-height: 1;">☂</span>
+        <span>{{ advisoryText }}</span>
+      </div>
+    </sc-if>
+
+    <main>
+      <sc-if value="{{ isCalendar }}">
+        <div style="padding: 24px 0; animation: naViewIn .28s cubic-bezier(0.2,0.8,0.2,1);">
+          <div style="margin-bottom: 14px;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 24px;">
+              <button onClick="{{ prevWeek }}" style="background: none; border: 1px solid var(--na-ink); color: var(--na-ink); padding: 6px 14px; font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.1em; white-space: nowrap; cursor: pointer; opacity: {{ prevOpacity }};">‹ Prev</button>
+              <div style="font-family: var(--na-display); font-size: 26px;"><span style="font-style: italic; color: var(--na-ink-3);">Week of</span> {{ weekRange }}</div>
+              <button onClick="{{ nextWeek }}" style="background: none; border: 1px solid var(--na-ink); color: var(--na-ink); padding: 6px 14px; font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.1em; white-space: nowrap; cursor: pointer; opacity: {{ nextOpacity }};">Next ›</button>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 2px solid var(--na-ink); border-left: 1px solid var(--na-rule);">
+            <sc-for list="{{ columns }}" as="col" hint-placeholder-count="7">
+              <div style="border-right: 1px solid var(--na-rule); border-bottom: 1px solid var(--na-rule); height: 620px; display: flex; flex-direction: column; min-height: 0; background: {{ col.bg }};">
+                <div style="padding: 10px 12px 8px; border-bottom: 1px dotted var(--na-rule); border-top: 3px solid {{ col.topRule }}; margin-top: -3px;">
+                  <div style="font-family: var(--na-mono); font-size: 10.5px; letter-spacing: 0.15em; color: var(--na-ink-3); text-transform: uppercase; display: flex; align-items: center; gap: 8px;">
+                    <span>{{ col.weekday }}</span>
+                    <sc-if value="{{ col.isToday }}"><span style="background: var(--na-press-red); color: var(--na-paper); font-size: 9px; padding: 1px 6px; letter-spacing: 0.08em;">today</span></sc-if>
+                  </div>
+                  <div style="font-family: var(--na-display); font-size: 42px; line-height: 1; margin: 4px 0 6px; letter-spacing: -0.02em;">{{ col.dateNum }}</div>
+                  <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.05em; color: var(--na-ink-3); display: flex; justify-content: space-between;">
+                    <span>{{ col.wx }}</span>
+                    <span>{{ col.countLabel }}</span>
+                  </div>
+                </div>
+                <div class="na-scroll" style="padding: 6px 8px; display: flex; flex-direction: column; gap: 6px; flex: 1; min-height: 0; overflow-y: auto; mask-image: linear-gradient(to bottom, transparent 0, #000 8px, #000 calc(100% - 12px), transparent 100%); -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 8px, #000 calc(100% - 12px), transparent 100%);">
+                  <sc-if value="{{ col.isEmpty }}">
+                    <div style="font-family: var(--na-display); font-style: italic; color: var(--na-ink-3); text-align: center; padding: 20px 0; font-size: 14px;">{{ col.emptyLabel }}</div>
+                  </sc-if>
+                  <sc-for list="{{ col.events }}" as="ev" hint-placeholder-count="3">
+                    <article onClick="{{ ev.open }}" role="button" tabIndex="0" aria-label="{{ ev.aria }}" style="display: flex; background: var(--na-paper-3); border: 1px solid var(--na-rule-soft); cursor: pointer; transition: all .15s; position: relative; opacity: {{ ev.opacity }};" style-hover="background: var(--na-paper); border-color: var(--na-ink); transform: translateX(1px);">
+                      <div style="width: 3px; flex-shrink: 0; background: {{ ev.catColor }};"></div>
+                      <div style="flex: 1; padding: 7px 9px 8px; min-width: 0;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: var(--na-mono); font-size: 9.5px; letter-spacing: 0.05em; color: var(--na-ink-3);">
+                          <span style="color: var(--na-ink); font-weight: 500;">{{ ev.time }}</span>
+                          <sc-if value="{{ ev.featured }}"><span style="color: var(--na-press-red); border: 1px solid var(--na-press-red); padding: 0 4px; letter-spacing: 0.04em;">Editor's pick</span></sc-if>
+                          <sc-if value="{{ ev.hidden }}"><span style="color: var(--na-ink); background: var(--na-gold); padding: 0 4px; letter-spacing: 0.04em;">Hidden gem</span></sc-if>
+                          <sc-if value="{{ ev.recurring }}"><span style="color: var(--na-ink-3);">↻</span></sc-if>
+                        </div>
+                        <h3 style="font-family: var(--na-display); font-size: 16px; line-height: 1.1; font-weight: 400; margin: 4px 0 3px; letter-spacing: -0.005em; text-wrap: balance;">{{ ev.title }}</h3>
+                        <div style="font-size: 11.5px; line-height: 1.3; color: var(--na-ink-2);">
+                          <span style="font-style: italic;">{{ ev.venue }}</span>
+                          <span style="margin: 0 4px; color: var(--na-ink-3);">·</span>
+                          <span style="color: var(--na-ink-3);">{{ ev.town }}</span>
+                        </div>
+                        <div style="margin-top: 6px; display: flex; justify-content: space-between; align-items: center; font-family: var(--na-mono); font-size: 9.5px; letter-spacing: 0.06em;">
+                          <span style="font-weight: 500; color: {{ ev.catColor }};">{{ ev.catLabel }}</span>
+                          <span style="color: var(--na-ink-3);">{{ ev.price }}</span>
+                          <button onClick="{{ ev.save }}" aria-label="Save to plan" style="background: none; border: none; color: {{ ev.saveColor }}; font-size: 14px; padding: 0 2px; line-height: 1; cursor: pointer;">{{ ev.saveGlyph }}</button>
+                        </div>
+                        <sc-if value="{{ ev.dimmed }}">
+                          <div style="margin-top: 5px; font-family: var(--na-mono); font-size: 9px; color: var(--na-press-red); letter-spacing: 0.06em; border-top: 1px dotted var(--na-press-red); padding-top: 4px;">Outdoor · rain forecast</div>
+                        </sc-if>
+                      </div>
+                    </article>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isWeekend }}">
+        <div style="padding: 24px 0; animation: naViewIn .28s cubic-bezier(0.2,0.8,0.2,1);">
+          <div style="text-align: center; margin-bottom: 22px; padding-bottom: 14px; border-bottom: 2px solid var(--na-ink);">
+            <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.22em; color: var(--na-press-red); margin-bottom: 4px;">FOCUSED · 3-DAY</div>
+            <h2 style="font-family: var(--na-display); font-size: 56px; letter-spacing: -0.02em; line-height: 0.95; margin: 0 0 6px; font-weight: 400;">This Weekend</h2>
+            <div style="font-family: var(--na-display); font-style: italic; font-size: 20px; color: var(--na-ink-2);">{{ weekendRange }}</div>
+          </div>
+          <div style="display: grid; grid-template-columns: {{ weekendCols }}; min-width: 0; border-top: 2px solid var(--na-ink); border-left: 1px solid var(--na-rule);">
+            <sc-for list="{{ weekendColumns }}" as="col" hint-placeholder-count="2">
+              <div style="border-right: 1px solid var(--na-rule); border-bottom: 1px solid var(--na-rule); background: {{ col.bg }}; display: flex; flex-direction: column; min-height: 0; border-top: 3px solid {{ col.topRule }}; margin-top: -3px;">
+                <div style="padding: 16px 18px 12px; border-bottom: 1px dotted var(--na-rule);">
+                  <div style="font-family: var(--na-mono); font-size: 12px; letter-spacing: 0.2em; color: var(--na-ink-3); text-transform: uppercase; display: flex; align-items: center; gap: 8px;">
+                    <span>{{ col.weekday }}</span>
+                    <sc-if value="{{ col.isToday }}"><span style="background: var(--na-press-red); color: var(--na-paper); font-size: 9px; padding: 1px 6px; letter-spacing: 0.08em;">today</span></sc-if>
+                  </div>
+                  <div style="font-family: var(--na-display); font-size: 64px; line-height: 1; margin: 6px 0 8px; letter-spacing: -0.03em;">{{ col.dateNum }}</div>
+                  <div style="font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.05em; color: var(--na-ink-3); display: flex; justify-content: space-between;">
+                    <span>{{ col.wx }}</span>
+                    <span>{{ col.countLabel }}</span>
+                  </div>
+                </div>
+                <div style="padding: 10px 12px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1;">
+                  <sc-if value="{{ col.isEmpty }}">
+                    <div style="font-family: var(--na-display); font-style: italic; color: var(--na-ink-3); text-align: center; padding: 20px 0; font-size: 14px;">— Nothing yet —</div>
+                  </sc-if>
+                  <sc-for list="{{ col.events }}" as="ev" hint-placeholder-count="4">
+                    <article onClick="{{ ev.open }}" role="button" tabIndex="0" aria-label="{{ ev.aria }}" style="display: flex; background: var(--na-paper-3); border: 1px solid var(--na-rule-soft); cursor: pointer; transition: all .15s; position: relative;" style-hover="background: var(--na-paper); border-color: var(--na-ink); transform: translateX(1px);">
+                      <div style="width: 3px; flex-shrink: 0; background: {{ ev.catColor }};"></div>
+                      <div style="flex: 1; padding: 7px 9px 8px; min-width: 0;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: var(--na-mono); font-size: 9.5px; letter-spacing: 0.05em; color: var(--na-ink-3);">
+                          <span style="color: var(--na-ink); font-weight: 500;">{{ ev.time }}</span>
+                          <sc-if value="{{ ev.featured }}"><span style="color: var(--na-press-red); border: 1px solid var(--na-press-red); padding: 0 4px; letter-spacing: 0.04em;">Editor's pick</span></sc-if>
+                          <sc-if value="{{ ev.recurring }}"><span style="color: var(--na-ink-3);">↻</span></sc-if>
+                        </div>
+                        <h3 style="font-family: var(--na-display); font-size: 16px; line-height: 1.1; font-weight: 400; margin: 4px 0 3px; letter-spacing: -0.005em; text-wrap: balance;">{{ ev.title }}</h3>
+                        <div style="font-size: 11.5px; line-height: 1.3; color: var(--na-ink-2);">
+                          <span style="font-style: italic;">{{ ev.venue }}</span>
+                          <span style="margin: 0 4px; color: var(--na-ink-3);">·</span>
+                          <span style="color: var(--na-ink-3);">{{ ev.town }}</span>
+                        </div>
+                        <div style="margin-top: 6px; display: flex; justify-content: space-between; align-items: center; font-family: var(--na-mono); font-size: 9.5px; letter-spacing: 0.06em;">
+                          <span style="font-weight: 500; color: {{ ev.catColor }};">{{ ev.catLabel }}</span>
+                          <span style="color: var(--na-ink-3);">{{ ev.price }}</span>
+                          <button onClick="{{ ev.save }}" aria-label="Save to plan" style="background: none; border: none; color: {{ ev.saveColor }}; font-size: 14px; padding: 0 2px; line-height: 1; cursor: pointer;">{{ ev.saveGlyph }}</button>
+                        </div>
+                      </div>
+                    </article>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStub }}">
+        <div style="padding: 80px 0; text-align: center; font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--na-ink-3);">{{ stubLabel }}</div>
+      </sc-if>
+    </main>
+
+    <footer style="margin-top: 60px;">
+      <div style="height: 4px; background: var(--na-ink); margin-bottom: 4px;"></div>
+      <div style="height: 1px; background: var(--na-ink);"></div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 18px 0; border-top: 1px solid var(--na-ink); margin-top: 8px;">
+        <div>
+          <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--na-ink-3); text-transform: uppercase; margin-bottom: 4px;">Compiled from</div>
+          <div style="font-family: var(--na-display); font-style: italic; font-size: 16px; color: var(--na-ink);">DiscoverNEPA · Happenings Magazine · Lackawanna County Library System · City of Scranton · University of Scranton · Marywood University · Keystone College. Weather via Open-Meteo.</div>
+        </div>
+        <div>
+          <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--na-ink-3); text-transform: uppercase; margin-bottom: 4px;">Coverage area</div>
+          <div style="font-family: var(--na-display); font-style: italic; font-size: 16px; color: var(--na-ink);">Lackawanna · Luzerne · Wayne · Monroe · Carbon counties</div>
+        </div>
+        <div>
+          <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.18em; color: var(--na-ink-3); text-transform: uppercase; margin-bottom: 4px;">About</div>
+          <div style="font-family: var(--na-display); font-style: italic; font-size: 16px; color: var(--na-ink);">How this almanac is made →</div>
+        </div>
+      </div>
+      <div style="font-family: var(--na-mono); font-size: 10.5px; letter-spacing: 0.06em; color: var(--na-ink-3); text-transform: uppercase; border-top: 1px solid var(--na-rule); padding: 12px 0 4px; text-align: center;">© 2026 Matt Wren · Code under the MIT License · Source on GitHub · Corrections. Event data belongs to the venues that publish it.</div>
+    </footer>
+  </div>
+
+  <sc-if value="{{ drawerOpen }}">
+    <div onClick="{{ closeEvent }}" style="position: fixed; inset: 0; background: var(--na-scrim); z-index: 50; display: flex; justify-content: flex-end; animation: naFadeIn .2s;">
+      <aside onClick="{{ stop }}" role="dialog" aria-modal="true" style="background: var(--na-paper); width: 460px; max-width: 92vw; height: 100%; display: flex; position: relative; animation: naSlideIn .25s ease-out; box-shadow: -8px 0 24px oklch(0.2 0.012 60 / 0.15);">
+        <button onClick="{{ closeEvent }}" aria-label="Close event details" style="position: absolute; top: 8px; right: 8px; background: none; border: none; font-size: 28px; color: var(--na-ink-2); line-height: 1; min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer;">×</button>
+        <div style="position: absolute; top: 22px; left: 28px; font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--na-ink-3);">← → to browse · Esc to close</div>
+        <div style="width: 6px; background: {{ drawer.catColor }};"></div>
+        <div class="na-scroll" style="padding: 32px 28px; overflow-y: auto; flex: 1;">
+          <div style="font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.15em; margin-bottom: 12px; color: {{ drawer.catColor }};">{{ drawer.catLabel }}{{ drawer.tagline }}</div>
+          <h2 style="font-family: var(--na-display); font-size: 38px; font-weight: 400; line-height: 1.05; margin: 0 0 14px; letter-spacing: -0.015em; text-wrap: balance;">{{ drawer.title }}</h2>
+          <div style="font-family: var(--na-mono); font-size: 12px; color: var(--na-ink); border-top: 1px solid var(--na-ink); border-bottom: 1px solid var(--na-ink); padding: 8px 0; margin-bottom: 14px; letter-spacing: 0.04em;">{{ drawer.when }}</div>
+          <div style="margin-bottom: 18px;">
+            <div style="font-family: var(--na-display); font-size: 20px; font-style: italic;">{{ drawer.venue }}</div>
+            <div style="font-family: var(--na-mono); font-size: 11px; color: var(--na-ink-3); letter-spacing: 0.1em;">{{ drawer.townLine }}</div>
+          </div>
+          <p style="font-size: 17px; line-height: 1.5; color: var(--na-ink-2); margin: 0 0 22px; text-wrap: pretty; border-left: 2px solid var(--na-press-red); padding-left: 14px; font-style: italic;">{{ drawer.blurb }}</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--na-rule); margin-bottom: 18px;">
+            <sc-for list="{{ drawer.stats }}" as="s" hint-placeholder-count="4">
+              <div style="padding: 10px 14px; border-right: 1px solid var(--na-rule); border-bottom: 1px solid var(--na-rule);">
+                <div style="font-family: var(--na-mono); font-size: 9.5px; letter-spacing: 0.15em; color: var(--na-ink-3); text-transform: uppercase;">{{ s.k }}</div>
+                <div style="font-family: var(--na-display); font-size: 18px; margin-top: 2px;">{{ s.v }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 22px;">
+            <sc-for list="{{ drawer.tags }}" as="t" hint-placeholder-count="3">
+              <span style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--na-ink-3); padding: 3px 8px; border: 1px dotted var(--na-rule);">{{ t.label }}</span>
+            </sc-for>
+          </div>
+          <div style="margin-top: 14px; padding: 10px 12px; background: var(--na-paper-2); border-left: 3px solid var(--na-rule); display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;">
+            <span style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--na-ink-3);">Listing via</span>
+            <span style="font-family: var(--na-serif); font-style: italic; font-size: 14px; color: var(--na-ink); border-bottom: 1px solid var(--na-rule);">{{ drawer.source }} ↗</span>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; margin-top: 18px;">
+            <button onClick="{{ drawer.save }}" style="flex: 1; padding: 12px 14px; font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid {{ drawer.saveBorder }}; background: {{ drawer.saveBg }}; color: var(--na-paper); cursor: pointer;">{{ drawer.saveLabel }}</button>
+            <div style="flex: 1 1 100%; display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border: 1px solid var(--na-rule); border-radius: 3px; background: var(--na-paper-3);">
+              <div style="font-family: var(--na-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--na-ink-3);">Add to calendar</div>
+              <div style="display: flex; gap: 6px;">
+                <span style="flex: 1; display: inline-flex; align-items: center; justify-content: center; padding: 9px 10px; font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--na-ink); background: var(--na-paper); color: var(--na-ink); cursor: pointer;">Google</span>
+                <span style="flex: 1; display: inline-flex; align-items: center; justify-content: center; padding: 9px 10px; font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--na-ink); background: var(--na-paper); color: var(--na-ink); cursor: pointer;">Apple (.ics)</span>
+                <span style="flex: 1; display: inline-flex; align-items: center; justify-content: center; padding: 9px 10px; font-family: var(--na-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--na-ink); background: var(--na-paper); color: var(--na-ink); cursor: pointer;">Outlook</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    view: 'calendar',
+    weekOffset: 0,
+    theme: 'light',
+    filtersOpen: false,
+    townDdOpen: false,
+    townQuery: '',
+    openId: null,
+    saved: [],
+    activeCats: null,
+    activeAudiences: ['community'],
+    activeTown: '',
+    zoom: 1,
+  };
+
+  get D() { return window.ALMANAC; }
+
+  componentDidMount() {
+    this._fit = () => {
+      const w = document.documentElement.clientWidth;
+      const z = Math.min(1, Math.max(0.4, w / 1452));
+      if (z !== this.state.zoom) this.setState({ zoom: z });
+    };
+    this._fit();
+    window.addEventListener('resize', this._fit);
+  }
+
+  componentWillUnmount() {
+    if (this._fit) window.removeEventListener('resize', this._fit);
+  }
+
+  allCats() { return Object.keys(this.D.CATEGORIES); }
+
+  cats() { return this.state.activeCats || this.allCats(); }
+
+  filtered() {
+    const cats = this.cats();
+    const { activeTown } = this.state;
+    return this.D.EVENTS.filter(
+      e => cats.includes(e.category) && (!activeTown || e.town === activeTown),
+    );
+  }
+
+  filterCount() {
+    return (
+      (this.cats().length !== this.allCats().length ? 1 : 0) + (this.state.activeTown ? 1 : 0)
+    );
+  }
+
+  card(ev, { dimmed = false } = {}) {
+    const D = this.D;
+    const cat = D.CATEGORIES[ev.category];
+    const isSaved = this.state.saved.includes(ev.id);
+    return {
+      id: ev.id,
+      title: ev.title,
+      venue: ev.venue,
+      town: ev.town,
+      price: ev.price,
+      time: ev.start === '00:00' && ev.end === '23:59' ? 'All day' : D.fmtTime(ev.start),
+      catColor: cat.color,
+      catLabel: cat.label.toUpperCase(),
+      featured: !!ev.featured,
+      hidden: !!ev.hidden,
+      recurring: !!ev.recurring,
+      dimmed,
+      opacity: dimmed ? 0.55 : 1,
+      aria: `${ev.title} at ${ev.venue}, ${ev.town}`,
+      saveGlyph: isSaved ? '★' : '☆',
+      saveColor: isSaved ? 'var(--na-press-red)' : 'var(--na-ink-3)',
+      open: () => this.setState({ openId: ev.id }),
+      save: e => {
+        e.stopPropagation();
+        this.toggleSave(ev.id);
+      },
+    };
+  }
+
+  toggleSave(id) {
+    this.setState(s => ({
+      saved: s.saved.includes(id) ? s.saved.filter(x => x !== id) : [...s.saved, id],
+    }));
+  }
+
+  buildColumn(d, events) {
+    const D = this.D;
+    const date = D.dateForDay(d);
+    const wx = D.WEATHER[d];
+    const isWeekend = date.weekday === 'Sat' || date.weekday === 'Sun';
+    const isToday = d === 0;
+    const list = events
+      .filter(e => e.day === d)
+      .sort((a, b) => a.start.localeCompare(b.start))
+      .map(ev => this.card(ev, { dimmed: wx.cond === 'rain' && !ev.indoor }));
+    return {
+      key: String(d),
+      weekday: date.weekday,
+      dateNum: date.date,
+      wx: `${wx.icon} ${wx.high}°/${wx.low}°`,
+      countLabel: `${list.length} ${list.length === 1 ? 'event' : 'events'}`,
+      isToday,
+      isEmpty: list.length === 0,
+      emptyLabel: this.filterCount() > 0 ? '— Filtered out —' : '— Nothing yet —',
+      bg: isWeekend ? 'var(--na-paper-3)' : 'transparent',
+      topRule: isToday ? 'var(--na-press-red)' : 'transparent',
+      events: list,
+    };
+  }
+
+  renderVals() {
+    if (!this.D) return {};
+    const D = this.D;
+    const s = this.state;
+    const events = this.filtered();
+    const start = s.weekOffset * 7;
+    const days = [0, 1, 2, 3, 4, 5, 6].map(i => start + i);
+    const first = D.dateForDay(start);
+    const last = D.dateForDay(start + 6);
+
+    const featured = events.filter(e => e.featured && e.day >= start && e.day < start + 7);
+    const rainyDays = days.filter(d => D.WEATHER[d] && D.WEATHER[d].cond === 'rain');
+    const atRisk = events.filter(e => rainyDays.includes(e.day) && !e.indoor).length;
+
+    const weekendDays = [0, 1];
+    const wFirst = D.dateForDay(weekendDays[0]);
+    const wLast = D.dateForDay(weekendDays[weekendDays.length - 1]);
+
+    const tiles = [
+      { key: 'calendar', label: 'Week', glyph: this.weekGlyph() },
+      { key: 'weekend', label: 'Weekend', glyph: this.weekendGlyph() },
+      { key: 'map', label: 'Map', glyph: this.mapGlyph() },
+      { key: 'list', label: 'Index', glyph: this.indexGlyph() },
+    ].map(t => ({
+      ...t,
+      bg: s.view === t.key ? 'var(--na-ink)' : 'var(--na-paper-3)',
+      fg: s.view === t.key ? 'var(--na-paper)' : 'var(--na-ink-2)',
+      border: s.view === t.key ? 'var(--na-ink)' : 'var(--na-rule)',
+      select: () => this.setState({ view: t.key }),
+    }));
+
+    const openEv = s.openId ? D.EVENTS.find(e => e.id === s.openId) : null;
+
+    const townQ = s.townQuery.trim().toLowerCase();
+    const townList = townQ ? D.TOWNS.filter(t => t.toLowerCase().includes(townQ)) : D.TOWNS;
+    const townOptions = [{ value: '', label: 'All towns' }, ...townList.map(t => ({ value: t, label: t }))].map(o => ({
+      key: o.value || '__all',
+      label: o.label,
+      mark: o.value === s.activeTown ? '✓' : '',
+      fg: o.value === s.activeTown ? 'var(--na-ink)' : 'var(--na-ink-2)',
+      weight: o.value === s.activeTown ? 600 : 400,
+      fontStyle: o.value === '' && s.activeTown !== '' ? 'italic' : 'normal',
+      pick: () => this.setState({ activeTown: o.value, townDdOpen: false }),
+    }));
+
+    return {
+      zoom: s.zoom,
+      theme: s.theme,
+      themeGlyph: s.theme === 'dark' ? this.sunGlyph() : this.moonGlyph(),
+      toggleTheme: () => this.setState({ theme: s.theme === 'dark' ? 'light' : 'dark' }),
+      openPlan: () => {},
+      hasSaved: s.saved.length > 0,
+      savedCount: s.saved.length,
+
+      viewTiles: tiles,
+      isCalendar: s.view === 'calendar',
+      isWeekend: s.view === 'weekend',
+      isStub: s.view === 'map' || s.view === 'list',
+      stubLabel: s.view === 'map' ? 'Map view — not in this pass' : 'Index view — not in this pass',
+
+      filtersOpen: s.filtersOpen,
+      toggleFilters: () => this.setState({ filtersOpen: !s.filtersOpen, townDdOpen: false }),
+      filtersCaret: s.filtersOpen ? '▲' : '▼',
+      filtersBtnBg: s.filtersOpen ? 'var(--na-ink)' : 'var(--na-paper-3)',
+      filtersBtnFg: s.filtersOpen ? 'var(--na-paper)' : 'var(--na-ink)',
+      filtersBtnBorder: s.filtersOpen
+        ? 'var(--na-ink)'
+        : this.filterCount() > 0
+          ? 'var(--na-press-red)'
+          : 'var(--na-rule)',
+      hasFilters: this.filterCount() > 0,
+      filterCount: this.filterCount(),
+      resetOpacity: this.filterCount() === 0 ? 0.5 : 1,
+      resetFilters: () => this.setState({ activeCats: null, activeTown: '', townQuery: '' }),
+
+      audienceRows: Object.entries(D.AUDIENCES).map(([k, a]) => {
+        const on = s.activeAudiences.includes(k);
+        return {
+          key: k,
+          label: a.label,
+          description: a.description,
+          mark: on ? '✓' : '',
+          markBg: on ? 'var(--na-ink)' : 'transparent',
+          markBorder: on ? 'var(--na-ink)' : 'var(--na-rule)',
+          toggle: () =>
+            this.setState(st => ({
+              activeAudiences: st.activeAudiences.includes(k)
+                ? st.activeAudiences.filter(x => x !== k)
+                : [...st.activeAudiences, k],
+            })),
+        };
+      }),
+      catsOnLabel: `${this.cats().length} of ${this.allCats().length} on`,
+      catRows: Object.entries(D.CATEGORIES).map(([k, c]) => {
+        const on = this.cats().includes(k);
+        return {
+          key: k,
+          label: c.label,
+          color: c.color,
+          dotOpacity: on ? 1 : 0.4,
+          bg: on ? 'var(--na-paper-3)' : 'var(--na-paper-2)',
+          border: on ? c.color : 'var(--na-rule-soft)',
+          fg: on ? 'var(--na-ink)' : 'var(--na-ink-2)',
+          toggle: () => {
+            const cur = this.cats();
+            const next = cur.includes(k) ? cur.filter(x => x !== k) : [...cur, k];
+            this.setState({ activeCats: next });
+          },
+        };
+      }),
+      townCountLabel: `${D.TOWNS.length} towns in this batch`,
+      townLabel: s.activeTown || 'All towns',
+      townLabelWeight: s.activeTown ? 600 : 400,
+      townCaret: s.townDdOpen ? '▲' : '▼',
+      townTriggerBorder: s.townDdOpen ? 'var(--na-ink)' : 'var(--na-rule)',
+      townDdOpen: s.townDdOpen,
+      toggleTownDd: () => this.setState({ townDdOpen: !s.townDdOpen, townQuery: '' }),
+      townQuery: s.townQuery,
+      townSearchPlaceholder: `Search ${D.TOWNS.length} towns…`,
+      setTownQuery: e => this.setState({ townQuery: e.target.value }),
+      townOptions,
+
+      showPicks: featured.length > 0 && s.view !== 'map',
+      picks: featured.map((ev, i) => {
+        const cat = D.CATEGORIES[ev.category];
+        const date = D.dateForDay(ev.day);
+        return {
+          key: ev.id,
+          num: `№ ${String(i + 1).padStart(2, '0')}`,
+          catLabel: cat.label.toUpperCase(),
+          catColor: cat.color,
+          title: ev.title,
+          blurb: ev.blurb,
+          when: `${date.weekday} ${date.month} ${date.date}, ${D.fmtTime(ev.start)}`,
+          where: `${ev.venue}, ${ev.town}`,
+          open: () => this.setState({ openId: ev.id }),
+        };
+      }),
+
+      showAdvisory: rainyDays.length > 0 && atRisk > 0 && s.view === 'calendar',
+      advisoryText: `${rainyDays.length} ${rainyDays.length === 1 ? 'rainy day' : 'rainy days'} ahead — ${atRisk} outdoor ${atRisk === 1 ? 'event is' : 'events are'} dimmed in this view`,
+
+      weekRange: `${first.month} ${first.date} — ${last.month} ${last.date}`,
+      prevWeek: () => this.setState({ weekOffset: Math.max(0, s.weekOffset - 1) }),
+      nextWeek: () => this.setState({ weekOffset: Math.min(1, s.weekOffset + 1) }),
+      prevOpacity: s.weekOffset === 0 ? 0.3 : 1,
+      nextOpacity: s.weekOffset === 1 ? 0.3 : 1,
+      columns: days.map(d => this.buildColumn(d, events)),
+
+      weekendRange: `${wFirst.weekday} ${wFirst.month} ${wFirst.date} – ${wLast.weekday} ${wLast.month} ${wLast.date}`,
+      weekendCols: weekendDays.map(() => 'minmax(0, 1fr)').join(' '),
+      weekendColumns: weekendDays.map(d => this.buildColumn(d, events)),
+
+      drawerOpen: !!openEv,
+      closeEvent: () => this.setState({ openId: null }),
+      stop: e => e.stopPropagation(),
+      drawer: openEv ? this.drawerVals(openEv) : {},
+    };
+  }
+
+  drawerVals(ev) {
+    const D = this.D;
+    const cat = D.CATEGORIES[ev.category];
+    const date = D.dateForDay(ev.day);
+    const wx = D.WEATHER[ev.day];
+    const isSaved = this.state.saved.includes(ev.id);
+    const stats = [
+      { key: 'price', k: 'Price', v: ev.price },
+      { key: 'setting', k: 'Setting', v: ev.indoor ? 'Indoor' : 'Outdoor' },
+      { key: 'wx', k: 'Forecast', v: `${wx.icon} ${wx.high}° / ${wx.low}°` },
+    ];
+    if (ev.recurring) stats.push({ key: 'cadence', k: 'Cadence', v: ev.recurring });
+    return {
+      catColor: cat.color,
+      catLabel: cat.label.toUpperCase(),
+      tagline: ev.featured ? " · Editor's pick" : ev.hidden ? ' · Hidden gem' : '',
+      title: ev.title,
+      when: `${date.weekday}, ${date.month} ${date.date}  ·  ${D.fmtTime(ev.start)} – ${D.fmtTime(ev.end)}`,
+      venue: ev.venue,
+      townLine: `${ev.town}, PA`,
+      blurb: ev.blurb,
+      stats,
+      tags: ev.tags.map(t => ({ key: t, label: `#${t}` })),
+      source: 'DiscoverNEPA',
+      saveLabel: isSaved ? '★ Saved to plan' : '☆ Add to plan',
+      saveBg: isSaved ? 'var(--na-press-red)' : 'var(--na-ink)',
+      saveBorder: isSaved ? 'var(--na-press-red)' : 'var(--na-ink)',
+      save: () => this.toggleSave(ev.id),
+    };
+  }
+
+  svg(children, extra) {
+    return React.createElement(
+      'svg',
+      {
+        viewBox: '0 0 20 20',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: '1.4',
+        strokeLinecap: 'round',
+        style: { width: '100%', height: '100%', display: 'block' },
+        ...(extra || {}),
+      },
+      children,
+    );
+  }
+
+  weekGlyph() {
+    const e = React.createElement;
+    return this.svg([
+      e('rect', { key: 'r', x: 2.5, y: 4, width: 15, height: 12, rx: 1.2 }),
+      e('line', { key: 'l', x1: 2.5, y1: 7.5, x2: 17.5, y2: 7.5 }),
+      ...[5.5, 7.7, 9.9, 12.1, 14.3].map((x, i) =>
+        e('line', { key: i, x1: x, y1: 7.5, x2: x, y2: 16 }),
+      ),
+    ]);
+  }
+
+  weekendGlyph() {
+    const e = React.createElement;
+    return this.svg(
+      [
+        e('rect', { key: 'a', x: 2, y: 9, width: 4.5, height: 6.5, rx: 0.8 }),
+        e('rect', { key: 'b', x: 7.75, y: 6, width: 4.5, height: 9.5, rx: 0.8 }),
+        e('rect', { key: 'c', x: 13.5, y: 9, width: 4.5, height: 6.5, rx: 0.8 }),
+      ],
+      { strokeLinejoin: 'round' },
+    );
+  }
+
+  mapGlyph() {
+    const e = React.createElement;
+    return this.svg(
+      [
+        e('path', {
+          key: 'p',
+          d: 'M10 3.5 C7 3.5 5 5.5 5 8 C5 11.5 10 16.5 10 16.5 C10 16.5 15 11.5 15 8 C15 5.5 13 3.5 10 3.5 Z',
+        }),
+        e('circle', { key: 'c', cx: 10, cy: 8, r: 1.7, fill: 'currentColor', stroke: 'none' }),
+      ],
+      { strokeLinejoin: 'round' },
+    );
+  }
+
+  indexGlyph() {
+    const e = React.createElement;
+    return this.svg([
+      ...[5.5, 10, 14.5].map((y, i) =>
+        e('circle', { key: 'd' + i, cx: 4.5, cy: y, r: 0.9, fill: 'currentColor', stroke: 'none' }),
+      ),
+      ...[5.5, 10, 14.5].map((y, i) => e('line', { key: 'l' + i, x1: 7.5, y1: y, x2: 17, y2: y })),
+    ]);
+  }
+
+  sunGlyph() {
+    const e = React.createElement;
+    return this.svg([
+      e('circle', { key: 'c', cx: 10, cy: 10, r: 3.6 }),
+      ...[0, 45, 90, 135, 180, 225, 270, 315].map(deg =>
+        e('line', {
+          key: deg,
+          x1: 10 + 6 * Math.cos((deg * Math.PI) / 180),
+          y1: 10 + 6 * Math.sin((deg * Math.PI) / 180),
+          x2: 10 + 7.8 * Math.cos((deg * Math.PI) / 180),
+          y2: 10 + 7.8 * Math.sin((deg * Math.PI) / 180),
+        }),
+      ),
+    ]);
+  }
+
+  moonGlyph() {
+    const e = React.createElement;
+    return this.svg(
+      [e('path', { key: 'p', d: 'M15.5 12.4A6.4 6.4 0 0 1 7.6 4.5a6.4 6.4 0 1 0 7.9 7.9 Z' })],
+      { strokeLinejoin: 'round' },
+    );
+  }
+}
+</script>
+</body>
+</html>

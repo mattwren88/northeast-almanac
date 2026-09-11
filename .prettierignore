@@ -6,5 +6,8 @@ public/mock-events.json
 curated.json
 .playwright-mcp/
 
+# Agent working notes, not shipped source.
+.claude/
+
 # Hand-tuned editorial CSS — column alignment and grouping are deliberate.
 src/style.css
