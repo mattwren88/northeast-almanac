@@ -3,17 +3,16 @@
 import { Fragment, useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import {
   CATEGORIES,
-  AUDIENCES,
-  ALL_AUDIENCES,
   WEATHER,
   dateForDay,
   todayDayOffset,
   loadEvents,
 } from './lib/data.js';
-import { CalendarView, fmtEventTime } from './calendar.jsx';
-import { MapView, WeekendView, ListView, EventDrawer, WeekendPlan } from './views.jsx';
+import { CalendarView, MonthView, fmtEventTime } from './calendar.jsx';
+import { MapView, WeekendView, ListView, EventDrawer, WeekendPlan, DayModal } from './views.jsx';
 import { SOURCES, COMMUNITY_SOURCES, COLLEGE_SOURCES, WEATHER_SOURCE } from './data/sources.js';
 import { useTheme } from './theme.js';
+import { HORIZON_DAYS, MAX_WEEK } from './lib/constants.js';
 
 function RefreshStamp({ generatedAt, eventStatus }) {
   if (eventStatus === 'mock') {
@@ -49,8 +48,19 @@ function RefreshStamp({ generatedAt, eventStatus }) {
   return <div className={`mast-refresh ${level}`}>Refreshed {human}</div>;
 }
 
-const ALL_VIEWS = ['calendar', 'weekend', 'map', 'list'];
+const ALL_VIEWS = ['calendar', 'month', 'weekend', 'map', 'list'];
 const ALL_CATS = Object.keys(CATEGORIES);
+const ALL_SOURCE_IDS = SOURCES.map(s => s.id); // everything on by default
+const isAllSources = xs => xs.length === ALL_SOURCE_IDS.length;
+// Isolate-pattern toggle shared by categories and sources: from "all on" a click
+// shows only that item; from a partial set it adds/removes; removing the last
+// one snaps back to all on.
+function isolateToggle(list, item, all) {
+  if (list.length === all.length) return [item];
+  if (!list.includes(item)) return [...list, item];
+  const next = list.filter(x => x !== item);
+  return next.length ? next : all;
+}
 
 // Snapshot the currently-focused element so we can restore it after a
 // modal closes. Call captureFocus() in the open-action handler (BEFORE
@@ -83,6 +93,22 @@ const WeekGlyph = () => (
     <rect x="2.5" y="4" width="15" height="12" rx="1.2" />
     <line x1="2.5" y1="7.5" x2="17.5" y2="7.5" />
     {[5.5, 7.7, 9.9, 12.1, 14.3].map((x, i) => (
+      <line key={i} x1={x} y1="7.5" x2={x} y2="16" />
+    ))}
+  </svg>
+);
+const MonthGlyph = () => (
+  <svg
+    viewBox="0 0 20 20"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.4"
+    strokeLinecap="round"
+  >
+    <rect x="2.5" y="4" width="15" height="12" rx="1.2" />
+    <line x1="2.5" y1="7.5" x2="17.5" y2="7.5" />
+    <line x1="2.5" y1="11.5" x2="17.5" y2="11.5" />
+    {[7.5, 12.5].map((x, i) => (
       <line key={i} x1={x} y1="7.5" x2={x} y2="16" />
     ))}
   </svg>
@@ -180,6 +206,7 @@ function ThemeToggle() {
 
 const VIEW_TILES = [
   { key: 'calendar', label: 'Week', Glyph: WeekGlyph },
+  { key: 'month', label: 'Month', Glyph: MonthGlyph },
   { key: 'weekend', label: 'Weekend', Glyph: WeekendGlyph },
   { key: 'map', label: 'Map', Glyph: MapGlyph },
   { key: 'list', label: 'Index', Glyph: IndexGlyph },
@@ -191,12 +218,22 @@ function parseHash() {
   const view = p.get('view');
   const w = parseInt(p.get('w') || '', 10);
   const cats = p.get('cats');
-  const aud = p.get('aud');
+  const src = p.get('src');
+  const aud = p.get('aud'); // legacy links: aud=community|college → that group's sources
+  let activeSources = null;
+  if (src) activeSources = src.split(',').filter(id => ALL_SOURCE_IDS.includes(id));
+  else if (aud) {
+    const groups = aud.split(',');
+    activeSources = SOURCES.filter(s => groups.includes(s.audience)).map(s => s.id);
+  }
+  if (activeSources && activeSources.length === 0) activeSources = null;
+  const day = parseInt(p.get('day') || '', 10);
   return {
+    openDay: Number.isInteger(day) && day >= 0 && day < HORIZON_DAYS ? day : null,
     view: ALL_VIEWS.includes(view) ? view : null,
-    weekOffset: Number.isInteger(w) && w >= 0 && w <= 1 ? w : null,
+    weekOffset: Number.isInteger(w) && w >= 0 && w <= MAX_WEEK ? w : null,
     activeCats: cats ? cats.split(',').filter(c => ALL_CATS.includes(c)) : null,
-    activeAudiences: aud ? aud.split(',').filter(a => ALL_AUDIENCES.includes(a)) : null,
+    activeSources,
     town: p.get('town') || '',
     openEventId: p.get('ev') || null,
     planOpen: p.get('plan') === '1',
@@ -211,14 +248,14 @@ function writeHash(state) {
   if (state.activeCats && state.activeCats.length !== ALL_CATS.length) {
     p.set('cats', state.activeCats.join(','));
   }
-  // Audiences: emit only when different from default (community-only).
-  if (state.activeAudiences) {
-    const sorted = [...state.activeAudiences].sort().join(',');
-    if (sorted !== 'community') p.set('aud', sorted);
+  // Sources: emit only when narrowed.
+  if (state.activeSources && !isAllSources(state.activeSources)) {
+    p.set('src', ALL_SOURCE_IDS.filter(id => state.activeSources.includes(id)).join(','));
   }
   if (state.town) p.set('town', state.town);
   if (state.openEventId) p.set('ev', state.openEventId);
   if (state.planOpen) p.set('plan', '1');
+  if (state.openDay != null) p.set('day', String(state.openDay));
   const next = p.toString();
   const target = next ? `#${next}` : '';
   if (window.location.hash !== target && !(window.location.hash === '' && target === '')) {
@@ -249,7 +286,7 @@ export function App() {
   const [view, setView] = useState(initial.view || 'calendar'); // calendar | map | list
   const [weekOffset, setWeekOffset] = useState(initial.weekOffset ?? 0);
   const [activeCats, setActiveCats] = useState(initial.activeCats || ALL_CATS);
-  const [activeAudiences, setActiveAudiences] = useState(initial.activeAudiences || ['community']); // colleges off by default
+  const [activeSources, setActiveSources] = useState(initial.activeSources || ALL_SOURCE_IDS);
   const [activeTown, setActiveTown] = useState(initial.town || ''); // '' = all
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [openEventId, setOpenEventId] = useState(initial.openEventId);
@@ -264,6 +301,7 @@ export function App() {
     initial.planOpen || (initial.sharedIds || []).length > 0,
   );
   const [aboutOpen, setAboutOpen] = useState(false);
+  const [openDay, setOpenDay] = useState(initial.openDay);
   const [toast, setToast] = useState(null); // { msg, undo? }
   const toastTimerRef = useRef(null);
   // Wrap state setters so opens capture focus and closes restore it.
@@ -286,6 +324,10 @@ export function App() {
   };
   const closePlan = () => {
     setPlanOpen(false);
+    focusReturn.restore();
+  };
+  const closeDay = () => {
+    setOpenDay(null);
     focusReturn.restore();
   };
   const openAbout = () => {
@@ -340,12 +382,13 @@ export function App() {
       view,
       weekOffset,
       activeCats,
-      activeAudiences,
+      activeSources,
       town: activeTown,
       openEventId,
       planOpen,
+      openDay,
     });
-  }, [view, weekOffset, activeCats, activeAudiences, activeTown, openEventId, planOpen]);
+  }, [view, weekOffset, activeCats, activeSources, activeTown, openEventId, planOpen, openDay]);
 
   // Read hash on browser back/forward
   useEffect(() => {
@@ -354,10 +397,11 @@ export function App() {
       setView(h.view || 'calendar');
       setWeekOffset(h.weekOffset ?? 0);
       setActiveCats(h.activeCats || ALL_CATS);
-      setActiveAudiences(h.activeAudiences || ['community']);
+      setActiveSources(h.activeSources || ALL_SOURCE_IDS);
       setActiveTown(h.town || '');
       setOpenEventId(h.openEventId);
       setPlanOpen(h.planOpen);
+      setOpenDay(h.openDay);
     };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
@@ -370,19 +414,20 @@ export function App() {
       .filter(
         e =>
           activeCats.includes(e.category) &&
-          activeAudiences.includes(e.audience || 'community') &&
+          activeSources.includes(e.source) &&
           (!activeTown || e.town === activeTown),
       )
       .sort((a, b) => a.day - b.day || a.start.localeCompare(b.start))
       .map(e => e.id);
-  }, [events, activeCats, activeAudiences, activeTown, openEventId]);
+  }, [events, activeCats, activeSources, activeTown, openEventId]);
   useEffect(() => {
-    if (!openEventId && !planOpen && !aboutOpen) return;
+    if (!openEventId && !planOpen && !aboutOpen && openDay == null) return;
     const onKey = e => {
       if (e.key === 'Escape') {
         // Close the topmost modal (last opened wins by precedence)
         if (aboutOpen) closeAbout();
         else if (openEventId) closeEvent();
+        else if (openDay != null) closeDay();
         else if (planOpen) closePlan();
         return;
       }
@@ -400,7 +445,7 @@ export function App() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [openEventId, filteredSortedIds, planOpen, aboutOpen, closeEvent]);
+  }, [openEventId, filteredSortedIds, planOpen, aboutOpen, openDay, closeEvent]);
 
   const allTowns = useMemo(() => {
     const set = new Set();
@@ -414,10 +459,10 @@ export function App() {
     return events.filter(
       e =>
         activeCats.includes(e.category) &&
-        activeAudiences.includes(e.audience || 'community') &&
+        activeSources.includes(e.source) &&
         (!activeTown || e.town === activeTown),
     );
-  }, [events, activeCats, activeAudiences, activeTown]);
+  }, [events, activeCats, activeSources, activeTown]);
 
   const featuredThisWeek = useMemo(() => {
     const start = weekOffset * 7;
@@ -478,8 +523,15 @@ export function App() {
     showToast('Share link copied to clipboard');
   };
 
+  // Isolate pattern: from "all on", a click shows only that category; from a
+  // partial set it adds/removes; removing the last one snaps back to all on.
   const toggleCat = cat => {
-    setActiveCats(cs => (cs.includes(cat) ? cs.filter(c => c !== cat) : [...cs, cat]));
+    setActiveCats(cs => isolateToggle(cs, cat, ALL_CATS));
+    setFilterTick(t => t + 1);
+  };
+
+  const showAllCats = () => {
+    setActiveCats(ALL_CATS);
     setFilterTick(t => t + 1);
   };
 
@@ -488,20 +540,36 @@ export function App() {
     setFilterTick(n => n + 1);
   };
 
-  const toggleAudience = a => {
-    setActiveAudiences(xs => (xs.includes(a) ? xs.filter(x => x !== a) : [...xs, a]));
+  const toggleSource = id => {
+    setActiveSources(xs => isolateToggle(xs, id, ALL_SOURCE_IDS));
+    setFilterTick(t => t + 1);
+  };
+  // Group-level all/none (audience = 'community' | 'college'). "none" on the
+  // only remaining group would empty the set — snap back to all instead.
+  const setSourceGroup = (audience, on) => {
+    const ids = SOURCES.filter(s => s.audience === audience).map(s => s.id);
+    setActiveSources(xs => {
+      const rest = xs.filter(id => !ids.includes(id));
+      const next = on ? [...rest, ...ids] : rest;
+      return next.length ? next : ALL_SOURCE_IDS;
+    });
+    setFilterTick(t => t + 1);
+  };
+  const showAllSources = () => {
+    setActiveSources(ALL_SOURCE_IDS);
+    setFilterTick(t => t + 1);
   };
 
   const resetFilters = () => {
     if (filterCount === 0) return;
-    const prev = { cats: activeCats, audiences: activeAudiences, town: activeTown };
+    const prev = { cats: activeCats, sources: activeSources, town: activeTown };
     setActiveCats(ALL_CATS);
-    setActiveAudiences(['community']);
+    setActiveSources(ALL_SOURCE_IDS);
     setActiveTown('');
     setFilterTick(t => t + 1);
     showToast('Filters reset', () => {
       setActiveCats(prev.cats);
-      setActiveAudiences(prev.audiences);
+      setActiveSources(prev.sources);
       setActiveTown(prev.town);
       setFilterTick(t => t + 1);
     });
@@ -509,8 +577,27 @@ export function App() {
 
   const filterCount =
     (activeCats.length !== ALL_CATS.length ? 1 : 0) +
-    (activeAudiences.length !== 1 || activeAudiences[0] !== 'community' ? 1 : 0) +
+    (isAllSources(activeSources) ? 0 : 1) +
     (activeTown ? 1 : 0);
+
+  // Month cell click → day modal; its footer link jumps to that week in the Week view.
+  const pickDay = d => {
+    if (d < 0 || d >= HORIZON_DAYS) return;
+    focusReturn.capture();
+    setOpenDay(d);
+  };
+  const openWeekFor = d => {
+    setOpenDay(null);
+    setWeekOffset(Math.floor(d / 7));
+    setView('calendar');
+  };
+  const openDayEvents = useMemo(
+    () =>
+      openDay == null
+        ? []
+        : filtered.filter(e => e.day === openDay).sort((a, b) => a.start.localeCompare(b.start)),
+    [filtered, openDay],
+  );
 
   const setLayout = v => {
     setView(v);
@@ -548,7 +635,7 @@ export function App() {
                 'NOVEMBER',
                 'DECEMBER',
               ][t.getMonth()];
-              return `${wd}, ${mo} ${t.getDate()}, ${t.getFullYear()} — TWO-WEEK ALMANAC`;
+              return `${wd}, ${mo} ${t.getDate()}, ${t.getFullYear()} — SIX-WEEK ALMANAC`;
             })()}
           </div>
           <div className="mast-price">FREE · PA</div>
@@ -615,8 +702,11 @@ export function App() {
         <FiltersPanel
           activeCats={activeCats}
           toggleCat={toggleCat}
-          activeAudiences={activeAudiences}
-          toggleAudience={toggleAudience}
+          showAllCats={showAllCats}
+          activeSources={activeSources}
+          toggleSource={toggleSource}
+          setSourceGroup={setSourceGroup}
+          showAllSources={showAllSources}
           allTowns={allTowns}
           activeTown={activeTown}
           setActiveTown={setActiveTownTicked}
@@ -632,7 +722,7 @@ export function App() {
         <section className="picks">
           <div className="picks-head">
             <h2 className="picks-title">
-              Editor's Picks <span className="picks-em">— this fortnight</span>
+              Editor's Picks <span className="picks-em">— coming up</span>
             </h2>
           </div>
           <div className="picks-rail">
@@ -679,9 +769,10 @@ export function App() {
       {eventStatus !== 'loading' &&
         eventStatus !== 'error' &&
         view !== 'map' &&
+        view !== 'month' &&
         (() => {
           const start = view === 'weekend' ? 0 : weekOffset * 7;
-          const end = view === 'weekend' ? 14 : start + 7;
+          const end = view === 'weekend' ? HORIZON_DAYS : start + 7;
           const rainyDays = [];
           for (let d = start; d < end; d++) {
             const wx = WEATHER[d];
@@ -733,6 +824,15 @@ export function App() {
                 filterCount={filterCount}
                 filterTick={filterTick}
                 onResetFilters={resetFilters}
+              />
+            )}
+            {view === 'month' && (
+              <MonthView
+                events={filtered}
+                saved={saved}
+                onOpen={viewEvent}
+                onPickDay={pickDay}
+                filterTick={filterTick}
               />
             )}
             {view === 'weekend' && (
@@ -843,6 +943,17 @@ export function App() {
           closing={drawerClosing}
         />
       )}
+      {openDay != null && (
+        <DayModal
+          d={openDay}
+          events={openDayEvents}
+          saved={saved}
+          onSave={toggleSave}
+          onOpen={viewEvent}
+          onClose={closeDay}
+          onOpenWeek={openWeekFor}
+        />
+      )}
       {planOpen && (
         <WeekendPlan
           events={events}
@@ -920,7 +1031,7 @@ function AboutModal({ onClose, generatedAt }) {
               </li>
             ))}
           </ul>
-          <h4 className="about-subhead">Colleges (off by default)</h4>
+          <h4 className="about-subhead">Colleges</h4>
           <ul>
             {COLLEGE_SOURCES.map(s => (
               <li key={s.id}>
@@ -936,13 +1047,13 @@ function AboutModal({ onClose, generatedAt }) {
               <a href={WEATHER_SOURCE.home} target="_blank" rel="noopener noreferrer">
                 {WEATHER_SOURCE.name}
               </a>{' '}
-              — 14-day forecast for Scranton
+              — 16-day forecast for Scranton
             </li>
           </ul>
           <p className="about-fine">
             Only titles and short excerpts are fetched, each linked back to its original page.
-            Requests carry a named User-Agent so site owners can reach us. Colleges are hidden by
-            default — their feeds carry many academic dates that aren't really public events.
+            Requests carry a named User-Agent so site owners can reach us. Colleges are on by
+            default; uncheck them in Filters if the academic dates get noisy.
           </p>
         </section>
 
@@ -1170,11 +1281,60 @@ function TownDropdown({ towns, value, onChange }) {
   );
 }
 
+function SourceGroup({ label, sources, activeSources, toggleSource, setSourceGroup, audience }) {
+  const onCount = sources.filter(s => activeSources.includes(s.id)).length;
+  return (
+    <div className="filters-srcgroup">
+      <div className="filters-srcgroup-head">
+        <span className="filters-srcgroup-k">{label}</span>
+        <span className="filters-srcgroup-links">
+          <button
+            type="button"
+            className="filters-hint-link"
+            onClick={() => setSourceGroup(audience, true)}
+            disabled={onCount === sources.length}
+          >
+            all
+          </button>
+          {' · '}
+          <button
+            type="button"
+            className="filters-hint-link"
+            onClick={() => setSourceGroup(audience, false)}
+            disabled={onCount === 0}
+          >
+            none
+          </button>
+        </span>
+      </div>
+      <div className="filters-cats">
+        {sources.map(s => (
+          <label
+            key={s.id}
+            className={`filters-cat filters-src ${activeSources.includes(s.id) ? 'is-on' : ''}`}
+            title={s.name}
+          >
+            <input
+              type="checkbox"
+              checked={activeSources.includes(s.id)}
+              onChange={() => toggleSource(s.id)}
+            />
+            <span className="filters-cat-label">{s.name}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function FiltersPanel({
   activeCats,
   toggleCat,
-  activeAudiences,
-  toggleAudience,
+  showAllCats,
+  activeSources,
+  toggleSource,
+  setSourceGroup,
+  showAllSources,
   allTowns,
   activeTown,
   setActiveTown,
@@ -1182,49 +1342,29 @@ function FiltersPanel({
   onClose,
   filterCount,
 }) {
+  const allCatsOn = activeCats.length === ALL_CATS.length;
+  const allSrcOn = activeSources.length === SOURCES.length;
   return (
     <div className="filters-panel" role="region" aria-label="Filters">
       <div className="filters-grid">
-        {/* SOURCE */}
-        <div className="filters-block">
-          <div className="filters-block-head">
-            <span className="filters-block-k">Source</span>
-            <span className="filters-block-hint">
-              community by default · colleges add ~50 academic dates
-            </span>
-          </div>
-          <div className="filters-block-rows">
-            {Object.entries(AUDIENCES).map(([k, a]) => (
-              <label
-                key={k}
-                className={`filters-check ${activeAudiences.includes(k) ? 'is-on' : ''}`}
-              >
-                <input
-                  type="checkbox"
-                  checked={activeAudiences.includes(k)}
-                  onChange={() => toggleAudience(k)}
-                />
-                <span className="filters-check-mark" aria-hidden="true">
-                  {activeAudiences.includes(k) ? '✓' : ''}
-                </span>
-                <span className="filters-check-body">
-                  <span className="filters-check-label">{a.label}</span>
-                  <span className="filters-check-desc">{a.description}</span>
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-
-        {/* CATEGORY */}
-        <div className="filters-block">
+        {/* CATEGORY — full width */}
+        <div className="filters-block filters-block-wide">
           <div className="filters-block-head">
             <span className="filters-block-k">Category</span>
             <span className="filters-block-hint">
-              {activeCats.length} of {ALL_CATS.length} on
+              {allCatsOn ? (
+                'all on · click one to show only it'
+              ) : (
+                <>
+                  {activeCats.length} of {ALL_CATS.length} on ·{' '}
+                  <button type="button" className="filters-hint-link" onClick={showAllCats}>
+                    show all
+                  </button>
+                </>
+              )}
             </span>
           </div>
-          <div className="filters-block-rows filters-cats">
+          <div className="filters-cats">
             {Object.entries(CATEGORIES).map(([k, c]) => (
               <label
                 key={k}
@@ -1241,6 +1381,41 @@ function FiltersPanel({
               </label>
             ))}
           </div>
+        </div>
+
+        {/* SOURCE */}
+        <div className="filters-block filters-block-sources">
+          <div className="filters-block-head">
+            <span className="filters-block-k">Source</span>
+            <span className="filters-block-hint">
+              {allSrcOn ? (
+                'all on · click one to show only it'
+              ) : (
+                <>
+                  {activeSources.length} of {SOURCES.length} on ·{' '}
+                  <button type="button" className="filters-hint-link" onClick={showAllSources}>
+                    show all
+                  </button>
+                </>
+              )}
+            </span>
+          </div>
+          <SourceGroup
+            label="Community"
+            audience="community"
+            sources={COMMUNITY_SOURCES}
+            activeSources={activeSources}
+            toggleSource={toggleSource}
+            setSourceGroup={setSourceGroup}
+          />
+          <SourceGroup
+            label="Colleges"
+            audience="college"
+            sources={COLLEGE_SOURCES}
+            activeSources={activeSources}
+            toggleSource={toggleSource}
+            setSourceGroup={setSourceGroup}
+          />
         </div>
 
         {/* TOWN */}

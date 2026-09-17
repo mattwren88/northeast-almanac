@@ -1,7 +1,8 @@
 // Calendar view — week grid with editorial styling
 
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { WEATHER, CATEGORIES, dateForDay, todayDayOffset } from './lib/data.js';
+import { WEATHER, CATEGORIES, DAYS, dateForDay, todayDayOffset } from './lib/data.js';
+import { HORIZON_DAYS, MAX_WEEK } from './lib/constants.js';
 
 // True only while the card-settle animation should actually be running.
 // The settle uses animation-fill-mode: both so staggered cards stay hidden
@@ -36,6 +37,18 @@ export function useIsMobile() {
   return m;
 }
 
+// Events grouped by day offset, each day sorted by start time.
+export function useEventsByDay(events) {
+  return useMemo(() => {
+    const m = {};
+    events.forEach(e => {
+      (m[e.day] ||= []).push(e);
+    });
+    Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
+    return m;
+  }, [events]);
+}
+
 export function CalendarView({
   events,
   saved,
@@ -62,27 +75,20 @@ export function CalendarView({
   const goNext = () => {
     setDir(1);
     setNavTick(t => t + 1);
-    setWeekOffset(Math.min(1, weekOffset + 1));
+    setWeekOffset(Math.min(MAX_WEEK, weekOffset + 1));
   };
   const navAnim =
     dir === 1 ? (navTick % 2 === 0 ? 'naInR1' : 'naInR2') : navTick % 2 === 0 ? 'naInL1' : 'naInL2';
   // On mobile we anchor the week to today (clamped within the 14-day horizon)
   // and ignore weekOffset — Prev/Next is hidden.
-  const startDay = isMobile ? Math.max(0, Math.min(todayD, 14 - 7)) : weekOffset * 7;
+  const startDay = isMobile ? Math.max(0, Math.min(todayD, HORIZON_DAYS - 7)) : weekOffset * 7;
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => startDay + i);
   const dates = useMemo(() => {
     const out = {};
-    for (let d = 0; d < 14; d++) out[d] = dateForDay(d);
+    for (let d = 0; d < HORIZON_DAYS; d++) out[d] = dateForDay(d);
     return out;
   }, []);
-  const eventsByDay = useMemo(() => {
-    const m = {};
-    events.forEach(e => {
-      (m[e.day] ||= []).push(e);
-    });
-    Object.values(m).forEach(arr => arr.sort((a, b) => a.start.localeCompare(b.start)));
-    return m;
-  }, [events]);
+  const eventsByDay = useEventsByDay(events);
   const startDate = dates[startDay];
   const endDate = dates[startDay + 6];
 
@@ -102,7 +108,7 @@ export function CalendarView({
             {endDate.month} {endDate.date}
           </div>
           {!isMobile && (
-            <button className="cal-nav-btn" onClick={goNext} disabled={weekOffset === 1}>
+            <button className="cal-nav-btn" onClick={goNext} disabled={weekOffset === MAX_WEEK}>
               Next ›
             </button>
           )}
@@ -132,12 +138,14 @@ export function CalendarView({
                 <div className="cal-head-row1">
                   <span className="cal-day-name">{date.weekday}</span>
                   {isToday && <span className="cal-today-dot">today</span>}
-                  <span className="cal-wx" title={`${wx.cond} · ${wx.high}°/${wx.low}°`}>
-                    <span className="cal-wx-glyph">{wx.icon}</span>
-                    <span className="cal-wx-temp">
-                      {wx.high}°/{wx.low}°
+                  {wx && (
+                    <span className="cal-wx" title={`${wx.cond} · ${wx.high}°/${wx.low}°`}>
+                      <span className="cal-wx-glyph">{wx.icon}</span>
+                      <span className="cal-wx-temp">
+                        {wx.high}°/{wx.low}°
+                      </span>
                     </span>
-                  </span>
+                  )}
                 </div>
                 <div className="cal-day-num">{date.date}</div>
               </div>
@@ -151,7 +159,7 @@ export function CalendarView({
                 {dayEvents.map((ev, i) => {
                   const cat = CATEGORIES[ev.category];
                   const isSaved = saved.includes(ev.id);
-                  const dimmed = weatherAware && wx.cond === 'rain' && !ev.indoor;
+                  const dimmed = weatherAware && wx?.cond === 'rain' && !ev.indoor;
                   return (
                     <article
                       key={ev.id}
@@ -203,6 +211,127 @@ export function CalendarView({
                     </article>
                   );
                 })}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ============ MONTH VIEW ============
+// Rolling five-week grid (Sun–Sat rows) starting the Sunday on/before the
+// anchor date. Days before the anchor have no data and render greyed.
+const MONTH_WEEKS = 5;
+const MONTH_MAX_LINES = 3;
+
+export function MonthView({ events, saved, onOpen, onPickDay, filterTick = 0 }) {
+  const todayD = todayDayOffset();
+  const settling = useFilterSettle(filterTick);
+  const eventsByDay = useEventsByDay(events);
+  const gridStart = -DAYS.indexOf(dateForDay(0).weekday);
+  const cells = Array.from({ length: MONTH_WEEKS * 7 }, (_, i) => gridStart + i);
+  const first = dateForDay(cells[0]);
+  const last = dateForDay(cells[cells.length - 1]);
+  const lineAnim = filterTick % 2 === 0 ? 'naCard1' : 'naCard2';
+
+  return (
+    <div className="cal-wrap mo-wrap">
+      <div className="cal-header">
+        <div className="cal-nav">
+          <div className="cal-week-label">
+            <span className="cal-week-em">Five weeks</span> {first.month} {first.date}
+            {' — '}
+            {last.month} {last.date}
+          </div>
+        </div>
+      </div>
+
+      <div className="mo-dow" aria-hidden="true">
+        {DAYS.map(d => (
+          <span key={d} className="mo-dow-name">
+            {d}
+          </span>
+        ))}
+      </div>
+
+      <div className="mo-grid">
+        {cells.map(d => {
+          const date = dateForDay(d);
+          const past = d < 0 || d >= HORIZON_DAYS;
+          const wx = WEATHER[d];
+          const dayEvents = past ? [] : eventsByDay[d] || [];
+          const shown = dayEvents.slice(0, MONTH_MAX_LINES);
+          const more = dayEvents.length - shown.length;
+          const isWeekend = date.weekday === 'Sat' || date.weekday === 'Sun';
+          const isToday = d === todayD;
+          const pick = () => !past && onPickDay(d);
+          return (
+            <div
+              key={d}
+              className={`mo-cell ${past ? 'is-past' : ''} ${isWeekend ? 'is-loud' : ''} ${isToday ? 'is-today' : ''}`}
+              onClick={pick}
+              onKeyDown={e => {
+                if (e.target !== e.currentTarget) return;
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  pick();
+                }
+              }}
+              role={past ? undefined : 'button'}
+              tabIndex={past ? -1 : 0}
+              aria-label={
+                past
+                  ? undefined
+                  : `${date.weekday} ${date.month} ${date.date}, ${dayEvents.length} events — open week`
+              }
+            >
+              <div className="mo-cell-head">
+                <span className="mo-day-num" data-wd={date.weekday}>
+                  {date.date === 1 || d === cells[0] ? `${date.month} ` : ''}
+                  {date.date}
+                </span>
+                {isToday && <span className="cal-today-dot">today</span>}
+                {wx && (
+                  <span className="mo-wx" title={`${wx.cond} · ${wx.high}°/${wx.low}°`}>
+                    {wx.icon}
+                  </span>
+                )}
+              </div>
+              <div className="mo-lines">
+                {shown.map((ev, i) => {
+                  const cat = CATEGORIES[ev.category];
+                  return (
+                    <button
+                      type="button"
+                      key={ev.id}
+                      className={`mo-evt ${settling ? 'evt-anim' : ''}`}
+                      style={{
+                        '--cat-color': cat.color,
+                        ...(settling
+                          ? { animationName: lineAnim, animationDelay: `${35 * i}ms` }
+                          : null),
+                      }}
+                      onClick={e => {
+                        e.stopPropagation();
+                        onOpen(ev.id);
+                      }}
+                      title={`${ev.title} · ${ev.venue}, ${ev.town}`}
+                    >
+                      <span className="mo-evt-time">{isAllDay(ev) ? 'all day' : fmtTime(ev.start)}</span>
+                      <span className="mo-evt-title">
+                        {saved.includes(ev.id) && (
+                          <span className="evt-star" aria-hidden="true">
+                            ★{' '}
+                          </span>
+                        )}
+                        {ev.title}
+                      </span>
+                    </button>
+                  );
+                })}
+                {more > 0 && <span className="mo-more">+{more} more</span>}
               </div>
             </div>
           );

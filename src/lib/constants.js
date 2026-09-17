@@ -6,4 +6,6 @@
 export const BBOX = { latMin: 40.8, latMax: 41.7, lngMin: -76.05, lngMax: -75.05 };
 
 // Days of events the scraper fetches and the app displays.
-export const HORIZON_DAYS = 14;
+export const HORIZON_DAYS = 42;
+export const MAX_WEEK = Math.ceil(HORIZON_DAYS / 7) - 1; // last weekOffset the Week view can show
+export const FORECAST_DAYS = 16; // Open-Meteo's cap — days beyond it have no weather

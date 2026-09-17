@@ -1,6 +1,6 @@
 # The Northeast Almanac
 
-A two-week calendar of things to do across Northeast Pennsylvania — markets, gallery
+A six-week calendar of things to do across Northeast Pennsylvania — markets, gallery
 openings, hikes, dive bars, opera-house touring acts — laid out like a weekend
 newspaper. Free, no ads, no tracking, no account.
 
@@ -15,7 +15,7 @@ No backend and no database — a static site plus a JSON file that a scheduled j
 rewrites:
 
 ```
-scripts/build-events.mjs   fetches ~14 days of events + weather  ─┐
+scripts/build-events.mjs   fetches ~42 days of events + 16 of weather  ─┐
                                                                   ├→ public/events.json
 .github/workflows/scrape.yml   runs it daily at 06:00 ET         ─┘
                                                                           ↓
@@ -32,7 +32,7 @@ in the masthead.
 | Path                       | What's in it                                                          |
 | -------------------------- | --------------------------------------------------------------------- |
 | `src/app.jsx`              | Masthead, toolbar, filters, colophon, About modal, plan/toasts        |
-| `src/calendar.jsx`         | Week grid, plus the time-formatting and `.ics`/calendar-link helpers  |
+| `src/calendar.jsx`         | Week + Month grids, plus the time-formatting and `.ics`/calendar-link helpers  |
 | `src/views.jsx`            | Map (Leaflet), Weekend, Index (Fuse search), event drawer, saved plan |
 | `src/lib/data.js`          | Event loading, the day↔date anchor math, categories, weather          |
 | `src/lib/constants.js`     | `BBOX` and `HORIZON_DAYS`, shared with the scraper                    |

@@ -41,8 +41,8 @@ export function eventLatLng(ev) {
 export function MapView({ events, saved, onOpen }) {
   const today = todayDayOffset();
   // Anchor the strip to today: show 7 days starting today, clamped so we
-  // always emit 7 valid offsets within the 14-day horizon.
-  const startDay = Math.max(0, Math.min(today, 14 - 7));
+  // always emit 7 valid offsets within the horizon.
+  const startDay = Math.max(0, Math.min(today, HORIZON_DAYS - 7));
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => startDay + i);
   const initialDay = days.includes(today) ? today : startDay;
   const [activeDay, setActiveDay] = useState(initialDay);
@@ -245,12 +245,14 @@ export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
                 <div className="weekend-head-row1">
                   <span className="weekend-col-wd">{date.weekday}</span>
                   {isToday && <span className="cal-today-dot">today</span>}
-                  <span className="cal-wx weekend-wx" title={`${wx.cond} · ${wx.high}°/${wx.low}°`}>
-                    <span className="cal-wx-glyph">{wx.icon}</span>
-                    <span className="cal-wx-temp">
-                      {wx.high}°/{wx.low}°
+                  {wx && (
+                    <span className="cal-wx weekend-wx" title={`${wx.cond} · ${wx.high}°/${wx.low}°`}>
+                      <span className="cal-wx-glyph">{wx.icon}</span>
+                      <span className="cal-wx-temp">
+                        {wx.high}°/{wx.low}°
+                      </span>
                     </span>
-                  </span>
+                  )}
                 </div>
                 <div className="weekend-col-num">{date.date}</div>
               </div>
@@ -259,7 +261,7 @@ export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
                 {dayEvents.map((ev, i) => {
                   const cat = CATEGORIES[ev.category];
                   const isSaved = saved.includes(ev.id);
-                  const dimmed = wx.cond === 'rain' && !ev.indoor;
+                  const dimmed = wx?.cond === 'rain' && !ev.indoor;
                   return (
                     <article
                       key={ev.id}
@@ -316,6 +318,131 @@ export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
 }
 
 // ============ LIST VIEW ============
+// One day's block from the Index view — sticky date header plus item rows.
+// Shared with the Month view's day modal.
+export function DayListing({ d, events, saved, onSave, onOpen }) {
+  const date = dateForDay(d);
+  const wx = WEATHER[d];
+  const dayEvents = events || [];
+  const isToday = d === todayDayOffset();
+  return (
+    <section className={`list-day ${isToday ? 'is-today' : ''}`}>
+      <header className="list-day-head">
+        <div className="list-day-num">{date.date}</div>
+        <div className="list-day-info">
+          <div className="list-day-wd">
+            {date.weekday}
+            {isToday && <span className="list-today-dot">today</span>}
+          </div>
+          <div className="list-day-month">{date.month}</div>
+        </div>
+        <div className="list-day-rule" />
+        {wx && (
+          <div className="list-day-wx">
+            {wx.icon} {wx.high}° / {wx.low}°
+          </div>
+        )}
+        <div className="list-day-count">
+          {dayEvents.length} {dayEvents.length === 1 ? 'event' : 'events'}
+        </div>
+      </header>
+      <div className="list-day-items">
+        {dayEvents.map(ev => {
+          const cat = CATEGORIES[ev.category];
+          const isSaved = saved.includes(ev.id);
+          return (
+            <article
+              key={ev.id}
+              className="list-item"
+              onClick={() => onOpen(ev.id)}
+              onKeyDown={onCardKey(() => onOpen(ev.id))}
+              role="button"
+              tabIndex={0}
+              aria-label={`${ev.title} at ${ev.venue}, ${ev.town}`}
+            >
+              <div className="list-item-time">
+                {isAllDay(ev) ? (
+                  <span className="list-item-start is-allday">All day</span>
+                ) : (
+                  <>
+                    <span className="list-item-start">{fmtTime(ev.start)}</span>
+                    <span className="list-item-end">to {fmtTime(ev.end)}</span>
+                  </>
+                )}
+              </div>
+              <div className="list-item-body">
+                <div className="list-item-meta">
+                  <span className="list-item-cat" style={{ color: cat.color }}>
+                    {cat.label}
+                  </span>
+                  {ev.featured && <span className="list-item-tag pick">Editor's pick</span>}
+                  {ev.hidden && <span className="list-item-tag hidden">Hidden gem</span>}
+                  {ev.recurring && <span className="list-item-tag recur">{ev.recurring}</span>}
+                </div>
+                <h3 className="list-item-title">{ev.title}</h3>
+                <p className="list-item-blurb">{ev.blurb}</p>
+                <div className="list-item-foot">
+                  <span>{ev.venue}</span>
+                  <span className="list-sep">·</span>
+                  <span>{ev.town}</span>
+                  <span className="list-sep">·</span>
+                  <span>{ev.price}</span>
+                </div>
+              </div>
+              <button
+                className={`list-item-save ${isSaved ? 'is-saved' : ''}`}
+                onClick={e => {
+                  e.stopPropagation();
+                  onSave(ev.id);
+                }}
+                aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
+                aria-pressed={isSaved}
+                title={isSaved ? 'Remove from plan' : 'Save to plan'}
+              >
+                {isSaved ? '★ Saved' : '☆ Save'}
+              </button>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+// Day modal — opened from a Month cell. Same layout as one Index day; clicking
+// an item opens the event drawer above it.
+export function DayModal({ d, events, saved, onSave, onOpen, onClose, onOpenWeek }) {
+  const date = dateForDay(d);
+  return (
+    <div className="day-backdrop" onClick={onClose}>
+      <aside
+        className="day-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-label={`${date.weekday}, ${date.month} ${date.date}`}
+        onClick={e => e.stopPropagation()}
+      >
+        <button className="about-close" onClick={onClose} aria-label="Close" autoFocus>
+          ×
+        </button>
+        {events.length > 0 ? (
+          <DayListing d={d} events={events} saved={saved} onSave={onSave} onOpen={onOpen} />
+        ) : (
+          <>
+            <DayListing d={d} events={[]} saved={saved} onSave={onSave} onOpen={onOpen} />
+            <div className="list-empty">Nothing listed for this day.</div>
+          </>
+        )}
+        <div className="day-modal-foot">
+          <button type="button" className="day-modal-week" onClick={() => onOpenWeek(d)}>
+            Open this week in the Week view →
+          </button>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
 function useDebouncedValue(value, delayMs) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -392,7 +519,6 @@ export function ListView({ events, saved, onSave, onOpen, filterCount = 0, onRes
     () => searched.filter(e => dayInRange(e.day)).length,
     [searched, dayInRange],
   );
-  const todayD = todayDayOffset();
 
   return (
     <div className="list-wrap">
@@ -450,93 +576,18 @@ export function ListView({ events, saved, onSave, onOpen, filterCount = 0, onRes
         </div>
       )}
       {visibleDays.length === 0 && <div className="list-empty">No events in this range.</div>}
-      {visibleDays.map(d => {
-        const date = dates[d];
-        const wx = WEATHER[d];
-        const dayEvents = searchedByDay[d] || [];
-        if (dayEvents.length === 0) return null;
-        const isToday = d === todayD;
-        return (
-          <section key={d} className={`list-day ${isToday ? 'is-today' : ''}`}>
-            <header className="list-day-head">
-              <div className="list-day-num">{date.date}</div>
-              <div className="list-day-info">
-                <div className="list-day-wd">
-                  {date.weekday}
-                  {isToday && <span className="list-today-dot">today</span>}
-                </div>
-                <div className="list-day-month">{date.month}</div>
-              </div>
-              <div className="list-day-rule" />
-              <div className="list-day-wx">
-                {wx.icon} {wx.high}° / {wx.low}°
-              </div>
-              <div className="list-day-count">{dayEvents.length} events</div>
-            </header>
-            <div className="list-day-items">
-              {dayEvents.map(ev => {
-                const cat = CATEGORIES[ev.category];
-                const isSaved = saved.includes(ev.id);
-                return (
-                  <article
-                    key={ev.id}
-                    className="list-item"
-                    onClick={() => onOpen(ev.id)}
-                    onKeyDown={onCardKey(() => onOpen(ev.id))}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`${ev.title} at ${ev.venue}, ${ev.town}`}
-                  >
-                    <div className="list-item-time">
-                      {isAllDay(ev) ? (
-                        <span className="list-item-start is-allday">All day</span>
-                      ) : (
-                        <>
-                          <span className="list-item-start">{fmtTime(ev.start)}</span>
-                          <span className="list-item-end">to {fmtTime(ev.end)}</span>
-                        </>
-                      )}
-                    </div>
-                    <div className="list-item-body">
-                      <div className="list-item-meta">
-                        <span className="list-item-cat" style={{ color: cat.color }}>
-                          {cat.label}
-                        </span>
-                        {ev.featured && <span className="list-item-tag pick">Editor's pick</span>}
-                        {ev.hidden && <span className="list-item-tag hidden">Hidden gem</span>}
-                        {ev.recurring && (
-                          <span className="list-item-tag recur">{ev.recurring}</span>
-                        )}
-                      </div>
-                      <h3 className="list-item-title">{ev.title}</h3>
-                      <p className="list-item-blurb">{ev.blurb}</p>
-                      <div className="list-item-foot">
-                        <span>{ev.venue}</span>
-                        <span className="list-sep">·</span>
-                        <span>{ev.town}</span>
-                        <span className="list-sep">·</span>
-                        <span>{ev.price}</span>
-                      </div>
-                    </div>
-                    <button
-                      className={`list-item-save ${isSaved ? 'is-saved' : ''}`}
-                      onClick={e => {
-                        e.stopPropagation();
-                        onSave(ev.id);
-                      }}
-                      aria-label={isSaved ? 'Remove from plan' : 'Save to plan'}
-                      aria-pressed={isSaved}
-                      title={isSaved ? 'Remove from plan' : 'Save to plan'}
-                    >
-                      {isSaved ? '★ Saved' : '☆ Save'}
-                    </button>
-                  </article>
-                );
-              })}
-            </div>
-          </section>
-        );
-      })}
+      {visibleDays.map(d =>
+        (searchedByDay[d] || []).length === 0 ? null : (
+          <DayListing
+            key={d}
+            d={d}
+            events={searchedByDay[d]}
+            saved={saved}
+            onSave={onSave}
+            onOpen={onOpen}
+          />
+        ),
+      )}
     </div>
   );
 }
@@ -606,7 +657,7 @@ export function EventDrawer({ event, isSaved, onSave, onClose, closing = false }
             <div className="drawer-stat">
               <div className="drawer-stat-k">Forecast</div>
               <div className="drawer-stat-v">
-                {wx.icon} {wx.high}° / {wx.low}°
+                {wx ? `${wx.icon} ${wx.high}° / ${wx.low}°` : 'Beyond forecast'}
               </div>
             </div>
             {event.recurring && (

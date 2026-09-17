@@ -5,6 +5,7 @@
 // when events.json is missing (e.g., before the first scrape) so the app still renders.
 
 // Mock events are lazy-loaded from mock-events.json on the fallback path.
+import { HORIZON_DAYS } from './constants.js';
 let _mockEventsCache = null;
 async function loadMockEvents() {
   if (_mockEventsCache) return _mockEventsCache;
@@ -103,7 +104,7 @@ export function thisWeekendDays() {
   const startToday = todayDayOffset();
   const out = [];
   let started = false;
-  for (let d = startToday; d < 14 && out.length < 3; d++) {
+  for (let d = startToday; d < HORIZON_DAYS && out.length < 3; d++) {
     if (d < 0) continue;
     const wd = dateForDay(d).weekday;
     const isWE = wd === 'Fri' || wd === 'Sat' || wd === 'Sun';
@@ -138,17 +139,6 @@ export async function loadEvents() {
   }
 }
 
-export const AUDIENCES = {
-  community: {
-    label: 'Community',
-    description: 'Public events from regional venues and publishers',
-  },
-  college: {
-    label: 'Colleges',
-    description: 'University of Scranton, Marywood, Keystone (lots of academic dates)',
-  },
-};
-export const ALL_AUDIENCES = Object.keys(AUDIENCES);
 
 export const CATEGORIES = {
   market: { label: 'Markets', color: '#E07A1F', icon: '🛍' },

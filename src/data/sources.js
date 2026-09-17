@@ -18,7 +18,21 @@
 //   25livepub.collegenet.com — User-agent: * Disallow: (empty) → fully allowed. ✓
 //   www.keystone.edu         — User-agent: * Disallow: (empty), Crawl-delay: 10 — we
 //                              hit it once per daily run, well under that. ✓
+// robots.txt review (verified 2026-09-17):
+//   monroepl.org             — User-agent: * Disallow: (empty). ✓
+//   osterhout.info           — User-agent: * Disallow: (empty). ✓
+//   waverlycomm.org          — Only a WP-Optimize json file blocked. ✓
+//   sccmt.org                — Only a WP-Optimize json file blocked. ✓
+//   countrysideconservancy.org — Only /wp-admin/ blocked. ✓
+//   news.wilkes.edu          — Disallow: (empty) plus one old post. ✓
+//   www.kings.edu            — User-agent: * with no Disallow lines. ✓
+//   www.northampton.edu      — Disallows /today/, /_move/ etc.; /events/_data/ not blocked. ✓
 // Re-verify if you fork this and aim a new UA at any of them.
+//
+// `town`/`coords` on a source are the fallback location for events that carry
+// no venue of their own (all college feeds; some Tribe feeds like Osterhout).
+// `filter` (uos-json only) keeps just events whose fields match — NCC's feed is
+// college-wide, so we take only the Pocono campus.
 
 export const SOURCES = [
   {
@@ -54,6 +68,56 @@ export const SOURCES = [
     api: 'https://scrantonpa.gov/wp-json/tribe/events/v1/events',
   },
   {
+    id: 'empl',
+    name: 'Eastern Monroe Public Library',
+    audience: 'community',
+    type: 'tribe',
+    home: 'https://www.monroepl.org/events/',
+    api: 'https://www.monroepl.org/wp-json/tribe/events/v1/events',
+    town: 'Stroudsburg',
+    coords: [40.9865, -75.1945],
+  },
+  {
+    id: 'ost',
+    name: 'Osterhout Free Library',
+    audience: 'community',
+    type: 'tribe',
+    home: 'https://www.osterhout.info/events/',
+    api: 'https://www.osterhout.info/wp-json/tribe/events/v1/events',
+    town: 'Wilkes-Barre',
+    coords: [41.2459, -75.8813],
+  },
+  {
+    id: 'wch',
+    name: 'Waverly Community House',
+    audience: 'community',
+    type: 'tribe',
+    home: 'https://www.waverlycomm.org/events/',
+    api: 'https://www.waverlycomm.org/wp-json/tribe/events/v1/events',
+    town: 'Waverly',
+    coords: [41.5262, -75.7118],
+  },
+  {
+    id: 'scc',
+    name: 'Scranton Cultural Center',
+    audience: 'community',
+    type: 'tribe',
+    home: 'https://www.sccmt.org/events/',
+    api: 'https://www.sccmt.org/wp-json/tribe/events/v1/events',
+    town: 'Scranton',
+    coords: [41.4088, -75.6642],
+  },
+  {
+    id: 'ccon',
+    name: 'Countryside Conservancy',
+    audience: 'community',
+    type: 'tribe',
+    home: 'https://www.countrysideconservancy.org/events/',
+    api: 'https://www.countrysideconservancy.org/wp-json/tribe/events/v1/events',
+    town: 'La Plume',
+    coords: [41.5868, -75.7825],
+  },
+  {
     id: 'uosc',
     name: 'University of Scranton',
     audience: 'college',
@@ -82,6 +146,37 @@ export const SOURCES = [
     api: 'https://www.keystone.edu/events/feed/',
     town: 'La Plume',
     coords: [41.5868, -75.7825],
+  },
+  {
+    id: 'wilk',
+    name: 'Wilkes University',
+    audience: 'college',
+    type: 'tribe',
+    home: 'https://news.wilkes.edu/events/',
+    api: 'https://news.wilkes.edu/wp-json/tribe/events/v1/events',
+    town: 'Wilkes-Barre',
+    coords: [41.2437, -75.8847],
+  },
+  {
+    id: 'king',
+    name: "King's College",
+    audience: 'college',
+    type: 'uos-json',
+    home: 'https://www.kings.edu/events/',
+    api: 'https://www.kings.edu/events/_data/current-live.json',
+    town: 'Wilkes-Barre',
+    coords: [41.2483, -75.8829],
+  },
+  {
+    id: 'nccm',
+    name: 'Northampton CC – Monroe Campus',
+    audience: 'college',
+    type: 'uos-json',
+    home: 'https://www.northampton.edu/events/',
+    api: 'https://www.northampton.edu/events/_data/current-live.json',
+    filter: { filter2: 'Pocono' },
+    town: 'Tannersville',
+    coords: [41.057, -75.3145],
   },
 ];
 

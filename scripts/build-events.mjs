@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Fetches the next ~14 days of NEPA events from a registry of public Tribe
+// Fetches the next HORIZON_DAYS of NEPA events from a registry of public Tribe
 // Events Calendar REST APIs (DiscoverNEPA + others) and writes events.json
 // in the shape the app expects.
 //
@@ -10,8 +10,13 @@ import { writeFile, readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
-import { BBOX, HORIZON_DAYS } from '../src/lib/constants.js';
-import { COMMUNITY_SOURCES as SOURCES, COLLEGE_SOURCES } from '../src/data/sources.js';
+import { BBOX, HORIZON_DAYS, FORECAST_DAYS } from '../src/lib/constants.js';
+import { SOURCES as ALL_SOURCES } from '../src/data/sources.js';
+
+// Route by feed type, not audience: a college can publish via Tribe (Wilkes) and
+// a community venue could in principle publish via the college-style feeds.
+const SOURCES = ALL_SOURCES.filter(s => s.type === 'tribe');
+const COLLEGE_SOURCES = ALL_SOURCES.filter(s => s.type !== 'tribe');
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, '..');
@@ -104,6 +109,10 @@ const TOWN_COORDS = {
   'mount pocono': [41.1212, -75.3613],
   // Wyoming County
   tunkhannock: [41.5384, -75.9474],
+  // Others
+  waverly: [41.5262, -75.7118],
+  'la plume': [41.5868, -75.7825],
+  tannersville: [41.057, -75.3145],
 };
 
 function townCoords(town) {
@@ -212,7 +221,7 @@ async function fetchWeather() {
     daily: 'temperature_2m_max,temperature_2m_min,weather_code',
     temperature_unit: 'fahrenheit',
     timezone: 'America/New_York',
-    forecast_days: String(HORIZON_DAYS),
+    forecast_days: String(Math.min(HORIZON_DAYS, FORECAST_DAYS)),
   });
   const res = await fetch(`${WEATHER_API}?${params}`, {
     headers: { 'User-Agent': UA },
@@ -267,11 +276,14 @@ function normalize(raw, anchorYmd, source) {
   const day = dayOffset(raw.start_date, anchorYmd);
   if (day < 0 || day >= HORIZON_DAYS) return null;
 
-  const town = fixTown(raw.venue?.city || '');
+  // Some Tribe feeds (libraries, campuses) list events with no venue at all;
+  // fall back to the source's own town/coords rather than dropping them.
+  const venueTown = fixTown(raw.venue?.city || '');
+  const town = venueTown || source.town || '';
   let lat = parseFloat(raw.venue?.geo_lat);
   let lng = parseFloat(raw.venue?.geo_lng);
   if (!(Number.isFinite(lat) && Number.isFinite(lng))) {
-    const fallback = townCoords(town);
+    const fallback = (venueTown ? townCoords(venueTown) : source.coords) || townCoords(town);
     if (fallback) [lat, lng] = fallback;
   }
   if (!(Number.isFinite(lat) && Number.isFinite(lng) && inBbox(lat, lng))) return null;
@@ -295,7 +307,9 @@ function normalize(raw, anchorYmd, source) {
     category,
     price: cost,
     indoor,
-    featured: !!raw.featured,
+    // Ignore Tribe's own `featured` flag — some venues mark every event — so
+    // Editor's Picks come only from curated.json.
+    featured: false,
     hidden: false,
     blurb,
     tags: [...(raw.tags || []).map(t => stripHtml(t.name))].filter(Boolean).slice(0, 5),
@@ -531,6 +545,13 @@ function normalizeCollegeEvent({
   };
 }
 
+// `source.filter` = { field: value }; every field must contain the value. Fields
+// may be a string or an array (NCC's campus filter is an array).
+function matchesFilter(raw, filter) {
+  if (!filter) return true;
+  return Object.entries(filter).every(([k, v]) => [].concat(raw[k] ?? []).includes(v));
+}
+
 async function fetchUofSJson(source, anchorYmd) {
   const res = await fetch(source.api, {
     headers: { 'User-Agent': UA, Accept: 'application/json' },
@@ -540,6 +561,7 @@ async function fetchUofSJson(source, anchorYmd) {
   const j = await res.json();
   const events = Array.isArray(j.events) ? j.events : [];
   return events
+    .filter(raw => matchesFilter(raw, source.filter))
     .map(raw => {
       const startD = raw.startDate ? new Date(raw.startDate) : null;
       const endD = raw.endDate ? new Date(raw.endDate) : null;
