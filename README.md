@@ -1,10 +1,10 @@
-# The Northeast Gazette
+# The Northeast Almanac
 
 A two-week calendar of things to do across Northeast Pennsylvania — markets, gallery
 openings, hikes, dive bars, opera-house touring acts — laid out like a weekend
 newspaper. Free, no ads, no tracking, no account.
 
-**Live:** <https://mattwren88.github.io/northeast-gazette/>
+**Live:** <https://mattwren88.github.io/northeast-almanac/>
 
 Listings come from public calendars run by the venues and publishers themselves, and
 every entry links back to its source. A GitHub Action re-scrapes them each morning.
@@ -52,7 +52,7 @@ Requires Node 18+.
 npm install
 npm run dev       # Vite dev server
 npm run build     # production build → dist/
-npm run preview   # serve the built site at the real /northeast-gazette/ base path
+npm run preview   # serve the built site at the real /northeast-almanac/ base path
 npm run scrape    # re-run the scraper → public/events.json
 ```
 
@@ -84,7 +84,7 @@ Repo setting required: **Settings → Pages → Source = GitHub Actions**.
 ## Corrections & removals
 
 If you run a venue or source listed here and want a listing pulled, the cadence
-changed, or your name spelled right — [open an issue](https://github.com/mattwren88/northeast-gazette/issues).
+changed, or your name spelled right — [open an issue](https://github.com/mattwren88/northeast-almanac/issues).
 Usually fixed within a day.
 
 ## License

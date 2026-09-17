@@ -548,7 +548,7 @@ export function App() {
                 'NOVEMBER',
                 'DECEMBER',
               ][t.getMonth()];
-              return `${wd}, ${mo} ${t.getDate()}, ${t.getFullYear()} — TWO-WEEK GAZETTE`;
+              return `${wd}, ${mo} ${t.getDate()}, ${t.getFullYear()} — TWO-WEEK ALMANAC`;
             })()}
           </div>
           <div className="mast-price">FREE · PA</div>
@@ -557,7 +557,7 @@ export function App() {
         <div className="mast-title-row">
           <h1 className="mast-title">
             <span className="mast-the">The</span>
-            <span className="mast-name">Northeast Gazette</span>
+            <span className="mast-name">Northeast Almanac</span>
           </h1>
           <div className="mast-actions">
             <ThemeToggle />
@@ -799,7 +799,7 @@ export function App() {
             <div className="colophon-k">About</div>
             <div className="colophon-v">
               <button className="colophon-link" onClick={openAbout}>
-                How this gazette is made →
+                How this almanac is made →
               </button>
             </div>
           </div>
@@ -807,7 +807,7 @@ export function App() {
         <div className="colophon-fine">
           © {new Date().getFullYear()} Matt Wren · Code under the{' '}
           <a
-            href="https://github.com/mattwren88/northeast-gazette/blob/main/LICENSE"
+            href="https://github.com/mattwren88/northeast-almanac/blob/main/LICENSE"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -815,7 +815,7 @@ export function App() {
           </a>
           {' · '}
           <a
-            href="https://github.com/mattwren88/northeast-gazette"
+            href="https://github.com/mattwren88/northeast-almanac"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -823,7 +823,7 @@ export function App() {
           </a>
           {' · '}
           <a
-            href="https://github.com/mattwren88/northeast-gazette/issues"
+            href="https://github.com/mattwren88/northeast-almanac/issues"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -899,8 +899,8 @@ function AboutModal({ onClose, generatedAt }) {
         <button className="about-close" onClick={onClose} aria-label="Close" autoFocus>
           ×
         </button>
-        <div className="about-eyebrow">COLOPHON · ABOUT THE GAZETTE</div>
-        <h2 className="about-title">How this gazette is made</h2>
+        <div className="about-eyebrow">COLOPHON · ABOUT THE ALMANAC</div>
+        <h2 className="about-title">How this almanac is made</h2>
 
         <p className="about-lede">
           A weekend planner for Northeast Pennsylvania, kept by one person and refreshed each
@@ -972,11 +972,11 @@ function AboutModal({ onClose, generatedAt }) {
             If you run a venue or source above and want a listing pulled, the cadence changed, or
             your name spelled right — open an issue at{' '}
             <a
-              href="https://github.com/mattwren88/northeast-gazette/issues"
+              href="https://github.com/mattwren88/northeast-almanac/issues"
               target="_blank"
               rel="noopener noreferrer"
             >
-              github.com/mattwren88/northeast-gazette/issues
+              github.com/mattwren88/northeast-almanac/issues
             </a>
             . Usually fixed within a day.
           </p>
@@ -1014,7 +1014,7 @@ function AboutModal({ onClose, generatedAt }) {
           <p className="about-fine">
             Code released under the{' '}
             <a
-              href="https://github.com/mattwren88/northeast-gazette/blob/main/LICENSE"
+              href="https://github.com/mattwren88/northeast-almanac/blob/main/LICENSE"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -1026,7 +1026,7 @@ function AboutModal({ onClose, generatedAt }) {
 
         <footer className="about-foot">
           <a
-            href="https://github.com/mattwren88/northeast-gazette"
+            href="https://github.com/mattwren88/northeast-almanac"
             target="_blank"
             rel="noopener noreferrer"
           >
