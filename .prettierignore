@@ -8,6 +8,7 @@ curated.json
 
 # Agent working notes, not shipped source.
 .claude/
+.superpowers/
 
 # Hand-tuned editorial CSS — column alignment and grouping are deliberate.
 src/style.css

@@ -3,6 +3,10 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { WEATHER, CATEGORIES, DAYS, dateForDay, todayDayOffset } from './lib/data.js';
 import { HORIZON_DAYS, MAX_WEEK } from './lib/constants.js';
+import { isAllDay, pickHighlights } from './lib/highlights.js';
+
+// Re-exported so views.jsx and other callers keep importing it from here.
+export { isAllDay };
 
 // True only while the card-settle animation should actually be running.
 // The settle uses animation-fill-mode: both so staggered cards stay hidden
@@ -53,6 +57,7 @@ export function CalendarView({
   events,
   saved,
   onOpen,
+  onPickDay,
   weekOffset,
   setWeekOffset,
   weatherAware,
@@ -123,6 +128,9 @@ export function CalendarView({
           const date = dates[d];
           const wx = WEATHER[d];
           const dayEvents = eventsByDay[d] || [];
+          const { allDay, picks, hiddenCount } = pickHighlights(dayEvents, saved);
+          // Visible text leads each accessible name (WCAG 2.5.3).
+          const seeAllSuffix = `see all ${dayEvents.length} events on ${date.weekday}, ${date.month} ${date.date}`;
           const isWeekend = date.weekday === 'Sat' || date.weekday === 'Sun';
           const isToday = d === todayD;
           // "Loud" days — today, or (weekend emphasis, hardcoded on) a Sat/Sun.
@@ -156,7 +164,17 @@ export function CalendarView({
                     {filterCount > 0 ? '— Filtered out —' : '— Nothing yet —'}
                   </div>
                 )}
-                {dayEvents.map((ev, i) => {
+                {allDay.length > 0 && (
+                  <button
+                    type="button"
+                    className="cal-allday"
+                    onClick={() => onPickDay(d)}
+                    aria-label={`All day, ${allDay.length} ${allDay.length === 1 ? 'listing' : 'listings'}, ${seeAllSuffix}`}
+                  >
+                    All day · {allDay.length} {allDay.length === 1 ? 'listing' : 'listings'} →
+                  </button>
+                )}
+                {picks.map((ev, i) => {
                   const cat = CATEGORIES[ev.category];
                   const isSaved = saved.includes(ev.id);
                   const dimmed = weatherAware && wx?.cond === 'rain' && !ev.indoor;
@@ -212,6 +230,16 @@ export function CalendarView({
                   );
                 })}
               </div>
+              {hiddenCount > 0 && (
+                <button
+                  type="button"
+                  className="cal-more"
+                  onClick={() => onPickDay(d)}
+                  aria-label={`+${hiddenCount} more, ${seeAllSuffix}`}
+                >
+                  +{hiddenCount} more →
+                </button>
+              )}
             </div>
           );
         })}
@@ -319,7 +347,9 @@ export function MonthView({ events, saved, onOpen, onPickDay, filterTick = 0 }) 
                       }}
                       title={`${ev.title} · ${ev.venue}, ${ev.town}`}
                     >
-                      <span className="mo-evt-time">{isAllDay(ev) ? 'all day' : fmtTime(ev.start)}</span>
+                      <span className="mo-evt-time">
+                        {isAllDay(ev) ? 'all day' : fmtTime(ev.start)}
+                      </span>
                       <span className="mo-evt-title">
                         {saved.includes(ev.id) && (
                           <span className="evt-star" aria-hidden="true">
@@ -346,10 +376,6 @@ export function fmtTime(t) {
   const ampm = h >= 12 ? 'PM' : 'AM';
   const hh = h % 12 === 0 ? 12 : h % 12;
   return m === 0 ? `${hh} ${ampm}` : `${hh}:${m.toString().padStart(2, '0')} ${ampm}`;
-}
-
-export function isAllDay(ev) {
-  return ev && ev.start === '00:00' && ev.end === '23:59';
 }
 
 export function fmtEventTime(ev, { range = false } = {}) {

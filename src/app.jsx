@@ -1,13 +1,7 @@
 // Main app — masthead, sidebar, view switching, filters
 
 import { Fragment, useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import {
-  CATEGORIES,
-  WEATHER,
-  dateForDay,
-  todayDayOffset,
-  loadEvents,
-} from './lib/data.js';
+import { CATEGORIES, WEATHER, dateForDay, todayDayOffset, loadEvents } from './lib/data.js';
 import { CalendarView, MonthView, fmtEventTime } from './calendar.jsx';
 import { MapView, WeekendView, ListView, EventDrawer, WeekendPlan, DayModal } from './views.jsx';
 import { SOURCES, COMMUNITY_SOURCES, COLLEGE_SOURCES, WEATHER_SOURCE } from './data/sources.js';
@@ -818,6 +812,7 @@ export function App() {
                 saved={saved}
                 onSave={toggleSave}
                 onOpen={viewEvent}
+                onPickDay={pickDay}
                 weekOffset={weekOffset}
                 setWeekOffset={setWeekOffset}
                 weatherAware={true}
@@ -951,7 +946,7 @@ export function App() {
           onSave={toggleSave}
           onOpen={viewEvent}
           onClose={closeDay}
-          onOpenWeek={openWeekFor}
+          onOpenWeek={view === 'calendar' ? null : openWeekFor}
         />
       )}
       {planOpen && (

@@ -246,7 +246,10 @@ export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
                   <span className="weekend-col-wd">{date.weekday}</span>
                   {isToday && <span className="cal-today-dot">today</span>}
                   {wx && (
-                    <span className="cal-wx weekend-wx" title={`${wx.cond} · ${wx.high}°/${wx.low}°`}>
+                    <span
+                      className="cal-wx weekend-wx"
+                      title={`${wx.cond} · ${wx.high}°/${wx.low}°`}
+                    >
                       <span className="cal-wx-glyph">{wx.icon}</span>
                       <span className="cal-wx-temp">
                         {wx.high}°/{wx.low}°
@@ -433,11 +436,13 @@ export function DayModal({ d, events, saved, onSave, onOpen, onClose, onOpenWeek
             <div className="list-empty">Nothing listed for this day.</div>
           </>
         )}
-        <div className="day-modal-foot">
-          <button type="button" className="day-modal-week" onClick={() => onOpenWeek(d)}>
-            Open this week in the Week view →
-          </button>
-        </div>
+        {onOpenWeek && (
+          <div className="day-modal-foot">
+            <button type="button" className="day-modal-week" onClick={() => onOpenWeek(d)}>
+              Open this week in the Week view →
+            </button>
+          </div>
+        )}
       </aside>
     </div>
   );

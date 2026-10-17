@@ -139,7 +139,6 @@ export async function loadEvents() {
   }
 }
 
-
 export const CATEGORIES = {
   market: { label: 'Markets', color: '#E07A1F', icon: '🛍' },
   food: { label: 'Food & Drink', color: '#D63838', icon: '🍴' },

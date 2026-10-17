@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "scrape": "node scripts/build-events.mjs"
+    "scrape": "node scripts/build-events.mjs",
+    "test": "node --test"
   },
   "engines": {
     "node": ">=18"
