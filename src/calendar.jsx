@@ -3,6 +3,10 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { WEATHER, CATEGORIES, DAYS, dateForDay, todayDayOffset } from './lib/data.js';
 import { HORIZON_DAYS, MAX_WEEK } from './lib/constants.js';
+import { isAllDay } from './lib/highlights.js';
+
+// Re-exported so views.jsx and other callers keep importing it from here.
+export { isAllDay };
 
 // True only while the card-settle animation should actually be running.
 // The settle uses animation-fill-mode: both so staggered cards stay hidden
@@ -319,7 +323,9 @@ export function MonthView({ events, saved, onOpen, onPickDay, filterTick = 0 }) 
                       }}
                       title={`${ev.title} · ${ev.venue}, ${ev.town}`}
                     >
-                      <span className="mo-evt-time">{isAllDay(ev) ? 'all day' : fmtTime(ev.start)}</span>
+                      <span className="mo-evt-time">
+                        {isAllDay(ev) ? 'all day' : fmtTime(ev.start)}
+                      </span>
                       <span className="mo-evt-title">
                         {saved.includes(ev.id) && (
                           <span className="evt-star" aria-hidden="true">
@@ -346,10 +352,6 @@ export function fmtTime(t) {
   const ampm = h >= 12 ? 'PM' : 'AM';
   const hh = h % 12 === 0 ? 12 : h % 12;
   return m === 0 ? `${hh} ${ampm}` : `${hh}:${m.toString().padStart(2, '0')} ${ampm}`;
-}
-
-export function isAllDay(ev) {
-  return ev && ev.start === '00:00' && ev.end === '23:59';
 }
 
 export function fmtEventTime(ev, { range = false } = {}) {
