@@ -35,6 +35,7 @@ in the masthead.
 | `src/calendar.jsx`         | Week + Month grids, plus the time-formatting and `.ics`/calendar-link helpers |
 | `src/views.jsx`            | Map (Leaflet), Weekend, Index (Fuse search), event drawer, saved plan         |
 | `src/lib/data.js`          | Event loading, the day↔date anchor math, categories, weather                  |
+| `src/lib/weather.js`       | Open-Meteo forecast shaping (daily + 3-hourly), the forecast card's summary   |
 | `src/lib/constants.js`     | `BBOX` and `HORIZON_DAYS`, shared with the scraper                            |
 | `src/data/sources.js`      | The one source registry — UI attribution _and_ scraper endpoints              |
 | `src/theme.js`             | Light/dark theme state                                                        |

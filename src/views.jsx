@@ -16,6 +16,7 @@ import {
   eventToOutlookUrl,
   downloadIcs,
   slugify,
+  WeatherChip,
 } from './calendar.jsx';
 import { BBOX, HORIZON_DAYS } from './lib/constants.js';
 import { loadBasemap } from './lib/basemap.js';
@@ -249,17 +250,7 @@ export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
                 <div className="weekend-head-row1">
                   <span className="weekend-col-wd">{date.weekday}</span>
                   {isToday && <span className="cal-today-dot">today</span>}
-                  {wx && (
-                    <span
-                      className="cal-wx weekend-wx"
-                      title={`${wx.cond} · ${wx.high}°/${wx.low}°`}
-                    >
-                      <span className="cal-wx-glyph">{wx.icon}</span>
-                      <span className="cal-wx-temp">
-                        {wx.high}°/{wx.low}°
-                      </span>
-                    </span>
-                  )}
+                  {wx && <WeatherChip wx={wx} d={d} className="weekend-wx" />}
                 </div>
                 <div className="weekend-col-num">{date.date}</div>
               </div>
