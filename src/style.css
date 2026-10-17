@@ -2869,10 +2869,10 @@ body::before {
 }
 
 /* ============ DARK MODE: MAP ============ */
-/* CARTO Voyager only ships light tiles, so invert them back into the dark
-   palette. hue-rotate undoes the color flip that invert() causes; the small
-   grayscale/contrast pull keeps roads and labels from glowing. */
-:root[data-theme='dark'] .leaflet-tile {
+/* The OpenFreeMap Positron basemap is light-only, so invert its canvas back
+   into the dark palette. hue-rotate undoes the color flip that invert() causes;
+   the small grayscale/contrast pull keeps roads and labels from glowing. */
+:root[data-theme='dark'] .leaflet-gl-layer {
   filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.88) grayscale(0.22);
 }
 :root[data-theme='dark'] .leaflet-canvas,
@@ -3079,3 +3079,95 @@ body::before {
   .day-backdrop { padding: 10px; }
   .day-modal { max-height: 92vh; padding: 18px 16px 14px; }
 }
+
+/* ============ WEATHER CARD ============
+   The header's weather reading is a button; its forecast card floats below
+   it (it's small and transient, so it overlays rather than pushing the grid).
+   Hover opens it after 120ms on fine pointers; .is-open is the click/tap/
+   keyboard state. visibility (not display) keeps the fade working and hides
+   the closed card from screen readers. */
+.wx-chip { position: relative; }
+.wx-btn {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 1px dotted var(--rule);
+  margin: 0;
+  padding: 0 0 1px;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.wx-btn:hover,
+.wx-chip.is-open .wx-btn { color: var(--ink); border-bottom-color: var(--ink-3); }
+.wx-card {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  right: -6px;
+  width: 280px;
+  display: block;
+  padding: 12px 14px 12px;
+  background: var(--paper-3);
+  border: 1px solid var(--ink);
+  box-shadow: 0 3px 0 var(--rule-soft);
+  text-align: left;
+  color: var(--ink);
+  letter-spacing: normal;
+  text-transform: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.16s ease,
+    transform 0.18s ease,
+    visibility 0s linear 0.18s;
+}
+/* Bridges the gap above the card so moving the cursor onto it keeps it open. */
+.wx-card::before { content: ''; position: absolute; left: 0; right: 0; top: -10px; height: 10px; }
+.wx-chip.align-left .wx-card { right: auto; left: -6px; }
+.wx-chip.is-open .wx-card {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.16s ease,
+    transform 0.18s ease,
+    visibility 0s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .wx-chip:hover .wx-card {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.16s ease 0.12s,
+      transform 0.18s ease 0.12s,
+      visibility 0s linear 0.12s;
+  }
+}
+.wx-card-summary { display: block; font-family: var(--display); font-size: 20px; line-height: 1.1; }
+.wx-card-line { display: block; margin-top: 4px; font-family: var(--serif); font-size: 13px; color: var(--ink-2); }
+.wx-card-sun { display: block; margin-top: 2px; font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
+.wx-hours {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid var(--rule-soft);
+}
+.wx-hour {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--ink-3);
+}
+.wx-hour-t { font-family: var(--display); font-size: 16px; line-height: 1.2; color: var(--ink); }
+.wx-hour-i { font-size: 12px; line-height: 1.3; }

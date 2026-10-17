@@ -19,8 +19,10 @@ import {
   EventRows,
   timeGroups,
   useScrollGuard,
+  WeatherChip,
 } from './calendar.jsx';
 import { BBOX, HORIZON_DAYS } from './lib/constants.js';
+import { loadBasemap } from './lib/basemap.js';
 import { SOURCES_BY_ID } from './data/sources.js';
 
 export const onCardKey = handler => e => {
@@ -70,13 +72,16 @@ export function MapView({ events, saved, onOpen }) {
       zoomControl: true,
       scrollWheelZoom: true,
     });
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap &copy; CARTO',
-      subdomains: 'abcd',
-      maxZoom: 19,
-    }).addTo(map);
+    // The basemap loads async; markers draw immediately on top of an empty map.
+    let unmounted = false;
+    loadBasemap()
+      .then(makeLayer => {
+        if (!unmounted) makeLayer().addTo(map);
+      })
+      .catch(err => console.warn('Basemap failed to load', err));
     mapRef.current = map;
     return () => {
+      unmounted = true;
       map.remove();
       mapRef.current = null;
     };
@@ -251,17 +256,7 @@ export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
                 <div className="weekend-head-row1">
                   <span className="weekend-col-wd">{date.weekday}</span>
                   {isToday && <span className="cal-today-dot">today</span>}
-                  {wx && (
-                    <span
-                      className="cal-wx weekend-wx"
-                      title={`${wx.cond} · ${wx.high}°/${wx.low}°`}
-                    >
-                      <span className="cal-wx-glyph">{wx.icon}</span>
-                      <span className="cal-wx-temp">
-                        {wx.high}°/{wx.low}°
-                      </span>
-                    </span>
-                  )}
+                  {wx && <WeatherChip wx={wx} d={d} className="weekend-wx" />}
                 </div>
                 <div className="weekend-col-num">{date.date}</div>
               </div>

@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { WEATHER, CATEGORIES, DAYS, dateForDay, todayDayOffset } from './lib/data.js';
+import { summarize, slotIcon } from './lib/weather.js';
 import { HORIZON_DAYS, MAX_WEEK } from './lib/constants.js';
 import { isAllDay, pickHighlights, groupByStart } from './lib/highlights.js';
 
@@ -242,14 +243,7 @@ export function CalendarView({
                 <div className="cal-head-row1">
                   <span className="cal-day-name">{date.weekday}</span>
                   {isToday && <span className="cal-today-dot">today</span>}
-                  {wx && (
-                    <span className="cal-wx" title={`${wx.cond} · ${wx.high}°/${wx.low}°`}>
-                      <span className="cal-wx-glyph">{wx.icon}</span>
-                      <span className="cal-wx-temp">
-                        {wx.high}°/{wx.low}°
-                      </span>
-                    </span>
-                  )}
+                  {wx && <WeatherChip wx={wx} d={d} />}
                 </div>
                 <div className="cal-day-num">{date.date}</div>
               </div>
@@ -581,4 +575,100 @@ export function downloadIcs(filename, ics) {
   a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// ============ WEATHER CARD ============
+// A day header's weather reading opens a forecast card: summary line,
+// high/low, rain chance, sunrise/sunset and a 3-hourly strip (first week only).
+// Mouse: opens on hover after a short delay (CSS). Keyboard and touch: the
+// button toggles it; Escape or a click elsewhere closes it.
+const WX_CARD_WIDTH = 280;
+const slotLabel = h => `${h % 12 === 0 ? 12 : h % 12}${h < 12 ? 'a' : 'p'}`;
+
+export function WeatherChip({ wx, d, className = '' }) {
+  const [open, setOpen] = useState(false);
+  const [alignLeft, setAlignLeft] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = e => {
+      if (!ref.current?.contains(e.target)) setOpen(false);
+    };
+    const onKey = e => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  // The chip sits at the right of its column, so the card hangs leftward from
+  // it — except near the left edge of the screen, where it flips.
+  const place = () => {
+    const r = ref.current?.getBoundingClientRect();
+    if (r) setAlignLeft(r.right - WX_CARD_WIDTH < 8);
+  };
+
+  const summary = summarize(wx);
+  // Today's card drops slots that are already over.
+  const nowHour = new Date().getHours();
+  const hours = (wx.hours || []).filter(s => d !== todayDayOffset() || s.h + 3 > nowHour);
+
+  return (
+    <span
+      ref={ref}
+      className={`cal-wx wx-chip ${className} ${open ? 'is-open' : ''} ${alignLeft ? 'align-left' : ''}`}
+      onMouseEnter={place}
+    >
+      <button
+        type="button"
+        className="wx-btn"
+        aria-expanded={open}
+        aria-label={`${summary}, high ${wx.high}°, low ${wx.low}°. Forecast details`}
+        onClick={() => {
+          place();
+          setOpen(o => !o);
+        }}
+      >
+        <span className="cal-wx-glyph" aria-hidden="true">
+          {wx.icon}
+        </span>
+        <span className="cal-wx-temp">
+          {wx.high}°/{wx.low}°
+        </span>
+      </button>
+      <span className="wx-card">
+        <span className="wx-card-summary">{summary}</span>
+        <span className="wx-card-line">
+          High {wx.high}° · Low {wx.low}°{wx.rain != null && ` · Rain ${wx.rain}%`}
+        </span>
+        {wx.sunrise && wx.sunset && (
+          <span className="wx-card-sun">
+            Sunrise {fmtTime(wx.sunrise)} · Sunset {fmtTime(wx.sunset)}
+          </span>
+        )}
+        {hours.length > 0 && (
+          <span className="wx-hours">
+            {hours.map(s => (
+              <span
+                key={s.h}
+                className="wx-hour"
+                role="img"
+                aria-label={`${fmtTime(`${s.h}:00`)}: ${s.temp}°, ${s.cond}, ${s.rain}% chance of rain`}
+              >
+                <span className="wx-hour-h">{slotLabel(s.h)}</span>
+                <span className="wx-hour-t">{s.temp}°</span>
+                <span className="wx-hour-i">{slotIcon(s, wx)}</span>
+                <span className="wx-hour-r">{s.rain}%</span>
+              </span>
+            ))}
+          </span>
+        )}
+      </span>
+    </span>
+  );
 }
