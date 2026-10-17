@@ -64,6 +64,32 @@ test('saved events go in first', () => {
   assert.equal(r.hiddenCount, 2);
 });
 
+test('featured events go in after saved', () => {
+  const day = spreadDay.map(e => (e.id === 'm4' ? { ...e, featured: true } : e));
+  const r = pickHighlights(day, ['e2']);
+  // e2 (saved) and m4 (featured) first, then round-robin: m1, a1, e1.
+  assert.deepEqual(ids(r.picks), ['m1', 'm4', 'a1', 'e1', 'e2']);
+  assert.equal(r.hiddenCount, 2);
+});
+
+test('saved picks count toward the category cap', () => {
+  const r = pickHighlights(
+    [
+      ev('s1', '08:00'),
+      ev('s2', '09:00'),
+      ev('c3', '10:00'),
+      ev('c4', '13:00'),
+      ev('c5', '18:00'),
+      ev('x1', '19:00', 'art'),
+    ],
+    ['s1', 's2'],
+    4,
+  );
+  // Capped pass skips community everywhere and takes art; the relaxed pass adds c3.
+  assert.deepEqual(ids(r.picks), ['s1', 's2', 'c3', 'x1']);
+  assert.equal(r.hiddenCount, 2);
+});
+
 test('more saved events than slots: earliest saved fill every slot', () => {
   const r = pickHighlights(spreadDay, ids(spreadDay));
   assert.deepEqual(ids(r.picks), ['m1', 'm2', 'm3', 'm4', 'a1']);

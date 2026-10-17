@@ -946,7 +946,7 @@ export function App() {
           onSave={toggleSave}
           onOpen={viewEvent}
           onClose={closeDay}
-          onOpenWeek={openWeekFor}
+          onOpenWeek={view === 'calendar' ? null : openWeekFor}
         />
       )}
       {planOpen && (

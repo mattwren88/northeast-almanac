@@ -1,4 +1,5 @@
-// Which of a day's events the week grid shows as cards. Everything else sits
+// Which of a day's events the week grid shows as cards: saved ones, then
+// editor-featured ones, then a spread across the day. Everything else sits
 // behind the column's "+N more" link, which opens the full day sheet.
 
 export const HIGHLIGHT_COUNT = 5;
@@ -38,6 +39,8 @@ export function pickHighlights(dayEvents, savedIds = [], n = HIGHLIGHT_COUNT) {
   const saved = new Set(savedIds);
 
   const picks = timed.filter(ev => saved.has(ev.id)).slice(0, n);
+  // Featured events are the editor's picks; the week grid has no picks rail.
+  picks.push(...timed.filter(ev => ev.featured && !picks.includes(ev)).slice(0, n - picks.length));
   const perCat = {};
   picks.forEach(ev => (perCat[ev.category] = (perCat[ev.category] || 0) + 1));
 

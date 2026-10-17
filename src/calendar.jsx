@@ -129,7 +129,8 @@ export function CalendarView({
           const wx = WEATHER[d];
           const dayEvents = eventsByDay[d] || [];
           const { allDay, picks, hiddenCount } = pickHighlights(dayEvents, saved);
-          const seeAllLabel = `See all ${dayEvents.length} events on ${date.weekday}, ${date.month} ${date.date}`;
+          // Visible text leads each accessible name (WCAG 2.5.3).
+          const seeAllSuffix = `see all ${dayEvents.length} events on ${date.weekday}, ${date.month} ${date.date}`;
           const isWeekend = date.weekday === 'Sat' || date.weekday === 'Sun';
           const isToday = d === todayD;
           // "Loud" days — today, or (weekend emphasis, hardcoded on) a Sat/Sun.
@@ -168,7 +169,7 @@ export function CalendarView({
                     type="button"
                     className="cal-allday"
                     onClick={() => onPickDay(d)}
-                    aria-label={seeAllLabel}
+                    aria-label={`All day, ${allDay.length} ${allDay.length === 1 ? 'listing' : 'listings'}, ${seeAllSuffix}`}
                   >
                     All day · {allDay.length} {allDay.length === 1 ? 'listing' : 'listings'} →
                   </button>
@@ -234,7 +235,7 @@ export function CalendarView({
                   type="button"
                   className="cal-more"
                   onClick={() => onPickDay(d)}
-                  aria-label={seeAllLabel}
+                  aria-label={`+${hiddenCount} more, ${seeAllSuffix}`}
                 >
                   +{hiddenCount} more →
                 </button>
