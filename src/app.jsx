@@ -1,13 +1,7 @@
 // Main app — masthead, sidebar, view switching, filters
 
 import { Fragment, useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import {
-  CATEGORIES,
-  WEATHER,
-  dateForDay,
-  todayDayOffset,
-  loadEvents,
-} from './lib/data.js';
+import { CATEGORIES, WEATHER, dateForDay, todayDayOffset, loadEvents } from './lib/data.js';
 import { CalendarView, MonthView, fmtEventTime } from './calendar.jsx';
 import { MapView, WeekendView, ListView, EventDrawer, WeekendPlan, DayModal } from './views.jsx';
 import { SOURCES, COMMUNITY_SOURCES, COLLEGE_SOURCES, WEATHER_SOURCE } from './data/sources.js';

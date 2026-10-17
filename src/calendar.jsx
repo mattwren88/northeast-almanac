@@ -319,7 +319,9 @@ export function MonthView({ events, saved, onOpen, onPickDay, filterTick = 0 }) 
                       }}
                       title={`${ev.title} · ${ev.venue}, ${ev.town}`}
                     >
-                      <span className="mo-evt-time">{isAllDay(ev) ? 'all day' : fmtTime(ev.start)}</span>
+                      <span className="mo-evt-time">
+                        {isAllDay(ev) ? 'all day' : fmtTime(ev.start)}
+                      </span>
                       <span className="mo-evt-title">
                         {saved.includes(ev.id) && (
                           <span className="evt-star" aria-hidden="true">
