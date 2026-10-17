@@ -57,3 +57,15 @@ export function pickHighlights(dayEvents, savedIds = [], n = HIGHLIGHT_COUNT) {
   picks.sort(byStart);
   return { allDay, picks, hiddenCount: timed.length - picks.length };
 }
+
+// Consecutive events sharing a start time, so a list can print each time once.
+// Expects `events` sorted by start; returns [{ start, events }] in order.
+export function groupByStart(events) {
+  const groups = [];
+  for (const ev of events) {
+    const last = groups[groups.length - 1];
+    if (last && last.start === ev.start) last.events.push(ev);
+    else groups.push({ start: ev.start, events: [ev] });
+  }
+  return groups;
+}
