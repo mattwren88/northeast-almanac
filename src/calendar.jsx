@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { WEATHER, CATEGORIES, DAYS, dateForDay, todayDayOffset } from './lib/data.js';
 import { HORIZON_DAYS, MAX_WEEK } from './lib/constants.js';
-import { isAllDay } from './lib/highlights.js';
+import { isAllDay, pickHighlights } from './lib/highlights.js';
 
 // Re-exported so views.jsx and other callers keep importing it from here.
 export { isAllDay };
@@ -57,6 +57,7 @@ export function CalendarView({
   events,
   saved,
   onOpen,
+  onPickDay,
   weekOffset,
   setWeekOffset,
   weatherAware,
@@ -127,6 +128,8 @@ export function CalendarView({
           const date = dates[d];
           const wx = WEATHER[d];
           const dayEvents = eventsByDay[d] || [];
+          const { allDay, picks, hiddenCount } = pickHighlights(dayEvents, saved);
+          const seeAllLabel = `See all ${dayEvents.length} events on ${date.weekday}, ${date.month} ${date.date}`;
           const isWeekend = date.weekday === 'Sat' || date.weekday === 'Sun';
           const isToday = d === todayD;
           // "Loud" days — today, or (weekend emphasis, hardcoded on) a Sat/Sun.
@@ -160,7 +163,17 @@ export function CalendarView({
                     {filterCount > 0 ? '— Filtered out —' : '— Nothing yet —'}
                   </div>
                 )}
-                {dayEvents.map((ev, i) => {
+                {allDay.length > 0 && (
+                  <button
+                    type="button"
+                    className="cal-allday"
+                    onClick={() => onPickDay(d)}
+                    aria-label={seeAllLabel}
+                  >
+                    All day · {allDay.length} {allDay.length === 1 ? 'listing' : 'listings'} →
+                  </button>
+                )}
+                {picks.map((ev, i) => {
                   const cat = CATEGORIES[ev.category];
                   const isSaved = saved.includes(ev.id);
                   const dimmed = weatherAware && wx?.cond === 'rain' && !ev.indoor;
@@ -216,6 +229,16 @@ export function CalendarView({
                   );
                 })}
               </div>
+              {hiddenCount > 0 && (
+                <button
+                  type="button"
+                  className="cal-more"
+                  onClick={() => onPickDay(d)}
+                  aria-label={seeAllLabel}
+                >
+                  +{hiddenCount} more →
+                </button>
+              )}
             </div>
           );
         })}

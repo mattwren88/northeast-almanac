@@ -33,6 +33,7 @@
 ### Task 1: Highlight selection module
 
 **Files:**
+
 - Create: `src/lib/highlights.js`
 - Create: `src/lib/highlights.test.js`
 - Modify: `src/calendar.jsx:351-353` (move `isAllDay` out, import and re-export it)
@@ -40,6 +41,7 @@
 - Modify: `.github/workflows/ci.yml` (add test step)
 
 **Interfaces:**
+
 - Consumes: nothing from other tasks. Event objects shaped like `public/events.json` entries: `{ id: string, start: 'HH:MM', end: 'HH:MM', category: string, ... }`.
 - Produces:
   - `HIGHLIGHT_COUNT` (number, `5`)
@@ -211,7 +213,8 @@ export function isAllDay(ev) {
   return ev && ev.start === '00:00' && ev.end === '23:59';
 }
 
-const byStart = (a, b) => a.start.localeCompare(b.start) || String(a.id).localeCompare(String(b.id));
+const byStart = (a, b) =>
+  a.start.localeCompare(b.start) || String(a.id).localeCompare(String(b.id));
 
 // 0 = morning, 1 = afternoon, 2 = evening.
 const bucketOf = ev => (ev.start < '12:00' ? 0 : ev.start < '17:00' ? 1 : 2);
@@ -289,8 +292,8 @@ export { isAllDay };
 In `.github/workflows/ci.yml`, insert after the `Lint` step:
 
 ```yaml
-      - name: Test
-        run: npm test
+- name: Test
+  run: npm test
 ```
 
 - [ ] **Step 8: Format, build, commit**
@@ -310,11 +313,13 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 ### Task 2: Render capped columns in the week view
 
 **Files:**
+
 - Modify: `src/calendar.jsx` (`CalendarView` props and the per-day column body, ~lines 52–223)
 - Modify: `src/app.jsx:816-826` (pass `onPickDay` to `CalendarView`)
 - Modify: `src/style.css:403-410` (`.cal-col`), `464-479` (`.cal-events` and its scrollbar rules), `1477` (mobile `max-height`), plus new `.cal-allday` / `.cal-more` rules
 
 **Interfaces:**
+
 - Consumes: `pickHighlights(dayEvents, saved)` → `{ allDay, picks, hiddenCount }` from Task 1 (already imported into `calendar.jsx`). `pickDay(d)` in `app.jsx` (line 584) opens `DayModal` for day offset `d`, captures focus for return, and is already reflected in the URL as `?day=`.
 - Produces: `CalendarView` accepts a new `onPickDay: (d: number) => void` prop. DOM hooks used for verification: `.cal-allday` and `.cal-more` buttons inside each `.cal-col`.
 
@@ -349,8 +354,8 @@ export function CalendarView({
 In the `days.map(d => { ... })` body, directly after `const dayEvents = eventsByDay[d] || [];`, add:
 
 ```jsx
-          const { allDay, picks, hiddenCount } = pickHighlights(dayEvents, saved);
-          const seeAllLabel = `See all ${dayEvents.length} events on ${date.weekday}, ${date.month} ${date.date}`;
+const { allDay, picks, hiddenCount } = pickHighlights(dayEvents, saved);
+const seeAllLabel = `See all ${dayEvents.length} events on ${date.weekday}, ${date.month} ${date.date}`;
 ```
 
 - [ ] **Step 4: Render the all-day row, the capped cards, and the footer**
@@ -451,13 +456,18 @@ Replace the `.cal-events` rule and the three `.cal-events::-webkit-scrollbar*` r
   padding: 9px 13px 10px;
   color: var(--press-red);
 }
-.cal-more:hover { background: var(--paper); }
+.cal-more:hover {
+  background: var(--paper);
+}
 ```
 
 In the `@media (max-width: 800px)` block, delete this line (around line 1477):
 
 ```css
-  .cal-col { height: auto; max-height: 540px; }
+.cal-col {
+  height: auto;
+  max-height: 540px;
+}
 ```
 
 Grid items stretch by default, so every column in a row matches the tallest one. `.cal-events` takes up the leftover space (`flex: 1`), which keeps each `.cal-more` at the bottom of its column and lines them up across the row.
@@ -490,6 +500,7 @@ At desktop width, run this in the page:
 Expected: every `cards` ≤ 5, every `innerScroll` is `false`, and busy days show a `more` such as `+23 more →`. All non-`-1` `moreBottom` values are equal.
 
 Then check:
+
 - Click a `+N more` footer. The day modal opens for that date, and its listing count equals `cards` + N + the all-day count. Escape closes it and focus returns to the footer button.
 - Click an all-day row. The same modal opens.
 - Turn on a category filter (e.g. only Nightlife). Cards and counts update, and a day left with only all-day events shows the row with no footer and no "Filtered out" text.
