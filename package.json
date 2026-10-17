@@ -13,9 +13,11 @@
     "node": ">=18"
   },
   "dependencies": {
+    "@maplibre/maplibre-gl-leaflet": "^0.1.4",
     "fuse.js": "^7.4.2",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
+    "maplibre-gl": "^6.11.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

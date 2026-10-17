@@ -2768,10 +2768,10 @@ body::before {
 }
 
 /* ============ DARK MODE: MAP ============ */
-/* CARTO Voyager only ships light tiles, so invert them back into the dark
-   palette. hue-rotate undoes the color flip that invert() causes; the small
-   grayscale/contrast pull keeps roads and labels from glowing. */
-:root[data-theme='dark'] .leaflet-tile {
+/* The OpenFreeMap Positron basemap is light-only, so invert its canvas back
+   into the dark palette. hue-rotate undoes the color flip that invert() causes;
+   the small grayscale/contrast pull keeps roads and labels from glowing. */
+:root[data-theme='dark'] .leaflet-gl-layer {
   filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.88) grayscale(0.22);
 }
 :root[data-theme='dark'] .leaflet-canvas,
