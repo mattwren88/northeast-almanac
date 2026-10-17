@@ -16,6 +16,9 @@ import {
   eventToOutlookUrl,
   downloadIcs,
   slugify,
+  EventRows,
+  timeGroups,
+  useScrollGuard,
 } from './calendar.jsx';
 import { BBOX, HORIZON_DAYS } from './lib/constants.js';
 import { SOURCES_BY_ID } from './data/sources.js';
@@ -203,6 +206,7 @@ export function MapView({ events, saved, onOpen }) {
 // ============ WEEKEND VIEW ============
 export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
   const settling = useFilterSettle(filterTick);
+  useScrollGuard();
   const days = thisWeekendDays();
   const eventsByDay = useMemo(() => {
     const m = {};
@@ -237,6 +241,8 @@ export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
           const date = dateForDay(d);
           const wx = WEATHER[d];
           const dayEvents = eventsByDay[d] || [];
+          const allDay = dayEvents.filter(isAllDay);
+          const timed = dayEvents.filter(ev => !isAllDay(ev));
           const isToday = d === todayD;
           const cardAnim = filterTick % 2 === 0 ? 'naCard1' : 'naCard2';
           return (
@@ -261,56 +267,17 @@ export function WeekendView({ events, saved, onOpen, filterTick = 0 }) {
               </div>
               <div className="weekend-events">
                 {dayEvents.length === 0 && <div className="cal-empty">— Nothing yet —</div>}
-                {dayEvents.map((ev, i) => {
-                  const cat = CATEGORIES[ev.category];
-                  const isSaved = saved.includes(ev.id);
-                  const dimmed = wx?.cond === 'rain' && !ev.indoor;
-                  return (
-                    <article
-                      key={ev.id}
-                      className={`evt ${settling ? 'evt-anim' : ''} ${dimmed ? 'evt-dim' : ''} ${ev.featured ? 'evt-featured' : ''}`}
-                      style={
-                        settling
-                          ? {
-                              animationName: cardAnim,
-                              animationDelay: `${35 * Math.min(i, 8)}ms`,
-                            }
-                          : undefined
-                      }
-                      onClick={() => onOpen(ev.id)}
-                      onKeyDown={onCardKey(() => onOpen(ev.id))}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`${ev.title} at ${ev.venue}, ${ev.town}`}
-                    >
-                      <div className="evt-bar" style={{ background: cat.color }} />
-                      <div className="evt-body">
-                        <span className={`evt-time ${isAllDay(ev) ? 'is-allday' : ''}`}>
-                          {fmtEventTime(ev)}
-                        </span>
-                        <h3 className="evt-title">{ev.title}</h3>
-                        <div className="evt-where">
-                          <span className="evt-venue">{ev.venue}</span>
-                          <span className="evt-sep">·</span>
-                          <span className="evt-town">{ev.town}</span>
-                        </div>
-                        {ev.blurb && <p className="evt-blurb">{ev.blurb}</p>}
-                        <div className="evt-foot">
-                          <span className="evt-cat" style={{ color: cat.color }}>
-                            {cat.label.toUpperCase()}
-                          </span>
-                          {ev.featured && <span className="evt-pick">Pick</span>}
-                          {isSaved && (
-                            <span className="evt-star" aria-hidden="true">
-                              ★
-                            </span>
-                          )}
-                        </div>
-                        {dimmed && <div className="evt-warn">Outdoor · rain forecast</div>}
-                      </div>
-                    </article>
-                  );
-                })}
+                <EventRows
+                  groups={[
+                    ...(allDay.length ? [{ label: 'All day', events: allDay }] : []),
+                    ...timeGroups(timed),
+                  ]}
+                  saved={saved}
+                  onOpen={onOpen}
+                  rainy={wx?.cond === 'rain'}
+                  settling={settling}
+                  cardAnim={cardAnim}
+                />
               </div>
             </div>
           );

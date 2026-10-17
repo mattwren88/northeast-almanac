@@ -8,24 +8,100 @@ import { isAllDay, pickHighlights, groupByStart } from './lib/highlights.js';
 // Re-exported so views.jsx and other callers keep importing it from here.
 export { isAllDay, groupByStart };
 
-// Week rows expand on hover. While the page scrolls, rows slide under a still
+// Event rows expand on hover. While the page scrolls, rows slide under a still
 // cursor and would flicker open one after another, so hover expansion is
-// suppressed (via `.is-scrolling`) until scrolling has been idle for 150ms.
-function useScrollGuard(ref) {
+// suppressed (via `.is-scrolling` on <html>) until scrolling has been idle for
+// 150ms. Called once by each view that renders EventRows.
+export function useScrollGuard() {
   useEffect(() => {
+    const root = document.documentElement;
     let timer;
     const onScroll = () => {
-      ref.current?.classList.add('is-scrolling');
+      root.classList.add('is-scrolling');
       clearTimeout(timer);
-      timer = setTimeout(() => ref.current?.classList.remove('is-scrolling'), 150);
+      timer = setTimeout(() => root.classList.remove('is-scrolling'), 150);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', onScroll);
       clearTimeout(timer);
+      root.classList.remove('is-scrolling');
     };
-  }, [ref]);
+  }, []);
 }
+
+// Calm ruled event rows under one label per time slot, shared by the Week and
+// Weekend views. A row expands in place on hover/focus to show its blurb and
+// category (see .evt-row / .evt-more in style.css). `groups` is
+// [{ label, events }]; rows dim with a warning when `rainy` and outdoors.
+export function EventRows({ groups, saved, onOpen, rainy, settling, cardAnim }) {
+  let order = 0;
+  return groups.map(group => (
+    <div key={group.label} className="cal-slot">
+      <div className="cal-slot-time">{group.label}</div>
+      {group.events.map(ev => {
+        const i = order++;
+        const cat = CATEGORIES[ev.category];
+        const isSaved = saved.includes(ev.id);
+        const dimmed = rainy && !ev.indoor;
+        return (
+          <article
+            key={ev.id}
+            className={`evt evt-row ${settling ? 'evt-anim' : ''} ${dimmed ? 'evt-dim' : ''} ${ev.featured ? 'evt-featured' : ''}`}
+            style={
+              settling
+                ? { animationName: cardAnim, animationDelay: `${35 * Math.min(i, 8)}ms` }
+                : undefined
+            }
+            onClick={() => onOpen(ev.id)}
+            onKeyDown={e => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onOpen(ev.id);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label={`${group.label}, ${ev.title} at ${ev.venue}, ${ev.town}`}
+          >
+            <div className="evt-bar" style={{ background: cat.color }} />
+            <div className="evt-body">
+              <h3 className="evt-title">
+                {ev.title}
+                {ev.featured && <span className="evt-pick">Pick</span>}
+                {isSaved && (
+                  <span className="evt-star" aria-hidden="true">
+                    ★
+                  </span>
+                )}
+              </h3>
+              <div className="evt-where">
+                <span className="evt-venue">{ev.venue}</span>
+                <span className="evt-sep">·</span>
+                <span className="evt-town">{ev.town}</span>
+              </div>
+              {dimmed && <div className="evt-warn">Outdoor · rain forecast</div>}
+              <div className="evt-more">
+                <div className="evt-more-inner">
+                  {ev.blurb && <p className="evt-blurb">{ev.blurb}</p>}
+                  <div className="evt-foot">
+                    <span className="evt-cat" style={{ color: cat.color }}>
+                      {cat.label.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  ));
+}
+
+// Timed events → EventRows groups, one per start time.
+export const timeGroups = events =>
+  groupByStart(events).map(g => ({ label: fmtTime(g.start), events: g.events }));
 
 // True only while the card-settle animation should actually be running.
 // The settle uses animation-fill-mode: both so staggered cards stay hidden
@@ -113,8 +189,7 @@ export function CalendarView({
     return out;
   }, []);
   const eventsByDay = useEventsByDay(events);
-  const gridRef = useRef(null);
-  useScrollGuard(gridRef);
+  useScrollGuard();
   const startDate = dates[startDay];
   const endDate = dates[startDay + 6];
 
@@ -142,7 +217,6 @@ export function CalendarView({
       </div>
 
       <div
-        ref={gridRef}
         className="cal-grid cal-grid-anim"
         style={navTick > 0 ? { animationName: navAnim } : undefined}
       >
@@ -196,71 +270,14 @@ export function CalendarView({
                     All day · {allDay.length} {allDay.length === 1 ? 'listing' : 'listings'} →
                   </button>
                 )}
-                {groupByStart(picks).map(group => (
-                  <div key={group.start} className="cal-slot">
-                    <div className="cal-slot-time">{fmtTime(group.start)}</div>
-                    {group.events.map(ev => {
-                      const i = picks.indexOf(ev);
-                      const cat = CATEGORIES[ev.category];
-                      const isSaved = saved.includes(ev.id);
-                      const dimmed = weatherAware && wx?.cond === 'rain' && !ev.indoor;
-                      return (
-                        <article
-                          key={ev.id}
-                          className={`evt evt-row ${settling ? 'evt-anim' : ''} ${dimmed ? 'evt-dim' : ''} ${ev.featured ? 'evt-featured' : ''}`}
-                          style={
-                            settling
-                              ? {
-                                  animationName: cardAnim,
-                                  animationDelay: `${35 * Math.min(i, 8)}ms`,
-                                }
-                              : undefined
-                          }
-                          onClick={() => onOpen(ev.id)}
-                          onKeyDown={e => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                              e.preventDefault();
-                              onOpen(ev.id);
-                            }
-                          }}
-                          role="button"
-                          tabIndex={0}
-                          aria-label={`${fmtTime(ev.start)}, ${ev.title} at ${ev.venue}, ${ev.town}`}
-                        >
-                          <div className="evt-bar" style={{ background: cat.color }} />
-                          <div className="evt-body">
-                            <h3 className="evt-title">
-                              {ev.title}
-                              {ev.featured && <span className="evt-pick">Pick</span>}
-                              {isSaved && (
-                                <span className="evt-star" aria-hidden="true">
-                                  ★
-                                </span>
-                              )}
-                            </h3>
-                            <div className="evt-where">
-                              <span className="evt-venue">{ev.venue}</span>
-                              <span className="evt-sep">·</span>
-                              <span className="evt-town">{ev.town}</span>
-                            </div>
-                            {dimmed && <div className="evt-warn">Outdoor · rain forecast</div>}
-                            {/* Revealed in place on hover/focus — see .evt-more in style.css. */}
-                            <div className="evt-more">
-                              <div className="evt-more-inner">
-                                {ev.blurb && <p className="evt-blurb">{ev.blurb}</p>}
-                                <div className="evt-foot">
-                                  <span className="evt-cat" style={{ color: cat.color }}>
-                                    {cat.label.toUpperCase()}
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </article>
-                      );
-                    })}
-                  </div>
-                ))}
+                <EventRows
+                  groups={timeGroups(picks)}
+                  saved={saved}
+                  onOpen={onOpen}
+                  rainy={weatherAware && wx?.cond === 'rain'}
+                  settling={settling}
+                  cardAnim={cardAnim}
+                />
               </div>
               {hiddenCount > 0 && (
                 <button
