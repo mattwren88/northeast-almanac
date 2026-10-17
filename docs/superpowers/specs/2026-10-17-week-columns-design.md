@@ -56,8 +56,10 @@ Algorithm, over the day's (already filtered) events:
 4. Round-robin morning → afternoon → evening, taking the earliest event in each
    bucket whose category has fewer than 2 picks so far, until `n` picks or no
    bucket yields one.
-5. If slots remain, fill them in start order from what's left, ignoring the
-   category cap.
+5. If slots remain, repeat the same round-robin with the category cap lifted, so
+   a mostly-one-category day (63% of listings are `community`) still spreads
+   across the day instead of filling with morning events. Saved picks count
+   toward the category cap.
 6. Sort `picks` by start; `hiddenCount` = timed events not picked.
 
 Ties on start time break by `id` so the selection is stable across renders.
