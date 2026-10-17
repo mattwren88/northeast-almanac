@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { pickHighlights, isAllDay } from './highlights.js';
+import { pickHighlights, isAllDay, groupByStart } from './highlights.js';
 
 const ev = (id, start, category = 'community', end = '23:00') => ({ id, start, end, category });
 const allDay = id => ({ id, start: '00:00', end: '23:59', category: 'community' });
@@ -149,4 +149,27 @@ test('equal start times break ties by id, whatever the input order', () => {
 test('does not mutate its input', () => {
   const input = Object.freeze([...spreadDay].reverse());
   assert.doesNotThrow(() => pickHighlights(input, ['m1']));
+});
+
+test('groupByStart puts consecutive same-start events under one time', () => {
+  const groups = groupByStart([ev('a', '08:00'), ev('b', '08:00'), ev('c', '12:00')]);
+  assert.deepEqual(
+    groups.map(g => [g.start, ids(g.events)]),
+    [
+      ['08:00', ['a', 'b']],
+      ['12:00', ['c']],
+    ],
+  );
+});
+
+test('groupByStart gives each distinct start its own group, in order', () => {
+  const groups = groupByStart([ev('a', '08:00'), ev('b', '09:00'), ev('c', '09:30')]);
+  assert.deepEqual(
+    groups.map(g => g.start),
+    ['08:00', '09:00', '09:30'],
+  );
+});
+
+test('groupByStart on an empty list', () => {
+  assert.deepEqual(groupByStart([]), []);
 });

@@ -345,13 +345,15 @@ export function DayListing({ d, events, saved, onSave, onOpen }) {
         </div>
       </header>
       <div className="list-day-items">
-        {dayEvents.map(ev => {
+        {dayEvents.map((ev, i) => {
           const cat = CATEGORIES[ev.category];
           const isSaved = saved.includes(ev.id);
+          // Same start as the previous listing: print the time once per group.
+          const sameSlot = i > 0 && dayEvents[i - 1].start === ev.start;
           return (
             <article
               key={ev.id}
-              className="list-item"
+              className={`list-item ${sameSlot ? 'is-same-slot' : ''}`}
               onClick={() => onOpen(ev.id)}
               onKeyDown={onCardKey(() => onOpen(ev.id))}
               role="button"
@@ -360,10 +362,10 @@ export function DayListing({ d, events, saved, onSave, onOpen }) {
             >
               <div className="list-item-time">
                 {isAllDay(ev) ? (
-                  <span className="list-item-start is-allday">All day</span>
+                  !sameSlot && <span className="list-item-start is-allday">All day</span>
                 ) : (
                   <>
-                    <span className="list-item-start">{fmtTime(ev.start)}</span>
+                    {!sameSlot && <span className="list-item-start">{fmtTime(ev.start)}</span>}
                     <span className="list-item-end">to {fmtTime(ev.end)}</span>
                   </>
                 )}
