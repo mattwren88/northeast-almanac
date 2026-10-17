@@ -587,14 +587,20 @@ body::before {
 }
 .evt-dim { opacity: 0.55; }
 
-/* ============ WEEK ROWS ============
-   Week columns list events as calm ruled rows, grouped under one time label
-   per start time. On hover (real pointers only) or keyboard focus a row grows
-   in place into the card layout and reveals its blurb and category.
-   Smoothness: expansion waits 120ms (so sweeping the cursor down a column
-   doesn't open every row) and collapses immediately; it's suppressed while the
-   page scrolls (`.is-scrolling`, set by useScrollGuard); height animates via
-   grid-template-rows 0fr → 1fr, so nothing is measured in JS. */
+/* ============ EVENT ROWS ============
+   Week and Weekend columns list events as calm ruled rows, grouped under one
+   time label per start time. On hover (real pointers only) or keyboard focus
+   a row grows in place into the card layout and reveals its blurb and
+   category. Smoothness: expansion waits 120ms (so sweeping the cursor down a
+   column doesn't open every row) and collapses immediately; it's suppressed
+   while the page scrolls (`.is-scrolling` on <html>, set by useScrollGuard);
+   height animates via grid-template-rows 0fr → 1fr, so nothing is measured
+   in JS. */
+/* Shaded columns (weekend, today) open rows on plain paper instead. */
+.cal-col.is-loud,
+.weekend-col { --evt-open-bg: var(--paper); }
+/* …except today's weekend column, which is plain paper itself. */
+.weekend-col.is-today { --evt-open-bg: var(--paper-3); }
 .cal-slot {
   border-top: 1px solid var(--rule-soft);
   padding: 8px 0 4px;
@@ -641,7 +647,7 @@ body::before {
 .evt-row:focus-visible {
   grid-template-columns: 3px minmax(0, 1fr);
   padding: 8px 8px 10px;
-  background: var(--paper-3);
+  background: var(--evt-open-bg, var(--paper-3));
   border-color: var(--rule);
   transition-delay: 0.12s;
 }
@@ -653,15 +659,15 @@ body::before {
 }
 /* Touch screens skip hover entirely; a tap opens the event drawer. */
 @media (hover: hover) and (pointer: fine) {
-  .cal-grid:not(.is-scrolling) .evt-row:hover {
+  :root:not(.is-scrolling) .evt-row:hover {
     grid-template-columns: 3px minmax(0, 1fr);
     padding: 8px 8px 10px;
-    background: var(--paper-3);
+    background: var(--evt-open-bg, var(--paper-3));
     border-color: var(--rule);
     transition-delay: 0.12s;
   }
-  .cal-grid:not(.is-scrolling) .evt-row:hover .evt-where { color: var(--ink-2); }
-  .cal-grid:not(.is-scrolling) .evt-row:hover .evt-more {
+  :root:not(.is-scrolling) .evt-row:hover .evt-where { color: var(--ink-2); }
+  :root:not(.is-scrolling) .evt-row:hover .evt-more {
     grid-template-rows: 1fr;
     opacity: 1;
     transition-delay: 0.12s, 0.2s;
@@ -1794,10 +1800,9 @@ body::before {
 .weekend-wx .cal-wx-glyph { font-size: 13px; }
 .weekend-wx .cal-wx-temp { font-size: 11px; }
 .weekend-events {
-  padding: 10px 12px 14px;
+  padding: 10px 16px 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   flex: 1;
 }
 .weekend-empty {
