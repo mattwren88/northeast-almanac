@@ -12,6 +12,7 @@ import { dirname, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { BBOX, HORIZON_DAYS, FORECAST_DAYS } from '../src/lib/constants.js';
 import { SOURCES as ALL_SOURCES } from '../src/data/sources.js';
+import { shapeForecast } from '../src/lib/weather.js';
 
 // Route by feed type, not audience: a college can publish via Tribe (Wilkes) and
 // a community venue could in principle publish via the college-style feeds.
@@ -200,25 +201,13 @@ function fixTown(t) {
   return TOWN_FIX[k] || t.trim();
 }
 
-// WMO weather codes → our { cond, icon }
-// https://open-meteo.com/en/docs (codes table)
-function wxFromCode(code) {
-  if (code === 0) return { cond: 'sun', icon: '☀' };
-  if (code <= 2) return { cond: 'partly', icon: '⛅' };
-  if (code === 3) return { cond: 'cloud', icon: '☁' };
-  if (code <= 48) return { cond: 'fog', icon: '🌫' };
-  if (code <= 67) return { cond: 'rain', icon: '☂' };
-  if (code <= 77) return { cond: 'snow', icon: '❄' };
-  if (code <= 82) return { cond: 'rain', icon: '☂' };
-  if (code <= 86) return { cond: 'snow', icon: '❄' };
-  return { cond: 'storm', icon: '⛈' };
-}
-
 async function fetchWeather() {
   const params = new URLSearchParams({
     latitude: String(WX_LAT),
     longitude: String(WX_LNG),
-    daily: 'temperature_2m_max,temperature_2m_min,weather_code',
+    daily:
+      'temperature_2m_max,temperature_2m_min,weather_code,precipitation_probability_max,sunrise,sunset',
+    hourly: 'temperature_2m,precipitation_probability,weather_code',
     temperature_unit: 'fahrenheit',
     timezone: 'America/New_York',
     forecast_days: String(Math.min(HORIZON_DAYS, FORECAST_DAYS)),
@@ -228,20 +217,7 @@ async function fetchWeather() {
     signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`Open-Meteo ${res.status}`);
-  const j = await res.json();
-  const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  return j.daily.time.map((date, i) => {
-    const wx = wxFromCode(j.daily.weather_code[i]);
-    const dt = new Date(date + 'T00:00:00');
-    return {
-      day: i,
-      label: dayLabels[dt.getDay()],
-      cond: wx.cond,
-      icon: wx.icon,
-      high: Math.round(j.daily.temperature_2m_max[i]),
-      low: Math.round(j.daily.temperature_2m_min[i]),
-    };
-  });
+  return shapeForecast(await res.json());
 }
 
 async function fetchPage(source, page, startYmd, endYmd, ifModifiedSince) {
