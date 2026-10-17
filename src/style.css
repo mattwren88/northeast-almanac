@@ -599,6 +599,8 @@ body::before {
 /* Shaded columns (weekend, today) open rows on plain paper instead. */
 .cal-col.is-loud,
 .weekend-col { --evt-open-bg: var(--paper); }
+/* …except today's weekend column, which is plain paper itself. */
+.weekend-col.is-today { --evt-open-bg: var(--paper-3); }
 .cal-slot {
   border-top: 1px solid var(--rule-soft);
   padding: 8px 0 4px;
