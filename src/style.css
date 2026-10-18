@@ -2216,14 +2216,16 @@ body::before {
 
 /* FILTERS PANEL
    Desktop: an inline panel under the toolbar. Phones (≤800px): a bottom sheet
-   over a dimmed backdrop, body scrolling inside, footer pinned. Chips are soft
-   fills with no border until selected; nothing selected means everything. */
+   over the theme's scrim; drag its header down (or tap ×, the backdrop or
+   Escape) to close. Type is the body serif throughout for legibility; a
+   selected chip inverts to ink so its state reads in both themes. */
 .filters-backdrop { display: none; }
 .filters-panel {
   margin: 0 24px 16px;
   background: var(--paper-3);
+  color: var(--ink);
   border: 1px solid var(--rule);
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 4px 12px oklch(var(--shadow-base) / 0.08);
   animation: filtersPanelIn 0.2s ease-out;
 }
@@ -2232,74 +2234,82 @@ body::before {
   to   { opacity: 1; transform: translateY(0); }
 }
 .filters-head {
+  position: relative;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  padding: 14px 22px 10px;
+  padding: 12px 14px 12px 22px;
   border-bottom: 1px solid var(--rule-soft);
 }
 .filters-grab { display: none; }
-.filters-title { font-family: var(--display); font-size: 24px; line-height: 1; }
-.filters-reset {
+.filters-title { margin: 0; font-family: var(--display); font-size: 28px; font-weight: 400; line-height: 1; }
+.filters-close {
   appearance: none;
-  background: none;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 0;
-  padding: 4px 0;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  color: var(--press-red);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink-2);
+  font-size: 26px;
+  line-height: 1;
   cursor: pointer;
 }
-.filters-reset:disabled { color: var(--ink-3); opacity: 0.6; cursor: default; }
+.filters-close:hover { background: var(--paper-2); color: var(--ink); }
 
 .filters-body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 18px 32px;
-  padding: 16px 22px 18px;
+  gap: 22px 36px;
+  padding: 18px 22px 22px;
 }
 .filters-block { min-width: 0; }
 .filters-block-cats { grid-column: 1 / -1; }
 .filters-block-k {
-  margin: 0 0 9px;
-  font-family: var(--mono);
-  font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-2);
+  margin: 0 0 10px;
+  font-family: var(--display);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
 }
 
 /* Category chips */
-.filters-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.filters-chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .filters-chip {
   appearance: none;
+  min-height: 40px;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 7px 12px;
-  border: 1px solid transparent;
+  gap: 8px;
+  padding: 0 15px 0 13px;
+  border: 1px solid var(--rule-soft);
   border-radius: 999px;
-  background: var(--paper-2);
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--ink-2);
+  background: var(--paper);
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--ink);
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, color 0.15s;
 }
-.filters-chip:hover { color: var(--ink); background: var(--paper); }
-.filters-chip.is-on { background: var(--paper); border-color: var(--ink); color: var(--ink); }
-.filters-chip-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cat-color); }
+.filters-chip:hover { border-color: var(--ink-3); }
+.filters-chip.is-on { background: var(--ink); border-color: var(--ink); color: var(--paper-3); }
+.filters-chip-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cat-color); }
+
+.filters-block-town .town-dd-trigger { min-height: 44px; font-size: 16px; background: var(--paper); }
 
 /* Sources: one summary row that folds open into grouped checkbox rows */
 .filters-disclosure {
   appearance: none;
   width: 100%;
+  min-height: 44px;
   display: flex;
   align-items: baseline;
   gap: 10px;
-  padding: 0 0 9px;
+  padding: 0 0 10px;
   background: none;
   border: 0;
   border-bottom: 1px solid var(--rule-soft);
@@ -2308,51 +2318,55 @@ body::before {
   text-align: left;
 }
 .filters-disclosure .filters-block-k { margin: 0; }
-.filters-disclosure-sum { font-family: var(--serif); font-size: 13px; color: var(--ink-3); }
+.filters-disclosure-sum { font-family: var(--serif); font-size: 15px; color: var(--ink-2); }
 .filters-disclosure-caret {
   margin-left: auto;
-  color: var(--ink-3);
+  font-size: 20px;
+  line-height: 1;
+  color: var(--ink-2);
   transition: transform 0.2s ease;
 }
 .filters-disclosure[aria-expanded='true'] .filters-disclosure-caret { transform: rotate(90deg); }
 .filters-srclist {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 4px 20px;
-  padding-top: 8px;
+  gap: 6px 24px;
+  padding-top: 10px;
   animation: filtersPanelIn 0.18s ease-out;
 }
 .filters-srcgroup-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin: 4px 0 2px;
+  margin: 6px 0 2px;
 }
-.filters-srcgroup-k { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
-.filters-srcgroup-links { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
+.filters-srcgroup-k { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-2); }
+.filters-srcgroup-links { display: inline-flex; gap: 14px; }
 .filters-hint-link {
-  font: inherit;
+  appearance: none;
+  font-family: var(--serif);
+  font-size: 15px;
   color: var(--press-red);
   background: none;
   border: 0;
-  padding: 0;
+  padding: 4px 0;
   cursor: pointer;
 }
-.filters-hint-link:disabled { color: var(--ink-3); opacity: 0.6; cursor: default; }
+.filters-hint-link:disabled { color: var(--ink-3); cursor: default; }
 .filters-src-row {
+  min-height: 40px;
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 5px 0;
+  gap: 12px;
   font-family: var(--serif);
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.25;
   color: var(--ink);
   cursor: pointer;
 }
-.filters-src-row input { width: 14px; height: 14px; margin: 0; accent-color: var(--ink); flex-shrink: 0; }
+.filters-src-row input { width: 18px; height: 18px; margin: 0; accent-color: var(--ink); flex-shrink: 0; }
 
-/* Footer: what's applied, and how many events it leaves */
+/* Footer: clear everything, or close and see the result */
 .filters-foot {
   display: flex;
   justify-content: space-between;
@@ -2360,43 +2374,50 @@ body::before {
   gap: 12px;
   padding: 12px 22px;
   border-top: 1px solid var(--rule-soft);
-  background: var(--paper-2);
-  border-radius: 0 0 4px 4px;
+  background: var(--paper-3);
+  border-radius: 0 0 6px 6px;
 }
-.filters-foot-sum {
-  min-width: 0;
+.filters-reset {
+  appearance: none;
+  min-height: 44px;
+  padding: 0 4px;
+  background: none;
+  border: 0;
   font-family: var(--serif);
-  font-size: 13px;
-  color: var(--ink-3);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.filters-done {
-  flex-shrink: 0;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  padding: 10px 16px;
-  border: 1px solid var(--ink);
-  border-radius: 3px;
-  background: var(--ink);
-  color: var(--paper);
+  font-size: 16px;
+  color: var(--press-red);
   cursor: pointer;
 }
-.filters-done:hover { background: var(--ink-2); border-color: var(--ink-2); }
+.filters-reset:disabled { color: var(--ink-3); cursor: default; }
+.filters-done {
+  appearance: none;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--ink);
+  color: var(--paper-3);
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.filters-done:hover { background: var(--ink-2); }
 
 @media (max-width: 800px) {
   .toolbar-filters-trigger { margin-left: 0; }
+  /* The sheet covers the page; keep the page from scrolling behind it. */
+  body:has(.filters-panel) { overflow: hidden; }
   .filters-backdrop {
     display: block;
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: oklch(0.15 0.01 60 / 0.45);
+    background: var(--scrim);
     animation: filtersFade 0.2s ease-out;
+    transition: opacity 0.22s ease;
   }
+  .filters-backdrop.is-closing { opacity: 0; }
   .filters-panel {
     position: fixed;
     left: 0;
@@ -2404,31 +2425,35 @@ body::before {
     bottom: 0;
     z-index: 41;
     margin: 0;
-    max-height: 85dvh;
+    max-height: 88dvh;
     display: flex;
     flex-direction: column;
     border: 0;
-    border-top: 1px solid var(--rule);
-    border-radius: 14px 14px 0 0;
-    box-shadow: 0 -6px 24px oklch(var(--shadow-base) / 0.18);
-    animation: filtersSheetUp 0.26s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 28px oklch(var(--shadow-base) / 0.2);
+    animation: filtersSheetUp 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
-  .filters-head { padding: 22px 18px 10px; }
+  /* The header is the drag handle. */
+  .filters-head {
+    padding: 24px 10px 10px 20px;
+    touch-action: none;
+    cursor: grab;
+  }
   .filters-grab {
     display: block;
     position: absolute;
-    top: 8px;
+    top: 9px;
     left: 50%;
-    width: 36px;
-    height: 4px;
-    margin-left: -18px;
-    border-radius: 2px;
+    width: 40px;
+    height: 5px;
+    margin-left: -20px;
+    border-radius: 3px;
     background: var(--rule);
   }
   .filters-body {
     grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 14px 18px 18px;
+    gap: 24px;
+    padding: 18px 20px 24px;
     overflow-y: auto;
     overscroll-behavior: contain;
     flex: 1;
@@ -2436,9 +2461,10 @@ body::before {
   }
   .filters-srclist { grid-template-columns: 1fr; }
   .filters-foot {
-    padding: 12px 18px calc(14px + env(safe-area-inset-bottom));
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
     border-radius: 0;
   }
+  .filters-done { flex: 1; max-width: 240px; }
 }
 @keyframes filtersSheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 @keyframes filtersFade { from { opacity: 0; } to { opacity: 1; } }
@@ -2830,38 +2856,6 @@ body::before {
   cursor: pointer;
 }
 .list-empty-reset:hover { background: var(--ink); color: var(--paper); }
-
-/* ============ MOBILE FILTERS BOTTOM SHEET (C7) ============ */
-@media (max-width: 800px) {
-  .filters-panel {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: 0;
-    max-height: 85vh;
-    overflow-y: auto;
-    border-radius: 12px 12px 0 0;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
-    box-shadow: 0 -8px 24px oklch(var(--shadow-base) / 0.18);
-    z-index: 9000;
-    animation: filtersSheetIn 0.22s ease-out;
-  }
-  @keyframes filtersSheetIn {
-    from { transform: translateY(100%); }
-    to   { transform: translateY(0); }
-  }
-  /* backdrop to dim main content */
-  .filters-panel::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: var(--scrim);
-    z-index: -1;
-  }
-}
 
 /* ============ DARK MODE: MAP ============ */
 /* The OpenFreeMap Positron basemap is light-only, so invert its canvas back
