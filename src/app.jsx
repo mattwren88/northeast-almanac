@@ -524,11 +524,6 @@ export function App() {
     setFilterTick(t => t + 1);
   };
 
-  const showAllCats = () => {
-    setActiveCats(ALL_CATS);
-    setFilterTick(t => t + 1);
-  };
-
   const setActiveTownTicked = t => {
     setActiveTown(t);
     setFilterTick(n => n + 1);
@@ -538,19 +533,16 @@ export function App() {
     setActiveSources(xs => isolateToggle(xs, id, ALL_SOURCE_IDS));
     setFilterTick(t => t + 1);
   };
-  // Group-level all/none (audience = 'community' | 'college'). "none" on the
-  // only remaining group would empty the set — snap back to all instead.
+  // Group-level all/none (audience = 'community' | 'college'), in "nothing
+  // selected means all" terms: "all" adds the group to the selection, "none"
+  // drops it; an empty selection snaps back to all sources.
   const setSourceGroup = (audience, on) => {
     const ids = SOURCES.filter(s => s.audience === audience).map(s => s.id);
     setActiveSources(xs => {
-      const rest = xs.filter(id => !ids.includes(id));
+      const rest = (isAllSources(xs) ? [] : xs).filter(id => !ids.includes(id));
       const next = on ? [...rest, ...ids] : rest;
       return next.length ? next : ALL_SOURCE_IDS;
     });
-    setFilterTick(t => t + 1);
-  };
-  const showAllSources = () => {
-    setActiveSources(ALL_SOURCE_IDS);
     setFilterTick(t => t + 1);
   };
 
@@ -696,17 +688,16 @@ export function App() {
         <FiltersPanel
           activeCats={activeCats}
           toggleCat={toggleCat}
-          showAllCats={showAllCats}
           activeSources={activeSources}
           toggleSource={toggleSource}
           setSourceGroup={setSourceGroup}
-          showAllSources={showAllSources}
           allTowns={allTowns}
           activeTown={activeTown}
           setActiveTown={setActiveTownTicked}
           onReset={resetFilters}
           onClose={toggleFilters}
           filterCount={filterCount}
+          resultCount={filtered.length}
         />
       )}
 
@@ -1276,8 +1267,12 @@ function TownDropdown({ towns, value, onChange }) {
   );
 }
 
+// One audience's sources as checkbox rows. Nothing checked means "all sources";
+// checking one narrows to it (see isolateToggle), so in the all state every box
+// reads unchecked.
 function SourceGroup({ label, sources, activeSources, toggleSource, setSourceGroup, audience }) {
-  const onCount = sources.filter(s => activeSources.includes(s.id)).length;
+  const selected = isAllSources(activeSources) ? [] : activeSources;
+  const onCount = sources.filter(s => selected.includes(s.id)).length;
   return (
     <div className="filters-srcgroup">
       <div className="filters-srcgroup-head">
@@ -1302,138 +1297,161 @@ function SourceGroup({ label, sources, activeSources, toggleSource, setSourceGro
           </button>
         </span>
       </div>
-      <div className="filters-cats">
-        {sources.map(s => (
-          <label
-            key={s.id}
-            className={`filters-cat filters-src ${activeSources.includes(s.id) ? 'is-on' : ''}`}
-            title={s.name}
-          >
-            <input
-              type="checkbox"
-              checked={activeSources.includes(s.id)}
-              onChange={() => toggleSource(s.id)}
-            />
-            <span className="filters-cat-label">{s.name}</span>
-          </label>
-        ))}
-      </div>
+      {sources.map(s => (
+        <label key={s.id} className="filters-src-row">
+          <input
+            type="checkbox"
+            checked={selected.includes(s.id)}
+            onChange={() => toggleSource(s.id)}
+          />
+          <span>{s.name}</span>
+        </label>
+      ))}
     </div>
   );
 }
 
+// Filters: an inline panel under the toolbar on desktop, a bottom sheet on
+// phones (≤800px — see .filters-panel in style.css). Nothing selected means
+// everything shows; picking chips or sources narrows the list, and the footer
+// says how many events the current filters leave.
 function FiltersPanel({
   activeCats,
   toggleCat,
-  showAllCats,
   activeSources,
   toggleSource,
   setSourceGroup,
-  showAllSources,
   allTowns,
   activeTown,
   setActiveTown,
   onReset,
   onClose,
   filterCount,
+  resultCount,
 }) {
-  const allCatsOn = activeCats.length === ALL_CATS.length;
-  const allSrcOn = activeSources.length === SOURCES.length;
+  const allCats = activeCats.length === ALL_CATS.length;
+  const allSrc = isAllSources(activeSources);
+  const [srcOpen, setSrcOpen] = useState(!allSrc);
+
+  // On phones the sheet covers the page; keep the page from scrolling behind it.
+  useEffect(() => {
+    if (!window.matchMedia('(max-width: 800px)').matches) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
+  // Escape closes the panel — unless the town dropdown is open, which closes first.
+  useEffect(() => {
+    const onKey = e => {
+      if (e.key === 'Escape' && !document.querySelector('.town-dd.is-open')) onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  const parts = [];
+  if (!allCats)
+    parts.push(`${activeCats.length} ${activeCats.length === 1 ? 'category' : 'categories'}`);
+  if (activeTown) parts.push(activeTown);
+  if (!allSrc)
+    parts.push(`${activeSources.length} ${activeSources.length === 1 ? 'source' : 'sources'}`);
+
   return (
-    <div className="filters-panel" role="region" aria-label="Filters">
-      <div className="filters-grid">
-        {/* CATEGORY — full width */}
-        <div className="filters-block filters-block-wide">
-          <div className="filters-block-head">
-            <span className="filters-block-k">Category</span>
-            <span className="filters-block-hint">
-              {allCatsOn ? (
-                'all on · click one to show only it'
-              ) : (
-                <>
-                  {activeCats.length} of {ALL_CATS.length} on ·{' '}
-                  <button type="button" className="filters-hint-link" onClick={showAllCats}>
-                    show all
-                  </button>
-                </>
-              )}
-            </span>
-          </div>
-          <div className="filters-cats">
-            {Object.entries(CATEGORIES).map(([k, c]) => (
-              <label
-                key={k}
-                className={`filters-cat ${activeCats.includes(k) ? 'is-on' : ''}`}
-                style={{ '--cat-color': c.color }}
-              >
-                <input
-                  type="checkbox"
-                  checked={activeCats.includes(k)}
-                  onChange={() => toggleCat(k)}
-                />
-                <span className="filters-cat-dot" />
-                <span className="filters-cat-label">{c.label}</span>
-              </label>
-            ))}
-          </div>
+    <>
+      <div className="filters-backdrop" onClick={onClose} aria-hidden="true" />
+      <div className="filters-panel" role="region" aria-label="Filters">
+        <div className="filters-head">
+          <span className="filters-grab" aria-hidden="true" />
+          <span className="filters-title">Filters</span>
+          <button
+            type="button"
+            className="filters-reset"
+            onClick={onReset}
+            disabled={filterCount === 0}
+          >
+            Reset
+          </button>
         </div>
 
-        {/* SOURCE */}
-        <div className="filters-block filters-block-sources">
-          <div className="filters-block-head">
-            <span className="filters-block-k">Source</span>
-            <span className="filters-block-hint">
-              {allSrcOn ? (
-                'all on · click one to show only it'
-              ) : (
-                <>
-                  {activeSources.length} of {SOURCES.length} on ·{' '}
-                  <button type="button" className="filters-hint-link" onClick={showAllSources}>
-                    show all
+        <div className="filters-body">
+          <section className="filters-block filters-block-cats">
+            <h3 className="filters-block-k">Category</h3>
+            <div className="filters-chips">
+              {Object.entries(CATEGORIES).map(([k, c]) => {
+                const on = !allCats && activeCats.includes(k);
+                return (
+                  <button
+                    key={k}
+                    type="button"
+                    className={`filters-chip ${on ? 'is-on' : ''}`}
+                    aria-pressed={on}
+                    onClick={() => toggleCat(k)}
+                    style={{ '--cat-color': c.color }}
+                  >
+                    <span className="filters-chip-dot" aria-hidden="true" />
+                    {c.label}
                   </button>
-                </>
-              )}
-            </span>
-          </div>
-          <SourceGroup
-            label="Community"
-            audience="community"
-            sources={COMMUNITY_SOURCES}
-            activeSources={activeSources}
-            toggleSource={toggleSource}
-            setSourceGroup={setSourceGroup}
-          />
-          <SourceGroup
-            label="Colleges"
-            audience="college"
-            sources={COLLEGE_SOURCES}
-            activeSources={activeSources}
-            toggleSource={toggleSource}
-            setSourceGroup={setSourceGroup}
-          />
-        </div>
+                );
+              })}
+            </div>
+          </section>
 
-        {/* TOWN */}
-        <div className="filters-block">
-          <div className="filters-block-head">
-            <span className="filters-block-k">Town</span>
-            <span className="filters-block-hint">{allTowns.length} towns in this batch</span>
-          </div>
-          <div className="filters-block-rows">
+          <section className="filters-block filters-block-town">
+            <h3 className="filters-block-k">Town</h3>
             <TownDropdown towns={allTowns} value={activeTown} onChange={setActiveTown} />
-          </div>
+          </section>
+
+          <section className="filters-block filters-block-sources">
+            <button
+              type="button"
+              className="filters-disclosure"
+              aria-expanded={srcOpen}
+              onClick={() => setSrcOpen(o => !o)}
+            >
+              <span className="filters-block-k">Sources</span>
+              <span className="filters-disclosure-sum">
+                {allSrc ? `All ${SOURCES.length}` : `${activeSources.length} of ${SOURCES.length}`}
+              </span>
+              <span className="filters-disclosure-caret" aria-hidden="true">
+                ›
+              </span>
+            </button>
+            {srcOpen && (
+              <div className="filters-srclist">
+                <SourceGroup
+                  label="Community"
+                  audience="community"
+                  sources={COMMUNITY_SOURCES}
+                  activeSources={activeSources}
+                  toggleSource={toggleSource}
+                  setSourceGroup={setSourceGroup}
+                />
+                <SourceGroup
+                  label="Colleges"
+                  audience="college"
+                  sources={COLLEGE_SOURCES}
+                  activeSources={activeSources}
+                  toggleSource={toggleSource}
+                  setSourceGroup={setSourceGroup}
+                />
+              </div>
+            )}
+          </section>
+        </div>
+
+        <div className="filters-foot">
+          <span className="filters-foot-sum">
+            {parts.length ? parts.join(' · ') : 'Everything'}
+          </span>
+          <button type="button" className="filters-done" onClick={onClose}>
+            Show {resultCount.toLocaleString()} {resultCount === 1 ? 'event' : 'events'}
+          </button>
         </div>
       </div>
-
-      <div className="filters-foot">
-        <button className="filters-reset" onClick={onReset} disabled={filterCount === 0}>
-          Reset all
-        </button>
-        <button className="filters-done" onClick={onClose}>
-          Done
-        </button>
-      </div>
-    </div>
+    </>
   );
 }
 
