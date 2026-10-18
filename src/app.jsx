@@ -1284,16 +1284,15 @@ function SourceGroup({ label, sources, activeSources, toggleSource, setSourceGro
             onClick={() => setSourceGroup(audience, true)}
             disabled={onCount === sources.length}
           >
-            all
+            All
           </button>
-          {' · '}
           <button
             type="button"
             className="filters-hint-link"
             onClick={() => setSourceGroup(audience, false)}
             disabled={onCount === 0}
           >
-            none
+            None
           </button>
         </span>
       </div>
@@ -1314,7 +1313,11 @@ function SourceGroup({ label, sources, activeSources, toggleSource, setSourceGro
 // Filters: an inline panel under the toolbar on desktop, a bottom sheet on
 // phones (≤800px — see .filters-panel in style.css). Nothing selected means
 // everything shows; picking chips or sources narrows the list, and the footer
-// says how many events the current filters leave.
+// button says how many events the current filters leave.
+const isPhone = () => window.matchMedia('(max-width: 800px)').matches;
+const SHEET_DISMISS_PX = 100; // drag further than this (or flick) to close
+const SHEET_ANIM_MS = 220;
+
 function FiltersPanel({
   activeCats,
   toggleCat,
@@ -1332,47 +1335,81 @@ function FiltersPanel({
   const allCats = activeCats.length === ALL_CATS.length;
   const allSrc = isAllSources(activeSources);
   const [srcOpen, setSrcOpen] = useState(!allSrc);
+  const [closing, setClosing] = useState(false);
+  const panelRef = useRef(null);
+  const drag = useRef(null);
 
-  // On phones the sheet covers the page; keep the page from scrolling behind it.
-  useEffect(() => {
-    if (!window.matchMedia('(max-width: 800px)').matches) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, []);
+  // On phones the sheet slides away before it unmounts; desktop closes at once.
+  const dismiss = useCallback(() => {
+    const panel = panelRef.current;
+    if (!panel || !isPhone()) return onClose();
+    setClosing(true);
+    panel.style.transition = `transform ${SHEET_ANIM_MS}ms cubic-bezier(0.4, 0, 1, 1)`;
+    panel.style.transform = 'translateY(100%)';
+    setTimeout(onClose, SHEET_ANIM_MS);
+  }, [onClose]);
 
   // Escape closes the panel — unless the town dropdown is open, which closes first.
   useEffect(() => {
     const onKey = e => {
-      if (e.key === 'Escape' && !document.querySelector('.town-dd.is-open')) onClose();
+      if (e.key === 'Escape' && !document.querySelector('.town-dd.is-open')) dismiss();
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [onClose]);
+  }, [dismiss]);
 
-  const parts = [];
-  if (!allCats)
-    parts.push(`${activeCats.length} ${activeCats.length === 1 ? 'category' : 'categories'}`);
-  if (activeTown) parts.push(activeTown);
-  if (!allSrc)
-    parts.push(`${activeSources.length} ${activeSources.length === 1 ? 'source' : 'sources'}`);
+  // Drag the sheet's header down to close it: the sheet follows the finger,
+  // then either slides away (far or fast enough) or springs back.
+  const onDragStart = e => {
+    if (!isPhone() || e.target.closest('button')) return;
+    drag.current = { y: e.clientY, t: performance.now(), dy: 0 };
+    panelRef.current.style.transition = 'none';
+    // Keep receiving moves if the finger leaves the header; harmless if unsupported.
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {}
+  };
+  const onDragMove = e => {
+    const d = drag.current;
+    if (!d) return;
+    d.dy = Math.max(0, e.clientY - d.y);
+    panelRef.current.style.transform = `translateY(${d.dy}px)`;
+  };
+  const onDragEnd = () => {
+    const d = drag.current;
+    if (!d) return;
+    drag.current = null;
+    const speed = d.dy / Math.max(1, performance.now() - d.t); // px per ms
+    if (d.dy > SHEET_DISMISS_PX || speed > 0.6) return dismiss();
+    const panel = panelRef.current;
+    panel.style.transition = `transform ${SHEET_ANIM_MS}ms cubic-bezier(0.2, 0.8, 0.2, 1)`;
+    panel.style.transform = '';
+  };
 
   return (
     <>
-      <div className="filters-backdrop" onClick={onClose} aria-hidden="true" />
-      <div className="filters-panel" role="region" aria-label="Filters">
-        <div className="filters-head">
+      <div
+        className={`filters-backdrop ${closing ? 'is-closing' : ''}`}
+        onClick={dismiss}
+        aria-hidden="true"
+      />
+      <div ref={panelRef} className="filters-panel" role="region" aria-label="Filters">
+        <div
+          className="filters-head"
+          onPointerDown={onDragStart}
+          onPointerMove={onDragMove}
+          onPointerUp={onDragEnd}
+          onPointerCancel={onDragEnd}
+        >
           <span className="filters-grab" aria-hidden="true" />
-          <span className="filters-title">Filters</span>
+          <h2 className="filters-title">Filters</h2>
           <button
             type="button"
-            className="filters-reset"
-            onClick={onReset}
-            disabled={filterCount === 0}
+            className="filters-close"
+            onClick={dismiss}
+            aria-label="Close filters"
           >
-            Reset
+            ×
           </button>
         </div>
 
@@ -1443,10 +1480,15 @@ function FiltersPanel({
         </div>
 
         <div className="filters-foot">
-          <span className="filters-foot-sum">
-            {parts.length ? parts.join(' · ') : 'Everything'}
-          </span>
-          <button type="button" className="filters-done" onClick={onClose}>
+          <button
+            type="button"
+            className="filters-reset"
+            onClick={onReset}
+            disabled={filterCount === 0}
+          >
+            Clear all
+          </button>
+          <button type="button" className="filters-done" onClick={dismiss}>
             Show {resultCount.toLocaleString()} {resultCount === 1 ? 'event' : 'events'}
           </button>
         </div>
