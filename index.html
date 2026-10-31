@@ -40,11 +40,14 @@
     </script>
     <meta name="theme-color" content="#fbf5e6" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#211f1c" media="(prefers-color-scheme: dark)" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts are self-hosted (public/fonts, @font-face in src/style.css). The
+         masthead face is preloaded so the title swaps in quickly. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@300;400;500&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/instrument-serif-latin-400-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
   </head>
   <body>
