@@ -245,7 +245,13 @@ export function CalendarView({
                   {isToday && <span className="cal-today-dot">today</span>}
                   {wx && <WeatherChip wx={wx} d={d} />}
                 </div>
-                <div className="cal-day-num">{date.date}</div>
+                {/* The day is each column's heading (h2) so event titles (h3) nest under it. */}
+                <h2
+                  className="cal-day-num"
+                  aria-label={`${date.weekday}, ${date.month} ${date.date}`}
+                >
+                  {date.date}
+                </h2>
               </div>
 
               <div className="cal-events">
