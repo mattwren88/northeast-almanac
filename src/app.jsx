@@ -1,9 +1,11 @@
 // Main app — masthead, sidebar, view switching, filters
 
-import { Fragment, useState, useEffect, useMemo, useRef, useCallback } from 'react';
+import { Fragment, Suspense, lazy, useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { CATEGORIES, WEATHER, dateForDay, todayDayOffset, loadEvents } from './lib/data.js';
 import { CalendarView, MonthView, fmtEventTime } from './calendar.jsx';
-import { MapView, WeekendView, ListView, EventDrawer, WeekendPlan, DayModal } from './views.jsx';
+import { WeekendView, ListView, EventDrawer, WeekendPlan, DayModal } from './views.jsx';
+// Leaflet is heavy and only the Map tab needs it.
+const MapView = lazy(() => import('./map-view.jsx'));
 import { SOURCES, COMMUNITY_SOURCES, COLLEGE_SOURCES, WEATHER_SOURCE } from './data/sources.js';
 import { useTheme } from './theme.js';
 import { HORIZON_DAYS, MAX_WEEK } from './lib/constants.js';
@@ -16,7 +18,15 @@ function RefreshStamp({ generatedAt, eventStatus }) {
       </div>
     );
   }
-  if (!generatedAt) return null;
+  // Hold the line's height while events load: rendering nothing here and then
+  // the stamp pushed the toolbar and calendar down (layout shift).
+  if (!generatedAt) {
+    return (
+      <div className="mast-refresh" aria-hidden="true">
+        &nbsp;
+      </div>
+    );
+  }
   const refreshed = new Date(generatedAt);
   // Reading the clock during render is impure by the letter of the rule, but this
   // stamp *is* "how long ago", and re-reading it on a re-render is the point.
@@ -750,36 +760,6 @@ export function App() {
         </section>
       )}
 
-      {/* WEATHER ADVISORY (when current week has rainy days that affect outdoor events) */}
-      {eventStatus !== 'loading' &&
-        eventStatus !== 'error' &&
-        view !== 'map' &&
-        view !== 'month' &&
-        (() => {
-          const start = view === 'weekend' ? 0 : weekOffset * 7;
-          const end = view === 'weekend' ? HORIZON_DAYS : start + 7;
-          const rainyDays = [];
-          for (let d = start; d < end; d++) {
-            const wx = WEATHER[d];
-            if (wx && wx.cond === 'rain') rainyDays.push(d);
-          }
-          if (rainyDays.length === 0) return null;
-          const outdoorAtRisk = filtered.filter(e => rainyDays.includes(e.day) && !e.indoor).length;
-          if (outdoorAtRisk === 0) return null;
-          return (
-            <div className="wx-advisory" role="note">
-              <span className="wx-advisory-icon">☂</span>
-              <span>
-                <strong>{rainyDays.length}</strong>{' '}
-                {rainyDays.length === 1 ? 'rainy day' : 'rainy days'} ahead
-                {' — '}
-                <strong>{outdoorAtRisk}</strong> outdoor{' '}
-                {outdoorAtRisk === 1 ? 'event is' : 'events are'} dimmed in this view
-              </span>
-            </div>
-          );
-        })()}
-
       {/* MAIN VIEW */}
       <main className="main">
         {eventStatus === 'loading' && <LoadingSkeleton />}
@@ -796,60 +776,95 @@ export function App() {
           </div>
         )}
         {eventStatus !== 'loading' && eventStatus !== 'error' && (
-          <div key={view} className="view-fade">
-            {view === 'calendar' && (
-              <CalendarView
-                events={filtered}
-                saved={saved}
-                onSave={toggleSave}
-                onOpen={viewEvent}
-                onPickDay={pickDay}
-                weekOffset={weekOffset}
-                setWeekOffset={setWeekOffset}
-                weatherAware={true}
-                filterCount={filterCount}
-                filterTick={filterTick}
-                onResetFilters={resetFilters}
-              />
-            )}
-            {view === 'month' && (
-              <MonthView
-                events={filtered}
-                saved={saved}
-                onOpen={viewEvent}
-                onPickDay={pickDay}
-                filterTick={filterTick}
-              />
-            )}
-            {view === 'weekend' && (
-              <WeekendView
-                events={filtered}
-                saved={saved}
-                onOpen={viewEvent}
-                filterTick={filterTick}
-              />
-            )}
-            {view === 'map' && (
-              <MapView
-                events={filtered}
-                saved={saved}
-                onSave={toggleSave}
-                onOpen={viewEvent}
-                weekOffset={weekOffset}
-              />
-            )}
-            {view === 'list' && (
-              <ListView
-                events={filtered}
-                saved={saved}
-                onSave={toggleSave}
-                onOpen={viewEvent}
-                weekOffset={weekOffset}
-                filterCount={filterCount}
-                onResetFilters={resetFilters}
-              />
-            )}
-          </div>
+          <>
+            {/* WEATHER ADVISORY (when current week has rainy days that affect outdoor events).
+              Rendered inside <main> with the loaded view, not above it: inserted above,
+              it pushed the whole calendar down after events.json arrived (CLS 0.25). */}
+            {view !== 'map' &&
+              view !== 'month' &&
+              (() => {
+                const start = view === 'weekend' ? 0 : weekOffset * 7;
+                const end = view === 'weekend' ? HORIZON_DAYS : start + 7;
+                const rainyDays = [];
+                for (let d = start; d < end; d++) {
+                  const wx = WEATHER[d];
+                  if (wx && wx.cond === 'rain') rainyDays.push(d);
+                }
+                if (rainyDays.length === 0) return null;
+                const outdoorAtRisk = filtered.filter(
+                  e => rainyDays.includes(e.day) && !e.indoor,
+                ).length;
+                if (outdoorAtRisk === 0) return null;
+                return (
+                  <div className="wx-advisory" role="note">
+                    <span className="wx-advisory-icon">☂</span>
+                    <span>
+                      <strong>{rainyDays.length}</strong>{' '}
+                      {rainyDays.length === 1 ? 'rainy day' : 'rainy days'} ahead
+                      {' — '}
+                      <strong>{outdoorAtRisk}</strong> outdoor{' '}
+                      {outdoorAtRisk === 1 ? 'event is' : 'events are'} dimmed in this view
+                    </span>
+                  </div>
+                );
+              })()}
+            <div key={view} className="view-fade">
+              {view === 'calendar' && (
+                <CalendarView
+                  events={filtered}
+                  saved={saved}
+                  onSave={toggleSave}
+                  onOpen={viewEvent}
+                  onPickDay={pickDay}
+                  weekOffset={weekOffset}
+                  setWeekOffset={setWeekOffset}
+                  weatherAware={true}
+                  filterCount={filterCount}
+                  filterTick={filterTick}
+                  onResetFilters={resetFilters}
+                />
+              )}
+              {view === 'month' && (
+                <MonthView
+                  events={filtered}
+                  saved={saved}
+                  onOpen={viewEvent}
+                  onPickDay={pickDay}
+                  filterTick={filterTick}
+                />
+              )}
+              {view === 'weekend' && (
+                <WeekendView
+                  events={filtered}
+                  saved={saved}
+                  onOpen={viewEvent}
+                  filterTick={filterTick}
+                />
+              )}
+              {view === 'map' && (
+                <Suspense fallback={<div className="map-loading">Loading the map…</div>}>
+                  <MapView
+                    events={filtered}
+                    saved={saved}
+                    onSave={toggleSave}
+                    onOpen={viewEvent}
+                    weekOffset={weekOffset}
+                  />
+                </Suspense>
+              )}
+              {view === 'list' && (
+                <ListView
+                  events={filtered}
+                  saved={saved}
+                  onSave={toggleSave}
+                  onOpen={viewEvent}
+                  weekOffset={weekOffset}
+                  filterCount={filterCount}
+                  onResetFilters={resetFilters}
+                />
+              )}
+            </div>
+          </>
         )}
       </main>
 
